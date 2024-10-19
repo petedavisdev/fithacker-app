@@ -19,7 +19,7 @@ export function ActivityCheckbox(props: ActivityCheckboxProps) {
 			onPress={() => props.onChange(props.activity)}
 		>
 			<View
-				className={`w-8 h-8 justify-center items-center rounded-md border border-blue-600 ${
+				className={`w-8 h-8 justify-center items-center rounded-full border border-blue-600 ${
 					props.isChecked ? `bg-blue-700` : 'bg-blue-950'
 				}`}
 			>

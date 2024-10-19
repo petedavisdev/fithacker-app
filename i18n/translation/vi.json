@@ -1,0 +1,49 @@
+{
+	"_": {
+		"lastWeek": "Tuần trước",
+		"thisWeek": "Tuần này",
+		"today": "Hôm nay",
+		"whatExerciseToday": "Bạn đã tập thể dục gì hôm nay?",
+		"yesterday": "Hôm qua"
+	},
+	"_$": {
+		"upgradeDescription": "Nâng cấp để xem lịch sử đầy đủ và hỗ trợ phát triển ứng dụng này",
+		"upgradeMessage": "Muốn xem lại quá khứ trước tuần trước?"
+	},
+	"_@": {
+		"email": "Email",
+		"loggedIn": "Đăng nhập bằng",
+		"login": "Đăng nhập",
+		"loginDescription": "Được sao lưu và sử dụng trên nhiều thiết bị",
+		"sendCode": "Gửi cho tôi một mã số ma thuật ✨"
+	},
+	"_day": {
+		"0": "Chủ nhật",
+		"1": "Thứ hai",
+		"2": "Thứ ba",
+		"3": "Thứ tư",
+		"4": "Thứ năm",
+		"5": "Thứ sáu",
+		"6": "Thứ bảy"
+	},
+	"_month": {
+		"0": "Tháng một",
+		"1": "Tháng hai",
+		"10": "Tháng mười một",
+		"11": "Tháng mười hai",
+		"2": "Tháng ba",
+		"3": "Tháng tư",
+		"4": "Tháng năm",
+		"5": "Tháng sáu",
+		"6": "Tháng bảy",
+		"7": "Tháng tám",
+		"8": "Tháng chín",
+		"9": "Tháng mười"
+	},
+	"🌴": "Sức mạnh cốt lõi",
+	"🏃‍♀️": "Cardio",
+	"💪": "Sức mạnh cánh tay",
+	"🚶": "Đi bộ",
+	"🤸": "Linh hoạt và cân bằng",
+	"🦵": "Sức mạnh chân"
+}

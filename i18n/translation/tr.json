@@ -1,0 +1,49 @@
+{
+	"_": {
+		"lastWeek": "Geçen hafta",
+		"thisWeek": "Bu hafta",
+		"today": "Bugün",
+		"whatExerciseToday": "Bugün hangi egzersizi yaptınız?",
+		"yesterday": "Dün"
+	},
+	"_$": {
+		"upgradeDescription": "Tam geçmişinizi görmek ve bu uygulamanın gelişimini desteklemek için yükseltin",
+		"upgradeMessage": "Geçen haftadan öncesine bakmak ister misiniz?"
+	},
+	"_@": {
+		"email": "E-posta",
+		"loggedIn": "Giriş yapıldı",
+		"login": "Giriş yap",
+		"loginDescription": "Yedeklenin ve birden fazla cihazda kullanın",
+		"sendCode": "Bana sihirli bir numara gönder ✨"
+	},
+	"_day": {
+		"0": "Pazar",
+		"1": "Pazartesi",
+		"2": "Salı",
+		"3": "Çarşamba",
+		"4": "Perşembe",
+		"5": "Cuma",
+		"6": "Cumartesi"
+	},
+	"_month": {
+		"0": "Ocak",
+		"1": "Şubat",
+		"10": "Kasım",
+		"11": "Aralık",
+		"2": "Mart",
+		"3": "Nisan",
+		"4": "Mayıs",
+		"5": "Haziran",
+		"6": "Temmuz",
+		"7": "Ağustos",
+		"8": "Eylül",
+		"9": "Ekim"
+	},
+	"🌴": "Çekirdek gücü",
+	"🏃‍♀️": "Kardiyo",
+	"💪": "Kol gücü",
+	"🚶": "Yürüyüş",
+	"🤸": "Esneklik ve denge",
+	"🦵": "Bacak gücü"
+}

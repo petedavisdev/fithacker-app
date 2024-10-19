@@ -1,0 +1,49 @@
+{
+	"_": {
+		"lastWeek": "Letzte Woche",
+		"thisWeek": "Diese Woche",
+		"today": "Heute",
+		"whatExerciseToday": "Welche Übung hast du heute gemacht?",
+		"yesterday": "Gestern"
+	},
+	"_$": {
+		"upgradeDescription": "Upgrade, um deine gesamte Historie zu sehen und die Entwicklung dieser App zu unterstützen",
+		"upgradeMessage": "Möchtest du weiter als letzte Woche zurückblicken?"
+	},
+	"_@": {
+		"email": "E-Mail",
+		"loggedIn": "Eingeloggt mit",
+		"login": "Einloggen",
+		"loginDescription": "Sichere deine Daten und nutze mehrere Geräte",
+		"sendCode": "Schicke mir eine magische Nummer ✨"
+	},
+	"_day": {
+		"0": "Sonntag",
+		"1": "Montag",
+		"2": "Dienstag",
+		"3": "Mittwoch",
+		"4": "Donnerstag",
+		"5": "Freitag",
+		"6": "Samstag"
+	},
+	"_month": {
+		"0": "Januar",
+		"1": "Februar",
+		"10": "November",
+		"11": "Dezember",
+		"2": "März",
+		"3": "April",
+		"4": "Mai",
+		"5": "Juni",
+		"6": "Juli",
+		"7": "August",
+		"8": "September",
+		"9": "Oktober"
+	},
+	"🌴": "Kernkraft",
+	"🏃‍♀️": "Cardio",
+	"💪": "Armkraft",
+	"🚶": "Gehen",
+	"🤸": "Flexibilität und Gleichgewicht",
+	"🦵": "Beinkraft"
+}

@@ -1,0 +1,49 @@
+{
+	"_": {
+		"lastWeek": "W zeszłym tygodniu",
+		"thisWeek": "W tym tygodniu",
+		"today": "Dzisiaj",
+		"whatExerciseToday": "Jakie ćwiczenia zrobiłeś dzisiaj?",
+		"yesterday": "Wczoraj"
+	},
+	"_$": {
+		"upgradeDescription": "Ulepsz, aby zobaczyć pełną historię i wspierać rozwój tej aplikacji",
+		"upgradeMessage": "Chcesz spojrzeć wstecz poza zeszły tydzień?"
+	},
+	"_@": {
+		"email": "Email",
+		"loggedIn": "Zalogowany jako",
+		"login": "Zaloguj się",
+		"loginDescription": "Zabezpiecz dane i używaj na wielu urządzeniach",
+		"sendCode": "Wyślij mi magiczny numer ✨"
+	},
+	"_day": {
+		"0": "Niedziela",
+		"1": "Poniedziałek",
+		"2": "Wtorek",
+		"3": "Środa",
+		"4": "Czwartek",
+		"5": "Piątek",
+		"6": "Sobota"
+	},
+	"_month": {
+		"0": "Styczeń",
+		"1": "Luty",
+		"10": "Listopad",
+		"11": "Grudzień",
+		"2": "Marzec",
+		"3": "Kwiecień",
+		"4": "Maj",
+		"5": "Czerwiec",
+		"6": "Lipiec",
+		"7": "Sierpień",
+		"8": "Wrzesień",
+		"9": "Październik"
+	},
+	"🌴": "Siła rdzenia",
+	"🏃‍♀️": "Kardio",
+	"💪": "Siła ramion",
+	"🚶": "Chodzenie",
+	"🤸": "Elastyczność i równowaga",
+	"🦵": "Siła nóg"
+}
