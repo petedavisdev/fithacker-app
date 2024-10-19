@@ -1,4 +1,10 @@
 {
-	"cSpell.words": ["Ionicons", "nativewind", "Pressable", "tailwindcss"],
+	"cSpell.words": [
+		"extralight",
+		"Ionicons",
+		"nativewind",
+		"Pressable",
+		"tailwindcss"
+	],
 	"i18next.i18nPaths": "/Users/Pete/GitHub/fithacker-app/i18n"
 }

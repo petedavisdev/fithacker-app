@@ -1,20 +1,29 @@
-import { Text, View } from 'react-native';
-import React from 'react';
+import { FlatList, Text, View } from 'react-native';
+import { useRef, useState } from 'react';
 import { Link } from 'expo-router';
 import { ChartDay } from '@/components/ChartDay';
 import { ActivityDay, ActivityLog } from '../constants/ACTIVITIES';
 import { EXERCISE_LOG } from '@/constants/EXERCISE_LOG';
 import { useTranslation } from 'react-i18next';
-import { ScrollView } from 'react-native-gesture-handler';
 
 type ExerciseLog = keyof typeof EXERCISE_LOG;
 
 export default function chart() {
 	const { t } = useTranslation();
+	const flatListRef = useRef<FlatList>(null);
+	const [weekCount, setWeekCount] = useState(2);
+
 	return (
-		<>
-			{getWeeks(2).map((week) => (
-				<View className="items-center gap-2" key={Object.keys(week)[0]}>
+		<FlatList
+			ref={flatListRef}
+			horizontal
+			initialNumToRender={2}
+			inverted
+			showsHorizontalScrollIndicator={true}
+			data={getWeeks(weekCount)}
+			keyExtractor={(week) => Object.keys(week)[0]}
+			renderItem={({ item: week }) => (
+				<View className="justify-center items-end gap-2 ml-1">
 					<View className="flex-row gap-1">
 						{Object.keys(week).map((date) => {
 							const jsDate = new Date(date);
@@ -46,15 +55,15 @@ export default function chart() {
 							);
 						})}
 					</View>
-					<Text className="text-blue-300 font-semibold text-lg">
+					<Text className="text-blue-300 font-semibold text-xl px-2">
 						{t(getWeekText(Object.keys(week)))}
 					</Text>
-					<Text className="text-blue-400 text-4xl -mt-2">
+					<Text className="text-blue-400 text-6xl -mt-1 font-extralight px-1">
 						{Object.values(week).flat().length}
 					</Text>
 				</View>
-			))}
-		</>
+			)}
+		/>
 	);
 }
 
@@ -78,7 +87,7 @@ function getWeeks(count: number) {
 		startDate.setDate(startDate.getDate() - 7);
 	});
 
-	return weeks.reverse();
+	return weeks;
 }
 
 function getWeekText(weekDates: string[]) {

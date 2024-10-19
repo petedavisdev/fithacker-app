@@ -15,7 +15,7 @@ export default function HomeScreen() {
 	return (
 		<>
 			<Text className="w-80 text-blue-300 text-xl font-semibold text-center text-balance">
-				{t(getDateText(date.toString()))}
+				{t(getDateText(date))}
 			</Text>
 
 			<View className="w-80 flex gap-2">
@@ -40,20 +40,19 @@ export default function HomeScreen() {
 				))}
 			</View>
 
-			<Link
-				href="/chart"
-				className="w-16 h-16 text-3xl bg-blue-950 flex items-center justify-center border border-blue-600 rounded-full"
-			>
-				👉
+			<Link href="/chart">
+				<View className="w-16 h-16 text-3xl bg-blue-950 flex items-center justify-center border border-blue-600 rounded-full">
+					<Text>👉</Text>
+				</View>
 			</Link>
 		</>
 	);
 }
 
-function getDateText(date: string) {
+function getDateText(date?: string | string[]) {
 	// Today
 	const today = new Date().toISOString().slice(0, 10);
-	date = Date.parse(date.toString()) ? date : today; // if not a valid date, use today
+	date = date && Date.parse(date.toString()) ? date : today; // if not a valid date, use today
 	if (date === today) return '_.today';
 
 	// Yesterday

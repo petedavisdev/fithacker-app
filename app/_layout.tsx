@@ -26,7 +26,7 @@ export default function RootLayout() {
 	}
 
 	return (
-		<View className="flex-1 bg-slate-950 flex flex-col items-center justify-center gap-10">
+		<View className="flex-1 bg-slate-950 flex items-center justify-center gap-10">
 			<Slot />
 		</View>
 	);
