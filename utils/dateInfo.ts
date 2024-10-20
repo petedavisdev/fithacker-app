@@ -6,11 +6,11 @@ type DateInfo = {
 	category: 'future' | 'today' | 'weekend' | 'weekday';
 };
 
-export function getDateInfo(date: string): DateInfo {
+export function getDateInfo(dateVal: string): DateInfo {
 	const today = new Date().toISOString().slice(0, 10);
 
 	// If date is not valid, use today
-	date = date && Date.parse(date.toString()) ? date : today;
+	const date = dateVal && Date.parse(dateVal.toString()) ? dateVal : today;
 	const jsDate = new Date(date);
 	const dayIndex = jsDate.getDay();
 
@@ -31,7 +31,7 @@ export function getDateInfo(date: string): DateInfo {
 		return {
 			date,
 			dayIndex,
-			text: '_.today',
+			text: date === dateVal ? '_.today' : '_.whatExerciseToday',
 			category: 'today',
 		};
 	}

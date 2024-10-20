@@ -18,9 +18,9 @@ export default function HomeScreen() {
 	const { date } = useLocalSearchParams();
 	const dateInfo = getDateInfo(date ? date.toString() : '');
 
-	const [activityLog, setActivityLog] = useState<ActivityLog>();
+	const [activityLog, setActivityLog] = useState<ActivityLog>({});
 
-	const dayActivities = activityLog?.[dateInfo.date?.toString()] ?? [];
+	const dayActivities = activityLog[dateInfo.date?.toString()] ?? [];
 
 	const DATE_CLASS_NAMES = {
 		future: 'text-slate-500',
@@ -64,7 +64,7 @@ export default function HomeScreen() {
 					: undefined,
 			}));
 		} else {
-			const { [dateInfo.date]: _, ...rest } = activityLog ?? {};
+			const { [dateInfo.date]: _, ...rest } = activityLog;
 			setActivityLog(rest);
 		}
 	}
@@ -83,14 +83,17 @@ export default function HomeScreen() {
 	return (
 		<>
 			<Text
-				className={`w-96 text-cyan-300 text-2xl font-semibold text-center text-balance ${dateClassNames}`}
+				className={`w-96 text-cyan-300 text-2xl font-semibold text-center text-balance font-mono ${dateClassNames}`}
 			>
 				{t(dateInfo.text)}
 			</Text>
 
-			<View className="w-96 flex gap-2">
+			<View className="w-96 flex gap-6">
 				{ACTIVITIES.map((activity) => {
 					const isChecked = dayActivities.flat().includes(activity);
+					const dayCount = isChecked
+						? undefined
+						: getDayCount(activity, dateInfo.date, activityLog);
 					const note = dayActivities.find(
 						(item) => item[0] === activity
 					)?.[1];
@@ -100,6 +103,7 @@ export default function HomeScreen() {
 							key={activity}
 							activity={activity}
 							isChecked={isChecked}
+							dayCount={dayCount}
 							note={note}
 							onCheckboxChange={(note: string) => {
 								if (isChecked) {
@@ -119,10 +123,30 @@ export default function HomeScreen() {
 			</View>
 
 			<Link href="/chart">
-				<View className="w-20 h-20 flex items-center justify-center border border-yellow-500 rounded-full">
+				<View className="w-20 h-20 flex items-center justify-center border-2 border-yellow-500 rounded-full shadow shadow-yellow-500">
 					<Text className="text-4xl">👉</Text>
 				</View>
 			</Link>
 		</>
 	);
+}
+
+function getDayCount(
+	activity: Activity,
+	date: string,
+	activityLog: ActivityLog
+) {
+	const prevDate = Object.keys(activityLog)
+		.filter(
+			(key) => key < date && activityLog[key]?.flat().includes(activity)
+		)
+		.sort()
+		.at(-1);
+
+	if (!prevDate) return;
+
+	const time = new Date(date).getTime();
+	const prevTime = new Date(prevDate).getTime();
+
+	return Math.floor((time - prevTime) / (1000 * 60 * 60 * 24));
 }

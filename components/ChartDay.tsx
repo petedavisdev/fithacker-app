@@ -13,35 +13,44 @@ export function ChartDay(props: ChartDayProps) {
 	const { t } = useTranslation();
 	const dateInfo = getDateInfo(props.date);
 
-	const DATE_CLASS_NAMES = {
-		future: 'border-slate-600 text-slate-500',
-		today: 'border-pink-400 text-pink-300',
-		weekend: 'border-yellow-400 text-yellow-300',
-		weekday: 'border-cyan-500 text-cyan-300',
+	const DATE_TEXT_COLORS = {
+		future: 'text-slate-500',
+		today: 'text-pink-400 shadow shadow-pink-500',
+		weekend: 'text-yellow-400 shadow shadow-yellow-600',
+		weekday: 'text-cyan-400 shadow shadow-cyan-500',
 	};
 
-	const dateClassNames = DATE_CLASS_NAMES[dateInfo.category];
+	const dateTextColor = DATE_TEXT_COLORS[dateInfo.category];
+
+	const DATE_LINE_COLORS = {
+		future: 'bg-slate-500',
+		today: 'bg-pink-600 shadow shadow-pink-500',
+		weekend: 'bg-yellow-600 shadow shadow-yellow-500',
+		weekday: 'bg-cyan-600 shadow shadow-cyan-500',
+	};
+
+	const dateLineColor = DATE_LINE_COLORS[dateInfo.category];
 
 	return (
 		<Link
 			key={props.date}
 			href={`/${props.date}`}
 			disabled={dateInfo.type === 'future'}
-			className={`pointer`}
 		>
 			<View className="justify-end items-center h-96 gap-2">
 				{props.activities.map((activity, index) => (
-					<Text key={index} className="text-blue-300 text-4xl">
+					<Text key={index} className="text-yellow-500 text-4xl">
 						{typeof activity === 'string' ? activity : activity[0]}
 					</Text>
 				))}
-				<View
-					className={`w-12 h-12 flex justify-center items-center border-t ${dateClassNames}`}
+
+				<View className={`h-0.5 w-12 ${dateLineColor}`} />
+
+				<Text
+					className={`font-mono font-semibold leading ${dateTextColor}`}
 				>
-					<Text className={`font-mono leading ${dateClassNames}`}>
-						{t(`_day.${dateInfo.dayIndex}`).slice(0, 3)}
-					</Text>
-				</View>
+					{t(`_day.${dateInfo.dayIndex}`).slice(0, 3)}
+				</Text>
 			</View>
 		</Link>
 	);

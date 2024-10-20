@@ -40,7 +40,7 @@ export default function chart() {
 					<Text className="text-cyan-500 font-semibold text-xl px-2 font-mono">
 						{t(getWeekText(Object.keys(week)))}
 					</Text>
-					<Text className="text-yellow-400 text-6xl -mt-1 font-extralight px-1 font-mono">
+					<Text className="text-yellow-500 text-6xl -mt-1 font-extralight px-1 font-mono">
 						{Object.values(week).flat().length}
 					</Text>
 				</View>
