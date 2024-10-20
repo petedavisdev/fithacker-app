@@ -2,7 +2,7 @@ import { Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { ActivityDay } from '../constants/ACTIVITIES';
 import { Link } from 'expo-router';
-import { getDateInfo } from '../utils/getDateInfo';
+import { getDateInfo } from '../utils/dateInfo';
 
 type ChartDayProps = {
 	date: string;

@@ -1,16 +1,21 @@
 import { FlatList, Text, View } from 'react-native';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ChartDay } from '@/components/ChartDay';
 import { ActivityDay, ActivityLog } from '../constants/ACTIVITIES';
-import { EXERCISE_LOG } from '@/constants/EXERCISE_LOG';
 import { useTranslation } from 'react-i18next';
-
-type ExerciseLog = keyof typeof EXERCISE_LOG;
+import { getActivityLog } from '../utils/activityLog';
 
 export default function chart() {
 	const { t } = useTranslation();
 	const flatListRef = useRef<FlatList>(null);
-	const [weekCount, setWeekCount] = useState(2);
+	const WEEK_COUNT = 2;
+	const [activityLog, setActivityLog] = useState<ActivityLog>({});
+
+	useEffect(() => {
+		(async () => {
+			setActivityLog(await getActivityLog());
+		})();
+	}, []);
 
 	return (
 		<FlatList
@@ -19,16 +24,18 @@ export default function chart() {
 			initialNumToRender={2}
 			inverted
 			showsHorizontalScrollIndicator={true}
-			data={getWeeks(weekCount)}
+			data={getWeeks(activityLog, WEEK_COUNT)}
 			keyExtractor={(week) => Object.keys(week)[0]}
 			renderItem={({ item: week }) => (
 				<View className="justify-center items-end gap-2 ml-1">
 					<View className="flex-row gap-1">
-						{Object.keys(week).map((date) => {
-							return (
-								<ChartDay date={date} activities={week[date]} />
-							);
-						})}
+						{Object.keys(week).map((date) => (
+							<ChartDay
+								date={date}
+								activities={week[date]}
+								key={date}
+							/>
+						))}
 					</View>
 					<Text className="text-cyan-500 font-semibold text-xl px-2 font-mono">
 						{t(getWeekText(Object.keys(week)))}
@@ -42,7 +49,7 @@ export default function chart() {
 	);
 }
 
-function getWeeks(count: number) {
+function getWeeks(activityLog: ActivityLog, count: number) {
 	const weeks: ActivityLog[] = Array.from({ length: count }, () => ({}));
 
 	const startDate = new Date();
@@ -54,10 +61,7 @@ function getWeeks(count: number) {
 			currentDate.setDate(currentDate.getDate() + d);
 			const date = currentDate.toISOString().slice(0, 10);
 
-			week[date] =
-				(EXERCISE_LOG[date as ExerciseLog] as unknown as
-					| ActivityDay
-					| undefined) ?? [];
+			week[date] = activityLog[date] ?? [];
 		}
 		startDate.setDate(startDate.getDate() - 7);
 	});

@@ -1,5 +1,6 @@
 // Accepts date format 'YYYY-MM-DD' and returns information about the date
 type DateInfo = {
+	date: string;
 	dayIndex: number;
 	text: string;
 	category: 'future' | 'today' | 'weekend' | 'weekday';
@@ -16,6 +17,7 @@ export function getDateInfo(date: string): DateInfo {
 	// Future
 	if (date > today) {
 		return {
+			date,
 			dayIndex,
 			text: jsDate.toLocaleDateString(undefined, {
 				dateStyle: 'full',
@@ -27,6 +29,7 @@ export function getDateInfo(date: string): DateInfo {
 	// Today
 	if (date === today) {
 		return {
+			date,
 			dayIndex,
 			text: '_.today',
 			category: 'today',
@@ -43,6 +46,7 @@ export function getDateInfo(date: string): DateInfo {
 		.slice(0, 10);
 	if (date === yesterday) {
 		return {
+			date,
 			dayIndex,
 			text: '_.yesterday',
 			category,
@@ -64,6 +68,7 @@ export function getDateInfo(date: string): DateInfo {
 					.slice(0, 10);
 	if (date >= lastMonday) {
 		return {
+			date,
 			category,
 			dayIndex,
 			text: new Date(date).toLocaleDateString(undefined, {
@@ -76,6 +81,7 @@ export function getDateInfo(date: string): DateInfo {
 	const isCurrentYear = date.slice(0, 4) === today.slice(0, 4);
 	if (isCurrentYear) {
 		return {
+			date,
 			category,
 			dayIndex,
 			text: new Date(date).toLocaleDateString(undefined, {
@@ -88,6 +94,7 @@ export function getDateInfo(date: string): DateInfo {
 
 	// Past years
 	return {
+		date,
 		category,
 		dayIndex,
 		text: new Date(date).toLocaleDateString(undefined, {

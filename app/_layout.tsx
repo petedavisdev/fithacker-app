@@ -1,7 +1,7 @@
 import '../global.css';
 import '@/i18n';
 import { useFonts } from 'expo-font';
-import { Slot, Stack } from 'expo-router';
+import { Slot } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { View } from 'react-native';
@@ -11,17 +11,17 @@ import 'react-native-reanimated';
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-	const [loaded] = useFonts({
+	const [fontLoaded] = useFonts({
 		SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
 	});
 
 	useEffect(() => {
-		if (loaded) {
+		if (fontLoaded) {
 			SplashScreen.hideAsync();
 		}
-	}, [loaded]);
+	}, [fontLoaded]);
 
-	if (!loaded) {
+	if (!fontLoaded) {
 		return null;
 	}
 
