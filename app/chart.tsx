@@ -1,6 +1,5 @@
 import { FlatList, Text, View } from 'react-native';
 import { useRef, useState } from 'react';
-import { Link } from 'expo-router';
 import { ChartDay } from '@/components/ChartDay';
 import { ActivityDay, ActivityLog } from '../constants/ACTIVITIES';
 import { EXERCISE_LOG } from '@/constants/EXERCISE_LOG';
@@ -26,28 +25,8 @@ export default function chart() {
 				<View className="justify-center items-end gap-2 ml-1">
 					<View className="flex-row gap-1">
 						{Object.keys(week).map((date) => {
-							const jsDate = new Date(date);
-							const day = jsDate.getDay();
-							const isFuture = jsDate > new Date();
-
-							if (isFuture)
-								return (
-									<ChartDay
-										key={date}
-										day={day}
-										isFuture={isFuture}
-										activities={week[date]}
-									/>
-								);
-
 							return (
-								<Link key={date} href={`/${date}`}>
-									<ChartDay
-										day={day}
-										isFuture={isFuture}
-										activities={week[date]}
-									/>
-								</Link>
+								<ChartDay date={date} activities={week[date]} />
 							);
 						})}
 					</View>
