@@ -1,4 +1,4 @@
-import { Pressable, Text, View } from 'react-native';
+import { Pressable, Text, TextInput, View } from 'react-native';
 import { type Activity } from '@/constants/ACTIVITIES';
 import { useTranslation } from 'react-i18next';
 
@@ -14,25 +14,37 @@ export function ActivityCheckbox(props: ActivityCheckboxProps) {
 	return (
 		<Pressable
 			className={`w-full flex-row items-center gap-2 p-2 rounded-lg ${
-				props.isChecked ? 'bg-blue-950' : ''
+				props.isChecked ? 'bg-slate-900' : ''
 			}`}
 			onPress={() => props.onChange(props.activity)}
 		>
 			<View
-				className={`w-8 h-8 justify-center items-center rounded-full border border-blue-600 ${
-					props.isChecked ? `bg-blue-700` : 'bg-blue-950'
+				className={`w-12 h-12 justify-center items-center rounded-md border  ${
+					props.isChecked
+						? `bg-slate-950 border-yellow-400`
+						: ' border-cyan-500'
 				}`}
 			>
 				{props.isChecked ? (
 					<Text>👍</Text>
 				) : (
-					<Text className="text-blue-400">0</Text>
+					<Text className="text-cyan-400">0</Text>
 				)}
 			</View>
 
-			<Text className="text-3xl">{props.activity}</Text>
+			<Text className="text-4xl">{props.activity}</Text>
 
-			<Text className="text-blue-300 font-mono">{t(props.activity)}</Text>
+			{props.isChecked ? (
+				<TextInput
+					placeholder={t(props.activity)}
+					placeholderTextColor={'slategray'}
+					className="text-yellow-300 font-mono border-b border-yellow-400 w-60 py-3"
+				/>
+			) : (
+				<Text className="text-cyan-300 font-mono">
+					{t(props.activity)}
+				</Text>
+			)}
 		</Pressable>
 	);
 }

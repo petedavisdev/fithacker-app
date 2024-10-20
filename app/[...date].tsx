@@ -14,11 +14,11 @@ export default function HomeScreen() {
 
 	return (
 		<>
-			<Text className="w-80 text-blue-300 text-xl font-semibold text-center text-balance">
+			<Text className="w-96 text-cyan-300 text-2xl font-semibold text-center text-balance">
 				{t(getDateText(date))}
 			</Text>
 
-			<View className="w-80 flex gap-2">
+			<View className="w-96 flex gap-2">
 				{ACTIVITIES.map((activity) => (
 					<ActivityCheckbox
 						key={activity}
@@ -41,8 +41,8 @@ export default function HomeScreen() {
 			</View>
 
 			<Link href="/chart">
-				<View className="w-16 h-16 text-3xl bg-blue-950 flex items-center justify-center border border-blue-600 rounded-full">
-					<Text>👉</Text>
+				<View className="w-20 h-20 flex items-center justify-center border border-yellow-500 rounded-full">
+					<Text className="text-4xl">👉</Text>
 				</View>
 			</Link>
 		</>

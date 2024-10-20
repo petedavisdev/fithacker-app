@@ -22,17 +22,17 @@ export function ChartDay(props: ChartDayProps) {
 					props.isFuture
 						? 'border-slate-700'
 						: [0, 6].includes(props.day)
-						? 'border-yellow-600  bg-neutral-800'
-						: 'border-blue-600 bg-blue-950'
+						? 'border-yellow-400'
+						: 'border-cyan-400'
 				}`}
 			>
 				<Text
-					className={`font-mono ${
+					className={`font-mono leading ${
 						props.isFuture
-							? ' text-slate-400'
+							? ' text-slate-500'
 							: [0, 6].includes(props.day)
 							? ' text-yellow-300'
-							: 'text-blue-200'
+							: 'text-cyan-300'
 					}`}
 				>
 					{t(`_day.${props.day}`).slice(0, 3)}

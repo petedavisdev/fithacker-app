@@ -41,11 +41,7 @@ export default function chart() {
 								);
 
 							return (
-								<Link
-									key={date}
-									href={`/${date}`}
-									disabled={isFuture}
-								>
+								<Link key={date} href={`/${date}`}>
 									<ChartDay
 										day={day}
 										isFuture={isFuture}
@@ -55,10 +51,10 @@ export default function chart() {
 							);
 						})}
 					</View>
-					<Text className="text-blue-300 font-semibold text-xl px-2">
+					<Text className="text-cyan-500 font-semibold text-xl px-2 font-mono">
 						{t(getWeekText(Object.keys(week)))}
 					</Text>
-					<Text className="text-blue-400 text-6xl -mt-1 font-extralight px-1">
+					<Text className="text-yellow-400 text-6xl -mt-1 font-extralight px-1 font-mono">
 						{Object.values(week).flat().length}
 					</Text>
 				</View>
@@ -71,7 +67,7 @@ function getWeeks(count: number) {
 	const weeks: ActivityLog[] = Array.from({ length: count }, () => ({}));
 
 	const startDate = new Date();
-	startDate.setDate(startDate.getDate() - startDate.getDay());
+	startDate.setDate(startDate.getDate() - (startDate.getDay() || 7));
 
 	weeks.forEach((week) => {
 		for (let d = 1; d <= 7; d++) {
