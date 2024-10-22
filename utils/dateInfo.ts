@@ -1,3 +1,5 @@
+import * as Localization from 'expo-localization';
+
 // Accepts date format 'YYYY-MM-DD' and returns information about the date
 type DateInfo = {
 	date: string;
@@ -66,13 +68,30 @@ export function getDateInfo(dateVal: string): DateInfo {
 			  )
 					.toISOString()
 					.slice(0, 10);
+
+	const lng = Localization.getLocales()?.[0]?.languageTag;
+
 	if (date >= lastMonday) {
 		return {
 			date,
 			category,
 			dayIndex,
-			text: new Date(date).toLocaleDateString(undefined, {
+			text: new Date(date).toLocaleDateString(lng, {
 				weekday: 'long',
+			}),
+		};
+	}
+
+	// This month
+	const isCurrentMonth = date.slice(0, 7) === today.slice(0, 7);
+	if (isCurrentMonth) {
+		return {
+			date,
+			category,
+			dayIndex,
+			text: new Date(date).toLocaleDateString(lng, {
+				weekday: 'long',
+				day: 'numeric',
 			}),
 		};
 	}
@@ -84,7 +103,7 @@ export function getDateInfo(dateVal: string): DateInfo {
 			date,
 			category,
 			dayIndex,
-			text: new Date(date).toLocaleDateString(undefined, {
+			text: new Date(date).toLocaleDateString(lng, {
 				weekday: 'long',
 				day: 'numeric',
 				month: 'long',
@@ -97,7 +116,7 @@ export function getDateInfo(dateVal: string): DateInfo {
 		date,
 		category,
 		dayIndex,
-		text: new Date(date).toLocaleDateString(undefined, {
+		text: new Date(date).toLocaleDateString(lng, {
 			dateStyle: 'full',
 		}),
 	};

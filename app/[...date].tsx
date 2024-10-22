@@ -1,16 +1,16 @@
-import { Text, View } from 'react-native';
 import { ActivityCheckbox } from '@/components/ActivityCheckbox';
-import { useEffect, useState } from 'react';
 import {
 	ACTIVITIES,
 	type Activity,
 	type ActivityItem,
 	type ActivityLog,
 } from '@/constants/ACTIVITIES';
-import { useTranslation } from 'react-i18next';
 import { Link, useLocalSearchParams } from 'expo-router';
-import { getDateInfo } from '../utils/dateInfo';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Keyboard, KeyboardAvoidingView, Text, View } from 'react-native';
 import { getActivityLog, storeActivityLog } from '../utils/activityLog';
+import { getDateInfo } from '../utils/dateInfo';
 
 export default function HomeScreen() {
 	const { t } = useTranslation();
@@ -24,14 +24,14 @@ export default function HomeScreen() {
 
 	const DATE_CLASS_NAMES = {
 		future: 'text-slate-500',
-		today: 'text-pink-400',
-		weekend: 'text-yellow-400',
-		weekday: 'text-cyan-400',
+		today: 'text-pink-500',
+		weekend: 'text-yellow-500',
+		weekday: 'text-cyan-500',
 	};
 
 	const dateClassNames = DATE_CLASS_NAMES[dateInfo.category];
 
-	function updateDayActivity(activity: Activity, note: string) {
+	function updateDayActivity(activity: Activity, note?: string) {
 		const newDayActivities = [
 			...dayActivities.filter(
 				(item) => item !== activity && item[0] !== activity
@@ -83,44 +83,49 @@ export default function HomeScreen() {
 	return (
 		<>
 			<Text
-				className={`w-96 text-cyan-300 text-2xl font-semibold text-center text-balance font-mono ${dateClassNames}`}
+				className={`w-96 px-4 text-cyan-300 text-2xl text-center text-balance font-mono capitalize ${dateClassNames}`}
 			>
 				{t(dateInfo.text)}
 			</Text>
 
-			<View className="w-96 flex gap-6">
-				{ACTIVITIES.map((activity) => {
-					const isChecked = dayActivities.flat().includes(activity);
-					const dayCount = isChecked
-						? undefined
-						: getDayCount(activity, dateInfo.date, activityLog);
-					const note = dayActivities.find(
-						(item) => item[0] === activity
-					)?.[1];
+			<KeyboardAvoidingView behavior="padding">
+				<View className="w-96 flex gap-6">
+					{ACTIVITIES.map((activity) => {
+						const isChecked = dayActivities
+							.flat()
+							.includes(activity);
+						const dayCount = isChecked
+							? undefined
+							: getDayCount(activity, dateInfo.date, activityLog);
+						const note = dayActivities.find(
+							(item) => item[0] === activity
+						)?.[1];
 
-					return (
-						<ActivityCheckbox
-							key={activity}
-							activity={activity}
-							isChecked={isChecked}
-							dayCount={dayCount}
-							note={note}
-							onCheckboxChange={(note: string) => {
-								if (isChecked) {
-									removeDayActivity(activity);
-								} else {
-									updateDayActivity(activity, note);
-								}
-							}}
-							onNoteChange={(note: string) => {
-								if (isChecked) {
-									updateDayActivity(activity, note);
-								}
-							}}
-						/>
-					);
-				})}
-			</View>
+						return (
+							<ActivityCheckbox
+								key={activity}
+								activity={activity}
+								isChecked={isChecked}
+								dayCount={dayCount}
+								note={note}
+								onCheckboxChange={(note?: string) => {
+									Keyboard.dismiss();
+									if (isChecked) {
+										removeDayActivity(activity);
+									} else {
+										updateDayActivity(activity, note);
+									}
+								}}
+								onNoteChange={(note?: string) => {
+									if (isChecked) {
+										updateDayActivity(activity, note);
+									}
+								}}
+							/>
+						);
+					})}
+				</View>
+			</KeyboardAvoidingView>
 
 			<Link href="/chart">
 				<View className="w-20 h-20 flex items-center justify-center border-2 border-yellow-500 rounded-full shadow shadow-yellow-500">

@@ -1,12 +1,13 @@
 import { Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { ActivityDay } from '../constants/ACTIVITIES';
+import { Activity, ActivityDay } from '../constants/ACTIVITIES';
 import { Link } from 'expo-router';
 import { getDateInfo } from '../utils/dateInfo';
 
 type ChartDayProps = {
 	date: string;
 	activities: ActivityDay;
+	filter?: Activity;
 };
 
 export function ChartDay(props: ChartDayProps) {
@@ -15,18 +16,18 @@ export function ChartDay(props: ChartDayProps) {
 
 	const DATE_TEXT_COLORS = {
 		future: 'text-slate-500',
-		today: 'text-pink-400 shadow shadow-pink-500',
-		weekend: 'text-yellow-400 shadow shadow-yellow-600',
-		weekday: 'text-cyan-400 shadow shadow-cyan-500',
+		today: 'text-pink-500',
+		weekend: 'text-yellow-500',
+		weekday: 'text-cyan-500',
 	};
 
 	const dateTextColor = DATE_TEXT_COLORS[dateInfo.category];
 
 	const DATE_LINE_COLORS = {
-		future: 'bg-slate-500',
-		today: 'bg-pink-600 shadow shadow-pink-500',
-		weekend: 'bg-yellow-600 shadow shadow-yellow-500',
-		weekday: 'bg-cyan-600 shadow shadow-cyan-500',
+		future: 'bg-slate-700',
+		today: 'bg-pink-500 shadow shadow-pink-500',
+		weekend: 'bg-yellow-500 shadow shadow-yellow-500',
+		weekday: 'bg-cyan-500 shadow shadow-cyan-500',
 	};
 
 	const dateLineColor = DATE_LINE_COLORS[dateInfo.category];
@@ -35,20 +36,37 @@ export function ChartDay(props: ChartDayProps) {
 		<Link
 			key={props.date}
 			href={`/${props.date}`}
-			disabled={dateInfo.type === 'future'}
+			disabled={dateInfo.category === 'future'}
 		>
 			<View className="justify-end items-center h-96 gap-2">
-				{props.activities.map((activity, index) => (
-					<Text key={index} className="text-yellow-500 text-4xl">
-						{typeof activity === 'string' ? activity : activity[0]}
-					</Text>
-				))}
+				{props.activities.map((activityItem, index) => {
+					const note =
+						typeof activityItem !== 'string' && activityItem[1];
+					const activity = note ? activityItem[0] : activityItem;
+
+					if (!props.filter || activity === props.filter)
+						return (
+							<>
+								{props.filter && note && (
+									<Text className="absolute w-80 font-mono text-pink-400 -rotate-90 -translate-y-60">
+										{note}
+									</Text>
+								)}
+								<Text
+									key={index}
+									className="text-yellow-500 text-4xl"
+								>
+									{typeof activity === 'string'
+										? activity
+										: activity[0]}
+								</Text>
+							</>
+						);
+				})}
 
 				<View className={`h-0.5 w-12 ${dateLineColor}`} />
 
-				<Text
-					className={`font-mono font-semibold leading ${dateTextColor}`}
-				>
+				<Text className={`font-mono leading ${dateTextColor}`}>
 					{t(`_day.${dateInfo.dayIndex}`).slice(0, 3)}
 				</Text>
 			</View>

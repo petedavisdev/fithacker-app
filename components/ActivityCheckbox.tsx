@@ -8,13 +8,14 @@ type ActivityCheckboxProps = {
 	isChecked: boolean;
 	dayCount?: number;
 	note?: string;
-	onCheckboxChange: (note: string) => void;
-	onNoteChange: (note: string) => void;
+	onCheckboxChange: (note?: string) => void;
+	onNoteChange: (note?: string) => void;
 };
 
 export function ActivityCheckbox(props: ActivityCheckboxProps) {
 	const { t } = useTranslation();
-	const [note, setNote] = useState(props.note ?? '');
+	const [note, setNote] = useState(props.note);
+	const [placeholder, setPlaceholder] = useState(t(props.activity));
 
 	useEffect(() => {
 		const debounceTimeoutId = setTimeout(() => {
@@ -31,20 +32,20 @@ export function ActivityCheckbox(props: ActivityCheckboxProps) {
 			<View
 				className={`w-12 h-12 justify-center items-center rounded-lg border-2  ${
 					props.isChecked
-						? 'border-yellow-500 shadow shadow-yellow-600'
+						? 'border-yellow-500 shadow shadow-yellow-500'
 						: Number(props.dayCount) < 4
-						? 'border-cyan-600 shadow shadow-cyan-500'
-						: 'border-pink-600 shadow shadow-pink-500'
+						? 'border-cyan-500 shadow shadow-cyan-500'
+						: 'border-pink-500 shadow shadow-pink-500'
 				}`}
 			>
 				{props.isChecked ? (
 					<Text>👍</Text>
 				) : (
 					<Text
-						className={`font-mono text-lg font-semibold ${
+						className={`font-mono text-lg ${
 							Number(props.dayCount) < 4
-								? 'text-cyan-400 shadow shadow-cyan-700'
-								: 'text-pink-400 shadow shadow-pink-700'
+								? 'text-cyan-400'
+								: 'text-pink-400'
 						}`}
 					>
 						{props.dayCount}
@@ -56,11 +57,14 @@ export function ActivityCheckbox(props: ActivityCheckboxProps) {
 
 			{props.isChecked ? (
 				<TextInput
-					placeholder={t(props.activity)}
+					placeholder={placeholder}
 					placeholderTextColor={'slategray'}
-					className="text-yellow-400 font-mono border-b-2 border-yellow-500 w-64 py-3 bg-black"
-					value={note}
+					className="text-yellow-400 font-mono border-y-2 border-b-yellow-500 border-t-transparent w-64 py-3 focus:border-yellow-200"
+					defaultValue={props.note}
 					onChangeText={(value) => setNote(value)}
+					onFocus={() => setPlaceholder('')}
+					onBlur={() => setPlaceholder(t(props.activity))}
+					maxLength={60}
 				/>
 			) : (
 				<Text className="text-cyan-400 font-mono">
