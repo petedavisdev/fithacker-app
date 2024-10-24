@@ -1,6 +1,6 @@
 {
 	"expo": {
-		"name": "fithacker-app",
+		"name": "Fithacker",
 		"slug": "fithacker-app",
 		"version": "1.0.0",
 		"orientation": "portrait",
@@ -10,15 +10,16 @@
 		"splash": {
 			"image": "./assets/images/splash.png",
 			"resizeMode": "contain",
-			"backgroundColor": "#000011"
+			"backgroundColor": "#111122"
 		},
 		"ios": {
-			"supportsTablet": true
+			"supportsTablet": true,
+			"bundleIdentifier": "dev.petedavis.fithacker"
 		},
 		"android": {
 			"adaptiveIcon": {
 				"foregroundImage": "./assets/images/adaptive-icon.png",
-				"backgroundColor": "#000011"
+				"backgroundColor": "#111122"
 			}
 		},
 		"web": {
@@ -29,6 +30,11 @@
 		"plugins": ["expo-router", "expo-localization"],
 		"experiments": {
 			"typedRoutes": true
+		},
+		"extra": {
+			"eas": {
+				"projectId": "6c3e19dc-162f-45b6-98f4-716ce558cd0e"
+			}
 		}
 	}
 }

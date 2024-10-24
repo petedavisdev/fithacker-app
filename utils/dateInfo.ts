@@ -5,7 +5,7 @@ type DateInfo = {
 	date: string;
 	dayIndex: number;
 	text: string;
-	category: 'future' | 'today' | 'weekend' | 'weekday';
+	category: 'future' | 'today' | 'tomorrow' | 'weekend' | 'weekday';
 };
 
 export function getDateInfo(dateVal: string): DateInfo {
@@ -16,6 +16,29 @@ export function getDateInfo(dateVal: string): DateInfo {
 	const jsDate = new Date(date);
 	const dayIndex = jsDate.getDay();
 
+	// Today
+	if (date === today) {
+		return {
+			date,
+			dayIndex,
+			text: date === dateVal ? '_.today' : '_.whatExerciseToday',
+			category: 'today',
+		};
+	}
+
+	// Tomorrow
+	const tomorrow = new Date(new Date().setDate(new Date().getDate() + 1))
+		.toISOString()
+		.slice(0, 10);
+	if (date === tomorrow) {
+		return {
+			date,
+			dayIndex,
+			text: '_.tomorrow',
+			category: 'tomorrow',
+		};
+	}
+
 	// Future
 	if (date > today) {
 		return {
@@ -25,16 +48,6 @@ export function getDateInfo(dateVal: string): DateInfo {
 				dateStyle: 'full',
 			}),
 			category: 'future',
-		};
-	}
-
-	// Today
-	if (date === today) {
-		return {
-			date,
-			dayIndex,
-			text: date === dateVal ? '_.today' : '_.whatExerciseToday',
-			category: 'today',
 		};
 	}
 

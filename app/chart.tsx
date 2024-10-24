@@ -86,9 +86,9 @@ export default function chart() {
 						onPress={() => setFilter(activity)}
 					>
 						<View
-							className={`h-0.5 w-14 ${
+							className={`h-[2px] w-14 shadow-none ${
 								filter === activity
-									? ' bg-pink-500 shadow shadow-pink-500'
+									? ' bg-pink-500 shadow-bg shadow-pink-500'
 									: 'bg-slate-800'
 							}`}
 						/>

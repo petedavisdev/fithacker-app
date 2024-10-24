@@ -1,6 +1,7 @@
-import { ActivityCheckbox } from '@/components/ActivityCheckbox';
+import { ActivityInput } from '@/components/ActivityInput';
 import {
 	ACTIVITIES,
+	ACTIVITY_PRIORITIES,
 	type Activity,
 	type ActivityItem,
 	type ActivityLog,
@@ -20,11 +21,28 @@ export default function HomeScreen() {
 
 	const [activityLog, setActivityLog] = useState<ActivityLog>({});
 
+	const dayCounts = ACTIVITIES.reduce((acc, activity) => {
+		acc[activity] = getDayCount(activity, dateInfo.date, activityLog);
+		return acc;
+	}, {} as Record<Activity, number | undefined>);
+
+	const priorityActivities: Activity[] = Object.entries(dayCounts)
+		.sort(
+			(countA, countB) =>
+				(countB[1] ?? 1000) +
+				ACTIVITY_PRIORITIES[countB[0] as Activity] -
+				((countA[1] ?? 1000) +
+					ACTIVITY_PRIORITIES[countA[0] as Activity])
+		)
+		.map((count) => count[0] as Activity)
+		.slice(0, 2);
+
 	const dayActivities = activityLog[dateInfo.date?.toString()] ?? [];
 
 	const DATE_CLASS_NAMES = {
 		future: 'text-slate-500',
 		today: 'text-pink-500',
+		tomorrow: 'text-slate-400',
 		weekend: 'text-yellow-500',
 		weekday: 'text-cyan-500',
 	};
@@ -96,17 +114,24 @@ export default function HomeScreen() {
 							.includes(activity);
 						const dayCount = isChecked
 							? undefined
-							: getDayCount(activity, dateInfo.date, activityLog);
+							: dayCounts[activity];
 						const note = dayActivities.find(
 							(item) => item[0] === activity
 						)?.[1];
+						const isDisabled =
+							dateInfo.category === 'future' ||
+							dateInfo.category === 'tomorrow';
 
 						return (
-							<ActivityCheckbox
+							<ActivityInput
 								key={activity}
 								activity={activity}
 								isChecked={isChecked}
 								dayCount={dayCount}
+								isPriority={priorityActivities.includes(
+									activity
+								)}
+								isDisabled={isDisabled}
 								note={note}
 								onCheckboxChange={(note?: string) => {
 									Keyboard.dismiss();
@@ -128,7 +153,7 @@ export default function HomeScreen() {
 			</KeyboardAvoidingView>
 
 			<Link href="/chart">
-				<View className="w-20 h-20 flex items-center justify-center border-2 border-yellow-500 rounded-full shadow shadow-yellow-500">
+				<View className="w-20 h-20 flex items-center justify-center border-2 border-yellow-500 rounded-full bg-black shadow shadow-yellow-700">
 					<Text className="text-4xl">👉</Text>
 				</View>
 			</Link>
