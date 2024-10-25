@@ -8,4 +8,8 @@ export async function getActivityLog() {
 
 export async function storeActivityLog(activityLog: ActivityLog) {
 	await AsyncStorage.setItem('activityLog', JSON.stringify(activityLog));
+	await AsyncStorage.setItem(
+		'activityLogUpdatedAt',
+		new Date().toISOString()
+	);
 }

@@ -1,7 +1,7 @@
 import { Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Activity, ActivityDay } from '../constants/ACTIVITIES';
-import { Link } from 'expo-router';
+import type { Activity, ActivityDay } from '../constants/ACTIVITIES';
+import { type Href, Link } from 'expo-router';
 import { getDateInfo } from '../utils/dateInfo';
 
 type ChartDayProps = {
@@ -37,7 +37,7 @@ export function ChartDay(props: ChartDayProps) {
 	return (
 		<Link
 			key={props.date}
-			href={`/${props.date}`}
+			href={`/${props.date}` as Href<string | object>}
 			disabled={dateInfo.category === 'future'}
 		>
 			<View className="justify-end items-center h-96 gap-2">
