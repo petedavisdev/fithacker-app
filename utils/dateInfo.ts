@@ -1,122 +1,97 @@
 import * as Localization from 'expo-localization';
+import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
-// Accepts date format 'YYYY-MM-DD' and returns information about the date
-type DateInfo = {
+export type DateInfo = {
 	date: string;
 	dayIndex: number;
+	category: 'today' | 'tomorrow' | 'future' | 'weekend' | 'weekday';
 	text: string;
-	category: 'future' | 'today' | 'tomorrow' | 'weekend' | 'weekday';
 };
 
 export function getDateInfo(dateVal: string): DateInfo {
-	const today = new Date().toISOString().slice(0, 10);
+	const today = getToday();
+	const date = Date.parse(dateVal) ? dateVal : today;
+	const dayIndex = new Date(date).getDay();
 
-	// If date is not valid, use today
-	const date = dateVal && Date.parse(dateVal.toString()) ? dateVal : today;
-	const jsDate = new Date(date);
-	const dayIndex = jsDate.getDay();
-
-	// Today
-	if (date === today) {
+	const isToday = date === today;
+	if (isToday) {
 		return {
 			date,
 			dayIndex,
-			text: date === dateVal ? '_.today' : '_.whatExerciseToday',
 			category: 'today',
+			text: date === dateVal ? '_.today' : '_.whatExerciseToday',
 		};
 	}
 
-	// Tomorrow
-	const tomorrow = new Date(new Date().setDate(new Date().getDate() + 1))
-		.toISOString()
-		.slice(0, 10);
-	if (date === tomorrow) {
+	const isTomorrow = date === getTomorrow();
+	if (isTomorrow) {
 		return {
 			date,
 			dayIndex,
-			text: '_.tomorrow',
 			category: 'tomorrow',
+			text: '_.tomorrow',
 		};
 	}
 
-	// Future
-	if (date > today) {
+	const language = Localization.getLocales()?.[0]?.languageTag;
+
+	const isFuture = date > today;
+	if (isFuture) {
 		return {
 			date,
 			dayIndex,
-			text: jsDate.toLocaleDateString(undefined, {
+			category: 'future',
+			text: new Date(date).toLocaleDateString(language, {
 				dateStyle: 'full',
 			}),
-			category: 'future',
 		};
 	}
 
-	// Weekday or weekend
 	const isWeekend = [0, 6].includes(dayIndex);
 	const category = isWeekend ? 'weekend' : 'weekday';
 
-	// Yesterday
-	const yesterday = new Date(new Date().setDate(new Date().getDate() - 1))
-		.toISOString()
-		.slice(0, 10);
-	if (date === yesterday) {
+	const isYesterday = date === getYesterday();
+	if (isYesterday) {
 		return {
 			date,
 			dayIndex,
-			text: '_.yesterday',
 			category,
+			text: '_.yesterday',
 		};
 	}
 
-	// This week
-	const lastMonday =
-		new Date().getDay() === 1
-			? new Date().toISOString().slice(0, 10)
-			: new Date(
-					new Date().setDate(
-						new Date().getDate() -
-							new Date().getDay() +
-							(new Date().getDay() === 0 ? -6 : 1)
-					)
-			  )
-					.toISOString()
-					.slice(0, 10);
-
-	const lng = Localization.getLocales()?.[0]?.languageTag;
-
-	if (date >= lastMonday) {
+	const isThisWeek = date >= getLastMonday();
+	if (isThisWeek) {
 		return {
 			date,
 			category,
 			dayIndex,
-			text: new Date(date).toLocaleDateString(lng, {
+			text: new Date(date).toLocaleDateString(language, {
 				weekday: 'long',
 			}),
 		};
 	}
 
-	// This month
 	const isCurrentMonth = date.slice(0, 7) === today.slice(0, 7);
 	if (isCurrentMonth) {
 		return {
 			date,
-			category,
 			dayIndex,
-			text: new Date(date).toLocaleDateString(lng, {
+			category,
+			text: new Date(date).toLocaleDateString(language, {
 				weekday: 'long',
 				day: 'numeric',
 			}),
 		};
 	}
 
-	// This year
 	const isCurrentYear = date.slice(0, 4) === today.slice(0, 4);
 	if (isCurrentYear) {
 		return {
 			date,
-			category,
 			dayIndex,
-			text: new Date(date).toLocaleDateString(lng, {
+			category,
+			text: new Date(date).toLocaleDateString(language, {
 				weekday: 'long',
 				day: 'numeric',
 				month: 'long',
@@ -124,13 +99,40 @@ export function getDateInfo(dateVal: string): DateInfo {
 		};
 	}
 
-	// Past years
 	return {
 		date,
-		category,
 		dayIndex,
-		text: new Date(date).toLocaleDateString(lng, {
+		category,
+		text: new Date(date).toLocaleDateString(language, {
 			dateStyle: 'full',
 		}),
 	};
+}
+
+function getToday() {
+	return new Date().toISOString().slice(0, 10);
+}
+
+function getTomorrow() {
+	const tomorrow = new Date(new Date().setDate(new Date().getDate() + 1));
+	return tomorrow.toISOString().slice(0, 10);
+}
+
+function getYesterday() {
+	const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
+	return yesterday.toISOString().slice(0, 10);
+}
+
+function getLastMonday() {
+	if (new Date().getDay() === 1) return getToday();
+
+	const lastMonday = new Date(
+		new Date().setDate(
+			new Date().getDate() -
+				new Date().getDay() +
+				(new Date().getDay() === 0 ? -6 : 1)
+		)
+	);
+
+	return lastMonday.toISOString().slice(0, 10);
 }

@@ -1,7 +1,6 @@
 import { ActivityInput } from '@/components/ActivityInput';
 import {
 	ACTIVITIES,
-	ACTIVITY_PRIORITIES,
 	type Activity,
 	type ActivityItem,
 	type ActivityLog,
@@ -12,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { Keyboard, KeyboardAvoidingView, Text, View } from 'react-native';
 import { getActivityLog, storeActivityLog } from '../utils/activityLog';
 import { getDateInfo } from '../utils/dateInfo';
+import { getActivityChecklist } from '../utils/activityChecklist';
 
 export default function HomeScreen() {
 	const { t } = useTranslation();
@@ -21,23 +21,8 @@ export default function HomeScreen() {
 
 	const [activityLog, setActivityLog] = useState<ActivityLog>({});
 
-	const dayCounts = ACTIVITIES.reduce((acc, activity) => {
-		acc[activity] = getDayCount(activity, dateInfo.date, activityLog);
-		return acc;
-	}, {} as Record<Activity, number | undefined>);
-
-	const priorityActivities: Activity[] = Object.entries(dayCounts)
-		.sort(
-			(countA, countB) =>
-				(countB[1] ?? 1000) +
-				ACTIVITY_PRIORITIES[countB[0] as Activity] -
-				((countA[1] ?? 1000) +
-					ACTIVITY_PRIORITIES[countA[0] as Activity])
-		)
-		.map((count) => count[0] as Activity)
-		.slice(0, 2);
-
-	const dayActivities = activityLog[dateInfo.date?.toString()] ?? [];
+	const dayLog = activityLog[dateInfo.date?.toString()] ?? [];
+	const checklist = getActivityChecklist(dateInfo, activityLog, dayLog);
 
 	const DATE_CLASS_NAMES = {
 		future: 'text-slate-500',
@@ -47,11 +32,11 @@ export default function HomeScreen() {
 		weekday: 'text-cyan-500',
 	};
 
-	const dateClassNames = DATE_CLASS_NAMES[dateInfo.category];
+	const dateClassName = DATE_CLASS_NAMES[dateInfo.category];
 
 	function updateDayActivity(activity: Activity, note?: string) {
 		const newDayActivities = [
-			...dayActivities.filter(
+			...dayLog.filter(
 				(item) => item !== activity && item[0] !== activity
 			),
 			(note ? [activity, note] : activity) as ActivityItem,
@@ -70,7 +55,7 @@ export default function HomeScreen() {
 	}
 
 	function removeDayActivity(activity: Activity) {
-		const newDayActivities = dayActivities.filter(
+		const newDayActivities = dayLog.filter(
 			(item) => item !== activity && item[0] !== activity
 		);
 
@@ -101,49 +86,34 @@ export default function HomeScreen() {
 	return (
 		<>
 			<Text
-				className={`w-96 px-4 text-cyan-300 text-2xl text-center text-balance font-mono capitalize ${dateClassNames}`}
+				className={`w-96 px-4 text-cyan-300 text-2xl text-center text-balance font-mono capitalize ${dateClassName}`}
 			>
 				{t(dateInfo.text)}
 			</Text>
 
 			<KeyboardAvoidingView behavior="padding">
 				<View className="w-96 flex gap-6">
-					{ACTIVITIES.map((activity) => {
-						const isChecked = dayActivities
-							.flat()
-							.includes(activity);
-						const dayCount = isChecked
-							? undefined
-							: dayCounts[activity];
-						const note = dayActivities.find(
-							(item) => item[0] === activity
-						)?.[1];
-						const isDisabled =
-							dateInfo.category === 'future' ||
-							dateInfo.category === 'tomorrow';
-
+					{checklist.map((item) => {
 						return (
 							<ActivityInput
-								key={activity}
-								activity={activity}
-								isChecked={isChecked}
-								dayCount={dayCount}
-								isPriority={priorityActivities.includes(
-									activity
-								)}
-								isDisabled={isDisabled}
-								note={note}
+								key={item.activity}
+								activity={item.activity}
+								note={item.note}
+								dayCount={item.dayCount}
+								isChecked={item.isChecked}
+								isPriority={item.isPriority}
+								isDisabled={item.isDisabled}
 								onCheckboxChange={(note?: string) => {
 									Keyboard.dismiss();
-									if (isChecked) {
-										removeDayActivity(activity);
+									if (item.isChecked) {
+										removeDayActivity(item.activity);
 									} else {
-										updateDayActivity(activity, note);
+										updateDayActivity(item.activity, note);
 									}
 								}}
 								onNoteChange={(note?: string) => {
-									if (isChecked) {
-										updateDayActivity(activity, note);
+									if (item.isChecked) {
+										updateDayActivity(item.activity, note);
 									}
 								}}
 							/>
@@ -159,24 +129,4 @@ export default function HomeScreen() {
 			</Link>
 		</>
 	);
-}
-
-function getDayCount(
-	activity: Activity,
-	date: string,
-	activityLog: ActivityLog
-) {
-	const prevDate = Object.keys(activityLog)
-		.filter(
-			(key) => key < date && activityLog[key]?.flat().includes(activity)
-		)
-		.sort()
-		.at(-1);
-
-	if (!prevDate) return;
-
-	const time = new Date(date).getTime();
-	const prevTime = new Date(prevDate).getTime();
-
-	return Math.floor((time - prevTime) / (1000 * 60 * 60 * 24));
 }
