@@ -1,111 +1,75 @@
 import * as Localization from 'expo-localization';
-import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
+
+type DateCategory = 'today' | 'tomorrow' | 'future' | 'weekend' | 'weekday';
 
 export type DateInfo = {
+	category: DateCategory;
 	date: string;
 	dayIndex: number;
-	category: 'today' | 'tomorrow' | 'future' | 'weekend' | 'weekday';
 	text: string;
 };
 
-export function getDateInfo(dateVal: string): DateInfo {
+type DateInfoOption = {
+	check: (date: string) => boolean;
+	category: (dayIndex: number) => DateCategory;
+	text: (date: string) => string;
+};
+
+const dateInfoOptions: DateInfoOption[] = [
+	{
+		check: checkToday,
+		category: () => 'today',
+		text: () => '_.today',
+	},
+	{
+		check: checkTomorrow,
+		category: () => 'tomorrow',
+		text: () => '_.tomorrow',
+	},
+	{
+		check: checkFuture,
+		category: () => 'future',
+		text: formatDateFull,
+	},
+	{
+		check: checkYesterday,
+		category: getWeekdayCategory,
+		text: () => '_.yesterday',
+	},
+	{
+		check: checkThisWeek,
+		category: getWeekdayCategory,
+		text: formatDateShort,
+	},
+	{
+		check: checkThisMonth,
+		category: getWeekdayCategory,
+		text: formatDateMedium,
+	},
+	{
+		check: checkThisYear,
+		category: getWeekdayCategory,
+		text: formatDateLong,
+	},
+	{
+		check: () => true,
+		category: getWeekdayCategory,
+		text: formatDateFull,
+	},
+] as const;
+
+export function getDateInfo(dateVal?: string): DateInfo {
 	const today = getToday();
-	const date = Date.parse(dateVal) ? dateVal : today;
+	const date = dateVal && Date.parse(dateVal) ? dateVal : today;
 	const dayIndex = new Date(date).getDay();
 
-	const isToday = date === today;
-	if (isToday) {
-		return {
-			date,
-			dayIndex,
-			category: 'today',
-			text: date === dateVal ? '_.today' : '_.whatExerciseToday',
-		};
-	}
-
-	const isTomorrow = date === getTomorrow();
-	if (isTomorrow) {
-		return {
-			date,
-			dayIndex,
-			category: 'tomorrow',
-			text: '_.tomorrow',
-		};
-	}
-
-	const language = Localization.getLocales()?.[0]?.languageTag;
-
-	const isFuture = date > today;
-	if (isFuture) {
-		return {
-			date,
-			dayIndex,
-			category: 'future',
-			text: new Date(date).toLocaleDateString(language, {
-				dateStyle: 'full',
-			}),
-		};
-	}
-
-	const isWeekend = [0, 6].includes(dayIndex);
-	const category = isWeekend ? 'weekend' : 'weekday';
-
-	const isYesterday = date === getYesterday();
-	if (isYesterday) {
-		return {
-			date,
-			dayIndex,
-			category,
-			text: '_.yesterday',
-		};
-	}
-
-	const isThisWeek = date >= getLastMonday();
-	if (isThisWeek) {
-		return {
-			date,
-			category,
-			dayIndex,
-			text: new Date(date).toLocaleDateString(language, {
-				weekday: 'long',
-			}),
-		};
-	}
-
-	const isCurrentMonth = date.slice(0, 7) === today.slice(0, 7);
-	if (isCurrentMonth) {
-		return {
-			date,
-			dayIndex,
-			category,
-			text: new Date(date).toLocaleDateString(language, {
-				weekday: 'long',
-				day: 'numeric',
-			}),
-		};
-	}
-
-	const isCurrentYear = date.slice(0, 4) === today.slice(0, 4);
-	if (isCurrentYear) {
-		return {
-			date,
-			dayIndex,
-			category,
-			text: new Date(date).toLocaleDateString(language, {
-				weekday: 'long',
-				day: 'numeric',
-				month: 'long',
-			}),
-		};
-	}
+	const dateOption = dateInfoOptions.find(({ check }) => check(date))!;
 
 	return {
+		category: dateOption.category(dayIndex),
 		date,
 		dayIndex,
-		category,
-		text: new Date(date).toLocaleDateString(language, {
-			dateStyle: 'full',
-		}),
+		text: dateOption.text(date),
 	};
 }
 
@@ -113,18 +77,26 @@ function getToday() {
 	return new Date().toISOString().slice(0, 10);
 }
 
-function getTomorrow() {
+function checkToday(date: string) {
+	return date === getToday();
+}
+
+function checkTomorrow(date: string) {
 	const tomorrow = new Date(new Date().setDate(new Date().getDate() + 1));
-	return tomorrow.toISOString().slice(0, 10);
+	return date === tomorrow.toISOString().slice(0, 10);
 }
 
-function getYesterday() {
+function checkYesterday(date: string) {
 	const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
-	return yesterday.toISOString().slice(0, 10);
+	return date === yesterday.toISOString().slice(0, 10);
 }
 
-function getLastMonday() {
-	if (new Date().getDay() === 1) return getToday();
+function checkFuture(date: string) {
+	return date > getToday();
+}
+
+function checkThisWeek(date: string) {
+	if (new Date().getDay() === 1) return false;
 
 	const lastMonday = new Date(
 		new Date().setDate(
@@ -134,5 +106,48 @@ function getLastMonday() {
 		)
 	);
 
-	return lastMonday.toISOString().slice(0, 10);
+	return date >= lastMonday.toISOString().slice(0, 10);
+}
+
+function checkThisMonth(date: string) {
+	return date.slice(0, 7) === getToday().slice(0, 7);
+}
+
+function checkThisYear(date: string) {
+	return date.slice(0, 4) === getToday().slice(0, 4);
+}
+
+function getWeekdayCategory(dayIndex: number) {
+	return [0, 6].includes(dayIndex) ? 'weekend' : 'weekday';
+}
+
+function getLanguage() {
+	return Localization.getLocales()?.[0]?.languageTag;
+}
+
+function formatDateShort(date: string) {
+	return new Date(date).toLocaleDateString(getLanguage(), {
+		weekday: 'long',
+	});
+}
+
+function formatDateMedium(date: string) {
+	return new Date(date).toLocaleDateString(getLanguage(), {
+		weekday: 'long',
+		day: 'numeric',
+	});
+}
+
+function formatDateLong(date: string) {
+	return new Date(date).toLocaleDateString(getLanguage(), {
+		weekday: 'long',
+		day: 'numeric',
+		month: 'long',
+	});
+}
+
+function formatDateFull(date: string) {
+	return new Date(date).toLocaleDateString(getLanguage(), {
+		dateStyle: 'full',
+	});
 }

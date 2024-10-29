@@ -34,7 +34,7 @@ export function ActivityInput(props: ActivityInputProps) {
 			<View
 				className={`w-12 h-12 justify-center items-center rounded-lg border-2 bg-black relative  ${
 					props.isDisabled
-						? 'bg-transparent border-transparent'
+						? 'border-transparent'
 						: props.isChecked
 						? 'border-yellow-500 shadow shadow-yellow-700'
 						: 'border-cyan-500 shadow shadow-cyan-700'

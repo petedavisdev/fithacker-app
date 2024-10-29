@@ -17,7 +17,7 @@ export default function HomeScreen() {
 	const { t } = useTranslation();
 
 	const { date } = useLocalSearchParams();
-	const dateInfo = getDateInfo(date ? date.toString() : '');
+	const dateInfo = getDateInfo(typeof date === 'string' ? date : '');
 
 	const [activityLog, setActivityLog] = useState<ActivityLog>({});
 
