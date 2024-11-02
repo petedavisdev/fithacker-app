@@ -1,10 +1,10 @@
 import { Pressable, Text, TextInput, View } from 'react-native';
-import { type Activity } from '@/constants/ACTIVITIES';
+import { type Exercise } from '../constants/EXERCISES';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 
-type ActivityInputProps = {
-	activity: Activity;
+type ExerciseChecklistInputProps = {
+	exercise: Exercise;
 	isChecked: boolean;
 	dayCount?: number;
 	isPriority?: boolean;
@@ -14,10 +14,10 @@ type ActivityInputProps = {
 	onNoteChange: (note?: string) => void;
 };
 
-export function ActivityInput(props: ActivityInputProps) {
+export function ExerciseChecklistInput(props: ExerciseChecklistInputProps) {
 	const { t } = useTranslation();
 	const [note, setNote] = useState(props.note);
-	const [placeholder, setPlaceholder] = useState(t(props.activity));
+	const [placeholder, setPlaceholder] = useState(t(props.exercise));
 
 	useEffect(() => {
 		const debounceTimeoutId = setTimeout(() => {
@@ -59,7 +59,7 @@ export function ActivityInput(props: ActivityInputProps) {
 				)}
 			</View>
 
-			<Text className="text-4xl">{props.activity}</Text>
+			<Text className="text-4xl">{props.exercise}</Text>
 
 			{props.isChecked ? (
 				<TextInput
@@ -69,7 +69,7 @@ export function ActivityInput(props: ActivityInputProps) {
 					defaultValue={props.note}
 					onChangeText={(value) => setNote(value)}
 					onFocus={() => setPlaceholder('')}
-					onBlur={() => setPlaceholder(t(props.activity))}
+					onBlur={() => setPlaceholder(t(props.exercise))}
 					maxLength={60}
 				/>
 			) : (
@@ -78,7 +78,7 @@ export function ActivityInput(props: ActivityInputProps) {
 						props.isDisabled ? 'text-slate-400' : 'text-cyan-400'
 					}`}
 				>
-					{t(props.activity)}
+					{t(props.exercise)}
 				</Text>
 			)}
 		</Pressable>

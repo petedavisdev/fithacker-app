@@ -1,16 +1,16 @@
 import { Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import type { Activity, ActivityDay } from '../constants/ACTIVITIES';
+import type { Exercise, ExerciseDay } from '../constants/EXERCISES';
 import { type Href, Link } from 'expo-router';
 import { getDateInfo } from '../utils/dateInfo';
 
 type ChartDayProps = {
 	date: string;
-	activities: ActivityDay;
-	filter?: Activity;
+	exercises: ExerciseDay;
+	filter?: Exercise;
 };
 
-export function ChartDay(props: ChartDayProps) {
+export function ExerciseChartDay(props: ChartDayProps) {
 	const { t } = useTranslation();
 	const dateInfo = getDateInfo(props.date);
 
@@ -41,12 +41,12 @@ export function ChartDay(props: ChartDayProps) {
 			disabled={dateInfo.category === 'future'}
 		>
 			<View className="justify-end items-center h-96 gap-2">
-				{props.activities.map((activityItem, index) => {
+				{props.exercises.map((exerciseItem, index) => {
 					const note =
-						typeof activityItem !== 'string' && activityItem[1];
-					const activity = note ? activityItem[0] : activityItem;
+						typeof exerciseItem !== 'string' && exerciseItem[1];
+					const exercise = note ? exerciseItem[0] : exerciseItem;
 
-					if (!props.filter || activity === props.filter)
+					if (!props.filter || exercise === props.filter)
 						return (
 							<View key={index} className="relative">
 								{props.filter && note && (
@@ -60,12 +60,12 @@ export function ChartDay(props: ChartDayProps) {
 									</View>
 								)}
 								<Text
-									key={`activity${index}`}
+									key={`exercise${index}`}
 									className="text-yellow-500 text-4xl"
 								>
-									{typeof activity === 'string'
-										? activity
-										: activity[0]}
+									{typeof exercise === 'string'
+										? exercise
+										: exercise[0]}
 								</Text>
 							</View>
 						);
