@@ -18,12 +18,15 @@ type ExerciseChecklistProps = {
 export function ExerciseChecklist(props: ExerciseChecklistProps) {
 	const [exerciseLog, setExerciseLog] = useState<ExerciseLog>({});
 
-	const dayLog = exerciseLog[props.dateInfo.date?.toString()] ?? [];
+	const dayLog = exerciseLog[props.dateInfo.date] ?? [];
+
 	const checklist = getExerciseChecklistData(
 		props.dateInfo,
 		exerciseLog,
 		dayLog
 	);
+
+	const isDisabled = ['future', 'tomorrow'].includes(props.dateInfo.category);
 
 	function updateDayExercise(exercise: Exercise, note?: string) {
 		const newDayExercises = [
@@ -87,7 +90,7 @@ export function ExerciseChecklist(props: ExerciseChecklistProps) {
 						dayCount={item.dayCount}
 						isChecked={item.isChecked}
 						isPriority={item.isPriority}
-						isDisabled={item.isDisabled}
+						isDisabled={isDisabled}
 						onCheckboxChange={(note?: string) => {
 							Keyboard.dismiss();
 							if (item.isChecked) {

@@ -24,7 +24,7 @@ export function getWeekData(exerciseLog: ExerciseLog, count: number) {
 const weekTextOptions = [
 	{
 		check: checkThisWeek,
-		text: '_.today',
+		text: '_.thisWeek',
 	},
 	{
 		check: () => true,
@@ -39,5 +39,5 @@ export function getWeekText(weekDates: string[]) {
 }
 
 function checkThisWeek(weekDates: string[]) {
-	weekDates.includes(getToday());
+	return weekDates.includes(getToday());
 }

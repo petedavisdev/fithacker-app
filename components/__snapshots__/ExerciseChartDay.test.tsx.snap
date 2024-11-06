@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<Text
+  disabled={false}
+  href="/2022-01-01"
+  onPress={[Function]}
+  role="link"
+>
+  <View
+    className="justify-end items-center h-96 gap-2"
+  >
+    <View
+      className="relative"
+    >
+      <Text
+        className="text-yellow-500 text-4xl"
+      >
+        🚶
+      </Text>
+    </View>
+    <View
+      className="relative"
+    >
+      <Text
+        className="text-yellow-500 text-4xl"
+      >
+        🏃‍♀️
+      </Text>
+    </View>
+    <View
+      className="h-[2px] w-12 bg-yellow-500 shadow shadow-yellow-500"
+    />
+    <Text
+      className="font-mono leading text-yellow-500"
+    >
+      _da
+    </Text>
+  </View>
+</Text>
+`;

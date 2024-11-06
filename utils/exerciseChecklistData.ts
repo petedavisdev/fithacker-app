@@ -14,7 +14,6 @@ export function getExerciseChecklistData(
 ) {
 	const dayCounts = getDayCounts(exerciseLog, dateInfo.date);
 	const priorityEXERCISES = getPriorityEXERCISES(dayCounts);
-	const isDisabled = ['future', 'tomorrow'].includes(dateInfo.category);
 
 	return EXERCISES.map((exercise) => ({
 		exercise,
@@ -22,7 +21,6 @@ export function getExerciseChecklistData(
 		note: dayLog.find((item) => item[0] === exercise)?.[1],
 		dayCount: dayCounts.find((count) => count[0] === exercise)?.[1],
 		isPriority: priorityEXERCISES.includes(exercise),
-		isDisabled,
 	}));
 }
 
