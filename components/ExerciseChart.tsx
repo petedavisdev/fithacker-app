@@ -1,10 +1,10 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FlatList, Text, View } from 'react-native';
-import { Exercise, ExerciseLog } from '../constants/EXERCISES';
-import { getExerciseLog } from '../utils/exerciseLog';
+import { Exercise } from '../constants/EXERCISES';
 import { ExerciseChartDay } from './ExerciseChartDay';
 import { getWeekData, getWeekText } from '../utils/weekData';
+import { useExerciseLog } from '../hooks/useExerciseLog';
 
 type ExerciseChartProps = {
 	filter?: Exercise;
@@ -15,13 +15,7 @@ export function ExerciseChart(props: ExerciseChartProps) {
 	const { t } = useTranslation();
 	const flatListRef = useRef<FlatList>(null);
 
-	const [exerciseLog, setExerciseLog] = useState<ExerciseLog>({});
-
-	useEffect(() => {
-		(async () => {
-			setExerciseLog(await getExerciseLog());
-		})();
-	}, []);
+	const { exerciseLog } = useExerciseLog();
 
 	return (
 		<FlatList
