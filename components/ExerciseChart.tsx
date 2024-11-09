@@ -1,10 +1,11 @@
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FlatList, Text, View } from 'react-native';
-import { Exercise } from '../constants/EXERCISES';
-import { ExerciseChartDay } from './ExerciseChartDay';
-import { getWeekData, getWeekText } from '../utils/weekData';
+import { type Exercise } from '../constants/EXERCISES';
 import { useExerciseLog } from '../hooks/useExerciseLog';
+import { checkDatesBeforeThisWeek } from '../utils/dateInfo';
+import { getWeekData, getWeekText } from '../utils/weekData';
+import { ExerciseChartDay } from './ExerciseChartDay';
 
 type ExerciseChartProps = {
 	filter?: Exercise;
@@ -17,6 +18,12 @@ export function ExerciseChart(props: ExerciseChartProps) {
 
 	const { exerciseLog } = useExerciseLog();
 
+	const hasDatesBeforeThisWeek = checkDatesBeforeThisWeek(
+		Object.keys(exerciseLog)
+	);
+
+	const weeksToShow = hasDatesBeforeThisWeek ? props.weekCount : 1;
+
 	return (
 		<FlatList
 			ref={flatListRef}
@@ -24,7 +31,7 @@ export function ExerciseChart(props: ExerciseChartProps) {
 			showsHorizontalScrollIndicator={false}
 			initialNumToRender={2}
 			inverted
-			data={getWeekData(exerciseLog, props.weekCount)}
+			data={getWeekData(exerciseLog, weeksToShow)}
 			keyExtractor={(week) => Object.keys(week)[0]}
 			renderItem={({ item: week }) => (
 				<View className="justify-center items-end gap-2 ml-1">

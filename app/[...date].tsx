@@ -2,7 +2,7 @@ import { Link, useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { KeyboardAvoidingView, Text, View } from 'react-native';
 import { getDateInfo } from '../utils/dateInfo';
-import { ExerciseChecklist } from '../components/ExerciseChecklist';
+import { Checklist } from '../components/Checklist';
 
 export default function HomeScreen() {
 	const { t } = useTranslation();
@@ -29,7 +29,7 @@ export default function HomeScreen() {
 			</Text>
 
 			<KeyboardAvoidingView behavior="padding">
-				<ExerciseChecklist dateInfo={dateInfo} />
+				<Checklist dateInfo={dateInfo} />
 			</KeyboardAvoidingView>
 
 			<Link href="/chart">

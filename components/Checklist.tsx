@@ -1,22 +1,18 @@
 import { Keyboard, View } from 'react-native';
-import { getExerciseChecklistData } from '../utils/exerciseChecklistData';
+import { getChecklistData } from '../utils/exerciseChecklistData';
 import { type DateInfo } from '../utils/dateInfo';
-import { ExerciseChecklistInput } from './ExerciseChecklistInput';
+import { ChecklistInput } from './ChecklistInput';
 import { useExerciseLog } from '../hooks/useExerciseLog';
 
-type ExerciseChecklistProps = {
+type ChecklistProps = {
 	dateInfo: DateInfo;
 };
 
-export function ExerciseChecklist(props: ExerciseChecklistProps) {
+export function Checklist(props: ChecklistProps) {
 	const { exerciseLog, dayLog, updateDayExercise, removeDayExercise } =
 		useExerciseLog(props.dateInfo.date);
 
-	const checklist = getExerciseChecklistData(
-		props.dateInfo,
-		exerciseLog,
-		dayLog
-	);
+	const checklist = getChecklistData(props.dateInfo, exerciseLog, dayLog);
 
 	const isDisabled = ['future', 'tomorrow'].includes(props.dateInfo.category);
 
@@ -24,7 +20,7 @@ export function ExerciseChecklist(props: ExerciseChecklistProps) {
 		<View className="w-96 flex gap-6">
 			{checklist.map((item) => {
 				return (
-					<ExerciseChecklistInput
+					<ChecklistInput
 						key={item.exercise}
 						exercise={item.exercise}
 						note={item.note}

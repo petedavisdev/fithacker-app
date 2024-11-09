@@ -7,7 +7,7 @@ import {
 } from '../constants/EXERCISES';
 import { DateInfo } from './dateInfo';
 
-export function getExerciseChecklistData(
+export function getChecklistData(
 	dateInfo: DateInfo,
 	exerciseLog: ExerciseLog,
 	dayLog: ExerciseDay

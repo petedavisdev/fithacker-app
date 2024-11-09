@@ -1,23 +1,23 @@
 import { ExerciseDay, ExerciseLog } from '../constants/EXERCISES';
 import { DateInfo } from './dateInfo';
-import { getExerciseChecklistData } from './exerciseChecklistData';
+import { getChecklistData } from './exerciseChecklistData';
 
-describe('getExerciseChecklistData', () => {
+describe('getChecklistData', () => {
 	it('should return the correct exercise checklist data', () => {
-		const inputDateInfo: DateInfo = {
+		const input1: DateInfo = {
 			category: 'today',
 			date: '2022-02-26',
 			dayIndex: 6,
 			text: '_.today',
 		};
 
-		const inputExerciseLog: ExerciseLog = {
+		const input2: ExerciseLog = {
 			'2022-02-26': ['🚶', ['🤸', 'yoga']],
 			'2022-02-25': ['💪', '🦵'],
 			'2022-01-01': ['🚶', '🌴'],
 		};
 
-		const inputDayLog: ExerciseDay = ['🚶', ['🤸', 'yoga']];
+		const input3: ExerciseDay = ['🚶', ['🤸', 'yoga']];
 
 		const expected = [
 			{
@@ -64,11 +64,7 @@ describe('getExerciseChecklistData', () => {
 			},
 		];
 
-		const result = getExerciseChecklistData(
-			inputDateInfo,
-			inputExerciseLog,
-			inputDayLog
-		);
+		const result = getChecklistData(input1, input2, input3);
 
 		expect(result).toEqual(expected);
 	});

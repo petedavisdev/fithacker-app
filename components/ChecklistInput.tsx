@@ -3,7 +3,7 @@ import { type Exercise } from '../constants/EXERCISES';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 
-type ExerciseChecklistInputProps = {
+type ChecklistInputProps = {
 	exercise: Exercise;
 	isChecked: boolean;
 	dayCount?: number;
@@ -14,7 +14,7 @@ type ExerciseChecklistInputProps = {
 	onNoteChange: (note?: string) => void;
 };
 
-export function ExerciseChecklistInput(props: ExerciseChecklistInputProps) {
+export function ChecklistInput(props: ChecklistInputProps) {
 	const { t } = useTranslation();
 	const [note, setNote] = useState(props.note);
 	const [placeholder, setPlaceholder] = useState(t(props.exercise));
@@ -67,7 +67,7 @@ export function ExerciseChecklistInput(props: ExerciseChecklistInputProps) {
 					placeholderTextColor={'slategray'}
 					className="text-yellow-400 font-mono border-y-2 border-b-yellow-500 border-t-transparent w-64 py-3 focus:border-yellow-200 focus:text-pink-400 focus:border-b-pink-500"
 					defaultValue={props.note}
-					onChangeText={(value) => setNote(value)}
+					onChangeText={(value) => setNote(value || undefined)}
 					onFocus={() => setPlaceholder('')}
 					onBlur={() => setPlaceholder(t(props.exercise))}
 					maxLength={60}

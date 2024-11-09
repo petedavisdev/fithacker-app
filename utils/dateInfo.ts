@@ -95,8 +95,8 @@ function checkFuture(date: string) {
 	return date > getToday();
 }
 
-function checkThisWeek(date: string) {
-	if (new Date().getDay() === 1) return false;
+function getLastMonday() {
+	if (new Date().getDay() === 1) return getToday();
 
 	const lastMonday = new Date(
 		new Date().setDate(
@@ -105,8 +105,16 @@ function checkThisWeek(date: string) {
 				(new Date().getDay() === 0 ? -6 : 1)
 		)
 	);
+	return lastMonday.toISOString().slice(0, 10);
+}
 
-	return date >= lastMonday.toISOString().slice(0, 10);
+export function checkDatesBeforeThisWeek(dates: string[]) {
+	const lastMonday = getLastMonday();
+	return dates.some((date) => date < lastMonday);
+}
+
+function checkThisWeek(date: string) {
+	return date >= getLastMonday();
 }
 
 function checkThisMonth(date: string) {
