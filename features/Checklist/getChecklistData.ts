@@ -4,8 +4,8 @@ import {
 	EXERCISE_PRIORITIES,
 	type ExerciseDay,
 	type ExerciseLog,
-} from '../constants/EXERCISES';
-import { DateInfo } from './dateInfo';
+} from '../EXERCISES';
+import { DateInfo } from '../dateInfo';
 
 export function getChecklistData(
 	dateInfo: DateInfo,
@@ -13,7 +13,7 @@ export function getChecklistData(
 	dayLog: ExerciseDay
 ) {
 	const dayCounts = getDayCounts(exerciseLog, dateInfo.date);
-	const priorityEXERCISES = getPriorityEXERCISES(dayCounts);
+	const priorityEXERCISES = getPriorityExercises(dayCounts);
 
 	return EXERCISES.map((exercise) => ({
 		exercise,
@@ -54,7 +54,7 @@ function getDayCount(
 	return Math.floor((time - prevTime) / (1000 * 60 * 60 * 24));
 }
 
-function getPriorityEXERCISES(dayCounts: [Exercise, number?][]) {
+function getPriorityExercises(dayCounts: [Exercise, number?][]) {
 	return dayCounts
 		.sort(
 			(countA, countB) =>

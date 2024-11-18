@@ -1,13 +1,13 @@
 import { Link, useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { KeyboardAvoidingView, Text, View } from 'react-native';
-import { getDateInfo } from '../utils/dateInfo';
-import { Checklist } from '../components/Checklist';
+import { getDateInfo } from '../features/dateInfo';
+import { Checklist } from '../features/Checklist/Checklist';
 
 export default function HomeScreen() {
 	const { t } = useTranslation();
 
-	const { date } = useLocalSearchParams();
+	const { date } = useLocalSearchParams<{ date: string }>();
 	const dateInfo = getDateInfo(date?.toString());
 
 	const DATE_CLASS_NAMES = {

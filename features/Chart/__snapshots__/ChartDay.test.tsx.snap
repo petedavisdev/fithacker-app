@@ -3,7 +3,7 @@
 exports[`renders correctly 1`] = `
 <Text
   disabled={false}
-  href="/2022-01-01"
+  href="/?date=2022-01-01"
   onPress={[Function]}
   role="link"
 >

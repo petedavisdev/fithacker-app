@@ -1,6 +1,6 @@
-import { ExerciseDay, ExerciseLog } from '../constants/EXERCISES';
-import { DateInfo } from './dateInfo';
-import { getChecklistData } from './exerciseChecklistData';
+import { ExerciseDay, ExerciseLog } from '../EXERCISES';
+import { DateInfo } from '../dateInfo';
+import { getChecklistData } from './getChecklistData';
 
 describe('getChecklistData', () => {
 	it('should return the correct exercise checklist data', () => {

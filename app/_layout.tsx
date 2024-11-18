@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import { SafeAreaView, StatusBar, Text, View } from 'react-native';
 import 'react-native-reanimated';
 import { LinearGradient } from 'expo-linear-gradient';
-import AppHeader from '../components/AppHeader';
+import AppHeader from '../features/AppHeader';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();

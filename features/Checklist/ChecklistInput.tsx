@@ -1,5 +1,5 @@
 import { Pressable, Text, TextInput, View } from 'react-native';
-import { type Exercise } from '../constants/EXERCISES';
+import { type Exercise } from '../EXERCISES';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 

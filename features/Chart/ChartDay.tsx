@@ -1,16 +1,16 @@
 import { Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import type { Exercise, ExerciseDay } from '../constants/EXERCISES';
+import type { Exercise, ExerciseDay } from '../EXERCISES';
 import { type Href, Link } from 'expo-router';
-import { getDateInfo } from '../utils/dateInfo';
+import { getDateInfo } from '../dateInfo';
 
 type ChartDayProps = {
 	date: string;
-	exercises: ExerciseDay;
+	exercises?: ExerciseDay;
 	filter?: Exercise;
 };
 
-export function ExerciseChartDay(props: ChartDayProps) {
+export function ChartDay(props: ChartDayProps) {
 	const { t } = useTranslation();
 	const dateInfo = getDateInfo(props.date);
 
@@ -36,33 +36,29 @@ export function ExerciseChartDay(props: ChartDayProps) {
 
 	return (
 		<Link
-			key={props.date}
-			href={`/${props.date}` as Href<string | object>}
+			href={`/?date=${props.date}` as Href<string | object>}
 			disabled={dateInfo.category === 'future'}
 		>
 			<View className="justify-end items-center h-96 gap-2">
-				{props.exercises.map((exerciseItem, index) => {
+				{props.exercises?.map((exerciseItem, index) => {
 					const note =
 						typeof exerciseItem !== 'string' && exerciseItem[1];
 					const exercise = note ? exerciseItem[0] : exerciseItem;
 
 					if (!props.filter || exercise === props.filter)
 						return (
-							<View key={index} className="relative">
+							<View
+								key={`${props.date}${index}`}
+								className="relative"
+							>
 								{props.filter && note && (
 									<View className="absolute -top-12 w-full -rotate-90">
-										<Text
-											key={`note${index}`}
-											className="font-mono text-pink-500 w-80 h-12 p-3"
-										>
+										<Text className="font-mono text-pink-500 w-80 h-12 p-3">
 											{note}
 										</Text>
 									</View>
 								)}
-								<Text
-									key={`exercise${index}`}
-									className="text-yellow-500 text-4xl"
-								>
+								<Text className="text-yellow-500 text-4xl">
 									{typeof exercise === 'string'
 										? exercise
 										: exercise[0]}

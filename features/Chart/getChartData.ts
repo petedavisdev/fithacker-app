@@ -1,8 +1,16 @@
-import { ExerciseLog } from '../constants/EXERCISES';
-import { getToday } from './dateInfo';
+import { ExerciseLog } from '../EXERCISES';
+import { getToday } from '../dateInfo';
 
-export function getWeekData(exerciseLog: ExerciseLog, count: number) {
-	const weeks: ExerciseLog[] = Array.from({ length: count }, () => ({}));
+export type ChartData = {
+	days: ExerciseLog;
+	text: string;
+};
+
+export function getChartData(exerciseLog: ExerciseLog, count: number) {
+	const weeks: ChartData[] = Array.from({ length: count }, () => ({
+		days: {},
+		text: '',
+	}));
 
 	const startDate = new Date();
 	startDate.setDate(startDate.getDate() - (startDate.getDay() || 7));
@@ -13,7 +21,8 @@ export function getWeekData(exerciseLog: ExerciseLog, count: number) {
 			currentDate.setDate(currentDate.getDate() + d);
 			const date = currentDate.toISOString().slice(0, 10);
 
-			week[date] = exerciseLog[date] ?? [];
+			week.days[date] = exerciseLog[date] ?? [];
+			week.text = getWeekText(Object.keys(week.days));
 		}
 		startDate.setDate(startDate.getDate() - 7);
 	});
@@ -33,7 +42,7 @@ const weekTextOptions = [
 	// TODO: Add past week text formats
 ] as const;
 
-export function getWeekText(weekDates: string[]) {
+function getWeekText(weekDates: string[]) {
 	const option = weekTextOptions.find(({ check }) => check(weekDates))!;
 	return option.text;
 }

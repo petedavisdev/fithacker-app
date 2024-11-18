@@ -1,8 +1,8 @@
 import { Keyboard, View } from 'react-native';
-import { getChecklistData } from '../utils/exerciseChecklistData';
-import { type DateInfo } from '../utils/dateInfo';
+import { getChecklistData } from './getChecklistData';
+import { type DateInfo } from '../dateInfo';
 import { ChecklistInput } from './ChecklistInput';
-import { useExerciseLog } from '../hooks/useExerciseLog';
+import { useExerciseLog } from '../useExerciseLog';
 
 type ChecklistProps = {
 	dateInfo: DateInfo;

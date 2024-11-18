@@ -5,7 +5,7 @@ import {
 	type ExerciseItem,
 	type ExerciseLog,
 	EXERCISES,
-} from '../constants/EXERCISES';
+} from './EXERCISES';
 
 export function useExerciseLog(date?: string) {
 	const [exerciseLog, setExerciseLog] = useState<ExerciseLog>({});
