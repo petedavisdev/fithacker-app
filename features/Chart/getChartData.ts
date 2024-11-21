@@ -1,31 +1,38 @@
-import { ExerciseLog } from '../EXERCISES';
-import { getToday } from '../dateInfo';
+import type { Exercise, ExerciseLog } from '../EXERCISES';
+import { getLastMonday, getToday } from '../dateInfo';
 
 export type ChartData = {
 	days: ExerciseLog;
 	text: string;
+	total: number;
 };
 
-export function getChartData(exerciseLog: ExerciseLog, count: number) {
-	const weeks: ChartData[] = Array.from({ length: count }, () => ({
-		days: {},
-		text: '',
-	}));
+export function getChartData(exerciseLog: ExerciseLog) {
+	const firstDate = Object.keys(exerciseLog).sort()[0] ?? getToday();
+	let date = getLastMonday(firstDate);
 
-	const startDate = new Date();
-	startDate.setDate(startDate.getDate() - (startDate.getDay() || 7));
+	const weeks: ChartData[] = [];
 
-	weeks.forEach((week) => {
+	const SAFE_LIMIT = 5000;
+
+	for (let i = 0; i < SAFE_LIMIT; i++) {
+		const days: ExerciseLog = {};
+
 		for (let d = 1; d <= 7; d++) {
-			const currentDate = new Date(startDate);
-			currentDate.setDate(currentDate.getDate() + d);
-			const date = currentDate.toISOString().slice(0, 10);
+			days[date] = exerciseLog[date] ?? [];
 
-			week.days[date] = exerciseLog[date] ?? [];
-			week.text = getWeekText(Object.keys(week.days));
+			const currentDate = new Date(date);
+			currentDate.setDate(currentDate.getDate() + 1);
+			date = currentDate.toISOString().slice(0, 10);
 		}
-		startDate.setDate(startDate.getDate() - 7);
-	});
+
+		const text = getWeekText(Object.keys(days));
+		const total = Object.values(days).flat().length;
+
+		weeks.unshift({ days, text, total });
+
+		if (text === '_.thisWeek') break;
+	}
 
 	return weeks;
 }

@@ -59,8 +59,7 @@ const dateInfoOptions: DateInfoOption[] = [
 ] as const;
 
 export function getDateInfo(dateVal?: string): DateInfo {
-	const today = getToday();
-	const date = dateVal && Date.parse(dateVal) ? dateVal : today;
+	const date = getValidDate(dateVal);
 	const dayIndex = new Date(date).getDay();
 
 	const dateOption = dateInfoOptions.find(({ check }) => check(date))!;
@@ -75,6 +74,10 @@ export function getDateInfo(dateVal?: string): DateInfo {
 
 export function getToday() {
 	return new Date().toISOString().slice(0, 10);
+}
+
+function getValidDate(date?: string) {
+	return date && Date.parse(date) ? date : getToday();
 }
 
 function checkToday(date: string) {
@@ -95,22 +98,20 @@ function checkFuture(date: string) {
 	return date > getToday();
 }
 
-function getLastMonday() {
-	if (new Date().getDay() === 1) return getToday();
+export function getLastMonday(dateVal?: string) {
+	const date = getValidDate(dateVal);
+	const jsDate = new Date(date);
+
+	if (jsDate.getDay() === 1) return date;
 
 	const lastMonday = new Date(
 		new Date().setDate(
-			new Date().getDate() -
-				new Date().getDay() +
-				(new Date().getDay() === 0 ? -6 : 1)
+			jsDate.getDate() -
+				jsDate.getDay() +
+				(jsDate.getDay() === 0 ? -6 : 1)
 		)
 	);
 	return lastMonday.toISOString().slice(0, 10);
-}
-
-export function checkDatesBeforeThisWeek(dates: string[]) {
-	const lastMonday = getLastMonday();
-	return dates.some((date) => date < lastMonday);
 }
 
 function checkThisWeek(date: string) {

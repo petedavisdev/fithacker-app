@@ -1,17 +1,17 @@
 import { Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import type { Exercise, ExerciseDay } from '../EXERCISES';
-import { type Href, Link } from 'expo-router';
+import { type Href, Link, useLocalSearchParams } from 'expo-router';
 import { getDateInfo } from '../dateInfo';
 
 type ChartDayProps = {
 	date: string;
 	exercises?: ExerciseDay;
-	filter?: Exercise;
 };
 
 export function ChartDay(props: ChartDayProps) {
 	const { t } = useTranslation();
+	const { filter } = useLocalSearchParams<{ filter?: Exercise | '' }>();
 	const dateInfo = getDateInfo(props.date);
 
 	const DATE_TEXT_COLORS = {
@@ -45,26 +45,26 @@ export function ChartDay(props: ChartDayProps) {
 						typeof exerciseItem !== 'string' && exerciseItem[1];
 					const exercise = note ? exerciseItem[0] : exerciseItem;
 
-					if (!props.filter || exercise === props.filter)
-						return (
-							<View
-								key={`${props.date}${index}`}
-								className="relative"
-							>
-								{props.filter && note && (
-									<View className="absolute -top-12 w-full -rotate-90">
-										<Text className="font-mono text-pink-500 w-80 h-12 p-3">
-											{note}
-										</Text>
-									</View>
-								)}
-								<Text className="text-yellow-500 text-4xl">
-									{typeof exercise === 'string'
-										? exercise
-										: exercise[0]}
-								</Text>
-							</View>
-						);
+					return (
+						<View
+							key={`${props.date}${index}`}
+							className="relative"
+						>
+							{!!filter && note && (
+								<View className="absolute -top-12 w-full -rotate-90">
+									<Text className="font-mono text-pink-500 w-80 h-12 p-3">
+										{note}
+									</Text>
+								</View>
+							)}
+
+							<Text className="text-yellow-500 text-4xl">
+								{typeof exercise === 'string'
+									? exercise
+									: exercise[0]}
+							</Text>
+						</View>
+					);
 				})}
 
 				<View className={`h-[2px] w-12 ${dateLineColor}`} />

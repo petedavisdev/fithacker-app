@@ -5,8 +5,7 @@ jest.useFakeTimers({ now: new Date('2022-02-26T00:00:00') });
 
 describe('getWeekData', () => {
 	it('should return the correct weeks and days', () => {
-		const input1 = {};
-		const input2 = 2;
+		const input: ExerciseLog = { '2022-02-14': ['💪'] };
 
 		const expected = [
 			{
@@ -20,10 +19,11 @@ describe('getWeekData', () => {
 					'2022-02-27': [],
 				},
 				text: '_.thisWeek',
+				total: 0,
 			},
 			{
 				days: {
-					'2022-02-14': [],
+					'2022-02-14': ['💪'],
 					'2022-02-15': [],
 					'2022-02-16': [],
 					'2022-02-17': [],
@@ -32,23 +32,23 @@ describe('getWeekData', () => {
 					'2022-02-20': [],
 				},
 				text: '_.lastWeek',
+				total: 1,
 			},
 		];
 
-		const result = getChartData(input1, input2);
+		const result = getChartData(input);
 
 		expect(result).toEqual(expected);
 	});
 
 	it('should return the correct exercise data', () => {
-		const input1: ExerciseLog = {
+		const input: ExerciseLog = {
 			'2022-02-26': ['🚶', '🤸'],
 			'2022-02-25': [
 				['💪', 'pull-ups'],
 				['🦵', 'squats'],
 			],
 		};
-		const input2 = 1;
 
 		const expected = [
 			{
@@ -66,10 +66,11 @@ describe('getWeekData', () => {
 					'2022-02-27': [],
 				},
 				text: '_.thisWeek',
+				total: 4,
 			},
 		];
 
-		const result = getChartData(input1, input2);
+		const result = getChartData(input);
 
 		expect(result).toEqual(expected);
 	});

@@ -1,21 +1,35 @@
 import { useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
-import { EXERCISES, type Exercise } from '../EXERCISES';
+import { EXERCISES, type Exercise, type ExerciseLog } from '../EXERCISES';
+import { useExerciseLog } from '../useExerciseLog';
+import { getFilteredExerciseLog } from './getFilteredExerciseLog';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 
 type ExerciseFilterProps = {
-	componentToFilter: (props: { filter?: Exercise }) => JSX.Element;
+	componentToFilter: (props: { exerciseLog?: ExerciseLog }) => JSX.Element;
 };
 
 export function ExerciseFilter(props: ExerciseFilterProps) {
 	const { componentToFilter: ComponentToFilter } = props;
-	const [filter, setFilter] = useState<Exercise>();
+
+	const params = useLocalSearchParams<{ filter?: Exercise }>();
+	const { setParams } = useRouter();
+
+	const [filter, setFilter] = useState<Exercise | undefined>(params.filter);
+	const { exerciseLog } = useExerciseLog();
+	const filteredExerciseLog = getFilteredExerciseLog(exerciseLog, filter);
+
+	function updateFilter(exercise?: Exercise) {
+		setFilter(exercise);
+		setParams({ filter: exercise ?? '' });
+	}
 
 	return (
 		<>
-			<ComponentToFilter filter={filter} />
+			<ComponentToFilter exerciseLog={filteredExerciseLog} />
 
 			<View className="flex-row justify-center items-center gap-1">
-				<Pressable onPress={() => setFilter(undefined)}>
+				<Pressable onPress={() => updateFilter()}>
 					<View
 						className={`h-0.5 w-14 ${
 							!filter
@@ -32,7 +46,7 @@ export function ExerciseFilter(props: ExerciseFilterProps) {
 				{Object.values(EXERCISES).map((exercise) => (
 					<Pressable
 						key={exercise}
-						onPress={() => setFilter(exercise)}
+						onPress={() => updateFilter(exercise)}
 					>
 						<View
 							className={`h-[2px] w-14 shadow-none ${

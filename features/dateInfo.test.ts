@@ -1,4 +1,4 @@
-import { checkDatesBeforeThisWeek, getDateInfo, getToday } from './dateInfo';
+import { getDateInfo, getLastMonday, getToday } from './dateInfo';
 
 jest.useFakeTimers({ now: new Date('2022-02-26T00:00:00') });
 
@@ -162,33 +162,29 @@ describe('getToday', () => {
 	});
 });
 
-describe('checkDatesBeforeThisWeek', () => {
-	it('should return false for no dates', () => {
-		const input: string[] = [];
+describe('getLastMonday', () => {
+	it("should return last Monday's date", () => {
+		const expected = '2022-02-21';
 
-		const expected = false;
-
-		const result = checkDatesBeforeThisWeek(input);
+		const result = getLastMonday();
 
 		expect(result).toEqual(expected);
 	});
+	it('should return previous Monday from given date', () => {
+		const input = '2022-02-20';
 
-	it("should return false for last Monday's date", () => {
-		const input = ['2022-02-21'];
+		const expected = '2022-02-14';
 
-		const expected = false;
-
-		const result = checkDatesBeforeThisWeek(input);
+		const result = getLastMonday(input);
 
 		expect(result).toEqual(expected);
 	});
+	it('should return current date if input is a Monday', () => {
+		const input = '2022-02-07';
 
-	it("should return true for last Sunday's date", () => {
-		const input = ['2022-02-21', '2022-02-20'];
+		const expected = '2022-02-07';
 
-		const expected = true;
-
-		const result = checkDatesBeforeThisWeek(input);
+		const result = getLastMonday(input);
 
 		expect(result).toEqual(expected);
 	});
