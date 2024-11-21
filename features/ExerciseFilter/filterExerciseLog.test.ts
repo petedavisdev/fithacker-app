@@ -1,7 +1,7 @@
 import { ExerciseLog } from '../EXERCISES';
-import { getFilteredExerciseLog } from './getFilteredExerciseLog';
+import { filterExerciseLog } from './filterExerciseLog';
 
-describe('getFilteredExerciseLog', () => {
+describe('filterExerciseLog', () => {
 	it('should return the correct filtered exercise log', () => {
 		const input1: ExerciseLog = {
 			'2022-02-26': [
@@ -16,10 +16,11 @@ describe('getFilteredExerciseLog', () => {
 
 		const expected = {
 			'2022-02-26': [['🚶', 'walk']],
+			'2022-02-25': [],
 			'2022-01-01': ['🚶'],
 		};
 
-		const result = getFilteredExerciseLog(input1, input2);
+		const result = filterExerciseLog(input1, input2);
 
 		expect(result).toEqual(expected);
 	});

@@ -9,10 +9,8 @@ type ChecklistProps = {
 };
 
 export function Checklist(props: ChecklistProps) {
-	const { exerciseLog, updateDayExercise, removeDayExercise } =
-		useExerciseLog();
-
-	const dayLog = exerciseLog[props.dateInfo.date] ?? [];
+	const { exerciseLog, dayLog, updateDayExercise, removeDayExercise } =
+		useExerciseLog(props.dateInfo.date);
 
 	const checklist = getChecklistData(props.dateInfo, exerciseLog, dayLog);
 

@@ -1,9 +1,6 @@
 import type { Exercise, ExerciseLog } from '../EXERCISES';
 
-export function getFilteredExerciseLog(
-	exerciseLog: ExerciseLog,
-	filter?: Exercise
-) {
+export function filterExerciseLog(exerciseLog: ExerciseLog, filter?: Exercise) {
 	if (!filter) return exerciseLog;
 
 	return Object.fromEntries(

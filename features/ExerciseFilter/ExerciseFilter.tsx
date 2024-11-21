@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { EXERCISES, type Exercise, type ExerciseLog } from '../EXERCISES';
 import { useExerciseLog } from '../useExerciseLog';
-import { getFilteredExerciseLog } from './getFilteredExerciseLog';
+import { filterExerciseLog } from './filterExerciseLog';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 
 type ExerciseFilterProps = {
-	componentToFilter: (props: { exerciseLog?: ExerciseLog }) => JSX.Element;
+	componentToFilter: (props: { exerciseLog: ExerciseLog }) => JSX.Element;
 };
 
 export function ExerciseFilter(props: ExerciseFilterProps) {
@@ -17,7 +17,7 @@ export function ExerciseFilter(props: ExerciseFilterProps) {
 
 	const [filter, setFilter] = useState<Exercise | undefined>(params.filter);
 	const { exerciseLog } = useExerciseLog();
-	const filteredExerciseLog = getFilteredExerciseLog(exerciseLog, filter);
+	const filteredExerciseLog = filterExerciseLog(exerciseLog, filter);
 
 	function updateFilter(exercise?: Exercise) {
 		setFilter(exercise);
