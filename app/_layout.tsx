@@ -1,15 +1,14 @@
-import '../global.css';
 import '@/i18n';
 import { useFonts } from 'expo-font';
+import { LinearGradient } from 'expo-linear-gradient';
 import { Slot } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
-import { SafeAreaView, StatusBar, Text, View } from 'react-native';
+import { SafeAreaView, StatusBar, View } from 'react-native';
 import 'react-native-reanimated';
-import { LinearGradient } from 'expo-linear-gradient';
 import AppHeader from '../features/AppHeader';
+import '../global.css';
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
