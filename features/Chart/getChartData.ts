@@ -1,4 +1,4 @@
-import type { ExerciseDay, ExerciseItem, ExerciseLog } from '../EXERCISES';
+import type { Exercise, ExerciseLog } from '../EXERCISES';
 import { getLastMonday, getToday } from '../dateInfo';
 import { checkLastWeek, checkThisWeek, getWeekText } from './getWeekText';
 
@@ -32,17 +32,18 @@ export function getChartData(
 
 		const dates = Object.keys(days);
 
-		const isLocked =
-			!isUpgraded && !checkThisWeek(dates) && !checkLastWeek(dates);
+		const isLocked = checkLocked(isUpgraded, dates);
+
+		if (isLocked) {
+			for (const date in days) {
+				days[date] = ['🔒' as Exercise];
+			}
+		}
 
 		const text = getWeekText(dates);
 		const total = isLocked ? '🔒' : Object.values(days).flat().length;
 
-		weeks.unshift({
-			days: isLocked ? lockDays(days) : days,
-			text,
-			total,
-		});
+		weeks.unshift({ days, text, total });
 
 		if (checkThisWeek(dates)) break;
 	}
@@ -50,14 +51,6 @@ export function getChartData(
 	return weeks;
 }
 
-function lockDays(days: ExerciseLog) {
-	Object.entries(days).forEach(([date, exercises]) => {
-		const lockedExercises = exercises?.map((exercise) =>
-			typeof exercise === 'string' ? '🔒' : ['🔒', '*****']
-		);
-
-		days[date] = lockedExercises as ExerciseDay;
-	});
-
-	return days;
+function checkLocked(isUpgraded: boolean, dates: string[]) {
+	return !isUpgraded && !checkThisWeek(dates) && !checkLastWeek(dates);
 }

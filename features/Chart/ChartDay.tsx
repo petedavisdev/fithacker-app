@@ -6,13 +6,15 @@ import { getDateInfo } from '../dateInfo';
 
 type ChartDayProps = {
 	date: string;
-	exercises?: ExerciseDay;
+	exercises?: ExerciseDay | ['🔒'];
 };
 
 export function ChartDay(props: ChartDayProps) {
 	const { t } = useTranslation();
 	const { filter } = useLocalSearchParams<{ filter?: Exercise | '' }>();
 	const dateInfo = getDateInfo(props.date);
+	const isLocked = props.exercises?.[0] === '🔒';
+	const isDisabled = isLocked || dateInfo.category === 'future';
 
 	const DATE_TEXT_COLORS = {
 		future: 'text-slate-500',
@@ -35,10 +37,7 @@ export function ChartDay(props: ChartDayProps) {
 	const dateLineColor = DATE_LINE_COLORS[dateInfo.category];
 
 	return (
-		<Link
-			href={`/?date=${props.date}` as Href<string | object>}
-			disabled={dateInfo.category === 'future'}
-		>
+		<Link href={`/?date=${props.date}` as Href} disabled={isDisabled}>
 			<View className="justify-end items-center h-96 gap-2">
 				{props.exercises?.map((exerciseItem, index) => {
 					const note =
