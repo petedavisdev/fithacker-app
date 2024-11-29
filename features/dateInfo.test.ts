@@ -1,4 +1,10 @@
-import { getDateInfo, getLastMonday, getToday } from './dateInfo';
+import {
+	checkThisMonth,
+	checkThisYear,
+	getDateInfo,
+	getLastMonday,
+	getToday,
+} from './dateInfo';
 
 jest.useFakeTimers({ now: new Date('2022-02-26T00:00:00') });
 
@@ -185,6 +191,48 @@ describe('getLastMonday', () => {
 		const expected = '2022-02-07';
 
 		const result = getLastMonday(input);
+
+		expect(result).toEqual(expected);
+	});
+});
+
+describe('checkThisMonth', () => {
+	it('should return true if date is in this month', () => {
+		const input = '2022-02-01';
+
+		const expected = true;
+
+		const result = checkThisMonth(input);
+
+		expect(result).toEqual(expected);
+	});
+	it('should return false if date is not in this month', () => {
+		const input = '2022-01-01';
+
+		const expected = false;
+
+		const result = checkThisMonth(input);
+
+		expect(result).toEqual(expected);
+	});
+});
+
+describe('checkThisYear', () => {
+	it('should return true if date is in this week', () => {
+		const input = '2022-01-01';
+
+		const expected = true;
+
+		const result = checkThisYear(input);
+
+		expect(result).toEqual(expected);
+	});
+	it('should return false if date is not in this week', () => {
+		const input = '2021-12-31';
+
+		const expected = false;
+
+		const result = checkThisYear(input);
 
 		expect(result).toEqual(expected);
 	});

@@ -1,13 +1,17 @@
-import type { Exercise, ExerciseLog } from '../EXERCISES';
+import type { ExerciseDay, ExerciseItem, ExerciseLog } from '../EXERCISES';
 import { getLastMonday, getToday } from '../dateInfo';
+import { checkLastWeek, checkThisWeek, getWeekText } from './getWeekText';
 
 export type ChartData = {
 	days: ExerciseLog;
 	text: string;
-	total: number;
+	total: number | '🔒';
 };
 
-export function getChartData(exerciseLog: ExerciseLog) {
+export function getChartData(
+	exerciseLog: ExerciseLog,
+	isUpgraded: boolean = false
+) {
 	const firstDate = Object.keys(exerciseLog).sort()[0] ?? getToday();
 	let date = getLastMonday(firstDate);
 
@@ -26,34 +30,34 @@ export function getChartData(exerciseLog: ExerciseLog) {
 			date = currentDate.toISOString().slice(0, 10);
 		}
 
-		const text = getWeekText(Object.keys(days));
-		const total = Object.values(days).flat().length;
+		const dates = Object.keys(days);
 
-		weeks.unshift({ days, text, total });
+		const isLocked =
+			!isUpgraded && !checkThisWeek(dates) && !checkLastWeek(dates);
 
-		if (text === '_.thisWeek') break;
+		const text = getWeekText(dates);
+		const total = isLocked ? '🔒' : Object.values(days).flat().length;
+
+		weeks.unshift({
+			days: isLocked ? lockDays(days) : days,
+			text,
+			total,
+		});
+
+		if (checkThisWeek(dates)) break;
 	}
 
 	return weeks;
 }
 
-const weekTextOptions = [
-	{
-		check: checkThisWeek,
-		text: '_.thisWeek',
-	},
-	{
-		check: () => true,
-		text: '_.lastWeek',
-	},
-	// TODO: Add past week text formats
-] as const;
+function lockDays(days: ExerciseLog) {
+	Object.entries(days).forEach(([date, exercises]) => {
+		const lockedExercises = exercises?.map((exercise) =>
+			typeof exercise === 'string' ? '🔒' : ['🔒', '*****']
+		);
 
-function getWeekText(weekDates: string[]) {
-	const option = weekTextOptions.find(({ check }) => check(weekDates))!;
-	return option.text;
-}
+		days[date] = lockedExercises as ExerciseDay;
+	});
 
-function checkThisWeek(weekDates: string[]) {
-	return weekDates.includes(getToday());
+	return days;
 }

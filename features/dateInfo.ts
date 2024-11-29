@@ -1,4 +1,4 @@
-import * as Localization from 'expo-localization';
+import { getLanguage } from './getLanguage';
 
 type DateCategory = 'today' | 'tomorrow' | 'future' | 'weekend' | 'weekday';
 
@@ -118,20 +118,16 @@ function checkThisWeek(date: string) {
 	return date >= getLastMonday();
 }
 
-function checkThisMonth(date: string) {
+export function checkThisMonth(date: string) {
 	return date.slice(0, 7) === getToday().slice(0, 7);
 }
 
-function checkThisYear(date: string) {
+export function checkThisYear(date: string) {
 	return date.slice(0, 4) === getToday().slice(0, 4);
 }
 
 function getWeekdayCategory(dayIndex: number) {
 	return [0, 6].includes(dayIndex) ? 'weekend' : 'weekday';
-}
-
-function getLanguage() {
-	return Localization.getLocales()?.[0]?.languageTag;
 }
 
 function formatDateShort(date: string) {
