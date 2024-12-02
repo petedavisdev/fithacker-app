@@ -32,6 +32,12 @@ export default {
 		newArchEnabled: true,
 		scheme: 'myapp',
 		userInterfaceStyle: 'automatic',
+		updates: {
+			url: 'https://u.expo.dev/6c3e19dc-162f-45b6-98f4-716ce558cd0e',
+		},
+		runtimeVersion: {
+			policy: 'appVersion',
+		},
 		splash: {
 			image: './assets/images/splash.png',
 			resizeMode: 'contain',
