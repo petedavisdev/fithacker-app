@@ -39,7 +39,7 @@ export function checkThisWeek(dates: string[]) {
 }
 
 export function checkLastWeek(dates: string[]) {
-	const dateAWeekAgo = new Date(new Date().setDate(new Date().getDate() - 7))
+	const dateAWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
 		.toISOString()
 		.slice(0, 10);
 
