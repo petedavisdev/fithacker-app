@@ -177,9 +177,9 @@ describe('getLastMonday', () => {
 		expect(result).toEqual(expected);
 	});
 	it('should return previous Monday from given date', () => {
-		const input = '2024-11-29';
+		const input = '2025-01-05';
 
-		const expected = '2024-11-25';
+		const expected = '2024-12-30';
 
 		const result = getLastMonday(input);
 
