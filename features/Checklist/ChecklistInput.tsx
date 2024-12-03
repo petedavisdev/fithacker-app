@@ -36,7 +36,7 @@ export function ChecklistInput(props: ChecklistInputProps) {
 					props.isDisabled
 						? 'border-transparent'
 						: props.isChecked
-						? 'border-yellow-500 shadow shadow-yellow-700'
+						? 'border-yellow-500 shadow shadow-yellow-700 bg-[#112]'
 						: 'border-cyan-500 shadow shadow-cyan-700'
 				}`}
 			>

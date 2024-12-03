@@ -1,8 +1,9 @@
-import { Link, useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { KeyboardAvoidingView, Text, View } from 'react-native';
+import { KeyboardAvoidingView, Text } from 'react-native';
 import { getDateInfo } from '../features/dateInfo';
 import { Checklist } from '../features/Checklist/Checklist';
+import { AButton } from '../features/Atoms/AButton';
 
 export default function HomeScreen() {
 	const { t } = useTranslation();
@@ -32,11 +33,7 @@ export default function HomeScreen() {
 				<Checklist dateInfo={dateInfo} />
 			</KeyboardAvoidingView>
 
-			<Link href="/chart">
-				<View className="w-20 h-20 flex items-center justify-center border-2 border-yellow-500 rounded-full bg-black shadow shadow-yellow-700">
-					<Text className="text-4xl">👉</Text>
-				</View>
-			</Link>
+			<AButton href="/chart">👉</AButton>
 		</>
 	);
 }

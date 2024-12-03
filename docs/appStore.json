@@ -2,27 +2,32 @@
 	"de": {
 		"subtitle": "Die einfache Fitness-App",
 		"description": "Fithacker hilft Ihnen dabei, die Bewegung zu bekommen, die Ihr Körper für langfristige Fitness, Kraft und Mobilität braucht.",
-		"keywords": "Fitness, Übung, fit, Übungstagebuch, Tagebuch, Übungstracker"
+		"keywords": "Fitness, Übung, fit, Übungstagebuch, Tagebuch, Übungstracker",
+		"update": "Fehlerbehebungen"
 	},
 	"en": {
 		"subtitle": "Log your exercise to keep fit",
 		"description": "Fithacker helps you get all the exercise your body needs for long-term fitness, strength and mobility.",
-		"keywords": "fitness, exercise, fit, exercise log, log, exercise tracker"
+		"keywords": "fitness, exercise, fit, exercise log, log, exercise tracker",
+		"update": "Bug fixes"
 	},
 	"es": {
 		"subtitle": "La sencilla app de fitness",
 		"description": "Fithacker le ayuda a realizar todo el ejercicio que su cuerpo necesita para mantener su forma física, fuerza y ​​movilidad a largo plazo.",
-		"keywords": "fitness, ejercicio, en forma, registro de ejercicio, registro, tracker de ejercicio"
+		"keywords": "fitness, ejercicio, en forma, registro de ejercicio, registro, tracker de ejercicio",
+		"update": "Correcciones de errores"
 	},
 	"fr": {
 		"subtitle": "L'app de fitness simple",
 		"description": "Fithacker vous aide à faire tous les exercices dont votre corps a besoin pour une forme physique, une force et une mobilité à long terme.",
-		"keywords": "fitness, entraînement, en forme, journal d'entraînement, journal, suivi des entraînements"
+		"keywords": "fitness, entraînement, en forme, journal d'entraînement, journal, suivi des entraînements",
+		"update": "Corrections de bugs"
 	},
 	"it": {
 		"subtitle": "La semplice app per il fitness",
 		"description": "Fithacker ti aiuta a ottenere tutto l'esercizio di cui il tuo corpo ha bisogno per fitness, forza e mobilità a lungo termine.",
-		"keywords": "fitness, esercizio, in forma, registro esercizi, registro, tracker esercizi"
+		"keywords": "fitness, esercizio, in forma, registro esercizi, registro, tracker esercizi",
+		"update": "Correzioni di bug"
 	},
 	"ja": {
 		"subtitle": "シンプルなフィットネスアプリ",
@@ -32,16 +37,19 @@
 	"ko": {
 		"subtitle": "간단한 피트니스 앱",
 		"description": "Fithacker는 장기적인 건강, 근력 및 이동성을 위한 모든 운동을 도와줍니다.",
-		"keywords": "피트니스, 운동, 습관 추적기, 건강, 운동 기록, 기록, 운동 추적기"
+		"keywords": "피트니스, 운동, 습관 추적기, 건강, 운동 기록, 기록, 운동 추적기",
+		"update": "버그 수정 및 개선"
 	},
 	"pt": {
 		"subtitle": "Aptidão simples",
 		"description": "Fithacker ajuda você a obter todos os exercícios que seu corpo precisa para um condicionamento físico, força e mobilidade de longo prazo.",
-		"keywords": "fitness, exercício, em forma, registro de exercício, registro, tracker de exercício"
+		"keywords": "fitness, exercício, em forma, registro de exercício, registro, tracker de exercício",
+		"update": "Correções de bugs"
 	},
 	"zh": {
 		"subtitle": "简单的健身应用程序",
 		"description": "Fithacker可以帮助你记录每日运动,帮助你保持健康。",
-		"keywords": "健康，运动，习惯追踪，健康保持，训练，运动记录，记录，运动追踪"
+		"keywords": "健康，运动，习惯追踪，健康保持，训练，运动记录，记录，运动追踪",
+		"update": "小错误修复和改进"
 	}
 }
