@@ -11,6 +11,12 @@
 		"upgradeDescription": "전체 기록을 보고 이 앱의 개발을 지원하려면 업그레이드하세요",
 		"upgradeMessage": "지난 주를 넘어서 돌아보고 싶으신가요?"
 	},
+	"_?": {
+		"daysSince": "운동한 지 며칠",
+		"suggestion": "제안",
+		"suggestionsEachDay": "매일 두 가지 제안을 받습니다.",
+		"suggestionsTomorrow": "오늘 할 수 있는 일을 완료하고 내일의 제안을 살펴보세요."
+	},
 	"_@": {
 		"email": "이메일",
 		"loggedIn": "로그인됨",

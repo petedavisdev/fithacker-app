@@ -11,6 +11,12 @@
 		"upgradeDescription": "升级以查看完整历史记录并支持此应用程序的开发",
 		"upgradeMessage": "想回顾上周之前的记录吗？"
 	},
+	"_?": {
+		"daysSince": "距离上次锻炼",
+		"suggestion": "建议",
+		"suggestionsEachDay": "每天您将收到两条建议。",
+		"suggestionsTomorrow": "完成今天能做的事情，然后看看明天的建议。"
+	},
 	"_@": {
 		"email": "电子邮件",
 		"loggedIn": "已登录",

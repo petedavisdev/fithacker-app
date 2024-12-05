@@ -11,6 +11,12 @@
 		"upgradeDescription": "Aggiorna per vedere la tua cronologia completa e supportare lo sviluppo di questa app",
 		"upgradeMessage": "Vuoi guardare indietro oltre la scorsa settimana?"
 	},
+	"_?": {
+		"daysSince": "Giorni dall'esercizio",
+		"suggestion": "Suggerimento",
+		"suggestionsEachDay": "Ricevi due suggerimenti ogni giorno.",
+		"suggestionsTomorrow": "Completa quello che puoi oggi, poi guarda i suggerimenti di domani."
+	},
 	"_@": {
 		"email": "Email",
 		"loggedIn": "Accesso effettuato con",

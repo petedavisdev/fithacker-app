@@ -11,6 +11,12 @@
 		"upgradeDescription": "Upgrade to see your full history and support the development of this app",
 		"upgradeMessage": "Want to look back past last week?"
 	},
+	"_?": {
+		"daysSince": "Days since exercise",
+		"suggestion": "Suggestion",
+		"suggestionsEachDay": "You get two suggestions each day.",
+		"suggestionsTomorrow": "Complete what you can today, then look at tomorrow's suggestions."
+	},
 	"_@": {
 		"email": "Email",
 		"loggedIn": "Logged in with",

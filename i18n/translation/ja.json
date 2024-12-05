@@ -11,6 +11,12 @@
 		"upgradeDescription": "完全な履歴を表示し、このアプリの開発をサポートするためにアップグレードしてください",
 		"upgradeMessage": "先週以前を振り返りたいですか？"
 	},
+	"_?": {
+		"daysSince": "運動してからの日数",
+		"suggestion": "提案",
+		"suggestionsEachDay": "毎日2つの提案を受け取ります。",
+		"suggestionsTomorrow": "今日できることを完了してから、明日の提案を検討してください。"
+	},
 	"_@": {
 		"email": "メール",
 		"loggedIn": "でログインしました",

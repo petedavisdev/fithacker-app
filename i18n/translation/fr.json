@@ -11,6 +11,12 @@
 		"upgradeDescription": "Mettez à niveau pour voir votre historique complet et soutenir le développement de cette application",
 		"upgradeMessage": "Vous voulez regarder au-delà de la semaine dernière?"
 	},
+	"_?": {
+		"daysSince": "Jours depuis l'exercice",
+		"suggestion": "Suggestions",
+		"suggestionsEachDay": "Vous recevez deux suggestions chaque jour.",
+		"suggestionsTomorrow": "Complétez ce que vous pouvez aujourd'hui, puis examinez les suggestions de demain."
+	},
 	"_@": {
 		"email": "Email",
 		"loggedIn": "Connecté avec",
