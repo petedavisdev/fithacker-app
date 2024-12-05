@@ -4,10 +4,9 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Slot } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
-import { SafeAreaView, StatusBar, View } from 'react-native';
+import { SafeAreaView, StatusBar } from 'react-native';
 import 'react-native-reanimated';
 import '../global.css';
-import { TheHeader } from '../features/TheHeader/TheHeader';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -40,11 +39,7 @@ export default function RootLayout() {
 				}}
 			>
 				<SafeAreaView className="flex-1 w-full">
-					<TheHeader />
-
-					<View className="flex-1 items-center justify-center gap-10">
-						<Slot />
-					</View>
+					<Slot />
 				</SafeAreaView>
 			</LinearGradient>
 

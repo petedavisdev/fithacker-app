@@ -1,9 +1,10 @@
 import { useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { KeyboardAvoidingView, Text } from 'react-native';
+import { KeyboardAvoidingView, Text, View } from 'react-native';
 import { getDateInfo } from '../features/dateInfo';
 import { Checklist } from '../features/Checklist/Checklist';
 import { AButton } from '../features/Atoms/AButton';
+import { TheHeader } from '../features/TheHeader/TheHeader';
 
 export default function HomeScreen() {
 	const { t } = useTranslation();
@@ -23,17 +24,23 @@ export default function HomeScreen() {
 
 	return (
 		<>
-			<Text
-				className={`w-96 px-4 text-cyan-300 text-2xl text-center text-balance font-mono capitalize ${dateClassName}`}
-			>
-				{date ? t(dateInfo.text) : t('_.whatExerciseToday')}
-			</Text>
+			<TheHeader
+				buttonRight={dateInfo.category === 'today' ? 'help' : undefined}
+			/>
 
-			<KeyboardAvoidingView behavior="padding">
-				<Checklist dateInfo={dateInfo} />
-			</KeyboardAvoidingView>
+			<View className="flex-1 items-center justify-center gap-10">
+				<Text
+					className={`w-96 px-4 text-cyan-300 text-2xl text-center text-balance font-mono capitalize ${dateClassName}`}
+				>
+					{date ? t(dateInfo.text) : t('_.whatExerciseToday')}
+				</Text>
 
-			<AButton href="/chart">👉</AButton>
+				<KeyboardAvoidingView behavior="padding">
+					<Checklist dateInfo={dateInfo} />
+				</KeyboardAvoidingView>
+
+				<AButton href="/chart">👉</AButton>
+			</View>
 		</>
 	);
 }

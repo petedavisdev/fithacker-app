@@ -21,10 +21,10 @@ export function Help(props: HelpProps) {
 
 	return (
 		<Modal animationType="slide" transparent={true} visible={props.isOpen}>
-			<View className="flex-1 flex p-2 bg-[#0006]">
-				<Pressable onPress={props.onClose} className="h-32" />
+			<View className="flex-1 flex p-2 bg-[#000c]">
+				<Pressable onPress={props.onClose} className="flex-1" />
 
-				<View className="flex-1 flex gap-10 justify-evenly items-center bg-[#112] p-6 rounded-3xl">
+				<View className="flex gap-10 items-center bg-[#112] p-10 rounded-3xl">
 					<View className="flex-row items-center gap-5">
 						<Text className="text-3xl" />
 						{checkboxExample}
