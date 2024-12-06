@@ -19,7 +19,7 @@ export function ChartDay(props: ChartDayProps) {
 	const DATE_TEXT_COLORS = {
 		future: 'text-slate-500',
 		today: 'text-pink-400',
-		tomorrow: 'text-slate-500',
+		tomorrow: 'text-slate-400',
 		weekend: 'text-yellow-500',
 		weekday: 'text-cyan-500',
 	};
@@ -35,6 +35,16 @@ export function ChartDay(props: ChartDayProps) {
 	};
 
 	const dateLineColor = DATE_LINE_COLORS[dateInfo.category];
+
+	const DATE_UNDERLINE_COLORS = {
+		future: '',
+		tomorrow: 'border-slate-600',
+		today: 'border-pink-600',
+		weekend: 'border-yellow-700',
+		weekday: 'border-cyan-700',
+	};
+
+	const dateUnderlineColor = DATE_UNDERLINE_COLORS[dateInfo.category];
 
 	return (
 		<Link href={`/?date=${props.date}` as Href} disabled={isDisabled}>
@@ -69,8 +79,10 @@ export function ChartDay(props: ChartDayProps) {
 				<View className={`h-[2px] w-12 ${dateLineColor}`} />
 
 				<Text
-					className={`font-mono leading ${dateTextColor} ${
-						isDisabled ? '' : 'underline'
+					className={`font-mono leading pb-0.5 border-b ${dateTextColor} ${
+						isDisabled
+							? 'border-transparent'
+							: `${dateUnderlineColor}`
 					}`}
 				>
 					{t(`_day.${dateInfo.dayIndex}`).slice(0, 3)}
