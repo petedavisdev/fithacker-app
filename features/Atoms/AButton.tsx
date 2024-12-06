@@ -14,7 +14,6 @@ type AButtonProps = (LinkButtonProps | PressableButtonProps) & {
 	children: React.ReactNode;
 	color?: 'pink';
 	size?: 'sm';
-	isHidden?: boolean;
 };
 
 export function AButton(props: AButtonProps) {
@@ -38,22 +37,8 @@ export function AButton(props: AButtonProps) {
 	);
 
 	if ('href' in props) {
-		return (
-			<Link
-				href={props.href}
-				className={props.isHidden ? 'invisible' : ''}
-			>
-				{button}
-			</Link>
-		);
+		return <Link href={props.href}>{button}</Link>;
 	} else {
-		return (
-			<Pressable
-				onPress={props.onPress}
-				className={props.isHidden ? 'invisible' : ''}
-			>
-				{button}
-			</Pressable>
-		);
+		return <Pressable onPress={props.onPress}>{button}</Pressable>;
 	}
 }

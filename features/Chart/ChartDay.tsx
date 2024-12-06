@@ -68,7 +68,11 @@ export function ChartDay(props: ChartDayProps) {
 
 				<View className={`h-[2px] w-12 ${dateLineColor}`} />
 
-				<Text className={`font-mono leading ${dateTextColor}`}>
+				<Text
+					className={`font-mono leading ${dateTextColor} ${
+						isDisabled ? '' : 'underline'
+					}`}
+				>
 					{t(`_day.${dateInfo.dayIndex}`).slice(0, 3)}
 				</Text>
 			</View>
