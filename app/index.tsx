@@ -24,22 +24,26 @@ export default function HomeScreen() {
 	const dateClassName = DATE_CLASS_NAMES[dateInfo.category];
 
 	return (
-		<KeyboardAwareScrollView keyboardOpeningTime={0}>
+		<View className="flex-1 items-center gap-10">
 			<TheHeader
 				buttonRight={dateInfo.category === 'today' ? 'help' : undefined}
 			/>
 
-			<View className="flex-1 items-center justify-center gap-10">
+			<View className="w-96 px-4 flex flex-grow justify-center">
 				<Text
-					className={`w-96 px-4 text-cyan-300 text-2xl text-center text-balance font-mono capitalize ${dateClassName}`}
+					className={` text-cyan-300 text-2xl text-center text-balance font-mono capitalize ${dateClassName}`}
 				>
 					{date ? t(dateInfo.text) : t('_.whatExerciseToday')}
 				</Text>
+			</View>
 
+			<KeyboardAwareScrollView keyboardOpeningTime={0}>
 				<Checklist dateInfo={dateInfo} />
+			</KeyboardAwareScrollView>
 
+			<View className="flex-grow">
 				<AButton href="/chart">👉</AButton>
 			</View>
-		</KeyboardAwareScrollView>
+		</View>
 	);
 }

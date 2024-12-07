@@ -39,7 +39,7 @@ export function TheHeader(props: TheHeaderProps) {
 
 	return (
 		<View className="w-full flex-row justify-center p-4">
-			<View className="w-96 flex-row justify-between">
+			<View className="w-full flex-row justify-between">
 				<View className="h-10 w-10">
 					{props.buttonLeft && headerButtons[props.buttonLeft]}
 				</View>
