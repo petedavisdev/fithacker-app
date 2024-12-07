@@ -17,7 +17,7 @@ export function Help(props: HelpProps) {
 
 	const checkboxExample = (
 		<View className="w-12 h-12 justify-center items-center rounded-lg border-2 bg-black relative border-cyan-500 shadow shadow-cyan-700">
-			<Text className="text-cyan-400">3</Text>
+			<Text className="text-cyan-400 font-mono">2</Text>
 			<View className="absolute -top-1 -right-1">{dot}</View>
 		</View>
 	);
@@ -48,7 +48,8 @@ export function Help(props: HelpProps) {
 						</Text>
 
 						<Text className="text-cyan-400">
-							3 = {t('_?.daysSince')}
+							<Text className="font-mono">2</Text> ={' '}
+							{t('_?.daysSince')}
 						</Text>
 					</View>
 

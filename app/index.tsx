@@ -24,7 +24,7 @@ export default function HomeScreen() {
 	const dateClassName = DATE_CLASS_NAMES[dateInfo.category];
 
 	return (
-		<View className="flex-1 items-center gap-10">
+		<View className="flex-1 items-center gap-5">
 			<TheHeader
 				buttonRight={dateInfo.category === 'today' ? 'help' : undefined}
 			/>
