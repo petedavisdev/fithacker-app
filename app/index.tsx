@@ -5,6 +5,7 @@ import { getDateInfo } from '../features/dateInfo';
 import { Checklist } from '../features/Checklist/Checklist';
 import { AButton } from '../features/Atoms/AButton';
 import { TheHeader } from '../features/TheHeader/TheHeader';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export default function HomeScreen() {
 	const { t } = useTranslation();
@@ -23,7 +24,7 @@ export default function HomeScreen() {
 	const dateClassName = DATE_CLASS_NAMES[dateInfo.category];
 
 	return (
-		<>
+		<KeyboardAwareScrollView keyboardOpeningTime={0}>
 			<TheHeader
 				buttonRight={dateInfo.category === 'today' ? 'help' : undefined}
 			/>
@@ -35,12 +36,10 @@ export default function HomeScreen() {
 					{date ? t(dateInfo.text) : t('_.whatExerciseToday')}
 				</Text>
 
-				<KeyboardAvoidingView behavior="padding">
-					<Checklist dateInfo={dateInfo} />
-				</KeyboardAvoidingView>
+				<Checklist dateInfo={dateInfo} />
 
 				<AButton href="/chart">👉</AButton>
 			</View>
-		</>
+		</KeyboardAwareScrollView>
 	);
 }
