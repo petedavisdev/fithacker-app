@@ -6,7 +6,7 @@ import { getDateInfo } from '../dateInfo';
 
 type ChartDayProps = {
 	date: string;
-	exercises?: ExerciseDay | ['🔒'];
+	exercises?: ExerciseDay;
 };
 
 export function ChartDay(props: ChartDayProps) {

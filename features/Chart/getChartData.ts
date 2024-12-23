@@ -5,7 +5,7 @@ import { checkThisWeek, getWeekText } from './getWeekText';
 export type ChartData = {
 	days: ExerciseLog;
 	text: string;
-	total: number | '🔒';
+	total: number;
 };
 
 export function getChartData(exerciseLog: ExerciseLog) {
