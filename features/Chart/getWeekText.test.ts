@@ -1,4 +1,4 @@
-import { checkLastWeek, checkThisWeek, getWeekText } from './getWeekText';
+import { checkThisWeek, getWeekText } from './getWeekText';
 
 jest.useFakeTimers({ now: new Date('2022-02-26T00:00:00') });
 
@@ -145,62 +145,6 @@ describe('checkThisWeek', () => {
 		const expected = false;
 
 		const result = checkThisWeek(dates);
-
-		expect(result).toEqual(expected);
-	});
-});
-
-describe('checkLastWeek', () => {
-	it('should return true last week', () => {
-		const dates = [
-			'2022-02-14',
-			'2022-02-15',
-			'2022-02-16',
-			'2022-02-17',
-			'2022-02-18',
-			'2022-02-19',
-			'2022-02-20',
-		];
-
-		const expected = true;
-
-		const result = checkLastWeek(dates);
-
-		expect(result).toEqual(expected);
-	});
-
-	it('should return false this week', () => {
-		const dates = [
-			'2022-02-21',
-			'2022-02-22',
-			'2022-02-23',
-			'2022-02-24',
-			'2022-02-25',
-			'2022-02-26',
-			'2022-02-27',
-		];
-
-		const expected = false;
-
-		const result = checkLastWeek(dates);
-
-		expect(result).toEqual(expected);
-	});
-
-	it('should return false week before last', () => {
-		const dates = [
-			'2022-02-07',
-			'2022-02-08',
-			'2022-02-09',
-			'2022-02-10',
-			'2022-02-11',
-			'2022-02-12',
-			'2022-02-13',
-		];
-
-		const expected = false;
-
-		const result = checkLastWeek(dates);
 
 		expect(result).toEqual(expected);
 	});

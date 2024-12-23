@@ -7,10 +7,6 @@
 		"whatExerciseToday": "Welche Übung hast du heute gemacht?",
 		"yesterday": "Gestern"
 	},
-	"_$": {
-		"upgradeDescription": "Upgrade, um deine gesamte Historie zu sehen und die Entwicklung dieser App zu unterstützen",
-		"upgradeMessage": "Möchtest du weiter als letzte Woche zurückblicken?"
-	},
 	"_?": {
 		"daysSince": "Tage seit dem Übung",
 		"suggestion": "Vorschlag",

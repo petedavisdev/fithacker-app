@@ -7,10 +7,6 @@
 		"whatExerciseToday": "今日はどんな運動をしましたか？",
 		"yesterday": "昨日"
 	},
-	"_$": {
-		"upgradeDescription": "完全な履歴を表示し、このアプリの開発をサポートするためにアップグレードしてください",
-		"upgradeMessage": "先週以前を振り返りたいですか？"
-	},
 	"_?": {
 		"daysSince": "運動してからの日数",
 		"suggestion": "提案",

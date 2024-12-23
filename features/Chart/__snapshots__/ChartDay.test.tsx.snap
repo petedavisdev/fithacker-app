@@ -32,7 +32,7 @@ exports[`renders correctly 1`] = `
       className="h-[2px] w-12 bg-yellow-500 shadow shadow-yellow-500"
     />
     <Text
-      className="font-mono leading text-yellow-500"
+      className="font-mono leading pb-0.5 border-b text-yellow-500 border-yellow-700"
     >
       _da
     </Text>

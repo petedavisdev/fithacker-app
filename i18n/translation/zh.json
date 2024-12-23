@@ -7,10 +7,6 @@
 		"whatExerciseToday": "今天做了什么运动？",
 		"yesterday": "昨天"
 	},
-	"_$": {
-		"upgradeDescription": "升级以查看完整历史记录并支持此应用程序的开发",
-		"upgradeMessage": "想回顾上周之前的记录吗？"
-	},
 	"_?": {
 		"daysSince": "距离上次锻炼",
 		"suggestion": "建议",

@@ -1,6 +1,6 @@
-import type { Exercise, ExerciseLog } from '../EXERCISES';
+import type { ExerciseLog } from '../EXERCISES';
 import { getLastMonday, getToday } from '../dateInfo';
-import { checkLastWeek, checkThisWeek, getWeekText } from './getWeekText';
+import { checkThisWeek, getWeekText } from './getWeekText';
 
 export type ChartData = {
 	days: ExerciseLog;
@@ -8,10 +8,7 @@ export type ChartData = {
 	total: number | '🔒';
 };
 
-export function getChartData(
-	exerciseLog: ExerciseLog,
-	isUpgraded: boolean = false
-) {
+export function getChartData(exerciseLog: ExerciseLog) {
 	const firstDate = Object.keys(exerciseLog).sort()[0] ?? getToday();
 	let date = getLastMonday(firstDate);
 
@@ -31,17 +28,8 @@ export function getChartData(
 		}
 
 		const dates = Object.keys(days);
-
-		const isLocked = checkLocked(isUpgraded, dates);
-
-		if (isLocked) {
-			for (const date in days) {
-				days[date] = ['🔒' as Exercise];
-			}
-		}
-
 		const text = getWeekText(dates);
-		const total = isLocked ? '🔒' : Object.values(days).flat().length;
+		const total = Object.values(days).flat().length;
 
 		weeks.unshift({ days, text, total });
 
@@ -49,8 +37,4 @@ export function getChartData(
 	}
 
 	return weeks;
-}
-
-function checkLocked(isUpgraded: boolean, dates: string[]) {
-	return !isUpgraded && !checkThisWeek(dates) && !checkLastWeek(dates);
 }

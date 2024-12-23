@@ -13,8 +13,7 @@ export function ChartDay(props: ChartDayProps) {
 	const { t } = useTranslation();
 	const { filter } = useLocalSearchParams<{ filter?: Exercise | '' }>();
 	const dateInfo = getDateInfo(props.date);
-	const isLocked = props.exercises?.[0] === '🔒';
-	const isDisabled = isLocked || dateInfo.category === 'future';
+	const isDisabled = dateInfo.category === 'future';
 
 	const DATE_TEXT_COLORS = {
 		future: 'text-slate-500',

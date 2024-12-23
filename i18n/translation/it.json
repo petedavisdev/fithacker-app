@@ -7,10 +7,6 @@
 		"whatExerciseToday": "Quale esercizio hai fatto oggi?",
 		"yesterday": "Ieri"
 	},
-	"_$": {
-		"upgradeDescription": "Aggiorna per vedere la tua cronologia completa e supportare lo sviluppo di questa app",
-		"upgradeMessage": "Vuoi guardare indietro oltre la scorsa settimana?"
-	},
 	"_?": {
 		"daysSince": "Giorni dall'esercizio",
 		"suggestion": "Suggerimento",

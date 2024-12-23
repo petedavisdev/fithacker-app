@@ -7,10 +7,6 @@
 		"whatExerciseToday": "오늘 어떤 운동을 했나요?",
 		"yesterday": "어제"
 	},
-	"_$": {
-		"upgradeDescription": "전체 기록을 보고 이 앱의 개발을 지원하려면 업그레이드하세요",
-		"upgradeMessage": "지난 주를 넘어서 돌아보고 싶으신가요?"
-	},
 	"_?": {
 		"daysSince": "운동한 지 며칠",
 		"suggestion": "제안",
