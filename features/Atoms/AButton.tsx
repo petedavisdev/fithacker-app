@@ -14,6 +14,7 @@ type AButtonProps = (LinkButtonProps | PressableButtonProps) & {
 	children: React.ReactNode;
 	color?: 'pink';
 	size?: 'sm';
+	isDisabled?: boolean;
 };
 
 export function AButton(props: AButtonProps) {
@@ -36,7 +37,9 @@ export function AButton(props: AButtonProps) {
 		</View>
 	);
 
-	if ('href' in props) {
+	if (props.isDisabled) {
+		return <View className="opacity-35">{button}</View>;
+	} else if ('href' in props) {
 		return <Link href={props.href}>{button}</Link>;
 	} else {
 		return <Pressable onPress={props.onPress}>{button}</Pressable>;

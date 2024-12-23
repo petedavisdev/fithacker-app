@@ -1,17 +1,19 @@
 import { useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { KeyboardAvoidingView, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { getDateInfo } from '../features/dateInfo';
 import { Checklist } from '../features/Checklist/Checklist';
 import { AButton } from '../features/Atoms/AButton';
 import { TheHeader } from '../features/TheHeader/TheHeader';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { getDateSteps } from '../features/Checklist/getDateSteps';
 
 export default function HomeScreen() {
 	const { t } = useTranslation();
 
 	const { date } = useLocalSearchParams<{ date: string }>();
 	const dateInfo = getDateInfo(date?.toString());
+	const { prev, next } = getDateSteps(dateInfo.date);
 
 	const DATE_CLASS_NAMES = {
 		future: 'text-slate-500',
@@ -41,8 +43,14 @@ export default function HomeScreen() {
 				<Checklist dateInfo={dateInfo} />
 			</KeyboardAwareScrollView>
 
-			<View className="flex-grow">
-				<AButton href="/chart">👉</AButton>
+			<View className="flex-grow w-96 flex-row justify-between items-center">
+				<AButton href={`/?date=${prev}`} size="sm">
+					👈
+				</AButton>
+				<AButton href="/chart">👍</AButton>
+				<AButton href={`/?date=${next}`} size="sm" isDisabled={!next}>
+					👉
+				</AButton>
 			</View>
 		</View>
 	);
