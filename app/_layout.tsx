@@ -6,6 +6,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { SafeAreaView, StatusBar } from 'react-native';
 import 'react-native-reanimated';
+import { useNewDay } from '../features/useNewDay';
 import '../global.css';
 
 SplashScreen.preventAutoHideAsync();
@@ -17,6 +18,8 @@ export default function RootLayout() {
 		UbuntuMonoItalic: require('../assets/fonts/UbuntuMono-Italic.ttf'),
 		UbuntuMonoBoldItalic: require('../assets/fonts/UbuntuMono-BoldItalic.ttf'),
 	});
+
+	const day = useNewDay();
 
 	useEffect(() => {
 		if (fontLoaded) {
@@ -39,7 +42,7 @@ export default function RootLayout() {
 				}}
 			>
 				<SafeAreaView className="flex-1 w-full">
-					<Slot />
+					<Slot key={day} />
 				</SafeAreaView>
 			</LinearGradient>
 

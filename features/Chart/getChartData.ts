@@ -1,5 +1,5 @@
 import type { ExerciseLog } from '../EXERCISES';
-import { getLastMonday, getToday } from '../dateInfo';
+import { getLastMonday, getDate } from '../dateInfo';
 import { checkThisWeek, getWeekText } from './getWeekText';
 
 export type ChartData = {
@@ -9,7 +9,7 @@ export type ChartData = {
 };
 
 export function getChartData(exerciseLog: ExerciseLog) {
-	const firstDate = Object.keys(exerciseLog).sort()[0] ?? getToday();
+	const firstDate = Object.keys(exerciseLog).sort()[0] ?? getDate();
 	let date = getLastMonday(firstDate);
 
 	const weeks: ChartData[] = [];
@@ -24,7 +24,7 @@ export function getChartData(exerciseLog: ExerciseLog) {
 
 			const currentDate = new Date(date);
 			currentDate.setDate(currentDate.getDate() + 1);
-			date = currentDate.toISOString().slice(0, 10);
+			date = getDate(currentDate);
 		}
 
 		const dates = Object.keys(days);

@@ -1,7 +1,7 @@
-import { getToday } from '../dateInfo';
+import { getDate } from '../dateInfo';
 
 export function getDateSteps(date: string) {
-	const today = getToday();
+	const today = getDate();
 	const isFuture = date > today;
 	const next = isFuture ? null : getNextDate(date);
 
@@ -15,15 +15,13 @@ function getPrevDate(date: string) {
 	const prevDate = new Date(
 		new Date(date).setDate(new Date(date).getDate() - 1)
 	);
-	return prevDate.toISOString().slice(0, 10);
+	return getDate(prevDate);
 }
 
 function getNextDate(date: string) {
 	const nextDate = new Date(
 		new Date(date).setDate(new Date(date).getDate() + 1)
-	)
-		.toISOString()
-		.slice(0, 10);
+	);
 
-	return nextDate;
+	return getDate(nextDate);
 }

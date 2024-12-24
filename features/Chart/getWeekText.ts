@@ -1,4 +1,4 @@
-import { checkThisMonth, checkThisYear, getToday } from '../dateInfo';
+import { checkThisMonth, checkThisYear, getDate } from '../dateInfo';
 import { getLanguage } from '../getLanguage';
 
 type WeekTextOption = {
@@ -35,13 +35,13 @@ export function getWeekText(dates: string[]) {
 }
 
 export function checkThisWeek(dates: string[]) {
-	return dates.includes(getToday());
+	return dates.includes(getDate());
 }
 
 function checkLastWeek(dates: string[]) {
-	const dateAWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
-		.toISOString()
-		.slice(0, 10);
+	const dateAWeekAgo = getDate(
+		new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+	);
 
 	return dates.includes(dateAWeekAgo);
 }

@@ -3,7 +3,7 @@ import {
 	checkThisYear,
 	getDateInfo,
 	getLastMonday,
-	getToday,
+	getDate,
 } from './dateInfo';
 
 jest.useFakeTimers({ now: new Date('2022-02-26T00:00:00') });
@@ -158,11 +158,11 @@ describe('getDateInfo', () => {
 	});
 });
 
-describe('getToday', () => {
+describe('getDate', () => {
 	it("should return today's date", () => {
 		const expected = '2022-02-26';
 
-		const result = getToday();
+		const result = getDate();
 
 		expect(result).toEqual(expected);
 	});

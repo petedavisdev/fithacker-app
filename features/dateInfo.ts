@@ -72,30 +72,34 @@ export function getDateInfo(dateVal?: string): DateInfo {
 	};
 }
 
-export function getToday() {
-	return new Date().toISOString().slice(0, 10);
+export function getDate(date?: string | Date) {
+	const jsDate = date ? new Date(date) : new Date();
+	const year = jsDate.getFullYear();
+	const month = (jsDate.getMonth() + 1).toString().padStart(2, '0');
+	const day = jsDate.getDate().toString().padStart(2, '0');
+	return `${year}-${month}-${day}`;
 }
 
 function getValidDate(date?: string) {
-	return date && Date.parse(date) ? date : getToday();
+	return date && Date.parse(date) ? date : getDate();
 }
 
 function checkToday(date: string) {
-	return date === getToday();
+	return date === getDate();
 }
 
 function checkTomorrow(date: string) {
 	const tomorrow = new Date(new Date().setDate(new Date().getDate() + 1));
-	return date === tomorrow.toISOString().slice(0, 10);
+	return date === getDate(tomorrow);
 }
 
 function checkYesterday(date: string) {
 	const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
-	return date === yesterday.toISOString().slice(0, 10);
+	return date === getDate(yesterday);
 }
 
 function checkFuture(date: string) {
-	return date > getToday();
+	return date > getDate();
 }
 
 export function getLastMonday(dateVal?: string) {
@@ -107,7 +111,7 @@ export function getLastMonday(dateVal?: string) {
 	const lastMonday = new Date(
 		jsDate.getTime() - ((jsDate.getDay() || 7) - 1) * 24 * 60 * 60 * 1000
 	);
-	return lastMonday.toISOString().slice(0, 10);
+	return getDate(lastMonday);
 }
 
 function checkThisWeek(date: string) {
@@ -115,11 +119,11 @@ function checkThisWeek(date: string) {
 }
 
 export function checkThisMonth(date: string) {
-	return date.slice(0, 7) === getToday().slice(0, 7);
+	return date.slice(0, 7) === getDate().slice(0, 7);
 }
 
 export function checkThisYear(date: string) {
-	return date.slice(0, 4) === getToday().slice(0, 4);
+	return date.slice(0, 4) === getDate().slice(0, 4);
 }
 
 function getWeekdayCategory(dayIndex: number) {
