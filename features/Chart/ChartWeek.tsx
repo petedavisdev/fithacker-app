@@ -13,7 +13,7 @@ export function ExerciseChartWeek(props: ExerciseChartWeekProps) {
 	return (
 		<>
 			<View className="justify-center items-end gap-2 ml-1">
-				<View className="flex-row gap-1">
+				<View className="flex-row">
 					{Object.entries(props.weekData.days).map(
 						([date, exercises]) => (
 							<ChartDay

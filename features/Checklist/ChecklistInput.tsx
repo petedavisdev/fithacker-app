@@ -65,12 +65,13 @@ export function ChecklistInput(props: ChecklistInputProps) {
 				<TextInput
 					placeholder={placeholder}
 					placeholderTextColor={'slategray'}
-					className="text-yellow-400 font-mono border-y-2 border-b-yellow-500 border-t-transparent w-64 py-3 focus:border-yellow-200 focus:text-pink-400 focus:border-b-pink-500"
+					className="text-yellow-400 font-mono border-y-2 border-b-yellow-500 border-t-transparent w-64 py-3  focus:text-pink-400 focus:border-b-pink-500 outline-none"
 					defaultValue={props.note}
 					onChangeText={(value) => setNote(value || undefined)}
 					onFocus={() => setPlaceholder('')}
 					onBlur={() => setPlaceholder(t(props.exercise))}
 					maxLength={60}
+					onClick={(e: Event) => e.stopPropagation()}
 				/>
 			) : (
 				<Text
