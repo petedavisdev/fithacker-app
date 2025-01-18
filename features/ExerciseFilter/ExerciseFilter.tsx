@@ -28,7 +28,7 @@ export function ExerciseFilter(props: ExerciseFilterProps) {
 		<>
 			<ComponentToFilter exerciseLog={filteredExerciseLog} />
 
-			<View className="flex-row justify-center items-center gap-1">
+			<View className="flex-row justify-center items-center">
 				<Pressable onPress={() => updateFilter()}>
 					<View
 						className={`h-0.5 w-14 ${

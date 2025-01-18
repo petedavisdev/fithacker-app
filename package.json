@@ -14,7 +14,10 @@
 		"ios:pre": "eas build --profile=preview --platform=ios",
 		"ios:prod": "eas build --platform=ios",
 		"ios:submit": "eas submit --platform=ios",
-		"ios:update:prod": "eas update --channel production"
+		"ios:update:prod": "eas update --channel production",
+		"web:build": "npx expo export --platform web",
+		"web:pre": "eas deploy --alias preview",
+		"web:prod": "eas deploy --prod"
 	},
 	"expo": {
 		"doctor": {

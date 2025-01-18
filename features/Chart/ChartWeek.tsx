@@ -3,11 +3,11 @@ import { ChartDay } from './ChartDay';
 import { type ChartData } from './getChartData';
 import { useTranslation } from 'react-i18next';
 
-type ExerciseChartWeekProps = {
+type ChartWeekProps = {
 	weekData: ChartData;
 };
 
-export function ExerciseChartWeek(props: ExerciseChartWeekProps) {
+export function ChartWeek(props: ChartWeekProps) {
 	const { t } = useTranslation();
 
 	return (

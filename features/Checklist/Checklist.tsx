@@ -17,7 +17,7 @@ export function Checklist(props: ChecklistProps) {
 	const isDisabled = ['future', 'tomorrow'].includes(props.dateInfo.category);
 
 	return (
-		<View className="w-96 flex gap-6">
+		<View className="w-96 flex gap-6 px-4">
 			{checklist.map((item) => {
 				return (
 					<ChecklistInput

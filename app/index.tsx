@@ -1,12 +1,13 @@
+import { Text, View } from 'react-native';
+
+import { AButton } from '../features/Atoms/AButton';
+import { Checklist } from '../features/Checklist/Checklist';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { TheHeader } from '../features/TheHeader/TheHeader';
+import { getDateInfo } from '../features/dateInfo';
+import { getDateSteps } from '../features/Checklist/getDateSteps';
 import { useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { Text, View } from 'react-native';
-import { getDateInfo } from '../features/dateInfo';
-import { Checklist } from '../features/Checklist/Checklist';
-import { AButton } from '../features/Atoms/AButton';
-import { TheHeader } from '../features/TheHeader/TheHeader';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { getDateSteps } from '../features/Checklist/getDateSteps';
 
 export default function HomeScreen() {
 	const { t } = useTranslation();
@@ -43,7 +44,7 @@ export default function HomeScreen() {
 				<Checklist dateInfo={dateInfo} />
 			</KeyboardAwareScrollView>
 
-			<View className="flex-grow w-96 flex-row justify-between items-center">
+			<View className="flex-grow w-96 flex-row justify-between items-center px-4">
 				<AButton href={`/?date=${prev}`} size="sm">
 					👈
 				</AButton>

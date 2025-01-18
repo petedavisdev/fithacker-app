@@ -1,5 +1,6 @@
 import { ScrollViewStyleReset } from 'expo-router/html';
 import { type PropsWithChildren } from 'react';
+import { Image } from 'react-native';
 
 /**
  * This file is web-only and used to configure the root HTML for every web page during static rendering.
@@ -7,8 +8,9 @@ import { type PropsWithChildren } from 'react';
  */
 export default function Root({ children }: PropsWithChildren) {
 	return (
-		<html lang="en">
+		<html lang="en" style={{ backgroundColor: 'black' }}>
 			<head>
+				<title>Fithacker</title>
 				<meta charSet="utf-8" />
 				<meta httpEquiv="X-UA-Compatible" content="IE=edge" />
 				<meta
@@ -23,7 +25,20 @@ export default function Root({ children }: PropsWithChildren) {
 				<ScrollViewStyleReset />
 				{/* Add any additional <head> elements that you want globally available on web... */}
 			</head>
-			<body>{children}</body>
+			<body>
+				<main className="grid place-items-center h-full">
+					<div className=" h-full max-h-[800px] w-full">
+						{children}
+					</div>
+				</main>
+
+				<a
+					className="absolute top-5 left-4 text-white"
+					href="https://apps.apple.com/us/app/fithacker/id6737473687?platform=iphone"
+				>
+					<img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" />
+				</a>
+			</body>
 		</html>
 	);
 }

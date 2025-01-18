@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { FlatList } from 'react-native';
 import { type ExerciseLog } from '../EXERCISES';
 import { getChartData } from './getChartData';
-import { ExerciseChartWeek } from './ChartWeek';
+import { ChartWeek } from './ChartWeek';
 
 type ChartProps = {
 	exerciseLog: ExerciseLog;
@@ -23,7 +23,7 @@ export function Chart(props: ChartProps) {
 			data={chartData}
 			keyExtractor={({ days }) => Object.keys(days)[0]}
 			renderItem={({ item: weekData }) => (
-				<ExerciseChartWeek weekData={weekData} />
+				<ChartWeek weekData={weekData} />
 			)}
 		/>
 	);
