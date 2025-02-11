@@ -1,8 +1,10 @@
 # FITHACKER V2
 
-I am using this pet project to learn React Native and Expo.
+A simple fitness app built with React Native and Expo.
 
-I previously built V1 using Vue and Supabase, which can be found here: [fithacker.app](https://fithacker.app)
+[Apple App Store](https://apps.apple.com/us/app/fithacker/id6737473687)
+
+[fithacker.app](https://fithacker.app)
 
 ## V2 Screenshots
 
