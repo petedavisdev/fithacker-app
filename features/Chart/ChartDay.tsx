@@ -75,7 +75,10 @@ export function ChartDay(props: ChartDayProps) {
 					);
 				})}
 
-				<View className={`h-[2px] w-12 ${dateLineColor}`} />
+				{/* scale-x to remove gap in ios */}
+				<View
+					className={`h-[2px] w-12 scale-x-[1.01] ${dateLineColor}`}
+				/>
 
 				<Text
 					className={`font-mono leading pb-0.5 border-b ${dateTextColor} ${

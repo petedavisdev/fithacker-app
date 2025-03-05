@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import { FlatList } from 'react-native';
 import { type ExerciseLog } from '../EXERCISES';
 import { getChartData } from './getChartData';
@@ -9,13 +8,10 @@ type ChartProps = {
 };
 
 export function Chart(props: ChartProps) {
-	const flatListRef = useRef<FlatList>(null);
-
 	const chartData = getChartData(props.exerciseLog);
 
 	return (
 		<FlatList
-			ref={flatListRef}
 			horizontal
 			showsHorizontalScrollIndicator={false}
 			initialNumToRender={2}

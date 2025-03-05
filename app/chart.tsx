@@ -1,7 +1,7 @@
-import { View } from 'react-native';
 import { Chart } from '../features/Chart/Chart';
 import { ExerciseFilter } from '../features/ExerciseFilter/ExerciseFilter';
 import { TheHeader } from '../features/TheHeader/TheHeader';
+import { View } from 'react-native';
 
 export default function chart() {
 	return (
