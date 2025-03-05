@@ -1,8 +1,10 @@
-import { View, Text } from 'react-native';
-import React from 'react';
-import { Link } from 'expo-router';
+import { Text, View } from 'react-native';
+
 import { AButton } from '../Atoms/AButton';
-import { Help } from './Help';
+import { AModal } from '../Atoms/AModal';
+import { HelpSuggestions } from './HelpSuggestions';
+import { Link } from 'expo-router';
+import React from 'react';
 
 const headerButtons = {
 	account: (
@@ -58,7 +60,9 @@ export function TheHeader(props: TheHeaderProps) {
 				</View>
 			</View>
 
-			<Help isOpen={isHelpOpen} onClose={closeHelp} />
+			<AModal isOpen={isHelpOpen} onClose={closeHelp}>
+				<HelpSuggestions />
+			</AModal>
 		</View>
 	);
 }

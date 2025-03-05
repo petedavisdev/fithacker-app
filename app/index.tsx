@@ -34,7 +34,7 @@ export default function HomeScreen() {
 
 			<View className="w-96 px-4 flex flex-grow justify-center">
 				<Text
-					className={` text-cyan-300 text-2xl text-center text-balance font-mono capitalize ${dateClassName}`}
+					className={` text-cyan-300 text-2xl text-center text-balance font-mono first-letter:uppercase ${dateClassName}`}
 				>
 					{date ? t(dateInfo.text) : t('_.whatExerciseToday')}
 				</Text>
