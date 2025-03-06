@@ -1,14 +1,20 @@
 import '@/i18n';
-import { useFonts } from 'expo-font';
-import { LinearGradient } from 'expo-linear-gradient';
-import { Slot } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
-import { SafeAreaView, StatusBar } from 'react-native';
 import 'react-native-reanimated';
-import { useNewDay } from '../features/useNewDay';
 import '../global.css';
 
+import * as SplashScreen from 'expo-splash-screen';
+
+import { SafeAreaView, StatusBar } from 'react-native';
+import { createContext, useEffect, useState } from 'react';
+
+import { LinearGradient } from 'expo-linear-gradient';
+import { Slot } from 'expo-router';
+import { User } from '@supabase/supabase-js';
+import { supabase } from '../features/User/supabase';
+import { useFonts } from 'expo-font';
+import { useNewDay } from '../features/useNewDay';
+
+export const UserContext = createContext<User | null>(null);
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -27,12 +33,27 @@ export default function RootLayout() {
 		}
 	}, [fontLoaded]);
 
+	const [user, setUser] = useState<User | null>(null);
+
+	useEffect(() => {
+		supabase.auth.getSession().then(({ data: { session } }) => {
+			setUser(session?.user || null);
+
+			console.log('session', session?.user);
+		});
+
+		supabase.auth.onAuthStateChange((_event, session) => {
+			console.log('session', session?.user);
+			setUser(session?.user || null);
+		});
+	}, []);
+
 	if (!fontLoaded) {
 		return null;
 	}
 
 	return (
-		<>
+		<UserContext.Provider value={user}>
 			<LinearGradient
 				colors={['black', '#112', '#112', 'black']}
 				style={{
@@ -47,6 +68,6 @@ export default function RootLayout() {
 			</LinearGradient>
 
 			<StatusBar barStyle="light-content" />
-		</>
+		</UserContext.Provider>
 	);
 }

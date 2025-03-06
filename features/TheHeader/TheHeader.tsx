@@ -1,11 +1,13 @@
+import React, { useContext } from 'react';
 import { Text, View } from 'react-native';
 
 import { AButton } from '../Atoms/AButton';
 import { AModal } from '../Atoms/AModal';
 import { HelpSuggestions } from './HelpSuggestions';
 import { Link } from 'expo-router';
-import React from 'react';
 import { User } from '../User/User';
+import { UserAccount } from '../User/UserAccount';
+import { UserContext } from '../../app/_layout';
 
 const headerButtons = {
 	account: <></>,
@@ -21,18 +23,15 @@ type TheHeaderProps = {
 
 export function TheHeader(props: TheHeaderProps) {
 	const [isAccountOpen, setIsAccountOpen] = React.useState(false);
+	const user = useContext(UserContext);
 
 	headerButtons.account = (
 		<AButton onPress={() => setIsAccountOpen(true)} size="sm">
-			👋
+			{user ? '😎' : '👋'}
 		</AButton>
 	);
 
 	const [isHelpOpen, setIsHelpOpen] = React.useState(false);
-
-	function closeHelp() {
-		setIsHelpOpen(false);
-	}
 
 	headerButtons.help = (
 		<AButton onPress={() => setIsHelpOpen(true)} color="pink" size="sm">
@@ -65,7 +64,7 @@ export function TheHeader(props: TheHeaderProps) {
 				isOpen={isAccountOpen}
 				onClose={() => setIsAccountOpen(false)}
 			>
-				<User />
+				<UserAccount />
 			</AModal>
 
 			<AModal isOpen={isHelpOpen} onClose={() => setIsHelpOpen(false)}>
