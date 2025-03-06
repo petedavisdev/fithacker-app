@@ -5,13 +5,10 @@ import { AModal } from '../Atoms/AModal';
 import { HelpSuggestions } from './HelpSuggestions';
 import { Link } from 'expo-router';
 import React from 'react';
+import { User } from '../User/User';
 
 const headerButtons = {
-	account: (
-		<AButton href="/account" size="sm">
-			👋
-		</AButton>
-	),
+	account: <></>,
 	help: <></>,
 };
 
@@ -23,18 +20,22 @@ type TheHeaderProps = {
 };
 
 export function TheHeader(props: TheHeaderProps) {
-	const [isHelpOpen, setIsHelpOpen] = React.useState(false);
+	const [isAccountOpen, setIsAccountOpen] = React.useState(false);
 
-	function open() {
-		setIsHelpOpen(true);
-	}
+	headerButtons.account = (
+		<AButton onPress={() => setIsAccountOpen(true)} size="sm">
+			👋
+		</AButton>
+	);
+
+	const [isHelpOpen, setIsHelpOpen] = React.useState(false);
 
 	function closeHelp() {
 		setIsHelpOpen(false);
 	}
 
 	headerButtons.help = (
-		<AButton onPress={open} color="pink" size="sm">
+		<AButton onPress={() => setIsHelpOpen(true)} color="pink" size="sm">
 			?
 		</AButton>
 	);
@@ -60,7 +61,14 @@ export function TheHeader(props: TheHeaderProps) {
 				</View>
 			</View>
 
-			<AModal isOpen={isHelpOpen} onClose={closeHelp}>
+			<AModal
+				isOpen={isAccountOpen}
+				onClose={() => setIsAccountOpen(false)}
+			>
+				<User />
+			</AModal>
+
+			<AModal isOpen={isHelpOpen} onClose={() => setIsHelpOpen(false)}>
 				<HelpSuggestions />
 			</AModal>
 		</View>

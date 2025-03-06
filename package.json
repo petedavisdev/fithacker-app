@@ -16,8 +16,8 @@
 		"ios:submit": "eas submit --platform=ios",
 		"ios:update:prod": "eas update --channel production",
 		"web:build": "npx expo export --platform web",
-		"web:pre": "eas deploy --alias preview",
-		"web:prod": "eas deploy --prod"
+		"web:pre": "npm run web:build && eas deploy --alias preview",
+		"web:prod": "npm run web:build && eas deploy --prod"
 	},
 	"expo": {
 		"doctor": {
@@ -33,9 +33,11 @@
 		"@expo/vector-icons": "^14.0.2",
 		"@react-native-async-storage/async-storage": "1.23.1",
 		"@react-navigation/native": "^7.0.0",
+		"@supabase/supabase-js": "^2.49.1",
 		"expo": "^52.0.0",
 		"expo-blur": "~14.0.1",
 		"expo-constants": "~17.0.3",
+		"expo-dev-client": "~5.0.12",
 		"expo-font": "~13.0.1",
 		"expo-linear-gradient": "^14.0.1",
 		"expo-linking": "~7.0.3",
@@ -60,8 +62,7 @@
 		"react-native-screens": "~4.1.0",
 		"react-native-web": "~0.19.13",
 		"react-native-webview": "13.12.2",
-		"tailwindcss": "^3.4.14",
-		"expo-dev-client": "~5.0.12"
+		"tailwindcss": "^3.4.14"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.25.2",

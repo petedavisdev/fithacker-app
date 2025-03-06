@@ -6,7 +6,7 @@ import { View } from 'react-native';
 export default function chart() {
 	return (
 		<>
-			<TheHeader />
+			<TheHeader buttonRight="account" />
 
 			<View className="flex-1 items-center justify-center gap-10">
 				<ExerciseFilter componentToFilter={Chart} />

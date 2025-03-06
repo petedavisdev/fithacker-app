@@ -1,6 +1,7 @@
+import { Pressable, Text, TextInput, View } from 'react-native';
+
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, Text, TextInput, View } from 'react-native';
 
 export default function account() {
 	const { t } = useTranslation();
