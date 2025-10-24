@@ -1,0 +1,42 @@
+---
+description: Styling conventions using NativeWind and design system
+globs: **/*.tsx
+alwaysApply: false
+---
+
+# Styling & Design System
+
+## NativeWind/Tailwind
+
+- Use NativeWind (Tailwind for React Native) via `className` prop
+- NO inline `style` prop unless absolutely necessary (e.g., LinearGradient)
+- Prefer Tailwind utilities over custom CSS
+
+## Color Palette (Strictly Enforced)
+
+**Source of Truth**: `tailwind.config.js` (`theme.colors`)
+
+Only colors defined in config are available - attempts to use others will fail:
+- Background: `bg-bg` (custom `#112`)
+- Accents: yellow, cyan, pink, slate (specific shades only)
+- Always match shadow colors to border colors (darker shade)
+- Date-based color semantics: See `features/Chart/ChartDay.tsx`
+
+## Typography
+
+**Source of Truth**: `tailwind.config.js` (`theme.extend.fontFamily`)
+
+- Font family: **Ubuntu Mono** for everything
+- Use `font-mono` class
+- No other fonts allowed
+
+## Root Layout Gradient
+
+**Source of Truth**: `app/_layout.tsx` (LinearGradient component) - do not change
+
+## Anti-Patterns
+
+- ❌ Don't use inline styles (except LinearGradient)
+- ❌ Don't use non-monospace fonts
+- ❌ Don't add colors outside the defined palette
+- ❌ Don't forget to add shadow when adding borders

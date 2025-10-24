@@ -32,9 +32,7 @@ export function ExerciseFilter(props: ExerciseFilterProps) {
 				<Pressable onPress={() => updateFilter()}>
 					<View
 						className={`h-0.5 w-14 ${
-							!filter
-								? ' bg-pink-500 shadow shadow-pink-500'
-								: 'bg-slate-800'
+							!filter ? ' bg-pink-500 shadow shadow-pink-500' : 'bg-slate-800'
 						}`}
 					/>
 					<Text className="text-cyan-500 w-14 h-12 text-center text-xs font-mono my-3">
@@ -44,10 +42,7 @@ export function ExerciseFilter(props: ExerciseFilterProps) {
 					</Text>
 				</Pressable>
 				{Object.values(EXERCISES).map((exercise) => (
-					<Pressable
-						key={exercise}
-						onPress={() => updateFilter(exercise)}
-					>
+					<Pressable key={exercise} onPress={() => updateFilter(exercise)}>
 						<View
 							className={`h-[2px] w-14 shadow-none ${
 								filter === exercise

@@ -1,0 +1,38 @@
+---
+description: Expo Router patterns and navigation conventions
+globs: **/*.tsx
+alwaysApply: false
+---
+
+# Expo Router & Navigation
+
+## Expo Router
+
+- File-based routing from `/app` directory
+- Typed routes enabled: use `as Href` for dynamic routes
+- Use `useLocalSearchParams<{ paramName: type }>()` for type-safe params
+- Links: `<Link href="/path">` or `AButton href="/path"`
+
+## Navigation Patterns
+
+**Source of Truth**: Files in `/app` directory
+
+- No tab/drawer navigation - simple stack-based routing
+- Routes defined by file structure in `/app` directory
+- Date selection via URL params: `/?date=2022-02-26`
+
+## Screen Structure
+
+**Examples**: See any file in `/app` directory (index.tsx, chart.tsx, account.tsx)
+
+- Always include TheHeader component
+- Use proper layout structure with flex-1, gap, etc.
+- SafeAreaView used in root layout (`app/_layout.tsx`)
+- Default export required for route files
+
+## Platform Considerations
+
+**Source of Truth**: `app.config.js` (ios, android, web configurations)
+
+- App supports iOS, Android, and Web
+- Web-specific checks: See `i18n/index.ts` for example (`Platform.OS !== 'web'`)

@@ -7,9 +7,8 @@ export function filterExerciseLog(exerciseLog: ExerciseLog, filter?: Exercise) {
 		Object.entries(exerciseLog).map(([date, exerciseDay]) => [
 			date,
 			exerciseDay?.filter(
-				(exerciseItem) =>
-					exerciseItem === filter || exerciseItem[0] === filter
+				(exerciseItem) => exerciseItem === filter || exerciseItem[0] === filter,
 			),
-		])
+		]),
 	);
 }

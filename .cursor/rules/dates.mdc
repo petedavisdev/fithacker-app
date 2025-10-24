@@ -1,0 +1,35 @@
+---
+description: Date handling conventions and patterns
+globs: *.ts,*.tsx
+alwaysApply: false
+---
+
+# Date Handling
+
+## Date Format
+
+- ALWAYS use `YYYY-MM-DD` format for dates (e.g., `'2022-02-26'`)
+- Use `getDate()` utility function from `dateInfo.ts` to create date strings
+- Never store Date objects in state or AsyncStorage - always use date strings
+- Date category logic is centralized in `dateInfo.ts`
+
+## Date Categories
+
+**Source of Truth**: `features/dateInfo.ts` (see `DateCategory` type)
+
+Date category logic is defined in `dateInfo.ts`:
+
+- Category determination based on date comparisons
+- Day index checks (0=Sunday, 6=Saturday) for weekends
+- Text formatting for each category
+
+## Common Patterns
+
+- Use `getDateInfo(date)` to get category, text, and dayIndex
+- Use `getDate()` to convert Date objects to YYYY-MM-DD strings
+- Use `getLastMonday(date)` for week calculations
+- Date comparisons: Use string comparison (`date > getDate()`)
+
+## Anti-Patterns
+
+- ❌ Don't use Date objects in state/storage - use YYYY-MM-DD strings

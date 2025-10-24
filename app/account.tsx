@@ -18,8 +18,8 @@ export default function account() {
 
 			<TextInput
 				placeholder={placeholder}
-				placeholderTextColor={'hotpink'}
-				className="text-lg text-yellow-400 font-mono border-y-2 border-b-yellow-500 border-t-transparent pb-3 pt-6 focus:border-yellow-200"
+				placeholderTextColor={'#f472b6'}
+				className="text-lg text-yellow-400 font-mono border-y-2 border-b-yellow-500 border-t-transparent pb-3 pt-6 focus:text-pink-400 focus:border-b-pink-500"
 				value={email}
 				onChangeText={(value) => setEmail(value)}
 				onFocus={() => setPlaceholder('')}

@@ -15,7 +15,7 @@ export function AModal(props: AModalProps) {
 			<View className="flex-1 flex px-2 pb-8 bg-[#000c]">
 				<Pressable onPress={props.onClose} className="flex-1" />
 
-				<View className="flex gap-10 items-center bg-[#112] p-10 rounded-3xl">
+				<View className="flex gap-10 items-center bg-bg p-10 rounded-3xl">
 					{props.children}
 
 					<AButton onPress={props.onClose}>👍</AButton>

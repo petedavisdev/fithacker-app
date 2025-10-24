@@ -20,7 +20,7 @@ type AButtonProps = (LinkButtonProps | PressableButtonProps) & {
 export function AButton(props: AButtonProps) {
 	const button: JSX.Element = (
 		<View
-			className={`flex items-center justify-center border-2  bg-[#112] rounded-full shadow  ${
+			className={`flex items-center justify-center border-2 bg-bg rounded-full shadow ${
 				props.color === 'pink'
 					? 'border-pink-600 shadow-pink-700'
 					: 'border-yellow-600 shadow-yellow-700'

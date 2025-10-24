@@ -14,7 +14,7 @@ export function useNewDay() {
 	useEffect(() => {
 		const eventListener = AppState.addEventListener(
 			'change',
-			handleAppStateChange
+			handleAppStateChange,
 		);
 
 		return () => {

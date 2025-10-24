@@ -1,0 +1,36 @@
+---
+description: TypeScript conventions and type safety standards
+globs: **/*.ts,**/*.tsx
+alwaysApply: false
+---
+
+# TypeScript Conventions
+
+## Type Safety
+
+- Strict mode enabled (see `tsconfig.json`: `"strict": true`)
+- Use `as const` for arrays that become type sources (see `features/EXERCISES.ts`)
+
+## Type Patterns
+
+- Derive types from constants using `typeof`: `type Exercise = (typeof EXERCISES)[number]`
+- Use discriminated unions for polymorphic props: `(LinkButtonProps | PressableButtonProps) & CommonProps`
+- Export types alongside data from constant files (e.g., `EXERCISES.ts` exports both `EXERCISES` and `Exercise`)
+- Use `Record<string, T>` for object maps with string keys
+- Props interfaces: Use `[ComponentName]Props` naming pattern
+
+## Type Examples
+
+**Derived types**: See `features/EXERCISES.ts` (Exercise type derived from EXERCISES array)
+**Discriminated unions**: See `features/Atoms/AButton.tsx` (LinkButtonProps | PressableButtonProps)
+
+## Constants
+
+- ALL_CAPS for true constants
+- `as const` for readonly arrays/objects
+- Export from dedicated files (e.g., `EXERCISES.ts`)
+
+## Anti-Patterns
+
+- ❌ Don't use `any` type
+- ❌ Don't use manual enums - use `as const` arrays instead

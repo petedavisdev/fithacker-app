@@ -109,7 +109,7 @@ export function getLastMonday(dateVal?: string) {
 	if (jsDate.getDay() === 1) return date;
 
 	const lastMonday = new Date(
-		jsDate.getTime() - ((jsDate.getDay() || 7) - 1) * 24 * 60 * 60 * 1000
+		jsDate.getTime() - ((jsDate.getDay() || 7) - 1) * 24 * 60 * 60 * 1000,
 	);
 	return getDate(lastMonday);
 }

@@ -1,0 +1,35 @@
+---
+description: UI/UX patterns including emojis, buttons, and modals
+globs: **/*.tsx
+alwaysApply: false
+---
+
+# UI/UX Patterns
+
+## Emoji Usage
+
+- Use emojis extensively instead of traditional icons
+- **Exercise emojis**: See `features/EXERCISES.ts` (`EXERCISES` array)
+- **UI action emojis**: 👍 (confirm), 👈 (previous), 👉 (next), 👋 (account), ? (help)
+- NEVER replace these with icon libraries (no Ionicons, FontAwesome, etc.)
+
+## Button Patterns
+
+**Source of Truth**: `features/Atoms/AButton.tsx`
+
+- Use `AButton` component for all buttons
+- Supports two modes: Link (`href` prop) or Pressable (`onPress` prop)
+- See component for available sizes, colors, and props
+- Examples: See usage in `features/TheHeader/TheHeader.tsx` and `app/index.tsx`
+
+## Modal Patterns
+
+**Source of Truth**: `features/Atoms/AModal.tsx`
+
+- Use `AModal` component for all overlays
+- See component for styling and behavior
+
+## Anti-Patterns
+
+- ❌ Don't use icon libraries (Ionicons, FontAwesome, etc.)
+- ❌ Don't translate emoji keys (they ARE the keys)

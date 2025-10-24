@@ -1,0 +1,95 @@
+---
+description: Guide for writing and maintaining Cursor commands
+globs: .cursor/commands/*.md
+alwaysApply: false
+---
+
+# FitHacker Cursor Commands
+
+Commands automate common tasks and guide development workflows.
+
+## Philosophy: Interactive & Intelligent
+
+Commands work with **minimal initial input** and ask follow-up questions:
+
+- ✅ **Optional parameters**: `[param?]` - prompt if not provided
+- ✅ **Smart defaults**: Use current file/context when applicable
+- ✅ **Read state first**: Check current values before prompting
+- ✅ **Reference source**: Point to files instead of duplicating values
+- ❌ **Don't require everything upfront**: Make user fill in all parameters
+
+## Keep Only Useful Commands
+
+**Create commands for:** High frequency × complexity • Project-specific workflows • Interactive guidance
+
+**Avoid commands for:** One-liners • Generic IDE features • Trivial manual tasks
+
+### Structure Requirements
+
+```markdown
+# /command-name
+
+Brief description.
+
+## Usage
+
+[param?] [param2?]
+
+If no X provided, prompts: "What X?"
+If no Y provided, uses current file/detects from context.
+
+## What it does
+
+- Reads current state from source
+- Prompts for missing info
+- References rules and source files
+
+## References
+
+See `.cursor/rules/rule-name.mdc` for:
+- Related conventions
+
+**Source of Truth**:
+- Key files/values referenced by this command
+```
+
+## Adding New Commands
+
+Before creating a command, ask:
+
+1. **Is it high-value?** Frequency × complexity score
+2. **Is it project-specific?** Leverages FitHacker patterns
+3. **Can it be interactive?** Prompts for missing info
+4. **Will it stay current?** References source, not hardcodes
+
+If yes to all → create it.
+
+## Examples of Good Commands
+
+**Interactive with defaults:**
+```markdown
+/prepare-release [version?]
+
+If no version: reads current from app.config.js, prompts for bump type
+```
+
+**Context-aware:**
+```markdown
+/this-test
+
+Detects if current file is component or function, creates appropriate test
+```
+
+**Smart prompting:**
+```markdown
+/add-translation [key?] [description?]
+
+Prompts for missing params, then asks for translation in each language
+```
+
+## Why This Approach Works
+
+**Before:** `/new-feature Settings SettingsScreen` (requires knowing all params) ❌  
+**After:** `/new-feature` → "What feature?" → uses smart defaults ✅
+
+Benefits: Lower barrier to use • Guides through process • Adapts to context

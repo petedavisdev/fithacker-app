@@ -1,0 +1,29 @@
+---
+description: Build and deployment conventions
+globs: app.config.js,eas.json,package.json
+alwaysApply: false
+---
+
+# Build & Deploy
+
+## NPM Scripts
+
+**Source of Truth**: `package.json` (`scripts` section)
+
+## Environment Variants
+
+**Source of Truth**: `app.config.js` (`APP_VARIANTS` array)
+
+Set `APP_VARIANT` env var to control build variant
+
+## Version Updates
+
+**Source of Truth**: `app.config.js` (`expo.version`)
+
+- Single source of truth for app versioning (maps to iOS CFBundleShortVersionString and Android versionName)
+- Must use full semver format: `"Major.Minor.Patch"` (e.g., `"1.2.0"`) - required by Apple
+- Used as `runtimeVersion` for EAS OTA updates (see `app.config.js` runtimeVersion policy)
+
+## Supported Platforms
+
+**Source of Truth**: `app.config.js` (`ios`, `android`, `web` configurations)

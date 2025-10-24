@@ -13,14 +13,14 @@ export function getDateSteps(date: string) {
 
 function getPrevDate(date: string) {
 	const prevDate = new Date(
-		new Date(date).setDate(new Date(date).getDate() - 1)
+		new Date(date).setDate(new Date(date).getDate() - 1),
 	);
 	return getDate(prevDate);
 }
 
 function getNextDate(date: string) {
 	const nextDate = new Date(
-		new Date(date).setDate(new Date(date).getDate() + 1)
+		new Date(date).setDate(new Date(date).getDate() + 1),
 	);
 
 	return getDate(nextDate);

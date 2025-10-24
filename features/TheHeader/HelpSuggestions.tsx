@@ -19,19 +19,12 @@ export function HelpSuggestions() {
 			<View className="flex items-start gap-5">
 				<View className="flex-row items-center">
 					{dot}
-					<Text className="text-pink-400">
-						{' '}
-						= {t('_?.suggestion')}
-					</Text>
+					<Text className="text-pink-400"> = {t('_?.suggestion')}</Text>
 				</View>
 
-				<Text className="text-pink-400">
-					{t('_?.suggestionsEachDay')}
-				</Text>
+				<Text className="text-pink-400">{t('_?.suggestionsEachDay')}</Text>
 
-				<Text className="text-pink-400">
-					{t('_?.suggestionsTomorrow')}
-				</Text>
+				<Text className="text-pink-400">{t('_?.suggestionsTomorrow')}</Text>
 
 				<Text className="text-cyan-400">
 					<Text className="font-mono">2</Text> = {t('_?.daysSince')}

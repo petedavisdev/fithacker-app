@@ -1,0 +1,25 @@
+---
+description: Exercise system conventions and data structures
+globs: features/EXERCISES.ts,features/**/Checklist*.ts,features/**/Checklist*.tsx,features/useExerciseLog.ts
+alwaysApply: false
+---
+
+# Exercise System
+
+## Exercise Constants
+
+**Source of Truth**: `features/EXERCISES.ts`
+
+- `EXERCISES` array defines all available exercises (emojis)
+- `EXERCISE_PRIORITIES` object defines priority weights (0-2) for highlighting
+- Order in `EXERCISES` array determines sort order in UI
+
+## Exercise Data Structure
+
+See `features/EXERCISES.ts` for complete type definitions:
+
+- `EXERCISES` - Array of exercise emojis (with `as const`)
+- `Exercise` - Derived type from `EXERCISES` array
+- `ExerciseItem` - Exercise or [Exercise, note string]
+- `ExerciseDay` - Array of ExerciseItems
+- `ExerciseLog` - Record mapping date strings to ExerciseDays

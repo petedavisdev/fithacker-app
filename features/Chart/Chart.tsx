@@ -18,9 +18,7 @@ export function Chart(props: ChartProps) {
 			inverted
 			data={chartData}
 			keyExtractor={({ days }) => Object.keys(days)[0]}
-			renderItem={({ item: weekData }) => (
-				<ChartWeek weekData={weekData} />
-			)}
+			renderItem={({ item: weekData }) => <ChartWeek weekData={weekData} />}
 		/>
 	);
 }

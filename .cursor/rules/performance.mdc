@@ -1,0 +1,21 @@
+---
+description: Performance optimization patterns
+globs: **/*.tsx
+alwaysApply: false
+---
+
+# Performance
+
+## List Rendering
+
+**Source of Truth**: `features/Chart/Chart.tsx`
+
+- Use `inverted` prop for reverse chronological order
+- Set `initialNumToRender` low for performance
+- Use descriptive `keyExtractor` functions
+
+## Debouncing
+
+**Example**: See `features/Checklist/ChecklistInput.tsx` (500ms debounce for note updates)
+
+- Use setTimeout/clearTimeout pattern in useEffect for debouncing

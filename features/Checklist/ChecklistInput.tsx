@@ -36,8 +36,8 @@ export function ChecklistInput(props: ChecklistInputProps) {
 					props.isDisabled
 						? 'border-transparent'
 						: props.isChecked
-						? 'border-yellow-500 shadow shadow-yellow-700 bg-[#112]'
-						: 'border-cyan-500 shadow shadow-cyan-700'
+							? 'border-yellow-500 shadow shadow-yellow-700 bg-bg'
+							: 'border-cyan-500 shadow shadow-cyan-700'
 				}`}
 			>
 				{props.isChecked ? (
@@ -45,9 +45,7 @@ export function ChecklistInput(props: ChecklistInputProps) {
 				) : (
 					<Text
 						className={`font-mono text-lg ${
-							props.isDisabled
-								? 'text-slate-400'
-								: 'text-cyan-400'
+							props.isDisabled ? 'text-slate-400' : 'text-cyan-400'
 						}`}
 					>
 						{props.dayCount}
@@ -64,7 +62,7 @@ export function ChecklistInput(props: ChecklistInputProps) {
 			{props.isChecked ? (
 				<TextInput
 					placeholder={placeholder}
-					placeholderTextColor={'slategray'}
+					placeholderTextColor={'#64748b'}
 					className="text-yellow-400 font-mono border-y-2 border-b-yellow-500 border-t-transparent w-64 py-3  focus:text-pink-400 focus:border-b-pink-500 outline-none"
 					defaultValue={props.note}
 					onChangeText={(value) => setNote(value || undefined)}

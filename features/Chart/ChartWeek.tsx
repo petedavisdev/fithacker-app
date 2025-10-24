@@ -13,15 +13,9 @@ export function ChartWeek(props: ChartWeekProps) {
 	return (
 		<View className="justify-center items-end gap-2 ml-2">
 			<View className="flex-row">
-				{Object.entries(props.weekData.days).map(
-					([date, exercises]) => (
-						<ChartDay
-							date={date}
-							exercises={exercises}
-							key={date}
-						/>
-					)
-				)}
+				{Object.entries(props.weekData.days).map(([date, exercises]) => (
+					<ChartDay date={date} exercises={exercises} key={date} />
+				))}
 			</View>
 
 			<Text className="text-cyan-500 text-xl px-2 font-mono">

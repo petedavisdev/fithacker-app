@@ -17,7 +17,7 @@ const APP_VARIANTS = [
 ];
 
 const variant = APP_VARIANTS.find(
-	(variant) => variant.env === process.env.APP_VARIANT
+	(variant) => variant.env === process.env.APP_VARIANT,
 );
 const bundleIdentifier = variant?.id;
 const name = variant?.name;
@@ -26,7 +26,7 @@ export default {
 	expo: {
 		name: name || 'Fithacker',
 		slug: 'fithacker-app',
-		version: '1.1',
+		version: '1.1.0',
 		orientation: 'portrait',
 		icon: './assets/images/icon.png',
 		newArchEnabled: true,

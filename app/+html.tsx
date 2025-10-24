@@ -27,9 +27,7 @@ export default function Root({ children }: PropsWithChildren) {
 			</head>
 			<body>
 				<main className="grid place-items-center h-full">
-					<div className=" h-full max-h-[800px] w-full">
-						{children}
-					</div>
+					<div className=" h-full max-h-[800px] w-full">{children}</div>
 				</main>
 
 				<a

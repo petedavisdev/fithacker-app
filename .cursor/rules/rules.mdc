@@ -1,0 +1,93 @@
+---
+description: Guide for writing and maintaining Cursor rules
+globs: .cursor/rules/*.mdc
+alwaysApply: false
+---
+
+# FitHacker Cursor Rules
+
+This directory contains context-aware rules for Cursor AI to follow when working on the FitHacker codebase.
+
+## Philosophy: Show, Don't Tell
+
+These rules **reference the source of truth** in the codebase rather than duplicating information:
+
+- ✅ **Point to examples**: "See `features/EXERCISES.ts`" 
+- ✅ **Reference actual files**: "Check `app.config.js` for languages"
+- ✅ **Show patterns in use**: "Examples: `features/Chart/Chart.tsx`"
+- ❌ **Don't duplicate**: Hardcoded values that can change
+
+This ensures rules **never get stale** - the codebase documents itself.
+
+## How Rules Apply
+
+### Coverage Strategy
+
+Rules apply **where patterns are used**, not just where they're defined:
+
+- **Broad globs** (e.g., `**/*.ts,**/*.tsx`) for patterns used throughout
+- **Specific globs** (e.g., `**/*.test.tsx`) for targeted patterns
+- **Always apply** (`alwaysApply: true`) for core architectural rules
+
+### Frontmatter Controls Application
+
+```markdown
+---
+description: Brief description of what this rule covers
+globs: **/*.ts,**/*.tsx
+alwaysApply: false
+---
+```
+
+- `globs`: File patterns where rule applies (no quotes!)
+- `alwaysApply`: `true` = all files, `false` = use globs
+
+## Adding New Rules
+
+When adding new rules:
+
+1. **Create** a new `.mdc` file in this directory
+2. **Add frontmatter** with `description`, `globs`, and `alwaysApply`
+3. **Reference, don't duplicate**: Point to source files instead of copying values
+4. **Use broad globs**: Apply where patterns are used, not just defined
+5. **Keep focused**: One concern per file
+
+### Writing Rules: Best Practices
+
+✅ **Do:**
+- **Reference**: "See `features/EXERCISES.ts` for types"
+- **Point to examples**: "Example: `features/Chart/Chart.tsx`"
+- **Use broad globs**: `**/*.ts,**/*.tsx` if pattern used throughout
+- **Explain why**: Include rationale for non-obvious patterns
+- **Keep concise**: < 100 lines; shorten or split if longer
+- **Cover opinionated choices**: Document non-obvious conventions, not industry standards
+- **Update with decisions**: Add to rules when making opinionated choices
+
+❌ **Don't:**
+- **Hardcode values**: "Exercises: 🚶, 🏃‍♀️..." (gets outdated)
+- **Copy code**: Show where it lives, don't duplicate it
+- **Use narrow globs**: If pattern used elsewhere, broaden scope
+- **Document obvious**: Skip general React/TypeScript best practices
+
+### Frontmatter Examples
+
+```markdown
+# Always apply
+alwaysApply: true
+
+# Broad pattern (used throughout)
+globs: **/*.ts,**/*.tsx
+
+# Specific files
+globs: app.config.js,eas.json,package.json
+
+# Component files only
+globs: **/*.tsx
+```
+
+## Why Reference Instead of Duplicate?
+
+**Before:** `Supported languages: de, en, es, fr, it, ja, ko, pt, zh` ❌ (gets stale)  
+**After:** `**Source of Truth**: i18n/index.ts (resources object)` ✅ (always accurate)
+
+Benefits: Never outdated • Single source of truth • Less maintenance • See real implementations

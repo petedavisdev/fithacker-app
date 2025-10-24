@@ -10,15 +10,13 @@ import {
 export function useExerciseLog(date?: string) {
 	const [exerciseLog, setExerciseLog] = useState<ExerciseLog>({});
 
-	const dayLog = date ? exerciseLog[date] ?? [] : [];
+	const dayLog = date ? (exerciseLog[date] ?? []) : [];
 
 	function updateDayExercise(exercise: Exercise, note?: string) {
 		if (!date) return;
 
 		const newDayExercises = [
-			...dayLog.filter(
-				(item) => item !== exercise && item[0] !== exercise
-			),
+			...dayLog.filter((item) => item !== exercise && item[0] !== exercise),
 			(note ? [exercise, note] : exercise) as ExerciseItem,
 		].sort((a: ExerciseItem, b: ExerciseItem) => {
 			const exerciseA = typeof a === 'string' ? a : a[0];
@@ -40,16 +38,14 @@ export function useExerciseLog(date?: string) {
 		if (!date) return;
 
 		const newDayExercises = dayLog.filter(
-			(item) => item !== exercise && item[0] !== exercise
+			(item) => item !== exercise && item[0] !== exercise,
 		);
 
 		if (newDayExercises.length) {
 			setExerciseLog((prev) => {
 				const newLog = {
 					...prev,
-					[date]: newDayExercises.length
-						? newDayExercises
-						: undefined,
+					[date]: newDayExercises.length ? newDayExercises : undefined,
 				};
 				storeExerciseLog(newLog);
 				return newLog;
@@ -68,7 +64,7 @@ export function useExerciseLog(date?: string) {
 		await AsyncStorage.setItem('exerciseLog', JSON.stringify(exerciseLog));
 		await AsyncStorage.setItem(
 			'exerciseLogUpdatedAt',
-			new Date().toISOString()
+			new Date().toISOString(),
 		);
 	}
 

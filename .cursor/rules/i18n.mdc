@@ -1,0 +1,42 @@
+---
+description: Internationalization patterns and translation conventions
+globs: i18n/**/*.ts,i18n/**/*.json,**/*.tsx
+alwaysApply: false
+---
+
+# Internationalization (i18n)
+
+## Translation Keys
+
+- Prefix utility translations with `_.`: `_.today`, `_.yesterday`, `_.thisWeek`
+- Exercise emojis are their own keys: `🚶`, `🏃‍♀️`, etc.
+- Use `useTranslation` hook: `const { t } = useTranslation();`
+- Always wrap user-facing text in `t()`: `t('_.today')`
+
+## Supported Languages
+
+**Source of Truth**: `i18n/index.ts` (see `resources` object)
+
+- Translation files: `/i18n/translation/{locale}.json` (one file per language)
+- Language detection: Auto-detect from device, fallback to English
+- Registered in `app.config.js` under `CFBundleLocalizations`
+
+## Adding Translations
+
+When adding new translation keys:
+
+1. Add to **ALL** language files in `/i18n/translation/` directory
+2. Use underscore prefix for utilities: `_.keyName`
+3. Use emoji as key for exercises: `"🚶": "Walk"`
+4. Maintain JSON structure consistency
+
+## Usage in Components
+
+```typescript
+import { useTranslation } from "react-i18next";
+
+function Component() {
+  const { t } = useTranslation();
+  return <Text>{t("_.today")}</Text>;
+}
+```

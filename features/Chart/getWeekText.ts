@@ -39,9 +39,7 @@ export function checkThisWeek(dates: string[]) {
 }
 
 function checkLastWeek(dates: string[]) {
-	const dateAWeekAgo = getDate(
-		new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
-	);
+	const dateAWeekAgo = getDate(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000));
 
 	return dates.includes(dateAWeekAgo);
 }
@@ -61,14 +59,11 @@ function formatWeekLong(firstDate: string, lastDate: string) {
 }
 
 function formatWeekFull(firstDate: string, lastDate: string) {
-	const firstDateText = new Date(firstDate).toLocaleDateString(
-		getLanguage(),
-		{
-			year: 'numeric',
-			month: 'short',
-			day: 'numeric',
-		}
-	);
+	const firstDateText = new Date(firstDate).toLocaleDateString(getLanguage(), {
+		year: 'numeric',
+		month: 'short',
+		day: 'numeric',
+	});
 	const lastDateText = formatDayMonth(lastDate);
 
 	return `${firstDateText} - ${lastDateText}`;

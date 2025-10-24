@@ -1,0 +1,52 @@
+---
+description: Core architectural patterns and file organization for FitHacker
+alwaysApply: true
+---
+
+# Architecture & File Organization
+
+## Feature-Based Structure
+
+**Examples**: See `/features` directory structure (Chart, Checklist, ExerciseFilter, TheHeader, Atoms)
+
+- Organize code by feature in `/features` directory, NOT by type (no `/components`, `/hooks`, `/utils` folders)
+- Each feature folder contains: components, hooks, utility functions, tests, and types
+- Co-locate test files next to implementation
+- Co-locate utility functions with their tests
+
+## Atomic Components
+
+**Examples**: See `/features/Atoms/` (AButton, AModal)
+
+- Shared primitive components go in `/features/Atoms/`
+- Prefix atomic component names with `A`
+- Keep atoms minimal and composable
+- Atoms should accept discriminated union props when polymorphic
+
+## File Naming
+
+- React components: PascalCase (e.g., `ChartDay.tsx`)
+- Utility functions: camelCase (e.g., `getChartData.ts`)
+- Custom hooks: camelCase starting with `use` (e.g., `useExerciseLog.ts`)
+- Test files: Match source filename + `.test.ts[x]` (e.g., `ChartDay.test.tsx`)
+- Types: Export from data files when derived from constants (e.g., `Exercise` type from `EXERCISES` constant)
+
+## Imports
+
+**Examples**: See any file in `/features` or `/app`
+
+- Group imports: React → React Native → Third party → Local
+- Use path alias `@/` for root-level imports (configured in `tsconfig.json`)
+- Import relative paths for local features
+
+## Export Patterns
+
+- App routes (Expo Router): Default exports (required by framework)
+- Everything else: Named exports
+- Constants: Named exports from dedicated files
+
+## Anti-Patterns (What NOT to Do)
+
+- ❌ Don't create `/components`, `/hooks`, `/utils` folders
+- ❌ Don't store AsyncStorage keys without 'exerciseLog' prefix
+- ❌ Don't create standalone utility/helper folders

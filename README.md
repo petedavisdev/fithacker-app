@@ -1,4 +1,5 @@
 # FITHACKER
+
 🚶 🏃‍♀️ 🤸 💪 🌴 🦵
 
 A simple fitness app built with React Native and Expo.

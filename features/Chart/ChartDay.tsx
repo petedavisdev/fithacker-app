@@ -49,15 +49,11 @@ export function ChartDay(props: ChartDayProps) {
 		<Link href={`/?date=${props.date}` as Href} disabled={isDisabled}>
 			<View className="justify-end items-center h-96 gap-2">
 				{props.exercises?.map((exerciseItem, index) => {
-					const note =
-						typeof exerciseItem !== 'string' && exerciseItem[1];
+					const note = typeof exerciseItem !== 'string' && exerciseItem[1];
 					const exercise = note ? exerciseItem[0] : exerciseItem;
 
 					return (
-						<View
-							key={`${props.date}${index}`}
-							className="relative"
-						>
+						<View key={`${props.date}${index}`} className="relative">
 							{!!filter && note && (
 								<View className="absolute -top-12 w-full -rotate-90">
 									<Text className="font-mono text-pink-500 w-80 h-12 p-3">
@@ -67,24 +63,18 @@ export function ChartDay(props: ChartDayProps) {
 							)}
 
 							<Text className="text-yellow-500 text-4xl">
-								{typeof exercise === 'string'
-									? exercise
-									: exercise[0]}
+								{typeof exercise === 'string' ? exercise : exercise[0]}
 							</Text>
 						</View>
 					);
 				})}
 
 				{/* scale-x to remove gap in ios */}
-				<View
-					className={`h-[2px] w-12 scale-x-[1.01] ${dateLineColor}`}
-				/>
+				<View className={`h-[2px] w-12 scale-x-[1.01] ${dateLineColor}`} />
 
 				<Text
 					className={`font-mono leading pb-0.5 border-b ${dateTextColor} ${
-						isDisabled
-							? 'border-transparent'
-							: `${dateUnderlineColor}`
+						isDisabled ? 'border-transparent' : `${dateUnderlineColor}`
 					}`}
 				>
 					{t(`_day.${dateInfo.dayIndex}`).slice(0, 3)}

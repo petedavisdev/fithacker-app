@@ -47,12 +47,8 @@ export function TheHeader(props: TheHeaderProps) {
 				</View>
 
 				<Link href="/" className="flex-row">
-					<Text className="font-mono text-xl text-yellow-500">
-						FIT
-					</Text>
-					<Text className="font-mono text-xl text-cyan-500">
-						HACKER
-					</Text>
+					<Text className="font-mono text-xl text-yellow-500">FIT</Text>
+					<Text className="font-mono text-xl text-cyan-500">HACKER</Text>
 				</Link>
 
 				<View className="h-10 w-10">

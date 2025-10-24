@@ -1,0 +1,36 @@
+---
+description: React component patterns and conventions
+globs: **/*.ts,**/*.tsx
+alwaysApply: false
+---
+
+# React Component Patterns
+
+## Function Components
+
+- Use function declarations: `export function Component(props: Props)`
+- NOT arrow functions for components
+- Props type inline: `function Component(props: ComponentProps)`
+
+## Custom Hooks Structure
+
+**Example**: See `features/useExerciseLog.ts` or `features/useNewDay.ts`
+
+## Custom Hooks for Domain Logic
+
+**Examples**: `features/useExerciseLog.ts`, `features/useNewDay.ts`
+
+- Use custom hooks for domain-specific state logic
+- Keep state local to features when possible
+- NO external state management libraries (no Redux, Zustand, etc.)
+
+## Async in useEffect
+
+**Example**: See `features/useExerciseLog.ts` (IIFE pattern for async in useEffect)
+
+## Pure Functions
+
+**Examples**: `features/Chart/getChartData.ts`, `features/Checklist/getChecklistData.ts`
+
+- Co-locate pure functions in feature folders (e.g., `Chart/getChartData.ts`)
+- Export function and types together

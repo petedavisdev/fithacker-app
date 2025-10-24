@@ -1,0 +1,34 @@
+---
+description: State management patterns using AsyncStorage
+globs: features/**/use*.ts
+alwaysApply: false
+---
+
+# State Management
+
+## AsyncStorage
+
+**Examples**: See `features/useExerciseLog.ts` and `i18n/index.ts`
+
+- Use AsyncStorage for persistence
+- NO external state management libraries (no Redux, Zustand, etc.)
+- Store keys: Prefix with feature name (e.g., 'exerciseLog', 'exerciseLogUpdatedAt', 'language')
+
+## Exercise Log Data Structure
+
+**Source of Truth**: `features/EXERCISES.ts` (type definitions)
+
+See `ExerciseItem`, `ExerciseDay`, `ExerciseLog` types
+
+## Exercise Log Updates
+
+**Source of Truth**: `features/useExerciseLog.ts`
+
+See `updateDayExercise()` and `removeDayExercise()` functions for:
+
+- Filtering, sorting, and persisting logic
+- AsyncStorage integration pattern
+
+## Anti-Patterns
+
+- ❌ Don't use external state management (Redux, Zustand, etc.)
