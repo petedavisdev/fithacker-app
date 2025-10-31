@@ -16,6 +16,7 @@ This project uses [EAS development builds](https://docs.expo.dev/get-started/set
 
 - Node.js and npm
 - [EAS CLI](https://docs.expo.dev/build/setup/) - Install globally: `npm install -g eas-cli@latest`
+- [Expo Orbit](https://expo.dev/orbit) (optional) - Simplifies installing and launching builds
 - For iOS: Xcode and iOS Simulator
 - For Android: Android Studio and emulator
 
@@ -52,7 +53,9 @@ npm run ios:dev
 # or for simulator: npm run ios:sim
 ```
 
-2. **Install the build** on your device or simulator
+2. **Install the build**
+   - Using Orbit: One-click install from the EAS dashboard
+   - Manually: Download and drag to simulator, or run `eas build:run`
 
 3. **Start the development server**
 ```bash
@@ -67,7 +70,9 @@ npm start
 eas build --profile development --platform android
 ```
 
-2. **Install the build** on your device or emulator
+2. **Install the build**
+   - Using Orbit: One-click install from the EAS dashboard
+   - Manually: Download and install APK, or run `eas build:run`
 
 3. **Start the development server**
 ```bash
