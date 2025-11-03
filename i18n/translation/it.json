@@ -29,6 +29,14 @@
 		"5": "Venerdì",
 		"6": "Sabato"
 	},
+	"_exercise": {
+		"a": "Camminata",
+		"b": "Cardio",
+		"c": "Flessibilità ed equilibrio",
+		"d": "Forza delle braccia",
+		"e": "Forza del core",
+		"f": "Forza delle gambe"
+	},
 	"_month": {
 		"0": "Gennaio",
 		"1": "Febbraio",
@@ -42,11 +50,5 @@
 		"7": "Agosto",
 		"8": "Settembre",
 		"9": "Ottobre"
-	},
-	"🌴": "Forza del core",
-	"🏃‍♀️": "Cardio",
-	"💪": "Forza delle braccia",
-	"🚶": "Camminata",
-	"🤸": "Flessibilità ed equilibrio",
-	"🦵": "Forza delle gambe"
+	}
 }

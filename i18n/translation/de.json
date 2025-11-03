@@ -29,6 +29,14 @@
 		"5": "Freitag",
 		"6": "Samstag"
 	},
+	"_exercise": {
+		"a": "Gehen",
+		"b": "Cardio",
+		"c": "Flexibilität und Gleichgewicht",
+		"d": "Armkraft",
+		"e": "Kernkraft",
+		"f": "Beinkraft"
+	},
 	"_month": {
 		"0": "Januar",
 		"1": "Februar",
@@ -42,11 +50,5 @@
 		"7": "August",
 		"8": "September",
 		"9": "Oktober"
-	},
-	"🌴": "Kernkraft",
-	"🏃‍♀️": "Cardio",
-	"💪": "Armkraft",
-	"🚶": "Gehen",
-	"🤸": "Flexibilität und Gleichgewicht",
-	"🦵": "Beinkraft"
+	}
 }

@@ -1,28 +1,19 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
-import {
-	type Exercise,
-	type ExerciseItem,
-	type ExerciseLog,
-	EXERCISES,
-} from './EXERCISES';
+import type { ExerciseCode, ExerciseDay, ExerciseLog } from './EXERCISES';
 
 export function useExerciseLog(date?: string) {
 	const [exerciseLog, setExerciseLog] = useState<ExerciseLog>({});
 
-	const dayLog = date ? (exerciseLog[date] ?? []) : [];
+	const dayLog: ExerciseDay = date ? (exerciseLog[date] ?? {}) : {};
 
-	function updateDayExercise(exercise: Exercise, note?: string) {
+	function updateDayExercise(exercise: ExerciseCode, note?: string) {
 		if (!date) return;
 
-		const newDayExercises = [
-			...dayLog.filter((item) => item !== exercise && item[0] !== exercise),
-			(note ? [exercise, note] : exercise) as ExerciseItem,
-		].sort((a: ExerciseItem, b: ExerciseItem) => {
-			const exerciseA = typeof a === 'string' ? a : a[0];
-			const exerciseB = typeof b === 'string' ? b : b[0];
-			return EXERCISES.indexOf(exerciseA) - EXERCISES.indexOf(exerciseB);
-		});
+		const newDayExercises: ExerciseDay = {
+			...dayLog,
+			[exercise]: note ?? '',
+		};
 
 		setExerciseLog((prev) => {
 			const newLog = {
@@ -34,18 +25,16 @@ export function useExerciseLog(date?: string) {
 		});
 	}
 
-	function removeDayExercise(exercise: Exercise) {
+	function removeDayExercise(exercise: ExerciseCode) {
 		if (!date) return;
 
-		const newDayExercises = dayLog.filter(
-			(item) => item !== exercise && item[0] !== exercise,
-		);
+		const { [exercise]: _, ...newDayExercises } = dayLog;
 
-		if (newDayExercises.length) {
+		if (Object.keys(newDayExercises).length) {
 			setExerciseLog((prev) => {
 				const newLog = {
 					...prev,
-					[date]: newDayExercises.length ? newDayExercises : undefined,
+					[date]: newDayExercises,
 				};
 				storeExerciseLog(newLog);
 				return newLog;
@@ -61,7 +50,7 @@ export function useExerciseLog(date?: string) {
 	}
 
 	async function storeExerciseLog(exerciseLog: ExerciseLog = {}) {
-		await AsyncStorage.setItem('exerciseLog', JSON.stringify(exerciseLog));
+		await AsyncStorage.setItem('exerciseLogV2', JSON.stringify(exerciseLog));
 		await AsyncStorage.setItem(
 			'exerciseLogUpdatedAt',
 			new Date().toISOString(),
@@ -70,7 +59,7 @@ export function useExerciseLog(date?: string) {
 
 	useEffect(() => {
 		(async () => {
-			const exerciseLogJSON = await AsyncStorage.getItem('exerciseLog');
+			const exerciseLogJSON = await AsyncStorage.getItem('exerciseLogV2');
 			const exerciseLogData = exerciseLogJSON
 				? JSON.parse(exerciseLogJSON)
 				: ({} as ExerciseLog);

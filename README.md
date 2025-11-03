@@ -86,11 +86,40 @@ npm start
 ```bash
 npm run web
 ```
+This starts the Expo development server and opens the app in your default browser. You can also manually navigate to the URL shown in the terminal (typically `http://localhost:3001`).
+
+**Note:** The web port is configured to use `3001` to avoid conflicts with other services. This can be changed by modifying the `PORT` environment variable in the `web` script in `package.json`.
 
 **Build for deployment:**
 ```bash
 npm run web:build
 ```
+This creates a static build in the `dist` directory.
+
+**Testing the Web Version**
+
+After building, you can test the production build locally using a static server:
+
+```bash
+npm run web:build
+npx serve dist
+```
+
+Then open the provided URL (typically `http://localhost:3000`) in your browser.
+
+**Testing with EAS Hosting:**
+
+1. **Deploy to preview:**
+```bash
+npm run web:pre
+```
+
+2. **Deploy to production:**
+```bash
+npm run web:prod
+```
+
+Both commands will provide a URL where you can test the web app in any browser. The preview deployment uses the `preview` alias, while production uses the default production URL.
 
 ### Available Scripts
 

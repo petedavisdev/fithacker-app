@@ -8,9 +8,13 @@ import { getDateInfo } from '../features/dateInfo';
 import { getDateSteps } from '../features/Checklist/getDateSteps';
 import { useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
+// TODO: REMOVE AFTER MIGRATION - Delete this import and the useMigration hook call below
+import { useMigration } from '../features/migration/useMigration';
 
 export default function HomeScreen() {
 	const { t } = useTranslation();
+	// TODO: REMOVE AFTER MIGRATION - Delete this line and the if (!isMigrated) guard below
+	const { isMigrated } = useMigration();
 
 	const { date } = useLocalSearchParams<{ date: string }>();
 	const dateInfo = getDateInfo(date?.toString());
@@ -25,6 +29,11 @@ export default function HomeScreen() {
 	};
 
 	const dateClassName = DATE_CLASS_NAMES[dateInfo.category];
+
+	// TODO: REMOVE AFTER MIGRATION - Delete this entire if block
+	if (!isMigrated) {
+		return null;
+	}
 
 	return (
 		<View className="flex-1 items-center gap-5">

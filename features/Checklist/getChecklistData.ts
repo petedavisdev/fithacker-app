@@ -1,7 +1,7 @@
 import {
-	EXERCISES,
-	type Exercise,
-	EXERCISE_PRIORITIES,
+	EXERCISE_CODES,
+	type ExerciseCode,
+	EXERCISE_METADATA,
 	type ExerciseDay,
 	type ExerciseLog,
 } from '../EXERCISES';
@@ -13,34 +13,34 @@ export function getChecklistData(
 	dayLog: ExerciseDay,
 ) {
 	const dayCounts = getDayCounts(exerciseLog, dateInfo.date);
-	const priorityEXERCISES = getPriorityExercises(dayCounts);
+	const priorityExercises = getPriorityExercises(dayCounts);
 
-	return EXERCISES.map((exercise) => ({
-		exercise,
-		isChecked: dayLog.flat().includes(exercise),
-		note: dayLog.find((item) => item[0] === exercise)?.[1],
-		dayCount: dayCounts.find((count) => count[0] === exercise)?.[1],
-		isPriority: priorityEXERCISES.includes(exercise),
+	return EXERCISE_CODES.map((code) => ({
+		exercise: code,
+		isChecked: code in dayLog,
+		note: dayLog[code] === '' ? undefined : dayLog[code],
+		dayCount: dayCounts.find((count) => count[0] === code)?.[1],
+		isPriority: priorityExercises.includes(code),
 	}));
 }
 
 function getDayCounts(
 	exerciseLog: ExerciseLog,
 	date: string,
-): [Exercise, number?][] {
-	return EXERCISES.map((exercise) => [
-		exercise,
-		getDayCount(exercise, date, exerciseLog),
+): [ExerciseCode, number?][] {
+	return EXERCISE_CODES.map((code) => [
+		code,
+		getDayCount(code, date, exerciseLog),
 	]);
 }
 
 function getDayCount(
-	exercise: Exercise,
+	exercise: ExerciseCode,
 	date: string,
 	exerciseLog: ExerciseLog,
 ) {
 	const prevDate = Object.keys(exerciseLog)
-		.filter((key) => key < date && exerciseLog[key]?.flat().includes(exercise))
+		.filter((key) => key < date && exercise in (exerciseLog[key] ?? {}))
 		.sort()
 		.at(-1);
 
@@ -52,14 +52,14 @@ function getDayCount(
 	return Math.floor((time - prevTime) / (1000 * 60 * 60 * 24));
 }
 
-function getPriorityExercises(dayCounts: [Exercise, number?][]) {
+function getPriorityExercises(dayCounts: [ExerciseCode, number?][]) {
 	return dayCounts
 		.sort(
 			(countA, countB) =>
 				(countB[1] ?? 1000) +
-				EXERCISE_PRIORITIES[countB[0] as Exercise] -
-				((countA[1] ?? 1000) + EXERCISE_PRIORITIES[countA[0] as Exercise]),
+				EXERCISE_METADATA[countB[0]].priority -
+				((countA[1] ?? 1000) + EXERCISE_METADATA[countA[0]].priority),
 		)
-		.map((count) => count[0] as Exercise)
+		.map((count) => count[0])
 		.slice(0, 2);
 }

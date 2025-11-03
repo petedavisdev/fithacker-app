@@ -1,6 +1,11 @@
 import { useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
-import { EXERCISES, type Exercise, type ExerciseLog } from '../EXERCISES';
+import {
+	EXERCISE_CODES,
+	type ExerciseCode,
+	EXERCISE_METADATA,
+	type ExerciseLog,
+} from '../EXERCISES';
 import { useExerciseLog } from '../useExerciseLog';
 import { filterExerciseLog } from './filterExerciseLog';
 import { useLocalSearchParams, useRouter } from 'expo-router';
@@ -12,14 +17,14 @@ type ExerciseFilterProps = {
 export function ExerciseFilter(props: ExerciseFilterProps) {
 	const { componentToFilter: ComponentToFilter } = props;
 
-	const params = useLocalSearchParams<{ filter?: Exercise }>();
+	const params = useLocalSearchParams<{ filter?: ExerciseCode }>();
 	const { setParams } = useRouter();
 
-	const [filter, setFilter] = useState<Exercise | undefined>(params.filter);
+	const [filter, setFilter] = useState<ExerciseCode | undefined>(params.filter);
 	const { exerciseLog } = useExerciseLog();
 	const filteredExerciseLog = filterExerciseLog(exerciseLog, filter);
 
-	function updateFilter(exercise?: Exercise) {
+	function updateFilter(exercise?: ExerciseCode) {
 		setFilter(exercise);
 		setParams({ filter: exercise ?? '' });
 	}
@@ -36,22 +41,22 @@ export function ExerciseFilter(props: ExerciseFilterProps) {
 						}`}
 					/>
 					<Text className="text-cyan-500 w-14 h-12 text-center text-xs font-mono my-3">
-						{EXERCISES.map((exercise) => (
-							<Text key={exercise}>{exercise}</Text>
+						{EXERCISE_CODES.map((code) => (
+							<Text key={code}>{EXERCISE_METADATA[code].emoji}</Text>
 						))}
 					</Text>
 				</Pressable>
-				{Object.values(EXERCISES).map((exercise) => (
-					<Pressable key={exercise} onPress={() => updateFilter(exercise)}>
+				{EXERCISE_CODES.map((code) => (
+					<Pressable key={code} onPress={() => updateFilter(code)}>
 						<View
 							className={`h-[2px] w-14 shadow-none ${
-								filter === exercise
+								filter === code
 									? ' bg-pink-500 shadow-bg shadow-pink-500'
 									: 'bg-slate-800'
 							}`}
 						/>
 						<Text className="text-yellow-500 w-14 h-12 text-center text-3xl font-mono my-3">
-							{exercise}
+							{EXERCISE_METADATA[code].emoji}
 						</Text>
 					</Pressable>
 				))}

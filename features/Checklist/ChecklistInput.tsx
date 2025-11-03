@@ -1,10 +1,10 @@
 import { Pressable, Text, TextInput, View } from 'react-native';
-import { type Exercise } from '../EXERCISES';
+import { type ExerciseCode, EXERCISE_METADATA } from '../EXERCISES';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 
 type ChecklistInputProps = {
-	exercise: Exercise;
+	exercise: ExerciseCode;
 	isChecked: boolean;
 	dayCount?: number;
 	isPriority?: boolean;
@@ -17,7 +17,7 @@ type ChecklistInputProps = {
 export function ChecklistInput(props: ChecklistInputProps) {
 	const { t } = useTranslation();
 	const [note, setNote] = useState(props.note);
-	const [placeholder, setPlaceholder] = useState(t(props.exercise));
+	const [placeholder, setPlaceholder] = useState(t(`_exercise.${props.exercise}`));
 
 	useEffect(() => {
 		const debounceTimeoutId = setTimeout(() => {
@@ -57,7 +57,7 @@ export function ChecklistInput(props: ChecklistInputProps) {
 				)}
 			</View>
 
-			<Text className="text-4xl">{props.exercise}</Text>
+			<Text className="text-4xl">{EXERCISE_METADATA[props.exercise].emoji}</Text>
 
 			{props.isChecked ? (
 				<TextInput
@@ -67,7 +67,7 @@ export function ChecklistInput(props: ChecklistInputProps) {
 					defaultValue={props.note}
 					onChangeText={(value) => setNote(value || undefined)}
 					onFocus={() => setPlaceholder('')}
-					onBlur={() => setPlaceholder(t(props.exercise))}
+					onBlur={() => setPlaceholder(t(`_exercise.${props.exercise}`))}
 					maxLength={60}
 					onClick={(e: Event) => e.stopPropagation()}
 				/>
@@ -77,7 +77,7 @@ export function ChecklistInput(props: ChecklistInputProps) {
 						props.isDisabled ? 'text-slate-400' : 'text-cyan-400'
 					}`}
 				>
-					{t(props.exercise)}
+					{t(`_exercise.${props.exercise}`)}
 				</Text>
 			)}
 		</Pressable>

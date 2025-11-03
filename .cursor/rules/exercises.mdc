@@ -10,16 +10,33 @@ alwaysApply: false
 
 **Source of Truth**: `features/EXERCISES.ts`
 
-- `EXERCISES` array defines all available exercises (emojis)
-- `EXERCISE_PRIORITIES` object defines priority weights (0-2) for highlighting
-- Order in `EXERCISES` array determines sort order in UI
+- `EXERCISE_METADATA` object defines all exercises with metadata (emoji, priority)
+- `EXERCISE_CODES` array derived from metadata keys (guaranteed order)
+- `EXERCISE_METADATA[code].priority` defines priority weights (0-2) for highlighting
+- Order in `EXERCISE_METADATA` determines sort order in UI
 
 ## Exercise Data Structure
 
 See `features/EXERCISES.ts` for complete type definitions:
 
-- `EXERCISES` - Array of exercise emojis (with `as const`)
-- `Exercise` - Derived type from `EXERCISES` array
-- `ExerciseItem` - Exercise or [Exercise, note string]
-- `ExerciseDay` - Array of ExerciseItems
-- `ExerciseLog` - Record mapping date strings to ExerciseDays
+- `EXERCISE_METADATA` - Object mapping codes (a-f) to metadata { emoji, priority }
+- `ExerciseCode` - Type derived from `EXERCISE_METADATA` keys ('a' | 'b' | 'c' | 'd' | 'e' | 'f')
+- `EXERCISE_CODES` - Array of exercise codes in order ['a', 'b', 'c', 'd', 'e', 'f']
+- `ExerciseDay` - Partial<Record<ExerciseCode, string>> (object mapping codes to notes)
+  - Empty string '' = checked exercise without note
+  - Non-empty string = checked exercise with note
+  - Omitted key = unchecked exercise
+- `ExerciseLog` - Record<string, ExerciseDay | undefined> mapping dates to exercise days
+
+## Storage
+
+- Storage key: `exerciseLogV2` (AsyncStorage/localStorage)
+- Old format (`exerciseLog`) automatically migrated and deleted
+- Migration flag: `exerciseLogMigrated` (for tracking)
+
+## Migration
+
+See `features/migration/` for migration logic:
+- Old format: Array of emojis/arrays `["🚶", ["🤸", "note"]]`
+- New format: Object mapping codes to notes `{ a: "", c: "note" }`
+- Migration runs once per device automatically

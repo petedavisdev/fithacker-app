@@ -12,51 +12,51 @@ describe('getChecklistData', () => {
 		};
 
 		const input2: ExerciseLog = {
-			'2022-02-26': ['🚶', ['🤸', 'yoga']],
-			'2022-02-25': ['💪', '🦵'],
-			'2022-01-01': ['🚶', '🌴'],
+			'2022-02-26': { a: '', c: 'yoga' },
+			'2022-02-25': { d: '', f: '' },
+			'2022-01-01': { a: '', e: '' },
 		};
 
-		const input3: ExerciseDay = ['🚶', ['🤸', 'yoga']];
+		const input3: ExerciseDay = { a: '', c: 'yoga' };
 
 		const expected = [
 			{
-				exercise: '🚶',
+				exercise: 'a',
 				isChecked: true,
 				note: undefined,
 				dayCount: 56,
 				isPriority: false,
 			},
 			{
-				exercise: '🏃‍♀️',
+				exercise: 'b',
 				isChecked: false,
 				note: undefined,
 				dayCount: undefined,
 				isPriority: true,
 			},
 			{
-				exercise: '🤸',
+				exercise: 'c',
 				isChecked: true,
 				note: 'yoga',
 				dayCount: undefined,
 				isPriority: true,
 			},
 			{
-				exercise: '💪',
+				exercise: 'd',
 				isChecked: false,
 				note: undefined,
 				dayCount: 1,
 				isPriority: false,
 			},
 			{
-				exercise: '🌴',
+				exercise: 'e',
 				isChecked: false,
 				note: undefined,
 				dayCount: 56,
 				isPriority: false,
 			},
 			{
-				exercise: '🦵',
+				exercise: 'f',
 				isChecked: false,
 				note: undefined,
 				dayCount: 1,

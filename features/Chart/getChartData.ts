@@ -20,7 +20,7 @@ export function getChartData(exerciseLog: ExerciseLog) {
 		const days: ExerciseLog = {};
 
 		for (let d = 1; d <= 7; d++) {
-			days[date] = exerciseLog[date] ?? [];
+			days[date] = exerciseLog[date] ?? {};
 
 			const currentDate = new Date(date);
 			currentDate.setDate(currentDate.getDate() + 1);
@@ -29,7 +29,10 @@ export function getChartData(exerciseLog: ExerciseLog) {
 
 		const dates = Object.keys(days);
 		const text = getWeekText(dates);
-		const total = Object.values(days).flat().length;
+		const total = Object.values(days).reduce(
+			(sum, day) => sum + Object.keys(day ?? {}).length,
+			0,
+		);
 
 		weeks.unshift({ days, text, total });
 

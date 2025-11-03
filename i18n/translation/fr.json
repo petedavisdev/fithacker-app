@@ -29,6 +29,14 @@
 		"5": "Vendredi",
 		"6": "Samedi"
 	},
+	"_exercise": {
+		"a": "Marche",
+		"b": "Cardio",
+		"c": "Flexibilité et équilibre",
+		"d": "Force des bras",
+		"e": "Force du tronc",
+		"f": "Force des jambes"
+	},
 	"_month": {
 		"0": "Janvier",
 		"1": "Février",
@@ -42,11 +50,5 @@
 		"7": "Août",
 		"8": "Septembre",
 		"9": "Octobre"
-	},
-	"🌴": "Force du tronc",
-	"🏃‍♀️": "Cardio",
-	"💪": "Force des bras",
-	"🚶": "Marche",
-	"🤸": "Flexibilité et équilibre",
-	"🦵": "Force des jambes"
+	}
 }

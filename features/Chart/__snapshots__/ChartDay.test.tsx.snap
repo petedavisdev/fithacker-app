@@ -1,11 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders correctly 1`] = `
-<Text
+<Link
   disabled={false}
   href="/?date=2022-01-01"
-  onPress={[Function]}
-  role="link"
 >
   <View
     className="justify-end items-center h-96 gap-2"
@@ -29,7 +27,7 @@ exports[`renders correctly 1`] = `
       </Text>
     </View>
     <View
-      className="h-[2px] w-12 bg-yellow-500 shadow shadow-yellow-500"
+      className="h-[2px] w-12 scale-x-[1.01] bg-yellow-500 shadow shadow-yellow-500"
     />
     <Text
       className="font-mono leading pb-0.5 border-b text-yellow-500 border-yellow-700"
@@ -37,5 +35,5 @@ exports[`renders correctly 1`] = `
       _da
     </Text>
   </View>
-</Text>
+</Link>
 `;
