@@ -8,6 +8,12 @@
  * 4. Sets `exerciseLogMigrated` flag
  * 5. Deletes old `exerciseLog` key immediately after successful migration
  * 
+ * Error Handling:
+ * - On migration failure, does NOT mark as migrated (allows retry on next app load)
+ * - Returns `isLoading`, `isMigrated`, and `error` states
+ * - App routes show loading spinner during migration
+ * - App routes show error message if migration fails (prevents data loss)
+ * 
  * Cleanup Plan (after all users migrated):
  * 1. Wait for 100% migration (check analytics/usage data)
  * 2. Remove features/migration/ folder
@@ -26,10 +32,13 @@ import { transformExerciseLog } from './transformExerciseLog';
 
 export function useMigration() {
 	const [isMigrated, setIsMigrated] = useState<boolean | null>(null);
+	const [error, setError] = useState<Error | null>(null);
 
 	useEffect(() => {
 		(async () => {
 			try {
+				setError(null);
+				
 				// Check if migration has already been completed
 				const migrationFlag = await AsyncStorage.getItem('exerciseLogMigrated');
 				if (migrationFlag === 'true') {
@@ -63,14 +72,22 @@ export function useMigration() {
 				await AsyncStorage.removeItem('exerciseLog');
 
 				setIsMigrated(true);
-			} catch (error) {
-				console.error('Migration failed:', error);
-				// On error, mark as migrated to prevent retry loops
-				// User can manually retry if needed
-				setIsMigrated(true);
+			} catch (err) {
+				const migrationError = err instanceof Error ? err : new Error(String(err));
+				console.error('Migration failed:', migrationError);
+				setError(migrationError);
+				// On error, DON'T mark as migrated - allow retry on next app load
+				setIsMigrated(false);
 			}
 		})();
 	}, []);
 
-	return { isMigrated: isMigrated === true };
+	const isLoading = isMigrated === null;
+	const canRetry = isMigrated === false && error !== null;
+
+	return { 
+		isMigrated: isMigrated === true, 
+		isLoading,
+		error: canRetry ? error : null,
+	};
 }

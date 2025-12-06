@@ -1,6 +1,9 @@
 {
 	"_": {
 		"lastWeek": "上周",
+		"migrating": "正在迁移您的数据...",
+		"migrationError": "迁移错误",
+		"migrationErrorDescription": "迁移运动数据失败。请关闭并重新打开应用程序以重试。",
 		"thisWeek": "本周",
 		"today": "今天",
 		"tomorrow": "明天",

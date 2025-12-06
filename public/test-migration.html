@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Migration Test</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #0f0;
+        }
+        .status {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #0f0;
+        }
+        .success { color: #0f0; }
+        .error { color: #f00; }
+        button {
+            padding: 10px 20px;
+            background: #0f0;
+            color: #000;
+            border: none;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover { background: #0a0; }
+        pre {
+            background: #000;
+            padding: 10px;
+            overflow-x: auto;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Migration Test</h1>
+    <div id="status" class="status">Loading...</div>
+    <button onclick="loadTestData()">Load Test Data</button>
+    <button onclick="checkMigration()">Check Migration</button>
+    <button onclick="clearAll()">Clear All Data</button>
+    <pre id="output"></pre>
+
+    <script>
+        function log(message) {
+            const output = document.getElementById('output');
+            output.textContent += message + '\n';
+            console.log(message);
+        }
+
+        function updateStatus(message, isError = false) {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.className = 'status ' + (isError ? 'error' : 'success');
+        }
+
+        async function loadTestData() {
+            try {
+                log('🔄 Loading test data...');
+                
+                // Clear existing migration state
+                localStorage.removeItem('exerciseLogV2');
+                localStorage.removeItem('exerciseLogMigrated');
+                
+                // Fetch the JSON file
+                const response = await fetch('/EXERCISE_LOG.json');
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                const dataString = JSON.stringify(data);
+                
+                // Store as old format
+                localStorage.setItem('exerciseLog', dataString);
+                
+                log('✅ Test data loaded successfully!');
+                log(`   Dates: ${Object.keys(data).length}`);
+                log(`   Size: ${dataString.length} bytes`);
+                log('   Sample date: ' + Object.keys(data)[0]);
+                log('   Sample value: ' + JSON.stringify(data[Object.keys(data)[0]]));
+                
+                updateStatus('✅ Test data loaded! Now navigate to http://localhost:3001 to trigger migration.');
+            } catch (error) {
+                log('❌ Failed to load test data: ' + error.message);
+                updateStatus('❌ Error: ' + error.message, true);
+            }
+        }
+
+        function checkMigration() {
+            log('\n📊 Checking migration status...');
+            
+            const oldData = localStorage.getItem('exerciseLog');
+            const newData = localStorage.getItem('exerciseLogV2');
+            const migrated = localStorage.getItem('exerciseLogMigrated');
+            
+            if (oldData) {
+                const old = JSON.parse(oldData);
+                log(`✅ Old data found: ${Object.keys(old).length} dates`);
+            } else {
+                log('❌ No old data found');
+            }
+            
+            if (newData) {
+                const new_ = JSON.parse(newData);
+                log(`✅ New data found: ${Object.keys(new_).length} dates`);
+                
+                // Show sample
+                const sampleDate = Object.keys(new_)[0];
+                if (sampleDate) {
+                    log(`   Sample date: ${sampleDate}`);
+                    log(`   Sample value: ${JSON.stringify(new_[sampleDate])}`);
+                }
+            } else {
+                log('❌ No new data found (migration may not have run yet)');
+            }
+            
+            if (migrated) {
+                log(`✅ Migration flag: ${migrated}`);
+            } else {
+                log('❌ Migration flag not set');
+            }
+            
+            updateStatus(newData ? '✅ Migration completed!' : '⏳ Migration pending...');
+        }
+
+        function clearAll() {
+            localStorage.removeItem('exerciseLog');
+            localStorage.removeItem('exerciseLogV2');
+            localStorage.removeItem('exerciseLogMigrated');
+            log('🗑️ All data cleared');
+            updateStatus('All data cleared');
+        }
+
+        // Auto-load on page load
+        window.addEventListener('load', () => {
+            log('Migration Test Page Loaded');
+            checkMigration();
+        });
+    </script>
+</body>
+</html>
+

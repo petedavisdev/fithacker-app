@@ -1,6 +1,9 @@
 {
 	"_": {
 		"lastWeek": "La semana pasada",
+		"migrating": "Migrando tus datos...",
+		"migrationError": "Error de migración",
+		"migrationErrorDescription": "Error al migrar tus datos de ejercicios. Por favor, cierra y vuelve a abrir la aplicación para reintentar.",
 		"thisWeek": "Esta semana",
 		"today": "Hoy",
 		"tomorrow": "Martes",

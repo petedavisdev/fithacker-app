@@ -1,6 +1,9 @@
 {
 	"_": {
 		"lastWeek": "지난 주",
+		"migrating": "데이터 마이그레이션 중...",
+		"migrationError": "마이그레이션 오류",
+		"migrationErrorDescription": "운동 데이터 마이그레이션에 실패했습니다. 앱을 닫고 다시 열어 재시도하세요.",
 		"thisWeek": "이번 주",
 		"today": "오늘",
 		"tomorrow": "어제",

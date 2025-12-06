@@ -1,6 +1,9 @@
 {
 	"_": {
 		"lastWeek": "Letzte Woche",
+		"migrating": "Daten werden migriert...",
+		"migrationError": "Migrationsfehler",
+		"migrationErrorDescription": "Die Migration Ihrer Übungsdaten ist fehlgeschlagen. Bitte schließen Sie die App und öffnen Sie sie erneut, um es erneut zu versuchen.",
 		"thisWeek": "Diese Woche",
 		"today": "Heute",
 		"tomorrow": "Morgen",

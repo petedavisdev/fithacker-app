@@ -1,6 +1,9 @@
 {
 	"_": {
 		"lastWeek": "先週",
+		"migrating": "データを移行中...",
+		"migrationError": "移行エラー",
+		"migrationErrorDescription": "運動データの移行に失敗しました。アプリを閉じて再度開いて、再試行してください。",
 		"thisWeek": "今週",
 		"today": "今日",
 		"tomorrow": "明日",
