@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
+import * as Network from 'expo-network';
 import {
 	type Exercise,
 	type ExerciseItem,
@@ -91,8 +92,12 @@ export function useExerciseLog(date?: string) {
 			// Add this day to pending sync with timestamp
 			await addToPendingSync(date, now);
 
+			// Check network status at execution time, not capture time
+			const networkState = await Network.getNetworkStateAsync();
+			const isOnlineNow = networkState.isConnected ?? false;
+
 			// If online AND logged in, push/delete immediately (fire and forget)
-			if (isOnline && loggedIn) {
+			if (isOnlineNow && loggedIn) {
 				const userId = await getCurrentUserId();
 				if (userId) {
 					if (dayLog) {

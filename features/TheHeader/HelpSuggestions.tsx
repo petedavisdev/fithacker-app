@@ -17,6 +17,10 @@ export function HelpSuggestions() {
 			</View>
 
 			<View className="flex items-start gap-5">
+				<Text className="text-cyan-400">
+					<Text className="font-mono mx-1">2</Text> = {t('_?.daysSince')}
+				</Text>
+
 				<View className="flex-row items-center">
 					{dot}
 					<Text className="text-pink-400"> = {t('_?.suggestion')}</Text>
@@ -25,10 +29,6 @@ export function HelpSuggestions() {
 				<Text className="text-pink-400">{t('_?.suggestionsEachDay')}</Text>
 
 				<Text className="text-pink-400">{t('_?.suggestionsTomorrow')}</Text>
-
-				<Text className="text-cyan-400">
-					<Text className="font-mono">2</Text> = {t('_?.daysSince')}
-				</Text>
 			</View>
 		</>
 	);
