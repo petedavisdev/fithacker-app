@@ -3,11 +3,26 @@ import Constants from 'expo-constants'
 import { Platform } from 'react-native'
 import type { Database } from './database.types'
 
+// Get Supabase configuration from Expo extra config or environment variables
+// Expo extra config is preferred (set via app.config.js from .env)
 const supabaseUrl =
-	Constants.expoConfig?.extra?.supabaseUrl ?? process.env.EXPO_PUBLIC_SUPABASE_URL!
+	Constants.expoConfig?.extra?.supabaseUrl ??
+	process.env.EXPO_PUBLIC_SUPABASE_URL
 const supabaseAnonKey =
 	Constants.expoConfig?.extra?.supabaseAnonKey ??
-	process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY!
+	process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY
+
+// Validate required environment variables
+if (!supabaseUrl || !supabaseAnonKey) {
+	const missingVars: string[] = []
+	if (!supabaseUrl) missingVars.push('EXPO_PUBLIC_SUPABASE_URL')
+	if (!supabaseAnonKey) missingVars.push('EXPO_PUBLIC_SUPABASE_ANON_KEY')
+
+	throw new Error(
+		`Missing required Supabase environment variables: ${missingVars.join(', ')}. ` +
+			'Please ensure these are set in your .env file or EAS environment variables.',
+	)
+}
 
 // Lazy-load AsyncStorage to avoid window access during module initialization
 // AsyncStorage uses window.localStorage on web, so we need to ensure it's only loaded client-side
