@@ -22,9 +22,16 @@ export function ChartWeek(props: ChartWeekProps) {
 				{t(props.weekData.text)}
 			</Text>
 
-			<Text className="text-yellow-500 text-6xl -mt-1 font-extralight px-1 font-mono">
-				{props.weekData.total}
-			</Text>
+			<View className="flex-row items-baseline">
+				{props.weekData.badge && (
+					<Text className="text-yellow-500 text-5xl -mt-1 font-extralight px-1 font-mono">
+						{props.weekData.badge}{' '}
+					</Text>
+				)}
+				<Text className="text-yellow-500 text-6xl -mt-1 font-extralight px-1 font-mono">
+					{props.weekData.total}
+				</Text>
+			</View>
 
 			<View className="h-48" />
 		</View>

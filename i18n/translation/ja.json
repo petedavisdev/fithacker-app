@@ -13,12 +13,23 @@
 		"suggestionsEachDay": "毎日2つの提案を受け取ります。",
 		"suggestionsTomorrow": "今日できることを完了してから、明日の提案を検討してください。"
 	},
+	"_chart": {
+		"medalDescription": "週に6種類すべての運動",
+		"trophyDescription": "週に6種類すべての運動を2回"
+	},
 	"_@": {
 		"email": "メール",
 		"loggedIn": "でログインしました",
 		"login": "ログイン",
 		"loginDescription": "バックアップを取得し、複数のデバイスで使用する",
 		"sendCode": "マジックナンバーを送ってください ✨"
+	},
+	"auth": {
+		"invalidEmail": "有効なメールアドレスを入力してください",
+		"otpExpired": "コードの有効期限が切れました。新しいコードをリクエストしてください",
+		"invalidOtp": "無効なコードです。もう一度お試しください",
+		"invalidPassword": "無効なパスワードです。もう一度お試しください。",
+		"networkError": "接続エラー。もう一度お試しください"
 	},
 	"_day": {
 		"0": "日曜日",

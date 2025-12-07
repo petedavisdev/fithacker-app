@@ -13,12 +13,23 @@
 		"suggestionsEachDay": "Vous recevez deux suggestions chaque jour.",
 		"suggestionsTomorrow": "Complétez ce que vous pouvez aujourd'hui, puis examinez les suggestions de demain."
 	},
+	"_chart": {
+		"medalDescription": "les 6 types d'exercice dans la semaine",
+		"trophyDescription": "les 6 types d'exercice deux fois dans la semaine"
+	},
 	"_@": {
 		"email": "Email",
 		"loggedIn": "Connecté avec",
 		"login": "Connexion",
 		"loginDescription": "Sauvegardez et utilisez sur plusieurs appareils",
 		"sendCode": "Envoyez-moi un numéro magique ✨"
+	},
+	"auth": {
+		"invalidEmail": "Veuillez entrer une adresse e-mail valide",
+		"otpExpired": "Code expiré. Veuillez en demander un nouveau",
+		"invalidOtp": "Code invalide. Veuillez réessayer",
+		"invalidPassword": "Mot de passe invalide. Veuillez réessayer.",
+		"networkError": "Erreur de connexion. Veuillez réessayer"
 	},
 	"_day": {
 		"0": "Dimanche",

@@ -29,6 +29,7 @@ export default function HomeScreen() {
 	return (
 		<View className="flex-1 items-center gap-5">
 			<TheHeader
+				buttonLeft="account"
 				buttonRight={dateInfo.category === 'today' ? 'help' : undefined}
 			/>
 

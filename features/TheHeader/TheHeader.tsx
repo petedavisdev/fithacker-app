@@ -4,14 +4,12 @@ import { AButton } from '../Atoms/AButton';
 import { AModal } from '../Atoms/AModal';
 import { HelpSuggestions } from './HelpSuggestions';
 import { Link } from 'expo-router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { isLoggedIn, onAuthStateChange } from '../supabase/auth';
+import { useNetworkStatus } from '../supabase/useNetworkStatus';
 
 const headerButtons = {
-	account: (
-		<AButton href="/account" size="sm">
-			👋
-		</AButton>
-	),
+	account: <></>, // Will be set dynamically
 	help: <></>,
 };
 
@@ -20,10 +18,27 @@ type TheHeaderButtons = keyof typeof headerButtons;
 type TheHeaderProps = {
 	buttonLeft?: TheHeaderButtons;
 	buttonRight?: TheHeaderButtons;
+	helpContent?: React.ReactNode;
 };
 
 export function TheHeader(props: TheHeaderProps) {
 	const [isHelpOpen, setIsHelpOpen] = React.useState(false);
+	const [loggedIn, setLoggedIn] = useState(false);
+	const { isOnline } = useNetworkStatus();
+
+	useEffect(() => {
+		// Initial check
+		isLoggedIn().then(setLoggedIn);
+
+		// Listen for auth state changes
+		const {
+			data: { subscription },
+		} = onAuthStateChange((loggedIn) => {
+			setLoggedIn(loggedIn);
+		});
+
+		return () => subscription?.unsubscribe();
+	}, []);
 
 	function open() {
 		setIsHelpOpen(true);
@@ -32,6 +47,15 @@ export function TheHeader(props: TheHeaderProps) {
 	function closeHelp() {
 		setIsHelpOpen(false);
 	}
+
+	// Determine emoji: 🫥 for offline, 😀 for logged in, 👤 for logged out
+	const accountEmoji = !isOnline ? '🫥' : loggedIn ? '😀' : '👤';
+
+	headerButtons.account = (
+		<AButton href="/account" size="sm">
+			{accountEmoji}
+		</AButton>
+	);
 
 	headerButtons.help = (
 		<AButton onPress={open} color="pink" size="sm">
@@ -57,7 +81,7 @@ export function TheHeader(props: TheHeaderProps) {
 			</View>
 
 			<AModal isOpen={isHelpOpen} onClose={closeHelp}>
-				<HelpSuggestions />
+				{props.helpContent || <HelpSuggestions />}
 			</AModal>
 		</View>
 	);

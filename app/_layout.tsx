@@ -4,7 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Slot } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
-import { SafeAreaView, StatusBar } from 'react-native';
+import { Platform, SafeAreaView, StatusBar } from 'react-native';
 import 'react-native-reanimated';
 import { useNewDay } from '../features/useNewDay';
 import '../global.css';
@@ -41,7 +41,9 @@ export default function RootLayout() {
 					justifyContent: 'center',
 				}}
 			>
-				<SafeAreaView className="flex-1 w-full">
+				<SafeAreaView
+					className={`flex-1 w-full ${Platform.OS === 'web' ? 'p-4' : ''}`}
+				>
 					<Slot key={day} />
 				</SafeAreaView>
 			</LinearGradient>

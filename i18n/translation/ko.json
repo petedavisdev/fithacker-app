@@ -13,12 +13,23 @@
 		"suggestionsEachDay": "매일 두 가지 제안을 받습니다.",
 		"suggestionsTomorrow": "오늘 할 수 있는 일을 완료하고 내일의 제안을 살펴보세요."
 	},
+	"_chart": {
+		"medalDescription": "주에 6가지 운동 모두",
+		"trophyDescription": "주에 6가지 운동 모두 두 번"
+	},
 	"_@": {
 		"email": "이메일",
 		"loggedIn": "로그인됨",
 		"login": "로그인",
 		"loginDescription": "백업하고 여러 기기에서 사용하세요",
 		"sendCode": "마법의 숫자를 보내주세요 ✨"
+	},
+	"auth": {
+		"invalidEmail": "유효한 이메일 주소를 입력하세요",
+		"otpExpired": "코드가 만료되었습니다. 새 코드를 요청하세요",
+		"invalidOtp": "유효하지 않은 코드입니다. 다시 시도하세요",
+		"invalidPassword": "유효하지 않은 비밀번호입니다. 다시 시도하세요.",
+		"networkError": "연결 오류. 다시 시도하세요"
 	},
 	"_day": {
 		"0": "일요일",

@@ -1,0 +1,103 @@
+---
+description: Supabase patterns and conventions for sync and auth
+globs: features/supabase/**/*.ts,features/supabase/**/*.tsx
+alwaysApply: false
+---
+
+# Supabase Integration (Hosted, Opt-In, Simplified)
+
+## Client Configuration
+
+**Source of Truth**: `features/supabase/client.ts`
+
+- Use AsyncStorage for auth persistence (React Native)
+- Set `detectSessionInUrl: false` for React Native
+- Enable `autoRefreshToken` and `persistSession`
+- Connect to hosted Supabase service only
+- Use generated types: `createClient<Database>`
+- Access env vars via `Constants.expoConfig?.extra` with fallback to `process.env`
+
+## Database Schema
+
+**JSONB Storage** - Store ExerciseDay directly as JSONB
+
+- Column `log` is JSONB type, stores ExerciseDay array
+- Same format as client - no transformations needed
+- Just `JSON.stringify()` to save, `JSON.parse()` to load
+- Query example: `log->>'0'` gets first exercise
+
+## Type Generation
+
+- Use generated types: `supabase gen types typescript`
+- Don't manually edit `database.types.ts`
+- Re-generate after schema changes
+- Import types from `database.types.ts`
+- Use MCP tool `mcp_supabase_generate_typescript_types` to generate types
+
+## Auth Patterns
+
+- Email OTP only: `supabase.auth.signInWithOtp({ email, options: { shouldCreateUser: true } })`
+- OTP verify: Try `type: 'email'` first, then `type: 'signup'` if that fails (handles both login and registration)
+- Apple review email: Use `signInWithPassword()` for designated test email only
+- Check logged in: `!!session?.user`
+- No anonymous auth - sync only available to authenticated users
+- Reactive auth state: Always listen to `onAuthStateChange()` in UI components
+
+## Error Handling
+
+- Map Supabase errors to user-friendly `AuthError` type
+- Show translated messages for OTP/password errors only
+- Log all other errors to console
+- Clear errors on user input
+
+## Sync Strategy: Full-Fetch with Timestamp Conflict Resolution
+
+**Source of Truth**: `features/supabase/sync.ts`
+
+- **Opt-in only**: Sync only happens when user is logged in
+- **Full-fetch**: Always fetch all user data (no incremental sync)
+- **Per-day granularity**: Newer timestamp wins for entire day
+- **No merging**: Winner takes all exercises for that day
+- **Pending sync structure**: `{ "2024-12-05": "2024-12-07T12:30:00Z" }`
+- **Pull logic**: Compare `pendingSync[date]` timestamp vs `row.updated_at`
+- **Push logic**: Upsert if day exists locally, DELETE if day missing locally
+- **Deletions**: Handled naturally (missing local data = DELETE from remote)
+- **Auto-sync on edit**: Changes sync immediately when online and logged in
+
+## Migration Strategy
+
+**Critical**: Never delete `exerciseLogPendingSync` from AsyncStorage
+
+- Use `setItem('{}')` to clear, never `removeItem()`
+- Key presence indicates migration completed
+- Migration runs once on first app launch after update
+- All existing data gets timestamp from migration time
+
+## Storage Keys
+
+Only one AsyncStorage key for sync:
+- `exerciseLogPendingSync` - Object mapping date → local edit timestamp
+
+## Error Handling
+
+- Use `console.error` only (simple logging)
+- Network errors: Log and retry on next sync
+- Auth errors: Show UI feedback only for OTP/password verification
+- Sync errors: Silent retry on next app load
+- Never block user actions for sync failures
+
+## Debugging with MCP
+
+- Use `mcp_supabase_get_logs` to view service logs
+- Use `mcp_supabase_execute_sql` to query data (JSONB queries: `log->>'0'`)
+- Use `mcp_supabase_get_advisors` to check for issues
+- Use `mcp_supabase_list_tables` to inspect schema
+
+## Testing
+
+See `.cursor/rules/testing.mdc` for general patterns
+
+- Mock Supabase client with Jest
+- Mock `expo-network` for network status tests
+- Use fake timers for date-dependent sync tests
+- Test OTP with real email addresses (check spam folder)

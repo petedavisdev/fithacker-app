@@ -13,12 +13,23 @@
 		"suggestionsEachDay": "每天您将收到两条建议。",
 		"suggestionsTomorrow": "完成今天能做的事情，然后看看明天的建议。"
 	},
+	"_chart": {
+		"medalDescription": "本周所有6种运动",
+		"trophyDescription": "本周所有6种运动各两次"
+	},
 	"_@": {
 		"email": "电子邮件",
 		"loggedIn": "已登录",
 		"login": "登录",
 		"loginDescription": "备份并在多个设备上使用",
 		"sendCode": "发送魔法数字 ✨"
+	},
+	"auth": {
+		"invalidEmail": "请输入有效的电子邮件地址",
+		"otpExpired": "代码已过期。请请求新代码",
+		"invalidOtp": "无效代码。请重试",
+		"invalidPassword": "无效密码。请重试。",
+		"networkError": "连接错误。请重试"
 	},
 	"_day": {
 		"0": "星期日",

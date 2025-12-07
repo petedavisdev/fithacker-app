@@ -1,3 +1,5 @@
+import 'dotenv/config';
+
 const APP_VARIANTS = [
 	{
 		env: 'development',
@@ -89,6 +91,9 @@ export default {
 			eas: {
 				projectId: '6c3e19dc-162f-45b6-98f4-716ce558cd0e',
 			},
+			supabaseUrl: process.env.EXPO_PUBLIC_SUPABASE_URL,
+			supabaseAnonKey: process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY,
+			appleReviewEmail: process.env.EXPO_PUBLIC_APPLE_REVIEW_EMAIL,
 		},
 	},
 };
