@@ -35,14 +35,15 @@ export function useExerciseLog(date?: string) {
 			return EXERCISES.indexOf(exerciseA) - EXERCISES.indexOf(exerciseB);
 		});
 
-		setExerciseLog((prev) => {
-			const newLog = {
-				...prev,
-				[date]: newDayExercises,
-			};
-			storeExerciseLog(newLog, date, newDayExercises);
-			return newLog;
-		});
+		const newLog = {
+			...exerciseLog,
+			[date]: newDayExercises,
+		};
+
+		// Persist to storage before updating state
+		await storeExerciseLog(newLog, date, newDayExercises);
+
+		setExerciseLog(newLog);
 	}
 
 	async function removeDayExercise(exercise: Exercise) {
@@ -52,23 +53,23 @@ export function useExerciseLog(date?: string) {
 			(item) => item !== exercise && item[0] !== exercise,
 		);
 
+		let newLog: ExerciseLog;
+
 		if (newDayExercises.length) {
-			setExerciseLog((prev) => {
-				const newLog = {
-					...prev,
-					[date]: newDayExercises.length ? newDayExercises : undefined,
-				};
-				storeExerciseLog(newLog, date, newDayExercises);
-				return newLog;
-			});
+			newLog = {
+				...exerciseLog,
+				[date]: newDayExercises,
+			};
+			// Persist to storage before updating state
+			await storeExerciseLog(newLog, date, newDayExercises);
 		} else {
-			setExerciseLog((prev) => {
-				const { [date]: _, ...rest } = prev;
-				const newLog = { ...rest };
-				storeExerciseLog(newLog, date, undefined);
-				return newLog;
-			});
+			const { [date]: _, ...rest } = exerciseLog;
+			newLog = { ...rest };
+			// Persist to storage before updating state
+			await storeExerciseLog(newLog, date, undefined);
 		}
+
+		setExerciseLog(newLog);
 	}
 
 	async function storeExerciseLog(

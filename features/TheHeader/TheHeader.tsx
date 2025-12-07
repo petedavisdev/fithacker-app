@@ -8,12 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { isLoggedIn, onAuthStateChange } from '../supabase/auth';
 import { useNetworkStatus } from '../supabase/useNetworkStatus';
 
-const headerButtons = {
-	account: <></>, // Will be set dynamically
-	help: <></>,
-};
-
-type TheHeaderButtons = keyof typeof headerButtons;
+type TheHeaderButtons = 'account' | 'help';
 
 type TheHeaderProps = {
 	buttonLeft?: TheHeaderButtons;
@@ -51,17 +46,19 @@ export function TheHeader(props: TheHeaderProps) {
 	// Determine emoji: 🫥 for offline, 😀 for logged in, 👤 for logged out
 	const accountEmoji = !isOnline ? '🫥' : loggedIn ? '😀' : '👤';
 
-	headerButtons.account = (
-		<AButton href="/account" size="sm">
-			{accountEmoji}
-		</AButton>
-	);
-
-	headerButtons.help = (
-		<AButton onPress={open} color="pink" size="sm">
-			?
-		</AButton>
-	);
+	// Create buttons inside component to avoid stale closures
+	const headerButtons = {
+		account: (
+			<AButton href="/account" size="sm">
+				{accountEmoji}
+			</AButton>
+		),
+		help: (
+			<AButton onPress={open} color="pink" size="sm">
+				?
+			</AButton>
+		),
+	};
 
 	return (
 		<View className="w-full flex-row justify-center p-4">
