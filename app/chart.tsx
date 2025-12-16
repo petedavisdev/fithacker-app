@@ -14,7 +14,8 @@ export default function chart() {
 			/>
 
 			<View className="flex-1 items-center justify-center gap-10">
-				<ExerciseFilter componentToFilter={Chart} />
+				<Chart />
+				<ExerciseFilter />
 			</View>
 		</>
 	);

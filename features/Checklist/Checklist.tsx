@@ -1,16 +1,26 @@
 import { Keyboard, View } from 'react-native';
 import { getChecklistData } from './getChecklistData';
-import { type DateInfo } from '../dateInfo';
+import { type DateInfo } from '@/shared/dateInfo';
 import { ChecklistInput } from './ChecklistInput';
-import { useExerciseLog } from '../useExerciseLog';
+import { useExerciseLog } from '@/shared/useExerciseLog';
+import { useUpdateDayExercise } from './useUpdateDayExercise';
+import { useRemoveDayExercise } from './useRemoveDayExercise';
 
 type ChecklistProps = {
 	dateInfo: DateInfo;
 };
 
 export function Checklist(props: ChecklistProps) {
-	const { exerciseLog, dayLog, updateDayExercise, removeDayExercise } =
-		useExerciseLog(props.dateInfo.date);
+	const { exerciseLog, isLoadingExerciseLog } = useExerciseLog();
+
+	const { updateDayExercise } = useUpdateDayExercise(
+		props.dateInfo.date,
+	);
+	const { removeDayExercise } = useRemoveDayExercise(
+		props.dateInfo.date,
+	);
+
+	const dayLog = exerciseLog?.[props.dateInfo.date] ?? [];
 
 	const checklist = getChecklistData(props.dateInfo, exerciseLog, dayLog);
 
@@ -18,6 +28,7 @@ export function Checklist(props: ChecklistProps) {
 
 	return (
 		<View className="w-96 flex gap-6 px-4">
+			{/* Optionally could show loading state; keeping UI minimal */}
 			{checklist.map((item) => {
 				return (
 					<ChecklistInput
@@ -27,18 +38,18 @@ export function Checklist(props: ChecklistProps) {
 						dayCount={item.dayCount}
 						isChecked={item.isChecked}
 						isPriority={item.isPriority}
-						isDisabled={isDisabled}
+						isDisabled={isDisabled || isLoadingExerciseLog}
 						onCheckboxChange={(note?: string) => {
 							Keyboard.dismiss();
 							if (item.isChecked) {
-								removeDayExercise(item.exercise);
+								removeDayExercise({ exercise: item.exercise });
 							} else {
-								updateDayExercise(item.exercise, note);
+								updateDayExercise({ exercise: item.exercise, note });
 							}
 						}}
 						onNoteChange={(note?: string) => {
 							if (item.isChecked) {
-								updateDayExercise(item.exercise, note);
+								updateDayExercise({ exercise: item.exercise, note });
 							}
 						}}
 					/>

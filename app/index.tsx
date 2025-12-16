@@ -1,11 +1,11 @@
 import { Text, View } from 'react-native';
 
-import { AButton } from '../features/Atoms/AButton';
-import { Checklist } from '../features/Checklist/Checklist';
+import { AButton } from '@/shared/Atoms/AButton';
+import { Checklist } from '@/features/Checklist/Checklist';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { TheHeader } from '../features/TheHeader/TheHeader';
-import { getDateInfo } from '../features/dateInfo';
-import { getDateSteps } from '../features/Checklist/getDateSteps';
+import { TheHeader } from '@/features/TheHeader/TheHeader';
+import { getDateInfo } from '@/shared/dateInfo';
+import { getDateSteps } from '@/features/Checklist/getDateSteps';
 import { useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 

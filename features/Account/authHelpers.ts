@@ -1,5 +1,6 @@
 import Constants from 'expo-constants'
-import { supabase } from './client'
+import type { Session } from '@supabase/supabase-js'
+import { supabase } from '@/shared/supabase/client'
 
 export type AuthError =
 	| 'invalidEmail'
@@ -145,11 +146,11 @@ export async function signOut(): Promise<void> {
 }
 
 export function onAuthStateChange(
-	callback: (isLoggedIn: boolean) => void,
+	callback: (isLoggedIn: boolean, session: Session | null) => void,
 ) {
 	return supabase.auth.onAuthStateChange((_event, session) => {
-		const isLoggedIn = !!session?.user
-		callback(isLoggedIn)
-	})
+		const isLoggedIn = !!session?.user;
+		callback(isLoggedIn, session);
+	});
 }
 

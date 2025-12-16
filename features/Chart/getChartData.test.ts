@@ -1,4 +1,4 @@
-import { ExerciseLog } from '../EXERCISES';
+import { ExerciseLog } from '@/shared/EXERCISES';
 import { getChartData } from './getChartData';
 
 jest.useFakeTimers({ now: new Date('2022-02-26T00:00:00') });

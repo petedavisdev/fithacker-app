@@ -1,6 +1,6 @@
-import type { Exercise, ExerciseItem, ExerciseLog } from '../EXERCISES';
-import { EXERCISES } from '../EXERCISES';
-import { getLastMonday, getDate } from '../dateInfo';
+import type { Exercise, ExerciseItem, ExerciseLog } from '@/shared/EXERCISES';
+import { EXERCISES } from '@/shared/EXERCISES';
+import { getLastMonday, getDate } from '@/shared/dateInfo';
 import { checkThisWeek, getWeekText } from './getWeekText';
 
 export type ChartData = {

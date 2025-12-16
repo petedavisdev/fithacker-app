@@ -1,5 +1,5 @@
-import { checkThisMonth, checkThisYear, getDate } from '../dateInfo';
-import { getLanguage } from '../getLanguage';
+import { checkThisMonth, checkThisYear, getDate } from '@/shared/dateInfo';
+import { getLanguage } from '@/shared/i18n/getLanguage';
 
 type WeekTextOption = {
 	check: (dates: string[]) => boolean;

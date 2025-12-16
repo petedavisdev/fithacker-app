@@ -1,8 +1,8 @@
 import { Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import type { Exercise, ExerciseDay } from '../EXERCISES';
+import type { Exercise, ExerciseDay } from '@/shared/EXERCISES';
 import { type Href, Link, useLocalSearchParams } from 'expo-router';
-import { getDateInfo } from '../dateInfo';
+import { getDateInfo } from '@/shared/dateInfo';
 
 type ChartDayProps = {
 	date: string;

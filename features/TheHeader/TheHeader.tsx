@@ -1,12 +1,12 @@
 import { Text, View } from 'react-native';
 
-import { AButton } from '../Atoms/AButton';
-import { AModal } from '../Atoms/AModal';
+import { AButton } from '@/shared/Atoms/AButton';
+import { AModal } from '@/shared/Atoms/AModal';
 import { HelpSuggestions } from './HelpSuggestions';
 import { Link } from 'expo-router';
-import React, { useEffect, useState } from 'react';
-import { isLoggedIn, onAuthStateChange } from '../supabase/auth';
-import { useNetworkStatus } from '../supabase/useNetworkStatus';
+import React from 'react';
+import { useIsLoggedIn } from '@/features/Account/useAuthSession';
+import { useIsOnline } from '@/shared/useNetworkStatus';
 
 type TheHeaderButtons = 'account' | 'help';
 
@@ -18,22 +18,8 @@ type TheHeaderProps = {
 
 export function TheHeader(props: TheHeaderProps) {
 	const [isHelpOpen, setIsHelpOpen] = React.useState(false);
-	const [loggedIn, setLoggedIn] = useState(false);
-	const { isOnline } = useNetworkStatus();
-
-	useEffect(() => {
-		// Initial check
-		isLoggedIn().then(setLoggedIn);
-
-		// Listen for auth state changes
-		const {
-			data: { subscription },
-		} = onAuthStateChange((loggedIn) => {
-			setLoggedIn(loggedIn);
-		});
-
-		return () => subscription?.unsubscribe();
-	}, []);
+	const loggedIn = useIsLoggedIn();
+	const isOnline = useIsOnline();
 
 	function open() {
 		setIsHelpOpen(true);

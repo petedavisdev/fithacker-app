@@ -1,5 +1,5 @@
 import { Pressable, Text, TextInput, View } from 'react-native';
-import { type Exercise } from '../EXERCISES';
+import { type Exercise } from '@/shared/EXERCISES';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 
@@ -10,21 +10,22 @@ type ChecklistInputProps = {
 	isPriority?: boolean;
 	isDisabled?: boolean;
 	note?: string;
-	onCheckboxChange: (note?: string) => void;
-	onNoteChange: (note?: string) => void;
+	onCheckboxChange: (note?: string) => void | Promise<void>;
+	onNoteChange: (note?: string) => void | Promise<void>;
 };
 
 export function ChecklistInput(props: ChecklistInputProps) {
 	const { t } = useTranslation();
+	const { onNoteChange } = props;
 	const [note, setNote] = useState(props.note);
 	const [placeholder, setPlaceholder] = useState(t(props.exercise));
 
 	useEffect(() => {
 		const debounceTimeoutId = setTimeout(() => {
-			props.onNoteChange(note);
+			onNoteChange(note);
 		}, 500);
 		return () => clearTimeout(debounceTimeoutId);
-	}, [note, 500]);
+	}, [note, onNoteChange]);
 
 	return (
 		<Pressable
@@ -69,7 +70,6 @@ export function ChecklistInput(props: ChecklistInputProps) {
 					onFocus={() => setPlaceholder('')}
 					onBlur={() => setPlaceholder(t(props.exercise))}
 					maxLength={60}
-					onClick={(e: Event) => e.stopPropagation()}
 				/>
 			) : (
 				<Text

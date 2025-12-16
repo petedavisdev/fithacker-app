@@ -26,7 +26,16 @@ if (!supabaseUrl || !supabaseAnonKey) {
 
 // Lazy-load AsyncStorage to avoid window access during module initialization
 // AsyncStorage uses window.localStorage on web, so we need to ensure it's only loaded client-side
-let AsyncStorage: any
+// eslint-disable-next-line import/first
+import type { AsyncStorageStatic } from '@react-native-async-storage/async-storage';
+
+type AsyncStorageAdapter = {
+	getItem: (key: string) => Promise<string | null>;
+	setItem: (key: string, value: string) => Promise<void>;
+	removeItem: (key: string) => Promise<void>;
+};
+
+let AsyncStorage: AsyncStorageStatic | AsyncStorageAdapter
 if (Platform.OS !== 'web') {
 	// Native platforms - safe to import immediately
 	AsyncStorage = require('@react-native-async-storage/async-storage').default

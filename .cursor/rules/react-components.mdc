@@ -14,19 +14,25 @@ alwaysApply: false
 
 ## Custom Hooks Structure
 
-**Example**: See `features/useExerciseLog.ts` or `features/useNewDay.ts`
+**Example**: See `features/useNewDay.ts` or React Query hooks in `features/queries/`
 
 ## Custom Hooks for Domain Logic
 
-**Examples**: `features/useExerciseLog.ts`, `features/useNewDay.ts`
+**Examples**: `features/useNewDay.ts`, React Query hooks in `features/queries/` and `features/mutations/`
 
 - Use custom hooks for domain-specific state logic
 - Keep state local to features when possible
-- NO external state management libraries (no Redux, Zustand, etc.)
+- Use React Query (`@tanstack/react-query`) for async state management
+- NO other external state management libraries (no Redux, Zustand, etc.)
 
-## Async in useEffect
+## Async State Management
 
-**Example**: See `features/useExerciseLog.ts` (IIFE pattern for async in useEffect)
+**Example**: See React Query hooks in `features/queries/` and `features/mutations/`
+
+- Use React Query's `useQuery` for data fetching
+- Use React Query's `useMutation` for data mutations
+- Components should have ZERO async/await, ZERO try-catch, ZERO data-fetching useEffects
+- Event handlers call `mutate()` synchronously
 
 ## Pure Functions
 

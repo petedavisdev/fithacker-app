@@ -1,4 +1,4 @@
-import { getLanguage } from './getLanguage';
+import { getLanguage } from './i18n/getLanguage';
 
 type DateCategory = 'today' | 'tomorrow' | 'future' | 'weekend' | 'weekday';
 

@@ -1,14 +1,25 @@
 import { FlatList } from 'react-native';
-import { type ExerciseLog } from '../EXERCISES';
+import { useLocalSearchParams } from 'expo-router';
 import { getChartData } from './getChartData';
 import { ChartWeek } from './ChartWeek';
+import { useExerciseLog } from '@/shared/useExerciseLog';
+import { filterExerciseLog } from '@/features/ExerciseFilter/filterExerciseLog';
+import { type Exercise } from '@/shared/EXERCISES';
 
-type ChartProps = {
-	exerciseLog: ExerciseLog;
-};
+export function Chart() {
+	const params = useLocalSearchParams<{ filter?: Exercise }>();
+	const {
+		exerciseLog,
+		isLoadingExerciseLog,
+		errorExerciseLog,
+	} = useExerciseLog();
 
-export function Chart(props: ChartProps) {
-	const chartData = getChartData(props.exerciseLog);
+	const filteredLog =
+		params.filter && exerciseLog
+			? filterExerciseLog(exerciseLog, params.filter)
+			: exerciseLog ?? {};
+
+	const chartData = getChartData(filteredLog);
 
 	return (
 		<FlatList
@@ -19,6 +30,9 @@ export function Chart(props: ChartProps) {
 			data={chartData}
 			keyExtractor={({ days }) => Object.keys(days)[0]}
 			renderItem={({ item: weekData }) => <ChartWeek weekData={weekData} />}
+			ListEmptyComponent={
+				isLoadingExerciseLog ? undefined : errorExerciseLog ? null : null
+			}
 		/>
 	);
 }

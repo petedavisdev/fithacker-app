@@ -41,7 +41,7 @@ alwaysApply: false
 - Apple review email: Use `signInWithPassword()` for designated test email only
 - Check logged in: `!!session?.user`
 - No anonymous auth - sync only available to authenticated users
-- Reactive auth state: Always listen to `onAuthStateChange()` in UI components
+- Reactive auth state: Listen to `onAuthStateChange()` and write into React Query cache via `setQueryData`
 
 ## Error Handling
 
@@ -63,6 +63,7 @@ alwaysApply: false
 - **Push logic**: Upsert if day exists locally, DELETE if day missing locally
 - **Deletions**: Handled naturally (missing local data = DELETE from remote)
 - **Auto-sync on edit**: Changes sync immediately when online and logged in
+- **Background sync query**: Dedicated React Query hook enabled when `isLoggedIn && isOnline`; use `refetchOnReconnect` and `refetchOnWindowFocus`
 
 ## Migration Strategy
 
@@ -85,6 +86,14 @@ Only one AsyncStorage key for sync:
 - Auth errors: Show UI feedback only for OTP/password verification
 - Sync errors: Silent retry on next app load
 - Never block user actions for sync failures
+
+## React Query Conventions (Supabase)
+
+- Cache async state: auth session (Infinity stale), network status (Infinity stale), pending sync (0ms)
+- Use listeners to `setQueryData` for instant auth/network updates (no polling)
+- Do not put sync inside other queryFns; use dedicated background sync query
+- Mutations are local-first (AsyncStorage) and fire-and-forget to Supabase
+- Always rename `data/isLoading/error` when destructuring queries/mutations for clarity
 
 ## Debugging with MCP
 
