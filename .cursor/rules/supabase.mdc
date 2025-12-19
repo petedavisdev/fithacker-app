@@ -1,6 +1,6 @@
 ---
 description: Supabase patterns and conventions for sync and auth
-globs: features/supabase/**/*.ts,features/supabase/**/*.tsx
+globs: shared/supabase/**/*.ts,shared/supabase/**/*.tsx
 alwaysApply: false
 ---
 
@@ -8,7 +8,7 @@ alwaysApply: false
 
 ## Client Configuration
 
-**Source of Truth**: `features/supabase/client.ts`
+**Source of Truth**: `shared/supabase/client.ts`
 
 - Use AsyncStorage for auth persistence (React Native)
 - Set `detectSessionInUrl: false` for React Native
@@ -52,7 +52,7 @@ alwaysApply: false
 
 ## Sync Strategy: Full-Fetch with Timestamp Conflict Resolution
 
-**Source of Truth**: `features/supabase/sync.ts`
+**Source of Truth**: `shared/supabase/syncHelpers.ts`
 
 - **Opt-in only**: Sync only happens when user is logged in
 - **Full-fetch**: Always fetch all user data (no incremental sync)
@@ -88,6 +88,8 @@ Only one AsyncStorage key for sync:
 - Never block user actions for sync failures
 
 ## React Query Conventions (Supabase)
+
+See `.cursor/rules/react-query.mdc` for detailed React Query patterns.
 
 - Cache async state: auth session (Infinity stale), network status (Infinity stale), pending sync (0ms)
 - Use listeners to `setQueryData` for instant auth/network updates (no polling)

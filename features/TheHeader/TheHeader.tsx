@@ -1,12 +1,12 @@
 import { Text, View } from 'react-native';
 
-import { AButton } from '@/shared/Atoms/AButton';
-import { AModal } from '@/shared/Atoms/AModal';
+import { AButton } from '@/shared/components/AButton';
+import { AModal } from '@/shared/components/AModal';
 import { HelpSuggestions } from './HelpSuggestions';
 import { Link } from 'expo-router';
 import React from 'react';
 import { useIsLoggedIn } from '@/features/Account/useAuthSession';
-import { useIsOnline } from '@/shared/useNetworkStatus';
+import { useIsOnline } from '@/shared/queries/useNetworkStatus';
 
 type TheHeaderButtons = 'account' | 'help';
 
@@ -14,6 +14,7 @@ type TheHeaderProps = {
 	buttonLeft?: TheHeaderButtons;
 	buttonRight?: TheHeaderButtons;
 	helpContent?: React.ReactNode;
+	customButtonRight?: React.ReactNode;
 };
 
 export function TheHeader(props: TheHeaderProps) {
@@ -59,7 +60,7 @@ export function TheHeader(props: TheHeaderProps) {
 				</Link>
 
 				<View className="h-10 w-10">
-					{props.buttonRight && headerButtons[props.buttonRight]}
+					{props.customButtonRight || (props.buttonRight && headerButtons[props.buttonRight])}
 				</View>
 			</View>
 

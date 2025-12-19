@@ -9,13 +9,13 @@ alwaysApply: false
 ## Emoji Usage
 
 - Use emojis extensively instead of traditional icons
-- **Exercise emojis**: See `features/EXERCISES.ts` (`EXERCISES` array)
+- **Exercise emojis**: See `shared/utils/EXERCISES.ts` (`EXERCISES` array)
 - **UI action emojis**: 👍 (confirm), 👈 (previous), 👉 (next), 👋 (account), ? (help)
 - NEVER replace these with icon libraries (no Ionicons, FontAwesome, etc.)
 
 ## Button Patterns
 
-**Source of Truth**: `features/Atoms/AButton.tsx`
+**Source of Truth**: `shared/components/AButton.tsx`
 
 - Use `AButton` component for all buttons
 - Supports two modes: Link (`href` prop) or Pressable (`onPress` prop)
@@ -24,7 +24,7 @@ alwaysApply: false
 
 ## Modal Patterns
 
-**Source of Truth**: `features/Atoms/AModal.tsx`
+**Source of Truth**: `shared/components/AModal.tsx`
 
 - Use `AModal` component for all overlays
 - See component for styling and behavior

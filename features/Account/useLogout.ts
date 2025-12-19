@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { clearSyncState } from '@/shared/supabase/syncState';
 import { signOut } from './authHelpers';
-import { queryKeys } from '@/shared/queryKeys';
+import { queryKeys } from '@/shared/queries/queryKeys';
 
 export function useLogout() {
 	const queryClient = useQueryClient();

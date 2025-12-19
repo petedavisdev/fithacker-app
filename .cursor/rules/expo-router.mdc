@@ -35,4 +35,4 @@ alwaysApply: false
 **Source of Truth**: `app.config.js` (ios, android, web configurations)
 
 - App supports iOS, Android, and Web
-- Web-specific checks: See `i18n/index.ts` for example (`Platform.OS !== 'web'`)
+- Web-specific checks: See `shared/i18n/index.ts` for example (`Platform.OS !== 'web'`)

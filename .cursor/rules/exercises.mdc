@@ -1,6 +1,6 @@
 ---
 description: Exercise system conventions and data structures
-globs: features/EXERCISES.ts,features/**/Checklist*.ts,features/**/Checklist*.tsx,features/useExerciseLog.ts
+globs: shared/utils/EXERCISES.ts,features/**/Checklist*.ts,features/**/Checklist*.tsx,shared/queries/useExerciseLog.ts
 alwaysApply: false
 ---
 
@@ -8,7 +8,7 @@ alwaysApply: false
 
 ## Exercise Constants
 
-**Source of Truth**: `features/EXERCISES.ts`
+**Source of Truth**: `shared/utils/EXERCISES.ts`
 
 - `EXERCISES` array defines all available exercises (emojis)
 - `EXERCISE_PRIORITIES` object defines priority weights (0-2) for highlighting
@@ -16,7 +16,7 @@ alwaysApply: false
 
 ## Exercise Data Structure
 
-See `features/EXERCISES.ts` for complete type definitions:
+See `shared/utils/EXERCISES.ts` for complete type definitions:
 
 - `EXERCISES` - Array of exercise emojis (with `as const`)
 - `Exercise` - Derived type from `EXERCISES` array

@@ -1,43 +1,41 @@
+import { useTranslation } from 'react-i18next';
 import { Pressable, Text, View } from 'react-native';
-import { AButton } from '@/shared/Atoms/AButton';
+import { AButton } from '@/shared/components/AButton';
 import { TheHeader } from '@/features/TheHeader/TheHeader';
 import { useLogout } from './useLogout';
+import { useAuthSession } from './useAuthSession';
+import { useBackgroundSync } from '@/shared/queries/useBackgroundSync';
+import { usePendingSync } from '@/shared/queries/usePendingSync';
 
-type AccountInfoProps = {
-	userEmail: string | null;
-	pendingCount: number;
-	isOnline: boolean;
-};
+export function AccountInfo() {
+	const { t } = useTranslation();
+	const { logout } = useLogout();
+	const { authSession } = useAuthSession();
+	const { isBackgroundSyncFetching } = useBackgroundSync();
+	const { pendingSync } = usePendingSync();
 
-export function AccountInfo({
-	userEmail,
-	pendingCount,
-	isOnline,
-}: AccountInfoProps) {
-	const logoutMutation = useLogout();
+	const userEmail = authSession?.user?.email ?? null;
+	const pendingCount = Object.keys(pendingSync ?? {}).length;
 
 	return (
 		<>
 			<TheHeader buttonLeft="account" />
 			<View className="flex-1 items-center justify-center p-4">
 				<Text className="font-mono text-cyan-400 text-2xl font-bold text-center">
-					Logged in as {userEmail}
+					{t('_@.loggedInAs', { email: userEmail })}
 				</Text>
-				<Text className="font-mono text-cyan-400 mt-2 text-center">
-					Your exercise log is safely backed-up and synced across all your
-					devices
-				</Text>
-				{pendingCount > 0 && (
-					<Text className="font-mono text-yellow-400 mt-2 text-center">
-						{pendingCount} days waiting to sync
-					</Text>
-				)}
 
-				{!isOnline && (
-					<Text className="font-mono text-cyan-400 mt-4 text-center">
-						You are offline. Sync will resume when you're back online.
-					</Text>
-				)}
+				<Text className="font-mono text-cyan-400 mt-4 text-center">
+					{t('_@.backupDescription')}
+				</Text>
+				
+				<Text className="font-mono text-yellow-400 mt-8 text-center">
+					{isBackgroundSyncFetching && pendingCount > 0
+						? t('_@.daysSyncingNow', { count: pendingCount })
+						: !isBackgroundSyncFetching && pendingCount === 0
+							? t('_@.syncComplete')
+							: t('_@.daysWaitingSync', { count: pendingCount })}
+				</Text>
 
 				<View className="flex-row justify-center items-center px-4 mt-10">
 					<AButton href="/chart">👍</AButton>
@@ -46,12 +44,12 @@ export function AccountInfo({
 				<View className="mt-10 items-center">
 					<Pressable
 						onPress={() => {
-							logoutMutation.mutate();
+							logout();
 						}}
 					>
-						<View className="min-h-20 max-w-60 p-6 items-center justify-center border-2 border-pink-500 rounded-full shadow shadow-pink-500">
-							<Text className="text-lg text-pink-400 font-mono text-balance text-center">
-								Sign Out
+						<View className="px-4 py-2 items-center justify-center border-2 border-pink-500 rounded-full shadow shadow-pink-500">
+							<Text className="text-sm text-pink-400 font-mono text-balance text-center">
+								🚪 {t('_@.signOut')}
 							</Text>
 						</View>
 					</Pressable>

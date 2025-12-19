@@ -7,18 +7,31 @@ alwaysApply: true
 
 ## Feature-Based Structure
 
-**Examples**: See `/features` directory structure (Chart, Checklist, ExerciseFilter, TheHeader, Atoms)
+**Examples**: See `/features` directory structure (Chart, Checklist, ExerciseFilter, TheHeader, Account)
 
 - Organize code by feature in `/features` directory, NOT by type (no `/components`, `/hooks`, `/utils` folders)
 - Each feature folder contains: components, hooks, utility functions, tests, and types
 - Co-locate test files next to implementation
 - Co-locate utility functions with their tests
 
+## Shared Code Structure
+
+**Examples**: See `/shared` directory structure (components, queries, supabase, utils, i18n)
+
+- Shared code goes in `/shared` directory, organized by type
+- `/shared/components/` - Shared atomic components (AButton, AModal, AErrorBoundary)
+- `/shared/queries/` - React Query hooks for data fetching
+- `/shared/supabase/` - Supabase client and sync logic
+- `/shared/utils/` - Shared utility functions and constants (EXERCISES, dateInfo)
+- `/shared/i18n/` - Internationalization configuration and translations
+
+**Note**: Mutations are co-located with features (e.g., `features/Checklist/useUpdateDayExercise.ts`), not in `/shared/mutations/`. See `.cursor/rules/react-query.mdc` for mutation patterns.
+
 ## Atomic Components
 
-**Examples**: See `/features/Atoms/` (AButton, AModal)
+**Examples**: See `/shared/components/` (AButton, AModal, AErrorBoundary)
 
-- Shared primitive components go in `/features/Atoms/`
+- Shared primitive components go in `/shared/components/`
 - Prefix atomic component names with `A`
 - Keep atoms minimal and composable
 - Atoms should accept discriminated union props when polymorphic

@@ -1,8 +1,8 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@/shared/utils/asyncStorage';
 import * as Localization from 'expo-localization';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import { Platform } from 'react-native';
+import { STORAGE_KEYS } from '@/shared/utils/constants';
 import de from './translation/de.json';
 import en from './translation/en.json';
 import es from './translation/es.json';
@@ -28,10 +28,8 @@ const resources = {
 const initI18n = async () => {
 	let lng: string | null = null;
 
-	// workaround for web - window not be available
-	if (Platform.OS !== 'web') {
-		lng = await AsyncStorage.getItem('language');
-	}
+	// Web-safe AsyncStorage handles window check internally
+	lng = await AsyncStorage.getItem(STORAGE_KEYS.LANGUAGE);
 
 	if (!lng) {
 		lng = Localization.getLocales()?.[0]?.languageCode;

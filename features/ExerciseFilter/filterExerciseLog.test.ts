@@ -1,4 +1,4 @@
-import { ExerciseLog } from '@/shared/EXERCISES';
+import { ExerciseLog } from '@/shared/utils/constants';
 import { filterExerciseLog } from './filterExerciseLog';
 
 describe('filterExerciseLog', () => {

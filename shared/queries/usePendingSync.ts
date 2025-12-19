@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { getPendingSync } from '@/shared/supabase/syncState';
-import { queryKeys } from '@/shared/queryKeys';
+import { queryKeys } from './queryKeys';
 
 export function usePendingSync() {
 	const { data, isLoading, error } = useQuery({

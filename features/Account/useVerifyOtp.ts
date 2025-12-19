@@ -1,6 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { verifyEmailOtp } from './authHelpers';
-import { queryKeys } from '@/shared/queryKeys';
+import { queryKeys } from '@/shared/queries/queryKeys';
+
+type VerifyPayload = {
+	email: string;
+	token: string;
+};
 
 export function useVerifyOtp() {
 	const queryClient = useQueryClient();
@@ -9,8 +14,10 @@ export function useVerifyOtp() {
 		mutate: verifyOtp,
 		isPending: isVerifyingOtp,
 		error: errorVerifyOtp,
+		reset: resetVerifyOtp,
 	} = useMutation({
-		mutationFn: async ({ email, token }: { email: string; token: string }) => {
+		networkMode: 'online', // Requires network to verify OTP
+		mutationFn: async ({ email, token }: VerifyPayload) => {
 			const { error } = await verifyEmailOtp(email, token);
 			if (error) {
 				throw new Error(error);
@@ -22,5 +29,7 @@ export function useVerifyOtp() {
 		},
 	});
 
-	return { verifyOtp, isVerifyingOtp, errorVerifyOtp };
+	return { verifyOtp, isVerifyingOtp, errorVerifyOtp, resetVerifyOtp };
 }
+
+

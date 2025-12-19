@@ -11,14 +11,20 @@ alwaysApply: false
 - Use function declarations: `export function Component(props: Props)`
 - NOT arrow functions for components
 - Props type inline: `function Component(props: ComponentProps)`
+- Access props directly: Use `props.propName` throughout the component, NOT destructuring
+- **Examples**: See `shared/components/AButton.tsx`, `features/Checklist/ChecklistInput.tsx`
+- **Anti-pattern**: ❌ Don't destructure props (`const { prop } = props` or `function Component({ prop }: Props)`)
+- **Helper functions**: See `.cursor/rules/typescript.mdc` for function declaration vs arrow function patterns
 
 ## Custom Hooks Structure
 
-**Example**: See `features/useNewDay.ts` or React Query hooks in `features/queries/`
+**Example**: See React Query hooks in `shared/queries/` or feature-specific hooks like `features/Checklist/useUpdateDayExercise.ts`
 
 ## Custom Hooks for Domain Logic
 
-**Examples**: `features/useNewDay.ts`, React Query hooks in `features/queries/` and `features/mutations/`
+**Examples**: React Query hooks in `shared/queries/`, feature-specific mutation hooks like `features/Checklist/useUpdateDayExercise.ts`
+
+See `.cursor/rules/react-query.mdc` for React Query patterns
 
 - Use custom hooks for domain-specific state logic
 - Keep state local to features when possible
@@ -27,12 +33,44 @@ alwaysApply: false
 
 ## Async State Management
 
-**Example**: See React Query hooks in `features/queries/` and `features/mutations/`
+**Example**: See React Query hooks in `shared/queries/` and mutation hooks in feature folders
 
 - Use React Query's `useQuery` for data fetching
 - Use React Query's `useMutation` for data mutations
 - Components should have ZERO async/await, ZERO try-catch, ZERO data-fetching useEffects
 - Event handlers call `mutate()` synchronously
+- See `.cursor/rules/react-query.mdc` for detailed patterns
+
+## When to Use useEffect
+
+**Reference**: https://react.dev/learn/you-might-not-need-an-effect
+
+Effects are an escape hatch for synchronizing with external systems. Use sparingly.
+
+**✅ Valid**: Subscribing to external systems (browser/React Native APIs, third-party libraries), timing-based side effects (debouncing)
+**Examples**: `useNetworkStatus.ts`, `useAuthSession.ts`, `ChecklistInput.tsx` (debouncing)
+
+**❌ Anti-patterns**: Transforming data (calculate during render), updating state from props/state (calculate during render), data fetching (use React Query), handling user events (use event handlers)
+
+**Always return cleanup**: `return () => subscription.remove()` or `clearTimeout(timeoutId)`
+
+## Component Self-Containment
+
+**Examples**: `features/Account/AccountInfo.tsx`, `features/Checklist/Checklist.tsx`, `features/Account/OfflineMessage.tsx`
+
+- Prefer accessing hooks directly over receiving data via props when data is globally available
+- Components should own their data dependencies when possible
+- Access React Query hooks directly: `useExerciseLog()`, `useAuthSession()`, `usePendingSync()`
+- Access route params directly: `useLocalSearchParams()` instead of receiving via props
+- **When to use props**: Presentational components, reusable UI components, data computed by parent
+- **When to use hooks**: Data available globally (React Query cache, route params, auth session)
+- **Benefits**: Reduced coupling, simpler parent components, easier testing, better encapsulation
+
+**Examples**:
+- ✅ `AccountInfo` accesses `useAuthSession()`, `usePendingSync()`, `useBackgroundSync()` directly
+- ✅ `Checklist` accesses `useLocalSearchParams()` directly to get date
+- ✅ `OfflineMessage` accesses `useAuthSession()` directly
+- ✅ `ChecklistInput` receives props (presentational, reusable component)
 
 ## Pure Functions
 

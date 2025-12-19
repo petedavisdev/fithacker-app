@@ -22,17 +22,19 @@ export function ChartWeek(props: ChartWeekProps) {
 				{t(props.weekData.text)}
 			</Text>
 
-				<Text className="text-yellow-500 text-6xl -mt-1 font-extralight px-1 font-mono">
-					{props.weekData.total}
-				</Text>
-				
-				{props.weekData.badge && (
+			<Text className="text-yellow-500 text-6xl -mt-1 font-extralight px-1 font-mono">
+				{props.weekData.total}
+			</Text>
+			
+			<View className="h-16">
+				{props.weekData.badges.length > 0 && (
 					<Text className="text-yellow-500 text-5xl font-extralight px-1 font-mono">
-						{props.weekData.badge}
+						{props.weekData.badges.join('')}
 					</Text>
 				)}
+			</View>
 
-			<View className="h-48" />
+			<View className="h-32" />
 		</View>
 	);
 }

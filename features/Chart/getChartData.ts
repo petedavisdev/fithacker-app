@@ -1,20 +1,21 @@
-import type { Exercise, ExerciseItem, ExerciseLog } from '@/shared/EXERCISES';
-import { EXERCISES } from '@/shared/EXERCISES';
-import { getLastMonday, getDate } from '@/shared/dateInfo';
+import type { Exercise, ExerciseItem, ExerciseLog, Badge } from '@/shared/utils/constants';
+import { EXERCISES } from '@/shared/utils/constants';
+import { getLastMonday, getDate } from '@/shared/utils/dateInfo';
 import { checkThisWeek, getWeekText } from './getWeekText';
+import { LIMITS, BADGES, DAYS } from '@/shared/utils/constants';
 
 export type ChartData = {
 	days: ExerciseLog;
 	text: string;
 	total: number;
-	badge: '🏅' | '🏆' | '';
+	badges: Badge[];
 };
 
 function getExerciseType(item: ExerciseItem): Exercise {
 	return typeof item === 'string' ? item : item[0];
 }
 
-function calculateBadge(days: ExerciseLog): '🏅' | '🏆' | '' {
+function calculateBadges(days: ExerciseLog): Badge[] {
 	// Flatten all exercises from all days in the week
 	const allExercises: ExerciseItem[] = [];
 	for (const dayExercises of Object.values(days)) {
@@ -38,23 +39,25 @@ function calculateBadge(days: ExerciseLog): '🏅' | '🏆' | '' {
 		exerciseCounts[exerciseType]++;
 	}
 
-	// Check if all exercise types appear at least twice
-	const allAtLeastTwice = EXERCISES.every(
-		(exercise) => exerciseCounts[exercise] >= 2,
-	);
-	if (allAtLeastTwice) {
-		return '🏆';
-	}
+	const badges: Badge[] = [];
 
 	// Check if all exercise types appear at least once
 	const allAtLeastOnce = EXERCISES.every(
 		(exercise) => exerciseCounts[exercise] >= 1,
 	);
 	if (allAtLeastOnce) {
-		return '🏅';
+		badges.push(BADGES[1]);
 	}
 
-	return '';
+	// Check if all exercise types appear at least twice
+	const allAtLeastTwice = EXERCISES.every(
+		(exercise) => exerciseCounts[exercise] >= 2,
+	);
+	if (allAtLeastTwice) {
+		badges.push(BADGES[2]);
+	}
+
+	return badges;
 }
 
 export function getChartData(exerciseLog: ExerciseLog) {
@@ -63,12 +66,10 @@ export function getChartData(exerciseLog: ExerciseLog) {
 
 	const weeks: ChartData[] = [];
 
-	const SAFE_LIMIT = 5000;
-
-	for (let i = 0; i < SAFE_LIMIT; i++) {
+	for (let i = 0; i < LIMITS.CHART_WEEKS_SAFE_LIMIT; i++) {
 		const days: ExerciseLog = {};
 
-		for (let d = 1; d <= 7; d++) {
+		for (let d = 1; d <= DAYS.PER_WEEK; d++) {
 			days[date] = exerciseLog[date] ?? [];
 
 			const currentDate = new Date(date);
@@ -79,9 +80,9 @@ export function getChartData(exerciseLog: ExerciseLog) {
 		const dates = Object.keys(days);
 		const text = getWeekText(dates);
 		const total = Object.values(days).flat().length;
-		const badge = calculateBadge(days);
+		const badges = calculateBadges(days);
 
-		weeks.unshift({ days, text, total, badge });
+		weeks.unshift({ days, text, total, badges });
 
 		if (checkThisWeek(dates)) break;
 	}

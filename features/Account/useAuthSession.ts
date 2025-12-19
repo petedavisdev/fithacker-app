@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { onAuthStateChange } from './authHelpers';
 import { supabase } from '@/shared/supabase/client';
-import { queryKeys } from '@/shared/queryKeys';
+import { queryKeys } from '@/shared/queries/queryKeys';
 
 export function useAuthSession() {
 	const queryClient = useQueryClient();
@@ -11,9 +10,9 @@ export function useAuthSession() {
 	useEffect(() => {
 		const {
 			data: { subscription },
-		} = onAuthStateChange((loggedIn, session) => {
+		} = supabase.auth.onAuthStateChange((_event, session) => {
 			queryClient.setQueryData(queryKeys.auth.session, session ?? null);
-			if (loggedIn) {
+			if (session?.user) {
 				queryClient.invalidateQueries({ queryKey: queryKeys.exerciseLog });
 			}
 		});

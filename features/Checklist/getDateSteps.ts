@@ -1,4 +1,4 @@
-import { getDate } from '@/shared/dateInfo';
+import { getDate } from '@/shared/utils/dateInfo';
 
 export function getDateSteps(date: string) {
 	const today = getDate();

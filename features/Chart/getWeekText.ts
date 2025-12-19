@@ -1,5 +1,6 @@
-import { checkThisMonth, checkThisYear, getDate } from '@/shared/dateInfo';
+import { checkThisMonth, checkThisYear, getDate } from '@/shared/utils/dateInfo';
 import { getLanguage } from '@/shared/i18n/getLanguage';
+import { TIMING } from '@/shared/utils/constants';
 
 type WeekTextOption = {
 	check: (dates: string[]) => boolean;
@@ -39,7 +40,7 @@ export function checkThisWeek(dates: string[]) {
 }
 
 function checkLastWeek(dates: string[]) {
-	const dateAWeekAgo = getDate(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000));
+	const dateAWeekAgo = getDate(new Date(Date.now() - TIMING.WEEK_MS));
 
 	return dates.includes(dateAWeekAgo);
 }

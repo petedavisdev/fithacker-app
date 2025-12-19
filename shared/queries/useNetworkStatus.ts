@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import * as Network from 'expo-network';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { queryKeys } from '@/shared/queryKeys';
+import { queryKeys } from './queryKeys';
 
 export function useNetworkStatus() {
 	const queryClient = useQueryClient();

@@ -1,4 +1,5 @@
-import { getLanguage } from './i18n/getLanguage';
+import { getLanguage } from '../i18n/getLanguage';
+import { TIMING, DAYS } from './constants';
 
 type DateCategory = 'today' | 'tomorrow' | 'future' | 'weekend' | 'weekday';
 
@@ -109,7 +110,7 @@ export function getLastMonday(dateVal?: string) {
 	if (jsDate.getDay() === 1) return date;
 
 	const lastMonday = new Date(
-		jsDate.getTime() - ((jsDate.getDay() || 7) - 1) * 24 * 60 * 60 * 1000,
+		jsDate.getTime() - ((jsDate.getDay() || 7) - 1) * TIMING.DAY_MS,
 	);
 	return getDate(lastMonday);
 }
@@ -127,7 +128,7 @@ export function checkThisYear(date: string) {
 }
 
 function getWeekdayCategory(dayIndex: number) {
-	return [0, 6].includes(dayIndex) ? 'weekend' : 'weekday';
+	return DAYS.WEEKEND.includes(dayIndex) ? 'weekend' : 'weekday';
 }
 
 function formatDateShort(date: string) {

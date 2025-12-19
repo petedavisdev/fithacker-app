@@ -1,34 +1,26 @@
-import { Keyboard, View } from 'react-native';
+import { View } from 'react-native';
 import { getChecklistData } from './getChecklistData';
-import { type DateInfo } from '@/shared/dateInfo';
+import { getDateInfo } from '@/shared/utils/dateInfo';
 import { ChecklistInput } from './ChecklistInput';
-import { useExerciseLog } from '@/shared/useExerciseLog';
-import { useUpdateDayExercise } from './useUpdateDayExercise';
-import { useRemoveDayExercise } from './useRemoveDayExercise';
+import { useExerciseLog } from '@/shared/queries/useExerciseLog';
+import { useLocalSearchParams } from 'expo-router';
 
-type ChecklistProps = {
-	dateInfo: DateInfo;
-};
+export function Checklist() {
+	const { date } = useLocalSearchParams<{ date: string }>();
+	const dateInfo = getDateInfo(date?.toString());
+	const { exerciseLog, isLoadingExerciseLog, errorExerciseLog } = useExerciseLog();
 
-export function Checklist(props: ChecklistProps) {
-	const { exerciseLog, isLoadingExerciseLog } = useExerciseLog();
+	// Don't render if there's an error - component depends on exerciseLog
+	if (errorExerciseLog) {
+		return null;
+	}
 
-	const { updateDayExercise } = useUpdateDayExercise(
-		props.dateInfo.date,
-	);
-	const { removeDayExercise } = useRemoveDayExercise(
-		props.dateInfo.date,
-	);
-
-	const dayLog = exerciseLog?.[props.dateInfo.date] ?? [];
-
-	const checklist = getChecklistData(props.dateInfo, exerciseLog, dayLog);
-
-	const isDisabled = ['future', 'tomorrow'].includes(props.dateInfo.category);
+	const dayLog = exerciseLog?.[dateInfo.date] ?? [];
+	const checklist = getChecklistData(dateInfo, exerciseLog, dayLog);
+	const isDisabled = ['future', 'tomorrow'].includes(dateInfo.category);
 
 	return (
 		<View className="w-96 flex gap-6 px-4">
-			{/* Optionally could show loading state; keeping UI minimal */}
 			{checklist.map((item) => {
 				return (
 					<ChecklistInput
@@ -39,19 +31,6 @@ export function Checklist(props: ChecklistProps) {
 						isChecked={item.isChecked}
 						isPriority={item.isPriority}
 						isDisabled={isDisabled || isLoadingExerciseLog}
-						onCheckboxChange={(note?: string) => {
-							Keyboard.dismiss();
-							if (item.isChecked) {
-								removeDayExercise({ exercise: item.exercise });
-							} else {
-								updateDayExercise({ exercise: item.exercise, note });
-							}
-						}}
-						onNoteChange={(note?: string) => {
-							if (item.isChecked) {
-								updateDayExercise({ exercise: item.exercise, note });
-							}
-						}}
 					/>
 				);
 			})}

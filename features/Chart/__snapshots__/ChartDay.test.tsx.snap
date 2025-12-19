@@ -29,7 +29,7 @@ exports[`renders correctly 1`] = `
       </Text>
     </View>
     <View
-      className="h-[2px] w-12 bg-yellow-500 shadow shadow-yellow-500"
+      className="h-[2px] w-12 scale-x-[1.01] bg-yellow-500 shadow shadow-yellow-500"
     />
     <Text
       className="font-mono leading pb-0.5 border-b text-yellow-500 border-yellow-700"

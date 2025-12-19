@@ -1,21 +1,15 @@
 import { useMutation } from '@tanstack/react-query';
-import { isAppleReviewEmail, isValidEmail, requestEmailOtp } from './authHelpers';
+import { requestEmailOtp } from './authHelpers';
 
 export function useLogin() {
 	const {
 		mutate: login,
 		isPending: isLoggingIn,
 		error: errorLogin,
+		reset: resetLogin,
 	} = useMutation({
+		networkMode: 'online', // Requires network to send OTP
 		mutationFn: async (email: string) => {
-			if (!isValidEmail(email)) {
-				throw new Error('invalidEmail');
-			}
-
-			if (isAppleReviewEmail(email)) {
-				return;
-			}
-
 			const { error } = await requestEmailOtp(email);
 			if (error) {
 				throw new Error(error);
@@ -23,5 +17,7 @@ export function useLogin() {
 		},
 	});
 
-	return { login, isLoggingIn, errorLogin };
+	return { login, isLoggingIn, errorLogin, resetLogin };
 }
+
+

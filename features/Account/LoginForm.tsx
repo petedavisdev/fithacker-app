@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, Text, TextInput, View } from 'react-native';
-import { AButton } from '@/shared/Atoms/AButton';
+import { AButton } from '@/shared/components/AButton';
 import { TheHeader } from '@/features/TheHeader/TheHeader';
 import { isAppleReviewEmail, type AuthError } from './authHelpers';
 import { useLogin } from './useLogin';
@@ -12,21 +12,14 @@ export function LoginForm() {
 	const [email, setEmail] = useState('');
 	const [token, setToken] = useState('');
 	const [step, setStep] = useState<'email' | 'token'>('email');
-	const [error, setError] = useState<AuthError>(null);
 	const [emailPlaceholder, setEmailPlaceholder] = useState(t('_@.email'));
-	const [tokenPlaceholder, setTokenPlaceholder] = useState('000000');
 
 	const isAppleReview = isAppleReviewEmail(email);
 
-	// Update token placeholder when step changes to token
-	useEffect(() => {
-		if (step === 'token') {
-			setTokenPlaceholder(isAppleReview ? 'Password' : '000000');
-		}
-	}, [isAppleReview, step]);
+	const { login, errorLogin, resetLogin } = useLogin();
+	const { verifyOtp, errorVerifyOtp, resetVerifyOtp } = useVerifyOtp();
 
-	const loginMutation = useLogin();
-	const verifyOtpMutation = useVerifyOtp();
+	const error = (errorLogin?.message ?? errorVerifyOtp?.message) as AuthError;
 
 	return (
 		<>
@@ -36,8 +29,7 @@ export function LoginForm() {
 					{t('_@.login')}
 				</Text>
 				<Text className="font-mono text-cyan-400 mt-2 text-center">
-					Login to backup your exercise log and use fithacker on your other
-					devices
+					{t('_@.loginSubtitle')}
 				</Text>
 
 				{step === 'email' && (
@@ -49,10 +41,10 @@ export function LoginForm() {
 							value={email}
 							onChangeText={(text) => {
 								setEmail(text);
-								setError(null); // Clear error on input
+								resetLogin();
 							}}
 							onFocus={() => {
-								setError(null);
+								resetLogin();
 								setEmailPlaceholder('');
 							}}
 							onBlur={() => {
@@ -63,28 +55,17 @@ export function LoginForm() {
 							keyboardType="email-address"
 							autoCapitalize="none"
 						/>
-						{error === 'invalidEmail' && (
+						{error && (
 							<Text className="font-mono text-pink-400 mt-2">
-								{t('auth.invalidEmail')}
-							</Text>
-						)}
-						{error === 'networkError' && (
-							<Text className="font-mono text-pink-400 mt-2">
-								{t('auth.networkError')}
+								{t(`auth.${error}`)}
 							</Text>
 						)}
 						<View className="mt-10 items-center">
 							<Pressable
 								onPress={() => {
-									loginMutation.mutate(email, {
+									login(email, {
 										onSuccess: () => {
 											setStep('token');
-											setError(null);
-										},
-										onError: (mutationError) => {
-											setError(
-												(mutationError as Error).message as AuthError,
-											);
 										},
 									});
 								}}
@@ -92,7 +73,7 @@ export function LoginForm() {
 								<View className="min-h-20 max-w-60 p-6 items-center justify-center border-2 border-yellow-500 rounded-full shadow shadow-yellow-500">
 									<Text className="text-lg text-yellow-400 font-mono text-balance text-center">
 										{isAppleReview
-											? 'Enter Password'
+											? t('_@.enterPassword')
 											: t('_@.sendCode')}
 									</Text>
 								</View>
@@ -110,72 +91,35 @@ export function LoginForm() {
 					<View className="mt-6">
 						<Text className="font-mono text-cyan-400 mt-2">
 							{isAppleReview
-								? `Enter password for ${email}`
-								: `Enter the 6-digit code sent to ${email}`}
+								? t('_@.enterPasswordFor', { email })
+								: t('_@.enterMagicNumber', { email })}
 						</Text>
 						<TextInput
-							placeholder={tokenPlaceholder}
-							placeholderTextColor={'#f472b6'}
 							className="text-lg text-yellow-400 font-mono border-y-2 border-b-yellow-500 border-t-transparent pb-3 pt-6 focus:text-pink-400 focus:border-b-pink-500 outline-none mt-4"
 							value={token}
 							onChangeText={(text) => {
 								setToken(text);
-								setError(null); // Clear error on input
+								resetVerifyOtp();
 							}}
-							onFocus={() => {
-								setError(null);
-								setTokenPlaceholder('');
-							}}
-							onBlur={() => {
-								if (!token) {
-									setTokenPlaceholder(isAppleReview ? 'Password' : '000000');
-								}
-							}}
+							onFocus={() => resetVerifyOtp()}
 							keyboardType={isAppleReview ? 'default' : 'number-pad'}
 							secureTextEntry={isAppleReview}
 							maxLength={isAppleReview ? undefined : 6}
 						/>
-						{error === 'otpExpired' && (
+						{error && (
 							<Text className="font-mono text-pink-400 mt-2">
-								{t('auth.otpExpired')}
-							</Text>
-						)}
-						{error === 'invalidOtp' && (
-							<Text className="font-mono text-pink-400 mt-2">
-								{t('auth.invalidOtp')}
-							</Text>
-						)}
-						{error === 'invalidPassword' && (
-							<Text className="font-mono text-pink-400 mt-2">
-								{t('auth.invalidPassword')}
-							</Text>
-						)}
-						{error === 'networkError' && (
-							<Text className="font-mono text-pink-400 mt-2">
-								{t('auth.networkError')}
+								{t(`auth.${error}`)}
 							</Text>
 						)}
 						<View className="mt-10 items-center">
 							<Pressable
 								onPress={() => {
-									verifyOtpMutation.mutate(
-										{ email, token },
-										{
-											onSuccess: () => {
-												setError(null);
-											},
-											onError: (mutationError) => {
-												setError(
-													(mutationError as Error).message as AuthError,
-												);
-											},
-										},
-									);
+									verifyOtp({ email, token });
 								}}
 							>
 								<View className="min-h-20 max-w-60 p-6 items-center justify-center border-2 border-yellow-500 rounded-full shadow shadow-yellow-500">
 									<Text className="text-lg text-yellow-400 font-mono text-balance text-center">
-										{isAppleReview ? 'Sign In' : 'Verify'}
+										{isAppleReview ? t('_@.signIn') : t('_@.verify')}
 									</Text>
 								</View>
 							</Pressable>

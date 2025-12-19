@@ -1,16 +1,25 @@
 import { Text, View } from 'react-native';
 
-import { AButton } from '@/shared/Atoms/AButton';
+import { AButton } from '@/shared/components/AButton';
 import { Checklist } from '@/features/Checklist/Checklist';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { TheHeader } from '@/features/TheHeader/TheHeader';
-import { getDateInfo } from '@/shared/dateInfo';
+import { getDateInfo } from '@/shared/utils/dateInfo';
 import { getDateSteps } from '@/features/Checklist/getDateSteps';
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useFocusEffect } from 'expo-router';
 import { useTranslation } from 'react-i18next';
+import { useBackgroundSync } from '@/shared/queries/useBackgroundSync';
 
 export default function HomeScreen() {
 	const { t } = useTranslation();
+	const { triggerSync } = useBackgroundSync();
+
+	// Trigger sync when leaving the checklist page
+	useFocusEffect(() => {
+		return () => {
+			triggerSync();
+		};
+	});
 
 	const { date } = useLocalSearchParams<{ date: string }>();
 	const dateInfo = getDateInfo(date?.toString());
@@ -42,7 +51,7 @@ export default function HomeScreen() {
 			</View>
 
 			<KeyboardAwareScrollView keyboardOpeningTime={0}>
-				<Checklist dateInfo={dateInfo} />
+				<Checklist />
 			</KeyboardAwareScrollView>
 
 			<View className="flex-grow w-96 flex-row justify-between items-center px-4">

@@ -15,9 +15,9 @@ alwaysApply: false
 
 ## Date Categories
 
-**Source of Truth**: `features/dateInfo.ts` (see `DateCategory` type)
+**Source of Truth**: `shared/utils/dateInfo.ts` (see `DateCategory` type)
 
-Date category logic is defined in `dateInfo.ts`:
+Date category logic is defined in `shared/utils/dateInfo.ts`:
 
 - Category determination based on date comparisons
 - Day index checks (0=Sunday, 6=Saturday) for weekends

@@ -1,5 +1,4 @@
 import Constants from 'expo-constants'
-import type { Session } from '@supabase/supabase-js'
 import { supabase } from '@/shared/supabase/client'
 
 export type AuthError =
@@ -22,21 +21,7 @@ export async function getCurrentUserId(): Promise<string | null> {
 	return session?.user?.id ?? null
 }
 
-export async function getUserEmail(): Promise<string | null> {
-	const {
-		data: { session },
-	} = await supabase.auth.getSession()
-	return session?.user?.email ?? null
-}
-
-export async function isLoggedIn(): Promise<boolean> {
-	const {
-		data: { session },
-	} = await supabase.auth.getSession()
-	return !!session?.user
-}
-
-export function isValidEmail(email: string): boolean {
+function isValidEmail(email: string): boolean {
 	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 	return emailRegex.test(email)
 }
@@ -143,14 +128,5 @@ export async function signOut(): Promise<void> {
 		console.error('Failed to sign out:', error)
 	}
 	// Note: Local data remains in AsyncStorage
-}
-
-export function onAuthStateChange(
-	callback: (isLoggedIn: boolean, session: Session | null) => void,
-) {
-	return supabase.auth.onAuthStateChange((_event, session) => {
-		const isLoggedIn = !!session?.user;
-		callback(isLoggedIn, session);
-	});
 }
 

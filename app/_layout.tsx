@@ -5,15 +5,14 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Slot } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
-import { Platform, SafeAreaView, StatusBar } from 'react-native';
+import { useEffect, useState } from 'react';
+import { Platform, SafeAreaView, StatusBar, AppState, type AppStateStatus } from 'react-native';
 import 'react-native-reanimated';
-import { useNewDay } from '@/shared/useNewDay';
 import '../global.css';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { hasPendingSyncKey } from '@/shared/supabase/syncState';
-import { queryKeys } from '@/shared/queryKeys';
-import { QueryErrorBoundary } from '@/shared/Atoms/AErrorBoundary';
+import { runMigration } from '@/shared/supabase/migration';
+import { queryKeys } from '@/shared/queries/queryKeys';
+import { QueryErrorBoundary } from '@/shared/components/AErrorBoundary';
+import { useBackgroundSync } from '@/shared/queries/useBackgroundSync';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -22,7 +21,10 @@ const queryClient = new QueryClient({
 		queries: {
 			refetchOnWindowFocus: true,
 			refetchOnReconnect: true,
-			retry: 1,
+			networkMode: 'always', // Default: work offline (most queries use AsyncStorage)
+		},
+		mutations: {
+			networkMode: 'always', // Default: work offline (most mutations write to AsyncStorage first)
 		},
 	},
 });
@@ -30,35 +32,20 @@ const queryClient = new QueryClient({
 // Run migration once at startup (only client-side, not during SSR)
 // On web with static output, this code runs in Node.js during build where window is undefined
 if (Platform.OS !== 'web' || typeof window !== 'undefined') {
-	hasPendingSyncKey()
-		.then(async (hasKey) => {
-			if (hasKey) return;
-
-			const logStr = await AsyncStorage.getItem('exerciseLog');
-			const now = new Date().toISOString();
-
-			if (logStr) {
-				const log = JSON.parse(logStr) as Record<string, unknown>;
-				const pending = Object.keys(log).reduce<Record<string, string>>(
-					(acc, date) => {
-						acc[date] = now;
-						return acc;
-					},
-					{},
-				);
-				await AsyncStorage.setItem(
-					'exerciseLogPendingSync',
-					JSON.stringify(pending),
-				);
-			} else {
-				await AsyncStorage.setItem('exerciseLogPendingSync', '{}');
-			}
-
+	runMigration()
+		.then(() => {
 			queryClient.invalidateQueries({ queryKey: queryKeys.pendingSync });
 		})
 		.catch((error) => {
 			console.error('Migration failed:', error);
 		});
+}
+
+// Background sync hook - must be inside QueryClientProvider
+// Syncs on app open, foreground, and when navigating with pending changes
+function InitBackgroundSync() {
+	useBackgroundSync();
+	return null;
 }
 
 export default function RootLayout() {
@@ -69,7 +56,19 @@ export default function RootLayout() {
 		UbuntuMonoBoldItalic: require('../assets/fonts/UbuntuMono-BoldItalic.ttf'),
 	});
 
-	const day = useNewDay();
+	const [day, setDay] = useState<number>(new Date().getDate());
+
+	useEffect(() => {
+		const eventListener = AppState.addEventListener('change', (newAppState: AppStateStatus) => {
+			const newDay = new Date().getDate();
+			if (newAppState === 'active' && day !== newDay) {
+				setDay(newDay);
+			}
+		});
+		return () => {
+			eventListener.remove();
+		};
+	}, [day]);
 
 	useEffect(() => {
 		if (fontLoaded) {
@@ -86,6 +85,7 @@ export default function RootLayout() {
 			<QueryErrorBoundary>
 				<QueryClientProvider client={queryClient}>
 					<QueryErrorBoundary>
+						<InitBackgroundSync />
 						<LinearGradient
 							colors={['black', '#112', '#112', 'black']}
 							style={{

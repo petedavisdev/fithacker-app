@@ -1,4 +1,4 @@
-import type { Exercise, ExerciseLog } from '@/shared/EXERCISES';
+import type { Exercise, ExerciseLog } from '@/shared/utils/constants';
 
 export function filterExerciseLog(exerciseLog: ExerciseLog, filter?: Exercise) {
 	if (!filter) return exerciseLog;
