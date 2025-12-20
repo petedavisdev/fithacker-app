@@ -9,7 +9,7 @@ import { addToPendingSync } from '@/shared/supabase/syncState';
 import { queryKeys } from '@/shared/queries/queryKeys';
 import { STORAGE_KEYS } from '@/shared/utils/constants';
 
-type MutateParams = 
+type MutateParams =
 	| { exercise: Exercise; note?: string; remove?: false }
 	| { exercise: Exercise; remove: true };
 
@@ -23,7 +23,8 @@ export function useMutateDayExercise(date: string) {
 	} = useMutation({
 		mutationFn: async (params: MutateParams) => {
 			// Cache guaranteed to exist since Checklist only renders when query succeeds
-			const currentLog = queryClient.getQueryData<ExerciseLog>(queryKeys.exerciseLog) ?? {};
+			const currentLog =
+				queryClient.getQueryData<ExerciseLog>(queryKeys.exerciseLog) ?? {};
 
 			const dayLog = currentLog[date] ?? [];
 
@@ -36,7 +37,10 @@ export function useMutateDayExercise(date: string) {
 			// Add back if not removing
 			const newDayExercises = params.remove
 				? filtered
-				: [...filtered, params.note ? [params.exercise, params.note] : params.exercise].sort((a, b) => {
+				: [
+						...filtered,
+						params.note ? [params.exercise, params.note] : params.exercise,
+					].sort((a, b) => {
 						const exA = (typeof a === 'string' ? a : a[0]) as Exercise;
 						const exB = (typeof b === 'string' ? b : b[0]) as Exercise;
 						return EXERCISES.indexOf(exA) - EXERCISES.indexOf(exB);
@@ -44,7 +48,10 @@ export function useMutateDayExercise(date: string) {
 
 			const newLog = { ...currentLog, [date]: newDayExercises };
 
-			await AsyncStorage.setItem(STORAGE_KEYS.EXERCISE_LOG, JSON.stringify(newLog));
+			await AsyncStorage.setItem(
+				STORAGE_KEYS.EXERCISE_LOG,
+				JSON.stringify(newLog),
+			);
 			await addToPendingSync(date, new Date().toISOString());
 
 			return newLog;
@@ -57,4 +64,3 @@ export function useMutateDayExercise(date: string) {
 
 	return { mutateDayExercise, isMutatingDayExercise, errorMutateDayExercise };
 }
-

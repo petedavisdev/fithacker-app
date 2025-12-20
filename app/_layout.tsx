@@ -6,7 +6,13 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Slot } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useState } from 'react';
-import { Platform, SafeAreaView, StatusBar, AppState, type AppStateStatus } from 'react-native';
+import {
+	Platform,
+	SafeAreaView,
+	StatusBar,
+	AppState,
+	type AppStateStatus,
+} from 'react-native';
 import 'react-native-reanimated';
 import '../global.css';
 import { runMigration } from '@/shared/supabase/migration';
@@ -59,12 +65,15 @@ export default function RootLayout() {
 	const [day, setDay] = useState<number>(new Date().getDate());
 
 	useEffect(() => {
-		const eventListener = AppState.addEventListener('change', (newAppState: AppStateStatus) => {
-			const newDay = new Date().getDate();
-			if (newAppState === 'active' && day !== newDay) {
-				setDay(newDay);
-			}
-		});
+		const eventListener = AppState.addEventListener(
+			'change',
+			(newAppState: AppStateStatus) => {
+				const newDay = new Date().getDate();
+				if (newAppState === 'active' && day !== newDay) {
+					setDay(newDay);
+				}
+			},
+		);
 		return () => {
 			eventListener.remove();
 		};

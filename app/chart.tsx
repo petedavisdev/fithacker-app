@@ -17,16 +17,13 @@ import { BADGES } from '@/shared/utils/constants';
 export default function Chart() {
 	const [isAchievementModalOpen, setIsAchievementModalOpen] = useState(false);
 	const params = useLocalSearchParams<{ filter?: Exercise }>();
-	const {
-		exerciseLog,
-		isLoadingExerciseLog,
-		errorExerciseLog,
-	} = useExerciseLog();
+	const { exerciseLog, isLoadingExerciseLog, errorExerciseLog } =
+		useExerciseLog();
 
 	const filteredLog =
 		params.filter && exerciseLog
 			? filterExerciseLog(exerciseLog, params.filter)
-			: exerciseLog ?? {};
+			: (exerciseLog ?? {});
 
 	// Don't render chart if there's an error - component depends on exerciseLog
 	if (errorExerciseLog) {
@@ -45,22 +42,27 @@ export default function Chart() {
 	const achievementEmoji = userHasMedals ? BADGES[2] : BADGES[1];
 
 	// Only show achievement button if there's chart data with actual exercises
-	const showAchievementButton = !isLoadingExerciseLog && chartData.some(week => week.total > 0);
+	const showAchievementButton =
+		!isLoadingExerciseLog && chartData.some((week) => week.total > 0);
 
 	const achievementButton = showAchievementButton ? (
-		<AButton onPress={() => setIsAchievementModalOpen(true)} color="pink" size="sm">
+		<AButton
+			onPress={() => setIsAchievementModalOpen(true)}
+			color="pink"
+			size="sm"
+		>
 			{achievementEmoji}
 		</AButton>
 	) : null;
 
 	return (
 		<>
-			<TheHeader
-				buttonLeft="account"
-				customButtonRight={achievementButton}
-			/>
+			<TheHeader buttonLeft="account" customButtonRight={achievementButton} />
 
-			<AModal isOpen={isAchievementModalOpen} onClose={() => setIsAchievementModalOpen(false)}>
+			<AModal
+				isOpen={isAchievementModalOpen}
+				onClose={() => setIsAchievementModalOpen(false)}
+			>
 				<ChartHelp hasMedals={userHasMedals} />
 			</AModal>
 

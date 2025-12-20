@@ -17,5 +17,3 @@ export function usePendingSync() {
 		errorPendingSync: error,
 	};
 }
-
-

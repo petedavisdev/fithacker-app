@@ -1,4 +1,8 @@
-import { checkThisMonth, checkThisYear, getDate } from '@/shared/utils/dateInfo';
+import {
+	checkThisMonth,
+	checkThisYear,
+	getDate,
+} from '@/shared/utils/dateInfo';
 import { getLanguage } from '@/shared/i18n/getLanguage';
 import { TIMING } from '@/shared/utils/constants';
 

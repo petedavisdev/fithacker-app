@@ -1,4 +1,9 @@
-import { hasPendingSyncKey, getExerciseLog, addToPendingSync, clearSyncState } from './syncState';
+import {
+	hasPendingSyncKey,
+	getExerciseLog,
+	addToPendingSync,
+	clearSyncState,
+} from './syncState';
 
 /**
  * Migrates existing exerciseLog data to pendingSync format.
@@ -24,4 +29,3 @@ export async function runMigration(): Promise<void> {
 		await clearSyncState();
 	}
 }
-

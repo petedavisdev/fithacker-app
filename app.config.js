@@ -83,7 +83,12 @@ export default {
 			output: 'static',
 			favicon: './assets/images/favicon.png',
 		},
-		plugins: ['expo-router', 'expo-localization', 'expo-font'],
+		plugins: [
+			'expo-router',
+			'expo-localization',
+			'expo-font',
+			'expo-web-browser',
+		],
 		experiments: {
 			typedRoutes: true,
 		},

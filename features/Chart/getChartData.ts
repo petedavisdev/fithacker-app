@@ -1,4 +1,9 @@
-import type { Exercise, ExerciseItem, ExerciseLog, Badge } from '@/shared/utils/constants';
+import type {
+	Exercise,
+	ExerciseItem,
+	ExerciseLog,
+	Badge,
+} from '@/shared/utils/constants';
 import { EXERCISES } from '@/shared/utils/constants';
 import { getLastMonday, getDate } from '@/shared/utils/dateInfo';
 import { checkThisWeek, getWeekText } from './getWeekText';

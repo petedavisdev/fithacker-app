@@ -14,9 +14,7 @@ export function ChartHelp(props: ChartHelpProps) {
 		<View className="flex items-start gap-5">
 			<View className="flex-row items-center gap-2">
 				<Text className="text-yellow-500 text-5xl">{BADGES[1]}</Text>
-				<Text className="text-pink-400">
-					= {t('_chart.medalDescription')}
-				</Text>
+				<Text className="text-pink-400">= {t('_chart.medalDescription')}</Text>
 			</View>
 
 			{(props.hasMedals ?? false) && (
@@ -30,4 +28,3 @@ export function ChartHelp(props: ChartHelpProps) {
 		</View>
 	);
 }
-

@@ -8,11 +8,8 @@ import { type Exercise } from '@/shared/utils/constants';
 
 export function Chart() {
 	const params = useLocalSearchParams<{ filter?: Exercise }>();
-	const {
-		exerciseLog,
-		isLoadingExerciseLog,
-		errorExerciseLog,
-	} = useExerciseLog();
+	const { exerciseLog, isLoadingExerciseLog, errorExerciseLog } =
+		useExerciseLog();
 
 	// Don't render if there's an error - component depends on exerciseLog
 	if (errorExerciseLog) {
@@ -22,7 +19,7 @@ export function Chart() {
 	const filteredLog =
 		params.filter && exerciseLog
 			? filterExerciseLog(exerciseLog, params.filter)
-			: exerciseLog ?? {};
+			: (exerciseLog ?? {});
 
 	const chartData = getChartData(filteredLog);
 

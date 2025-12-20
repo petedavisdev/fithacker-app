@@ -72,9 +72,7 @@ export function LoginForm() {
 							>
 								<View className="min-h-20 max-w-60 p-6 items-center justify-center border-2 border-yellow-500 rounded-full shadow shadow-yellow-500">
 									<Text className="text-lg text-yellow-400 font-mono text-balance text-center">
-										{isAppleReview
-											? t('_@.enterPassword')
-											: t('_@.sendCode')}
+										{isAppleReview ? t('_@.enterPassword') : t('_@.sendCode')}
 									</Text>
 								</View>
 							</Pressable>
@@ -135,4 +133,3 @@ export function LoginForm() {
 		</>
 	);
 }
-

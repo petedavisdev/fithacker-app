@@ -9,10 +9,5 @@ export const queryKeys = {
 	supabase: {
 		allRemoteData: (userId: string) => ['supabase', 'all', userId] as const,
 	},
-	backgroundSync: (userId?: string, isOnline?: boolean) =>
-		['backgroundSync', userId, isOnline] as const,
+	backgroundSync: (userId?: string) => ['backgroundSync', userId] as const,
 };
-
-
-
-

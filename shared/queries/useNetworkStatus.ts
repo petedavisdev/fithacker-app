@@ -7,9 +7,19 @@ export function useNetworkStatus() {
 	const queryClient = useQueryClient();
 
 	useEffect(() => {
-		const subscription = Network.addNetworkStateListener((state) => {
+		Network.getNetworkStateAsync().then((state) => {
+			// Default to true (optimistic) if null/undefined, only false if explicitly false
+			const isOnline = state.isConnected !== false;
 			queryClient.setQueryData(queryKeys.network, {
-				isOnline: state.isConnected ?? false,
+				isOnline,
+			});
+		});
+
+		const subscription = Network.addNetworkStateListener((state) => {
+			// Default to true (optimistic) if null/undefined, only false if explicitly false
+			const isOnline = state.isConnected !== false;
+			queryClient.setQueryData(queryKeys.network, {
+				isOnline,
 			});
 		});
 
@@ -20,13 +30,17 @@ export function useNetworkStatus() {
 		queryKey: queryKeys.network,
 		queryFn: async () => {
 			const state = await Network.getNetworkStateAsync();
-			return { isOnline: state.isConnected ?? false };
+			// Default to true (optimistic) if null/undefined, only false if explicitly false
+			const isOnline = state.isConnected !== false;
+			return { isOnline };
 		},
 		staleTime: Infinity,
+		// Optimistically assume online until we know otherwise
+		initialData: { isOnline: true },
 	});
 
 	return {
-		networkStatus: data ?? { isOnline: false },
+		networkStatus: data ?? { isOnline: true },
 		isLoadingNetworkStatus: isLoading,
 		errorNetworkStatus: error,
 	};

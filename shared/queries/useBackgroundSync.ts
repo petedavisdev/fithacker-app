@@ -17,7 +17,7 @@ export function useBackgroundSync() {
 		error: errorBackgroundSync,
 		refetch: triggerSync,
 	} = useQuery({
-		queryKey: queryKeys.backgroundSync(authSession?.user?.id, networkStatus?.isOnline),
+		queryKey: queryKeys.backgroundSync(authSession?.user?.id),
 		queryFn: async () => {
 			const success = await syncAll();
 			if (success) {
@@ -40,5 +40,3 @@ export function useBackgroundSync() {
 		triggerSync,
 	};
 }
-
-

@@ -36,4 +36,3 @@ if (Platform.OS !== 'web') {
 }
 
 export default AsyncStorage;
-

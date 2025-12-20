@@ -12,10 +12,7 @@ module.exports = {
 	useMutation: fn(() => ({ mutate: fn() })),
 	useQueryClient: fn(() => mockClient),
 	QueryClient: fn(() => mockClient),
-	QueryClientProvider: ({ children }) => React.createElement(React.Fragment, null, children),
+	QueryClientProvider: ({ children }) =>
+		React.createElement(React.Fragment, null, children),
 	QueryErrorResetBoundary: ({ children }) => children({ reset: fn() }),
 };
-
-
-
-

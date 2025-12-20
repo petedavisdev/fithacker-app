@@ -1,4 +1,3 @@
-// Exercise constants
 export const EXERCISES = ['🚶', '🏃‍♀️', '🤸', '💪', '🌴', '🦵'] as const;
 
 export type Exercise = (typeof EXERCISES)[number];
@@ -23,7 +22,6 @@ export const STORAGE_KEYS = {
 
 export const TIMING = {
 	DEBOUNCE_MS: 500,
-	BACKGROUND_SYNC_STALE_TIME_MS: 5 * 60 * 1000, // 5 minutes
 	DAY_MS: 24 * 60 * 60 * 1000,
 	WEEK_MS: 7 * 24 * 60 * 60 * 1000,
 } as const;
@@ -42,11 +40,10 @@ export type Badge = (typeof BADGES)[keyof typeof BADGES];
 
 export const STALE_TIME = {
 	IMMEDIATE: 0,
-	BACKGROUND_SYNC: TIMING.BACKGROUND_SYNC_STALE_TIME_MS,
+	BACKGROUND_SYNC: 30 * 1000,
 } as const;
 
 export const DAYS = {
 	WEEKEND: [0, 6] as const, // Sunday (0), Saturday (6)
 	PER_WEEK: 7,
 } as const;
-

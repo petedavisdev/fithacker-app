@@ -1,4 +1,5 @@
 import { Text, View } from 'react-native';
+import { useRef, useEffect } from 'react';
 
 import { AButton } from '@/shared/components/AButton';
 import { Checklist } from '@/features/Checklist/Checklist';
@@ -9,15 +10,33 @@ import { getDateSteps } from '@/features/Checklist/getDateSteps';
 import { useLocalSearchParams, useFocusEffect } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useBackgroundSync } from '@/shared/queries/useBackgroundSync';
+import { usePendingSync } from '@/shared/queries/usePendingSync';
 
 export default function HomeScreen() {
 	const { t } = useTranslation();
 	const { triggerSync } = useBackgroundSync();
+	const { pendingSync } = usePendingSync();
+	const hasTriggeredSyncRef = useRef(false);
+	const pendingSyncRef = useRef<Record<string, string>>({});
 
-	// Trigger sync when leaving the checklist page
+	// Keep ref updated with latest pendingSync value
+	useEffect(() => {
+		pendingSyncRef.current = pendingSync ?? {};
+	}, [pendingSync]);
+
+	// Trigger sync when leaving the checklist page, but only if there are pending changes
 	useFocusEffect(() => {
+		// Reset the ref when the screen comes into focus
+		hasTriggeredSyncRef.current = false;
+
 		return () => {
-			triggerSync();
+			// Check the latest pendingSync value from ref (avoids stale closure)
+			const hasPendingChanges =
+				Object.keys(pendingSyncRef.current ?? {}).length > 0;
+			if (hasPendingChanges && !hasTriggeredSyncRef.current) {
+				hasTriggeredSyncRef.current = true;
+				triggerSync();
+			}
 		};
 	});
 

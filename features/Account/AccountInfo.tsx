@@ -28,7 +28,7 @@ export function AccountInfo() {
 				<Text className="font-mono text-cyan-400 mt-4 text-center">
 					{t('_@.backupDescription')}
 				</Text>
-				
+
 				<Text className="font-mono text-yellow-400 mt-8 text-center">
 					{isBackgroundSyncFetching && pendingCount > 0
 						? t('_@.daysSyncingNow', { count: pendingCount })
@@ -58,4 +58,3 @@ export function AccountInfo() {
 		</>
 	);
 }
-

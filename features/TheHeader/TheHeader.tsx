@@ -60,7 +60,8 @@ export function TheHeader(props: TheHeaderProps) {
 				</Link>
 
 				<View className="h-10 w-10">
-					{props.customButtonRight || (props.buttonRight && headerButtons[props.buttonRight])}
+					{props.customButtonRight ||
+						(props.buttonRight && headerButtons[props.buttonRight])}
 				</View>
 			</View>
 

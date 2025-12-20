@@ -16,12 +16,9 @@ export function OfflineMessage() {
 					{t('_@.offlineTitle')}
 				</Text>
 				<Text className="font-mono text-cyan-400 mt-4 text-center">
-					{loggedIn
-						? t('_@.offlineLoggedIn')
-						: t('_@.offlineLoggedOut')}
+					{loggedIn ? t('_@.offlineLoggedIn') : t('_@.offlineLoggedOut')}
 				</Text>
 			</View>
 		</>
 	);
 }
-

@@ -1,27 +1,27 @@
-import { createClient } from '@supabase/supabase-js'
-import Constants from 'expo-constants'
-import { Platform } from 'react-native'
-import type { Database } from './database.types'
+import { createClient } from '@supabase/supabase-js';
+import Constants from 'expo-constants';
+import { Platform } from 'react-native';
+import type { Database } from './database.types';
 
 // Get Supabase configuration from Expo extra config or environment variables
 // Expo extra config is preferred (set via app.config.js from .env)
 const supabaseUrl =
 	Constants.expoConfig?.extra?.supabaseUrl ??
-	process.env.EXPO_PUBLIC_SUPABASE_URL
+	process.env.EXPO_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey =
 	Constants.expoConfig?.extra?.supabaseAnonKey ??
-	process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY
+	process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
 
 // Validate required environment variables
 if (!supabaseUrl || !supabaseAnonKey) {
-	const missingVars: string[] = []
-	if (!supabaseUrl) missingVars.push('EXPO_PUBLIC_SUPABASE_URL')
-	if (!supabaseAnonKey) missingVars.push('EXPO_PUBLIC_SUPABASE_ANON_KEY')
+	const missingVars: string[] = [];
+	if (!supabaseUrl) missingVars.push('EXPO_PUBLIC_SUPABASE_URL');
+	if (!supabaseAnonKey) missingVars.push('EXPO_PUBLIC_SUPABASE_ANON_KEY');
 
 	throw new Error(
 		`Missing required Supabase environment variables: ${missingVars.join(', ')}. ` +
 			'Please ensure these are set in your .env file or EAS environment variables.',
-	)
+	);
 }
 
 // Lazy-load AsyncStorage to avoid window access during module initialization
@@ -35,32 +35,32 @@ type AsyncStorageAdapter = {
 	removeItem: (key: string) => Promise<void>;
 };
 
-let AsyncStorage: AsyncStorageStatic | AsyncStorageAdapter
+let AsyncStorage: AsyncStorageStatic | AsyncStorageAdapter;
 if (Platform.OS !== 'web') {
 	// Native platforms - safe to import immediately
-	AsyncStorage = require('@react-native-async-storage/async-storage').default
+	AsyncStorage = require('@react-native-async-storage/async-storage').default;
 } else {
 	// Web platform - create a localStorage adapter that checks for window
 	AsyncStorage = {
 		getItem: (key: string) => {
 			if (typeof window !== 'undefined') {
-				return Promise.resolve(window.localStorage.getItem(key))
+				return Promise.resolve(window.localStorage.getItem(key));
 			}
-			return Promise.resolve(null)
+			return Promise.resolve(null);
 		},
 		setItem: (key: string, value: string) => {
 			if (typeof window !== 'undefined') {
-				window.localStorage.setItem(key, value)
+				window.localStorage.setItem(key, value);
 			}
-			return Promise.resolve()
+			return Promise.resolve();
 		},
 		removeItem: (key: string) => {
 			if (typeof window !== 'undefined') {
-				window.localStorage.removeItem(key)
+				window.localStorage.removeItem(key);
 			}
-			return Promise.resolve()
+			return Promise.resolve();
 		},
-	}
+	};
 }
 
 export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
@@ -70,5 +70,4 @@ export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
 		persistSession: true,
 		detectSessionInUrl: Platform.OS === 'web', // Enable for web, disable for React Native
 	},
-})
-
+});

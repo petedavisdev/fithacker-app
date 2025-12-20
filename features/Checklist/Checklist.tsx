@@ -8,7 +8,8 @@ import { useLocalSearchParams } from 'expo-router';
 export function Checklist() {
 	const { date } = useLocalSearchParams<{ date: string }>();
 	const dateInfo = getDateInfo(date?.toString());
-	const { exerciseLog, isLoadingExerciseLog, errorExerciseLog } = useExerciseLog();
+	const { exerciseLog, isLoadingExerciseLog, errorExerciseLog } =
+		useExerciseLog();
 
 	// Don't render if there's an error - component depends on exerciseLog
 	if (errorExerciseLog) {
@@ -24,7 +25,7 @@ export function Checklist() {
 			{checklist.map((item) => {
 				return (
 					<ChecklistInput
-						key={item.exercise}
+						key={`${dateInfo.date}-${item.exercise}`}
 						exercise={item.exercise}
 						note={item.note}
 						dayCount={item.dayCount}

@@ -31,5 +31,3 @@ export function useVerifyOtp() {
 
 	return { verifyOtp, isVerifyingOtp, errorVerifyOtp, resetVerifyOtp };
 }
-
-

@@ -9,7 +9,13 @@ type QueryErrorBoundaryProps = {
 	children: React.ReactNode;
 };
 
-function ErrorFallback({ error, resetErrorBoundary }: { error: Error; resetErrorBoundary: () => void }) {
+function ErrorFallback({
+	error,
+	resetErrorBoundary,
+}: {
+	error: Error;
+	resetErrorBoundary: () => void;
+}) {
 	const { t } = useTranslation();
 	return (
 		<View className="flex-1 items-center justify-center p-4">
@@ -29,7 +35,10 @@ export function QueryErrorBoundary(props: QueryErrorBoundaryProps) {
 				<ErrorBoundary
 					onReset={reset}
 					fallbackRender={({ error, resetErrorBoundary }) => (
-						<ErrorFallback error={error} resetErrorBoundary={resetErrorBoundary} />
+						<ErrorFallback
+							error={error}
+							resetErrorBoundary={resetErrorBoundary}
+						/>
 					)}
 				>
 					{props.children}
@@ -38,7 +47,3 @@ export function QueryErrorBoundary(props: QueryErrorBoundaryProps) {
 		</QueryErrorResetBoundary>
 	);
 }
-
-
-
-

@@ -25,7 +25,7 @@ export function ChartWeek(props: ChartWeekProps) {
 			<Text className="text-yellow-500 text-6xl -mt-1 font-extralight px-1 font-mono">
 				{props.weekData.total}
 			</Text>
-			
+
 			<View className="h-16">
 				{props.weekData.badges.length > 0 && (
 					<Text className="text-yellow-500 text-5xl font-extralight px-1 font-mono">

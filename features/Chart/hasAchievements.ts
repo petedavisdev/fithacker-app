@@ -14,4 +14,3 @@ export function hasMedals(chartData: ChartData[]): boolean {
 export function hasTrophies(chartData: ChartData[]): boolean {
 	return chartData.some((week) => week.badges.includes(BADGES[2]));
 }
-

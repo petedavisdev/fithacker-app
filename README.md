@@ -25,11 +25,13 @@ Refer to [Expo's environment setup guide](https://docs.expo.dev/get-started/set-
 ### Initial Setup
 
 1. **Install dependencies**
+
 ```bash
 npm install
 ```
 
 2. **Login to EAS**
+
 ```bash
 eas login
 ```
@@ -39,6 +41,7 @@ eas login
 The app supports multiple build variants configured in [`app.config.js`](./app.config.js) (see `APP_VARIANTS` array).
 
 Set the variant using the `APP_VARIANT` environment variable:
+
 ```bash
 APP_VARIANT=development npm run ios:dev
 ```
@@ -48,6 +51,7 @@ APP_VARIANT=development npm run ios:dev
 #### iOS Development
 
 1. **Build development client** (first time or when native dependencies change)
+
 ```bash
 npm run ios:dev
 # or for simulator: npm run ios:sim
@@ -58,6 +62,7 @@ npm run ios:dev
    - Manually: Download and drag to simulator, or run `eas build:run`
 
 3. **Start the development server**
+
 ```bash
 npm start
 # or for iOS specifically: npm run ios
@@ -66,6 +71,7 @@ npm start
 #### Android Development
 
 1. **Build development client**
+
 ```bash
 eas build --profile development --platform android
 ```
@@ -75,6 +81,7 @@ eas build --profile development --platform android
    - Manually: Download and install APK, or run `eas build:run`
 
 3. **Start the development server**
+
 ```bash
 npm start
 # or for Android specifically: npm run android
@@ -83,11 +90,13 @@ npm start
 #### Web Development
 
 **Local development:**
+
 ```bash
 npm run web
 ```
 
 **Build for deployment:**
+
 ```bash
 npm run web:build
 ```
@@ -105,9 +114,10 @@ For a complete list of build, deploy, and utility scripts, refer to the `scripts
 
 ### Version Management
 
-Version is managed in [`app.config.js`](./app.config.js) (`expo.version` field). 
+Version is managed in [`app.config.js`](./app.config.js) (`expo.version` field).
 
 When releasing a new version:
+
 - Update the version using full semver format: `Major.Minor.Patch` (e.g., `"2.1.0"`)
 - This version is used as the `runtimeVersion` for EAS OTA updates
 - See [Expo versioning docs](https://docs.expo.dev/versions/latest/config/app/#version) for details
@@ -115,6 +125,7 @@ When releasing a new version:
 ### OTA Updates
 
 Push over-the-air updates to production without rebuilding:
+
 ```bash
 npm run ios:update:prod
 ```
@@ -128,16 +139,19 @@ This only works for JavaScript/asset changes. Native changes require a new build
 To upgrade to the latest Expo SDK version:
 
 1. **Update the Expo package**
+
 ```bash
 npm install expo@latest
 ```
 
 2. **Upgrade all Expo dependencies**
+
 ```bash
 npx expo install --fix
 ```
 
 3. **Verify the upgrade**
+
 ```bash
 npx expo-doctor
 ```
@@ -145,6 +159,7 @@ npx expo-doctor
 4. **Rebuild development clients**
 
 Since native dependencies may have changed, you'll need to create new development builds:
+
 ```bash
 npm run ios:dev
 # and/or
@@ -158,6 +173,7 @@ Check the [Expo SDK release notes](https://docs.expo.dev/workflow/upgrading-expo
 #### Upgrading Other Dependencies
 
 For non-Expo packages:
+
 ```bash
 npm update  # Update all packages within their semver ranges
 # or for specific packages to latest version
@@ -169,6 +185,7 @@ Always rebuild development clients after upgrading native dependencies. See [npm
 ### Testing
 
 Run the Jest test suite:
+
 ```bash
 npm test
 ```
@@ -201,4 +218,3 @@ Tests are co-located with source files using the `.test.ts` or `.test.tsx` exten
 - Ensure `APP_VARIANT` environment variable is set correctly
 - Verify the variant exists in `app.config.js` APP_VARIANTS array
 - Example: `APP_VARIANT=development eas build --profile development --platform ios`
-

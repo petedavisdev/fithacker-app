@@ -15,4 +15,3 @@ declare namespace NodeJS {
 		APP_VARIANT?: 'development' | 'preview' | 'production';
 	}
 }
-

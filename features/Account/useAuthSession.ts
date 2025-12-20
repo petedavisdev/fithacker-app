@@ -46,5 +46,3 @@ export function useIsLoggedIn() {
 	const { authSession } = useAuthSession();
 	return !!authSession?.user;
 }
-
-
