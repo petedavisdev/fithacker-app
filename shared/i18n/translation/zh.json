@@ -52,7 +52,8 @@
 		"recentlyViewed": "最近查看",
 		"noResults": "未找到用户",
 		"userNotFound": "未找到用户",
-		"removeUser": "删除用户"
+		"searchYourNotes": "搜索您的笔记",
+		"noResultsFound": "未找到结果"
 	},
 	"auth": {
 		"invalidEmail": "请输入有效的电子邮件地址",

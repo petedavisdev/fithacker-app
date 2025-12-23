@@ -41,4 +41,3 @@ export function ShareableChartDay(props: ShareableChartDayProps) {
 		</View>
 	);
 }
-

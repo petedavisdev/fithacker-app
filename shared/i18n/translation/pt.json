@@ -52,7 +52,8 @@
 		"recentlyViewed": "Visualizados recentemente",
 		"noResults": "Nenhum usuário encontrado",
 		"userNotFound": "Usuário não encontrado",
-		"removeUser": "Remover usuário"
+		"searchYourNotes": "Pesquisar suas notas",
+		"noResultsFound": "Nenhum resultado encontrado"
 	},
 	"auth": {
 		"invalidEmail": "Por favor, insira um endereço de e-mail válido",

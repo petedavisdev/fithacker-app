@@ -20,4 +20,3 @@ export function ErrorFallback(props: ErrorFallbackProps) {
 		</View>
 	);
 }
-

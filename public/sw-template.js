@@ -63,4 +63,3 @@ self.addEventListener('activate', (event) => {
 	console.log('[SW] Activating...');
 	event.waitUntil(self.clients.claim());
 });
-

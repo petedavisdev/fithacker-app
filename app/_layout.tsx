@@ -145,11 +145,11 @@ export default function RootLayout() {
 									justifyContent: 'center',
 								}}
 							>
-							<SafeAreaView
-								className={`flex-1 w-full ${
-									Platform.OS === 'web' ? 'py-4' : ''
-								}`}
-							>
+								<SafeAreaView
+									className={`flex-1 w-full ${
+										Platform.OS === 'web' ? 'py-4' : ''
+									}`}
+								>
 									<Slot key={day} />
 								</SafeAreaView>
 							</LinearGradient>

@@ -14,7 +14,7 @@ export function SearchList(props: SearchListProps) {
 		return (
 			<View className="flex-1 items-center justify-center p-8">
 				<Text className="text-slate-400 font-mono text-center">
-					No results found
+					{t('_@.noResultsFound')}
 				</Text>
 			</View>
 		);
@@ -36,10 +36,13 @@ export function SearchList(props: SearchListProps) {
 						</Link>
 					</View>
 					{day.exercises.map((exercise, index) => (
-						<View key={`${day.date}-${exercise.exercise}-${index}`} className="py-2 flex-row items-center gap-3">
+						<View
+							key={`${day.date}-${exercise.exercise}-${index}`}
+							className="py-2 flex-row items-center gap-3"
+						>
 							<Text className="text-2xl">{exercise.exercise}</Text>
 							{exercise.note ? (
-								<Text className="text-yellow-400 font-mono flex-1">
+								<Text className="text-yellow-400 font-mono text-lg flex-1">
 									{exercise.note}
 								</Text>
 							) : (
@@ -54,4 +57,3 @@ export function SearchList(props: SearchListProps) {
 		</ScrollView>
 	);
 }
-

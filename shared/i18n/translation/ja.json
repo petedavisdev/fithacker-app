@@ -52,7 +52,8 @@
 		"recentlyViewed": "最近閲覧した",
 		"noResults": "ユーザーが見つかりません",
 		"userNotFound": "ユーザーが見つかりません",
-		"removeUser": "ユーザーを削除"
+		"searchYourNotes": "ノートを検索",
+		"noResultsFound": "結果が見つかりません"
 	},
 	"auth": {
 		"invalidEmail": "有効なメールアドレスを入力してください",

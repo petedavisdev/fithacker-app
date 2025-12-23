@@ -52,7 +52,8 @@
 		"recentlyViewed": "최근에 본",
 		"noResults": "사용자를 찾을 수 없습니다",
 		"userNotFound": "사용자를 찾을 수 없습니다",
-		"removeUser": "사용자 제거"
+		"searchYourNotes": "노트 검색",
+		"noResultsFound": "결과를 찾을 수 없습니다"
 	},
 	"auth": {
 		"invalidEmail": "유효한 이메일 주소를 입력하세요",

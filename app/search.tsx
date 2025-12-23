@@ -9,7 +9,10 @@ import { getSearchData } from '@/features/Search/getSearchData';
 import { type Exercise, URL_PARAMS } from '@/shared/utils/constants';
 
 export default function SearchScreen() {
-	const params = useLocalSearchParams<{ [URL_PARAMS.SEARCH]?: string; [URL_PARAMS.FILTER]?: string }>();
+	const params = useLocalSearchParams<{
+		[URL_PARAMS.SEARCH]?: string;
+		[URL_PARAMS.FILTER]?: string;
+	}>();
 	const { exerciseLog } = useExerciseLog();
 	const searchQuery = params[URL_PARAMS.SEARCH];
 	const filterExercise = params[URL_PARAMS.FILTER] as Exercise | undefined;
@@ -34,4 +37,3 @@ export default function SearchScreen() {
 		</View>
 	);
 }
-

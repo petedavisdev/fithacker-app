@@ -52,7 +52,6 @@ export function RecentlyViewed() {
 									onPress={() => {
 										updateViewedUsers({ action: 'remove', userId });
 									}}
-									accessibilityLabel={t('_@.removeUser')}
 								>
 									<Text className="font-mono text-pink-400 text-xl ml-4">
 										⊗

@@ -52,7 +52,8 @@
 		"recentlyViewed": "Recently viewed",
 		"noResults": "No fithackers found",
 		"userNotFound": "User not found",
-		"removeUser": "Remove user"
+		"searchYourNotes": "Search your notes",
+		"noResultsFound": "No results found"
 	},
 	"auth": {
 		"invalidEmail": "Please enter a valid email address",

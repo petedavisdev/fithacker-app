@@ -21,7 +21,9 @@ export function ProfileInfo() {
 	const username = userProfile?.username;
 	const userId = authSession?.user?.id;
 
-	const shareLink = userId ? `https://fithacker.app/chart?${URL_PARAMS.USER}=${userId}` : '';
+	const shareLink = userId
+		? `https://fithacker.app/chart?${URL_PARAMS.USER}=${userId}`
+		: '';
 
 	async function copyUsername() {
 		if (username) {

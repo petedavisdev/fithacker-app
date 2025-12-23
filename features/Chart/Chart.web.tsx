@@ -3,7 +3,11 @@ import { useLocalSearchParams } from 'expo-router';
 import { getChartData } from './getChartData';
 import { ChartWeek } from './ChartWeek';
 import { filterExerciseLog } from '@/shared/utils/filterExerciseLog';
-import { type ExerciseLog, type Exercise, URL_PARAMS } from '@/shared/utils/constants';
+import {
+	type ExerciseLog,
+	type Exercise,
+	URL_PARAMS,
+} from '@/shared/utils/constants';
 
 type ChartProps = {
 	readOnly: boolean;
@@ -20,7 +24,8 @@ export function Chart(props: ChartProps) {
 		if (scrollContainerRef.current && props.exerciseLog) {
 			setTimeout(() => {
 				if (scrollContainerRef.current) {
-					scrollContainerRef.current.scrollLeft = scrollContainerRef.current.scrollWidth;
+					scrollContainerRef.current.scrollLeft =
+						scrollContainerRef.current.scrollWidth;
 				}
 			}, 100);
 		}
@@ -56,11 +61,14 @@ export function Chart(props: ChartProps) {
 				const firstDate = Object.keys(weekData.days)[0];
 				return (
 					<div key={firstDate} style={{ flexShrink: 0 }}>
-						<ChartWeek weekData={weekData} readOnly={props.readOnly} onBadgePress={props.onBadgePress} />
+						<ChartWeek
+							weekData={weekData}
+							readOnly={props.readOnly}
+							onBadgePress={props.onBadgePress}
+						/>
 					</div>
 				);
 			})}
 		</div>
 	);
 }
-

@@ -21,7 +21,10 @@ import { ChartNotFound } from '../features/Chart/ChartNotFound';
 export default function Chart() {
 	const router = useRouter();
 	const [isAchievementModalOpen, setIsAchievementModalOpen] = useState(false);
-	const params = useLocalSearchParams<{ [URL_PARAMS.USER]?: string; [URL_PARAMS.FILTER]?: string }>();
+	const params = useLocalSearchParams<{
+		[URL_PARAMS.USER]?: string;
+		[URL_PARAMS.FILTER]?: string;
+	}>();
 	const { authSession } = useAuthSession();
 	const isOnline = useIsOnline();
 	const { userProfile } = useUserProfile();
@@ -51,8 +54,9 @@ export default function Chart() {
 	const { publicProfile, isLoadingPublicProfile, errorPublicProfile } =
 		usePublicProfile(isViewingOtherUser ? viewingUserId : null);
 
-	const { publicExerciseLog, errorPublicExerciseLog } =
-		usePublicExerciseLog(isViewingOtherUser ? viewingUserId : null);
+	const { publicExerciseLog, errorPublicExerciseLog } = usePublicExerciseLog(
+		isViewingOtherUser ? viewingUserId : null,
+	);
 
 	const { updateViewedUsers } = useUpdateViewedUsers();
 	const hasUpdatedViewedRef = useRef<string | null>(null);
@@ -67,7 +71,7 @@ export default function Chart() {
 			hasUpdatedViewedRef.current = viewingUserId;
 			updateViewedUsers({ action: 'add', userId: viewingUserId });
 		}
-		
+
 		if (!isViewingOtherUser) {
 			hasUpdatedViewedRef.current = null;
 		}
@@ -81,7 +85,9 @@ export default function Chart() {
 	// Use own log or public log
 	const { exerciseLog, errorExerciseLog } = useExerciseLog();
 	const logToUse = isViewingOtherUser ? publicExerciseLog : exerciseLog;
-	const errorLog = isViewingOtherUser ? errorPublicExerciseLog : errorExerciseLog;
+	const errorLog = isViewingOtherUser
+		? errorPublicExerciseLog
+		: errorExerciseLog;
 
 	// Error handling: 404 if user doesn't exist or has no profile
 	if (

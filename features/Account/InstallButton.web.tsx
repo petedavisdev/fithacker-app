@@ -21,10 +21,7 @@ export function InstallButton() {
 			<AButton onPress={handleInstall} size="sm" color="cyan">
 				📱
 			</AButton>
-			<Text className="text-slate-400 text-xs text-center">
-				Install App
-			</Text>
+			<Text className="text-slate-400 text-xs text-center">Install App</Text>
 		</View>
 	);
 }
-
