@@ -10,7 +10,9 @@ export function SearchInput() {
 	const router = useRouter();
 	const searchParam = params[URL_PARAMS.SEARCH];
 	const [searchQuery, setSearchQuery] = useState(searchParam || '');
-	const [placeholder, setPlaceholder] = useState(`🔎 ${t('_@.searchYourNotes')}`);
+	const [placeholder, setPlaceholder] = useState(
+		`🔎 ${t('_@.searchYourNotes')}`,
+	);
 
 	useEffect(() => {
 		setSearchQuery(searchParam || '');

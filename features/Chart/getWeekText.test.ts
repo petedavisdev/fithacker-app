@@ -50,7 +50,7 @@ describe('getWeekText', () => {
 			'2022-02-13',
 		];
 
-		const expected = '7 - Feb 13';
+		const expected = 'Feb 7 - Feb 13';
 
 		const result = getWeekText(dates);
 

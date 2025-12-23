@@ -1,8 +1,4 @@
-import {
-	checkThisMonth,
-	checkThisYear,
-	getDate,
-} from '@/shared/utils/dateInfo';
+import { checkThisYear, getDate } from '@/shared/utils/dateInfo';
 import { getLanguage } from '@/shared/i18n/getLanguage';
 import { TIMING } from '@/shared/utils/constants';
 
@@ -19,10 +15,6 @@ const weekTextOptions: WeekTextOption[] = [
 	{
 		check: checkLastWeek,
 		text: () => '_.lastWeek',
-	},
-	{
-		check: (dates: string[]) => checkThisMonth(dates[0]),
-		text: (dates: string[]) => formatWeekShort(dates[0], dates[6]),
 	},
 	{
 		check: (dates: string[]) => checkThisYear(dates[0]),
@@ -47,13 +39,6 @@ export function checkLastWeek(dates: string[]) {
 	const dateAWeekAgo = getDate(new Date(Date.now() - TIMING.WEEK_MS));
 
 	return dates.includes(dateAWeekAgo);
-}
-
-function formatWeekShort(firstDate: string, lastDate: string) {
-	const firstDateText = +firstDate.slice(8, 10);
-	const lastDateText = formatDayMonth(lastDate);
-
-	return `${firstDateText} - ${lastDateText}`;
 }
 
 function formatWeekLong(firstDate: string, lastDate: string) {
