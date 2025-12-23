@@ -35,6 +35,27 @@ export type Database = {
 				};
 				Relationships: [];
 			};
+			user_profiles: {
+				Row: {
+					updated_at: string;
+					user_id: string;
+					username: string;
+					viewed_user_ids: string[] | null;
+				};
+				Insert: {
+					updated_at?: string;
+					user_id: string;
+					username: string;
+					viewed_user_ids?: string[] | null;
+				};
+				Update: {
+					updated_at?: string;
+					user_id?: string;
+					username?: string;
+					viewed_user_ids?: string[] | null;
+				};
+				Relationships: [];
+			};
 		};
 		Views: {
 			[_ in never]: never;

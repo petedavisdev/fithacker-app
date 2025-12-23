@@ -1,6 +1,6 @@
 import AsyncStorage from '@/shared/utils/asyncStorage';
 import * as Localization from 'expo-localization';
-import i18n from 'i18next';
+import i18n, { type InitOptions } from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { STORAGE_KEYS } from '@/shared/utils/constants';
 import de from './translation/de.json';
@@ -25,7 +25,7 @@ const resources = {
 	zh: { translation: zh },
 };
 
-const initI18n = async () => {
+async function initI18n() {
 	let lng: string | null = null;
 
 	// Web-safe AsyncStorage handles window check internally
@@ -35,17 +35,21 @@ const initI18n = async () => {
 		lng = Localization.getLocales()?.[0]?.languageCode;
 	}
 
-	i18n.use(initReactI18next).init({
-		compatibilityJSON: 'v3',
+	i18n.use(initReactI18next);
+
+	const config: InitOptions = {
+		compatibilityJSON: 'v4',
 		resources,
-		lng,
+		lng: lng ?? undefined,
 		fallbackLng: 'en',
 		interpolation: {
 			escapeValue: false,
 		},
-	});
-};
+	};
 
-initI18n();
+	return i18n.init(config);
+}
+
+export const i18nReady = initI18n();
 
 export default i18n;

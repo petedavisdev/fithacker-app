@@ -1,74 +1,138 @@
 import { Chart as ChartComponent } from '../features/Chart/Chart';
-import { ChartHelp } from '../features/Chart/ChartHelp';
-import { ExerciseFilter } from '../features/ExerciseFilter/ExerciseFilter';
+import { BadgesHelp } from '../features/Chart/BadgesHelp';
+import { TheFilter } from '@/shared/components/TheFilter';
 import { TheHeader } from '../features/TheHeader/TheHeader';
-import { View } from 'react-native';
-import { useExerciseLog } from '@/shared/queries/useExerciseLog';
-import { getChartData } from '../features/Chart/getChartData';
-import { hasMedals } from '../features/Chart/hasAchievements';
 import { AButton } from '@/shared/components/AButton';
+import { View, Text } from 'react-native';
+import { useExerciseLog } from '@/shared/queries/useExerciseLog';
 import { AModal } from '@/shared/components/AModal';
-import { useState } from 'react';
-import { filterExerciseLog } from '../features/ExerciseFilter/filterExerciseLog';
-import { useLocalSearchParams } from 'expo-router';
-import { type Exercise } from '@/shared/utils/constants';
-import { BADGES } from '@/shared/utils/constants';
+import { useState, useEffect, useRef } from 'react';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import { type Exercise, URL_PARAMS } from '@/shared/utils/constants';
+import { usePublicExerciseLog } from '@/shared/queries/usePublicExerciseLog';
+import { usePublicProfile } from '@/shared/queries/usePublicProfile';
+import { useAuthSession } from '@/features/Account/useAuthSession';
+import { useIsOnline } from '@/shared/queries/useNetworkStatus';
+import { useUserProfile } from '@/features/Account/useUserProfile';
+import { useUpdateViewedUsers } from '@/features/Account/useUpdateViewedUsers';
+import { useGradient } from './_layout';
+import { ChartNotFound } from '../features/Chart/ChartNotFound';
 
 export default function Chart() {
+	const router = useRouter();
 	const [isAchievementModalOpen, setIsAchievementModalOpen] = useState(false);
-	const params = useLocalSearchParams<{ filter?: Exercise }>();
-	const { exerciseLog, isLoadingExerciseLog, errorExerciseLog } =
-		useExerciseLog();
+	const params = useLocalSearchParams<{ [URL_PARAMS.USER]?: string; [URL_PARAMS.FILTER]?: string }>();
+	const { authSession } = useAuthSession();
+	const isOnline = useIsOnline();
+	const { userProfile } = useUserProfile();
+	const { setViewingOther } = useGradient();
+	const currentUserId = authSession?.user?.id;
+	const viewingUserId = params[URL_PARAMS.USER];
+	const isViewingOtherUser = !!viewingUserId && viewingUserId !== currentUserId;
+	const shouldAddUserParam = isOnline && userProfile && !viewingUserId;
 
-	const filteredLog =
-		params.filter && exerciseLog
-			? filterExerciseLog(exerciseLog, params.filter)
-			: (exerciseLog ?? {});
+	useEffect(() => {
+		if (isViewingOtherUser && !isOnline) {
+			router.replace('/account');
+		}
+	}, [isViewingOtherUser, isOnline, router]);
+
+	useEffect(() => {
+		if (shouldAddUserParam) {
+			router.replace(`/chart?${URL_PARAMS.USER}=${currentUserId}`);
+		}
+	}, [shouldAddUserParam, currentUserId, router]);
+
+	useEffect(() => {
+		setViewingOther(isViewingOtherUser);
+		return () => setViewingOther(false);
+	}, [isViewingOtherUser, setViewingOther]);
+
+	const { publicProfile, isLoadingPublicProfile, errorPublicProfile } =
+		usePublicProfile(isViewingOtherUser ? viewingUserId : null);
+
+	const { publicExerciseLog, errorPublicExerciseLog } =
+		usePublicExerciseLog(isViewingOtherUser ? viewingUserId : null);
+
+	const { updateViewedUsers } = useUpdateViewedUsers();
+	const hasUpdatedViewedRef = useRef<string | null>(null);
+
+	const shouldUpdateViewedUsers =
+		isViewingOtherUser &&
+		publicProfile &&
+		hasUpdatedViewedRef.current !== viewingUserId;
+
+	useEffect(() => {
+		if (shouldUpdateViewedUsers) {
+			hasUpdatedViewedRef.current = viewingUserId;
+			updateViewedUsers({ action: 'add', userId: viewingUserId });
+		}
+		
+		if (!isViewingOtherUser) {
+			hasUpdatedViewedRef.current = null;
+		}
+	}, [
+		shouldUpdateViewedUsers,
+		isViewingOtherUser,
+		viewingUserId,
+		updateViewedUsers,
+	]);
+
+	// Use own log or public log
+	const { exerciseLog, errorExerciseLog } = useExerciseLog();
+	const logToUse = isViewingOtherUser ? publicExerciseLog : exerciseLog;
+	const errorLog = isViewingOtherUser ? errorPublicExerciseLog : errorExerciseLog;
+
+	// Error handling: 404 if user doesn't exist or has no profile
+	if (
+		isViewingOtherUser &&
+		!isLoadingPublicProfile &&
+		(!publicProfile || errorPublicProfile)
+	) {
+		return <ChartNotFound />;
+	}
 
 	// Don't render chart if there's an error - component depends on exerciseLog
-	if (errorExerciseLog) {
+	if (errorLog) {
 		return (
 			<>
 				<TheHeader buttonLeft="account" />
 				<View className="flex-1 items-center justify-center gap-10">
-					<ExerciseFilter />
+					<TheFilter />
 				</View>
 			</>
 		);
 	}
 
-	const chartData = getChartData(filteredLog);
-	const userHasMedals = hasMedals(chartData);
-	const achievementEmoji = userHasMedals ? BADGES[2] : BADGES[1];
-
-	// Only show achievement button if there's chart data with actual exercises
-	const showAchievementButton =
-		!isLoadingExerciseLog && chartData.some((week) => week.total > 0);
-
-	const achievementButton = showAchievementButton ? (
-		<AButton
-			onPress={() => setIsAchievementModalOpen(true)}
-			color="pink"
-			size="sm"
-		>
-			{achievementEmoji}
+	const searchButton = !isViewingOtherUser ? (
+		<AButton href="/search" size="sm" color="cyan">
+			🔎
 		</AButton>
-	) : null;
+	) : undefined;
 
 	return (
 		<>
-			<TheHeader buttonLeft="account" customButtonRight={achievementButton} />
+			<TheHeader buttonLeft="account" customButtonRight={searchButton} />
 
 			<AModal
 				isOpen={isAchievementModalOpen}
 				onClose={() => setIsAchievementModalOpen(false)}
 			>
-				<ChartHelp hasMedals={userHasMedals} />
+				<BadgesHelp />
 			</AModal>
 
 			<View className="flex-1 items-center justify-center gap-10">
-				<ChartComponent />
-				<ExerciseFilter />
+				{isViewingOtherUser && publicProfile && (
+					<Text className="font-mono text-pink-400 text-xl mb-4">
+						{publicProfile.username}
+					</Text>
+				)}
+				<ChartComponent
+					readOnly={isViewingOtherUser}
+					exerciseLog={logToUse}
+					onBadgePress={() => setIsAchievementModalOpen(true)}
+				/>
+				<TheFilter />
 			</View>
 		</>
 	);

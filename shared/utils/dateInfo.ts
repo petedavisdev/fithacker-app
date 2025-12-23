@@ -43,11 +43,6 @@ const dateInfoOptions: DateInfoOption[] = [
 		text: formatDateShort,
 	},
 	{
-		check: checkThisMonth,
-		category: getWeekdayCategory,
-		text: formatDateMedium,
-	},
-	{
 		check: checkThisYear,
 		category: getWeekdayCategory,
 		text: formatDateLong,
@@ -119,10 +114,6 @@ function checkThisWeek(date: string) {
 	return date >= getLastMonday();
 }
 
-export function checkThisMonth(date: string) {
-	return date.slice(0, 7) === getDate().slice(0, 7);
-}
-
 export function checkThisYear(date: string) {
 	return date.slice(0, 4) === getDate().slice(0, 4);
 }
@@ -134,13 +125,6 @@ function getWeekdayCategory(dayIndex: number) {
 function formatDateShort(date: string) {
 	return new Date(date).toLocaleDateString(getLanguage(), {
 		weekday: 'long',
-	});
-}
-
-function formatDateMedium(date: string) {
-	return new Date(date).toLocaleDateString(getLanguage(), {
-		weekday: 'long',
-		day: 'numeric',
 	});
 }
 

@@ -38,7 +38,21 @@
 		"offlineLoggedOut": "問題ありません！オンラインになったら、ログインしてデータをバックアップし、同期してください。",
 		"sendCode": "マジックナンバーを送ってください ✨",
 		"somethingWentWrong": "問題が発生しました",
-		"tryAgain": "再試行"
+		"tryAgain": "再試行",
+		"shareProfile": "運動ログを共有して他の人を見つける",
+		"usernameLabel": "ユーザー名",
+		"usernameInUse": "ユーザー名は既に使用されています",
+		"usernameTooShort": "ユーザー名は少なくとも{{min}}文字である必要があります",
+		"usernameTooLong": "ユーザー名は{{max}}文字を超えてはいけません",
+		"usernameInvalidCharacters": "{{chars}}は使用できません",
+		"copyUsername": "ユーザー名をコピー",
+		"copyLink": "リンクをコピー",
+		"copied": "コピーしました！",
+		"searchUsers": "fithackerを検索",
+		"recentlyViewed": "最近閲覧した",
+		"noResults": "ユーザーが見つかりません",
+		"userNotFound": "ユーザーが見つかりません",
+		"removeUser": "ユーザーを削除"
 	},
 	"auth": {
 		"invalidEmail": "有効なメールアドレスを入力してください",

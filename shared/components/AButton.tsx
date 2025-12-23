@@ -12,7 +12,7 @@ type PressableButtonProps = {
 
 type AButtonProps = (LinkButtonProps | PressableButtonProps) & {
 	children: React.ReactNode;
-	color?: 'pink';
+	color?: 'pink' | 'cyan';
 	size?: 'sm';
 	isDisabled?: boolean;
 };
@@ -23,13 +23,19 @@ export function AButton(props: AButtonProps) {
 			className={`flex items-center justify-center border-2 bg-bg rounded-full shadow ${
 				props.color === 'pink'
 					? 'border-pink-600 shadow-pink-700'
-					: 'border-yellow-600 shadow-yellow-700'
+					: props.color === 'cyan'
+						? 'border-cyan-600 shadow-cyan-700'
+						: 'border-yellow-600 shadow-yellow-700'
 			} ${props.size === 'sm' ? 'w-10 h-10' : 'w-20 h-20'}
 			}`}
 		>
 			<Text
 				className={`text-2xl  ${
-					props.color === 'pink' ? 'text-pink-500' : 'text-yellow-500'
+					props.color === 'pink'
+						? 'text-pink-500'
+						: props.color === 'cyan'
+							? 'text-cyan-500'
+							: 'text-yellow-500'
 				} ${props.size === 'sm' ? 'text-2xl' : 'text-4xl'}`}
 			>
 				{props.children}

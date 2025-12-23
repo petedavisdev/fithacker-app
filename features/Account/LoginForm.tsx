@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, Text, TextInput, View } from 'react-native';
 import { AButton } from '@/shared/components/AButton';
-import { TheHeader } from '@/features/TheHeader/TheHeader';
 import { isAppleReviewEmail, type AuthError } from './authHelpers';
 import { useLogin } from './useLogin';
 import { useVerifyOtp } from './useVerifyOtp';
@@ -16,15 +15,14 @@ export function LoginForm() {
 
 	const isAppleReview = isAppleReviewEmail(email);
 
-	const { login, errorLogin, resetLogin } = useLogin();
-	const { verifyOtp, errorVerifyOtp, resetVerifyOtp } = useVerifyOtp();
+	const { login, isLoggingIn, errorLogin, resetLogin } = useLogin();
+	const { verifyOtp, isVerifyingOtp, errorVerifyOtp, resetVerifyOtp } =
+		useVerifyOtp();
 
 	const error = (errorLogin?.message ?? errorVerifyOtp?.message) as AuthError;
 
 	return (
-		<>
-			<TheHeader buttonLeft="account" />
-			<View className="flex-1 items-center justify-center p-4">
+		<View className="flex-1 items-center justify-center p-4">
 				<Text className="font-mono text-cyan-400 text-2xl font-bold text-center">
 					{t('_@.login')}
 				</Text>
@@ -54,6 +52,7 @@ export function LoginForm() {
 							}}
 							keyboardType="email-address"
 							autoCapitalize="none"
+							editable={!isLoggingIn}
 						/>
 						{error && (
 							<Text className="font-mono text-pink-400 mt-2">
@@ -69,18 +68,22 @@ export function LoginForm() {
 										},
 									});
 								}}
+								disabled={isLoggingIn}
 							>
-								<View className="min-h-20 max-w-60 p-6 items-center justify-center border-2 border-yellow-500 rounded-full shadow shadow-yellow-500">
+								<View
+									className={`min-h-20 max-w-60 p-6 items-center justify-center border-2 border-yellow-500 rounded-full shadow shadow-yellow-500 ${
+										isLoggingIn ? 'opacity-35' : ''
+									}`}
+								>
 									<Text className="text-lg text-yellow-400 font-mono text-balance text-center">
-										{isAppleReview ? t('_@.enterPassword') : t('_@.sendCode')}
+										{isLoggingIn
+											? '⏳'
+											: isAppleReview
+												? t('_@.enterPassword')
+												: t('_@.sendCode')}
 									</Text>
 								</View>
 							</Pressable>
-							<View className="mt-6">
-								<AButton href="/" color="pink" size="sm">
-									👈
-								</AButton>
-							</View>
 						</View>
 					</View>
 				)}
@@ -103,6 +106,7 @@ export function LoginForm() {
 							keyboardType={isAppleReview ? 'default' : 'number-pad'}
 							secureTextEntry={isAppleReview}
 							maxLength={isAppleReview ? undefined : 6}
+							editable={!isVerifyingOtp}
 						/>
 						{error && (
 							<Text className="font-mono text-pink-400 mt-2">
@@ -114,22 +118,25 @@ export function LoginForm() {
 								onPress={() => {
 									verifyOtp({ email, token });
 								}}
+								disabled={isVerifyingOtp}
 							>
-								<View className="min-h-20 max-w-60 p-6 items-center justify-center border-2 border-yellow-500 rounded-full shadow shadow-yellow-500">
+								<View
+									className={`min-h-20 max-w-60 p-6 items-center justify-center border-2 border-yellow-500 rounded-full shadow shadow-yellow-500 ${
+										isVerifyingOtp ? 'opacity-35' : ''
+									}`}
+								>
 									<Text className="text-lg text-yellow-400 font-mono text-balance text-center">
-										{isAppleReview ? t('_@.signIn') : t('_@.verify')}
+										{isVerifyingOtp
+											? '⏳'
+											: isAppleReview
+												? t('_@.signIn')
+												: t('_@.verify')}
 									</Text>
 								</View>
 							</Pressable>
-							<View className="mt-6">
-								<AButton href="/" color="pink" size="sm">
-									👈
-								</AButton>
-							</View>
 						</View>
 					</View>
 				)}
 			</View>
-		</>
 	);
 }

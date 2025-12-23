@@ -1,24 +1,33 @@
 import '@/shared/i18n';
+import { i18nReady } from '@/shared/i18n';
 import { useFonts } from 'expo-font';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Slot } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, createContext, useContext } from 'react';
 import {
 	Platform,
-	SafeAreaView,
 	StatusBar,
 	AppState,
 	type AppStateStatus,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import 'react-native-reanimated';
 import '../global.css';
 import { runMigration } from '@/shared/supabase/migration';
 import { queryKeys } from '@/shared/queries/queryKeys';
 import { QueryErrorBoundary } from '@/shared/components/AErrorBoundary';
 import { useBackgroundSync } from '@/shared/queries/useBackgroundSync';
+
+const GradientContext = createContext<{
+	setViewingOther: (value: boolean) => void;
+}>({ setViewingOther: () => {} });
+
+export function useGradient() {
+	return useContext(GradientContext);
+}
 
 SplashScreen.preventAutoHideAsync();
 
@@ -61,8 +70,17 @@ export default function RootLayout() {
 		UbuntuMonoItalic: require('../assets/fonts/UbuntuMono-Italic.ttf'),
 		UbuntuMonoBoldItalic: require('../assets/fonts/UbuntuMono-BoldItalic.ttf'),
 	});
+	const [i18nLoaded, setI18nLoaded] = useState(false);
 
 	const [day, setDay] = useState<number>(new Date().getDate());
+	const [viewingOther, setViewingOther] = useState(false);
+	const gradientColor = viewingOther ? '#211' : '#112';
+
+	useEffect(() => {
+		i18nReady.then(() => {
+			setI18nLoaded(true);
+		});
+	}, []);
 
 	useEffect(() => {
 		const eventListener = AppState.addEventListener(
@@ -80,12 +98,12 @@ export default function RootLayout() {
 	}, [day]);
 
 	useEffect(() => {
-		if (fontLoaded) {
+		if (fontLoaded && i18nLoaded) {
 			SplashScreen.hideAsync();
 		}
-	}, [fontLoaded]);
+	}, [fontLoaded, i18nLoaded]);
 
-	if (!fontLoaded) {
+	if (!fontLoaded || !i18nLoaded) {
 		return null;
 	}
 
@@ -94,23 +112,25 @@ export default function RootLayout() {
 			<QueryErrorBoundary>
 				<QueryClientProvider client={queryClient}>
 					<QueryErrorBoundary>
-						<InitBackgroundSync />
-						<LinearGradient
-							colors={['black', '#112', '#112', 'black']}
-							style={{
-								flex: 1,
-								alignItems: 'center',
-								justifyContent: 'center',
-							}}
-						>
+						<GradientContext.Provider value={{ setViewingOther }}>
+							<InitBackgroundSync />
+							<LinearGradient
+								colors={['black', gradientColor, gradientColor, 'black']}
+								style={{
+									flex: 1,
+									alignItems: 'center',
+									justifyContent: 'center',
+								}}
+							>
 							<SafeAreaView
 								className={`flex-1 w-full ${
-									Platform.OS === 'web' ? 'p-4' : ''
+									Platform.OS === 'web' ? 'py-4' : ''
 								}`}
 							>
-								<Slot key={day} />
-							</SafeAreaView>
-						</LinearGradient>
+									<Slot key={day} />
+								</SafeAreaView>
+							</LinearGradient>
+						</GradientContext.Provider>
 					</QueryErrorBoundary>
 					<ReactQueryDevtools />
 				</QueryClientProvider>

@@ -1,19 +1,22 @@
 import { Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import type { Exercise, ExerciseDay } from '@/shared/utils/constants';
+import type { ExerciseDay, Exercise } from '@/shared/utils/constants';
+import { URL_PARAMS } from '@/shared/utils/constants';
 import { type Href, Link, useLocalSearchParams } from 'expo-router';
 import { getDateInfo } from '@/shared/utils/dateInfo';
 
 type ChartDayProps = {
 	date: string;
 	exercises?: ExerciseDay;
+	readOnly?: boolean;
 };
 
 export function ChartDay(props: ChartDayProps) {
 	const { t } = useTranslation();
-	const { filter } = useLocalSearchParams<{ filter?: Exercise | '' }>();
+	const params = useLocalSearchParams<{ [URL_PARAMS.FILTER]?: string }>();
+	const filter = params[URL_PARAMS.FILTER] as Exercise | undefined;
 	const dateInfo = getDateInfo(props.date);
-	const isDisabled = dateInfo.category === 'future';
+	const isDisabled = dateInfo.category === 'future' || props.readOnly;
 
 	const DATE_TEXT_COLORS = {
 		future: 'text-slate-500',

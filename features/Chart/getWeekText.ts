@@ -43,7 +43,7 @@ export function checkThisWeek(dates: string[]) {
 	return dates.includes(getDate());
 }
 
-function checkLastWeek(dates: string[]) {
+export function checkLastWeek(dates: string[]) {
 	const dateAWeekAgo = getDate(new Date(Date.now() - TIMING.WEEK_MS));
 
 	return dates.includes(dateAWeekAgo);
@@ -63,13 +63,27 @@ function formatWeekLong(firstDate: string, lastDate: string) {
 	return `${firstDateText} - ${lastDateText}`;
 }
 
-function formatWeekFull(firstDate: string, lastDate: string) {
-	const firstDateText = new Date(firstDate).toLocaleDateString(getLanguage(), {
+export function formatWeekFull(firstDate: string, lastDate: string) {
+	const firstDateObj = new Date(firstDate);
+	const lastDateObj = new Date(lastDate);
+	const firstDateYear = firstDateObj.getFullYear();
+	const lastDateYear = lastDateObj.getFullYear();
+	const firstDateMonth = firstDateObj.getMonth();
+	const lastDateMonth = lastDateObj.getMonth();
+
+	const firstDateText =
+		firstDateMonth === lastDateMonth && firstDateYear === lastDateYear
+			? firstDateObj.getDate().toString()
+			: firstDateObj.toLocaleDateString(getLanguage(), {
+					month: 'short',
+					day: 'numeric',
+					...(firstDateYear !== lastDateYear && { year: 'numeric' }),
+				});
+	const lastDateText = lastDateObj.toLocaleDateString(getLanguage(), {
 		year: 'numeric',
 		month: 'short',
 		day: 'numeric',
 	});
-	const lastDateText = formatDayMonth(lastDate);
 
 	return `${firstDateText} - ${lastDateText}`;
 }

@@ -10,4 +10,12 @@ export const queryKeys = {
 		allRemoteData: (userId: string) => ['supabase', 'all', userId] as const,
 	},
 	backgroundSync: (userId?: string) => ['backgroundSync', userId] as const,
+	profiles: {
+		own: ['profiles', 'own'] as const,
+		public: (userId: string) => ['profiles', 'public', userId] as const,
+		batch: (userIds: string[]) =>
+			['profiles', 'batch', ...userIds.sort()] as const,
+		search: (query: string) => ['profiles', 'search', query] as const,
+	},
+	publicExerciseLog: (userId: string) => ['publicExerciseLog', userId] as const,
 };

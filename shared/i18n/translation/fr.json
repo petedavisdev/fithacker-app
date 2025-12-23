@@ -38,7 +38,21 @@
 		"offlineLoggedOut": "Pas de problème ! Lorsque vous serez en ligne, connectez-vous pour sauvegarder et synchroniser vos données.",
 		"sendCode": "Envoyez-moi un numéro magique ✨",
 		"somethingWentWrong": "Quelque chose s'est mal passé",
-		"tryAgain": "Réessayer"
+		"tryAgain": "Réessayer",
+		"shareProfile": "Partagez votre journal d'exercices et trouvez d'autres",
+		"usernameLabel": "Nom d'utilisateur",
+		"usernameInUse": "Nom d'utilisateur déjà utilisé",
+		"usernameTooShort": "Le nom d'utilisateur doit contenir au moins {{min}} caractères",
+		"usernameTooLong": "Le nom d'utilisateur ne doit pas dépasser {{max}} caractères",
+		"usernameInvalidCharacters": "{{chars}} non autorisés",
+		"copyUsername": "Copier le nom d'utilisateur",
+		"copyLink": "Copier le lien",
+		"copied": "Copié !",
+		"searchUsers": "Rechercher des fithackers",
+		"recentlyViewed": "Récemment consultés",
+		"noResults": "Aucun utilisateur trouvé",
+		"userNotFound": "Utilisateur introuvable",
+		"removeUser": "Supprimer l'utilisateur"
 	},
 	"auth": {
 		"invalidEmail": "Veuillez entrer une adresse e-mail valide",

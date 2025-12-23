@@ -1,18 +1,18 @@
 import { Pressable, Text, View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { EXERCISES, type Exercise } from '@/shared/utils/constants';
+import { EXERCISES, type Exercise, URL_PARAMS } from '@/shared/utils/constants';
 
-export function ExerciseFilter() {
-	const params = useLocalSearchParams<{ filter?: Exercise }>();
+export function TheFilter() {
+	const params = useLocalSearchParams<{ [URL_PARAMS.FILTER]?: string }>();
 	const router = useRouter();
-	const filter = params.filter;
-	const isValidFilter = filter && EXERCISES.includes(filter as Exercise);
+	const filter = params[URL_PARAMS.FILTER] as Exercise | undefined;
+	const isValidFilter = Boolean(filter);
 
 	function updateFilter(exercise?: Exercise) {
 		if (exercise) {
-			router.setParams({ filter: exercise });
+			router.setParams({ [URL_PARAMS.FILTER]: exercise });
 		} else {
-			router.setParams({ filter: undefined });
+			router.setParams({ [URL_PARAMS.FILTER]: undefined });
 		}
 	}
 
@@ -49,3 +49,4 @@ export function ExerciseFilter() {
 		</View>
 	);
 }
+

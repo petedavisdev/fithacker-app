@@ -182,6 +182,43 @@ npm install package-name@latest
 
 Always rebuild development clients after upgrading native dependencies. See [npm update docs](https://docs.npmjs.com/cli/commands/npm-update) for more details.
 
+### Supabase Development
+
+The project uses Supabase for backend services. Common Supabase CLI commands are available as npm scripts.
+
+**First-time setup:**
+
+1. **Login to Supabase CLI** (required for most commands):
+
+```bash
+npm run supabase:login
+```
+
+This will open a browser to authenticate. Alternatively, set `SUPABASE_ACCESS_TOKEN` environment variable.
+
+2. **Generate TypeScript types** (after schema changes):
+
+```bash
+npm run supabase:types
+```
+
+This updates `shared/supabase/database.types.ts` with the latest schema.
+
+**Available Supabase scripts:**
+
+- `npm run supabase:login` - Authenticate with Supabase CLI
+- `npm run supabase:types` - Generate TypeScript types from database schema
+- `npm run supabase:status` - List all Supabase projects
+- `npm run supabase:migrations` - List database migrations
+- `npm run supabase:db:pull` - Pull remote schema changes
+- `npm run supabase:db:diff` - Show schema differences
+- `npm run supabase:db:reset` - Reset database (use with caution)
+- `npm run supabase:logs:api` - View API logs
+- `npm run supabase:logs:postgres` - View Postgres logs
+- `npm run supabase:logs:realtime` - View Realtime logs
+
+**Project ID:** `eujlarqrbwllnmxlhbsk` (configured in scripts)
+
 ### Testing
 
 Run the Jest test suite:

@@ -38,7 +38,21 @@
 		"offlineLoggedOut": "没问题！当您恢复在线时，请登录以备份和同步您的数据。",
 		"sendCode": "发送魔法数字 ✨",
 		"somethingWentWrong": "出了点问题",
-		"tryAgain": "重试"
+		"tryAgain": "重试",
+		"shareProfile": "分享您的运动记录并找到其他人",
+		"usernameLabel": "用户名",
+		"usernameInUse": "用户名已被使用",
+		"usernameTooShort": "用户名至少需要{{min}}个字符",
+		"usernameTooLong": "用户名不能超过{{max}}个字符",
+		"usernameInvalidCharacters": "不允许使用{{chars}}",
+		"copyUsername": "复制用户名",
+		"copyLink": "复制链接",
+		"copied": "已复制！",
+		"searchUsers": "搜索 fithacker",
+		"recentlyViewed": "最近查看",
+		"noResults": "未找到用户",
+		"userNotFound": "未找到用户",
+		"removeUser": "删除用户"
 	},
 	"auth": {
 		"invalidEmail": "请输入有效的电子邮件地址",

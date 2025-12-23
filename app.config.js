@@ -32,7 +32,7 @@ export default {
 		orientation: 'portrait',
 		icon: './assets/images/icon.png',
 		newArchEnabled: true,
-		scheme: 'myapp',
+		scheme: 'fithacker',
 		userInterfaceStyle: 'automatic',
 		updates: {
 			url: 'https://u.expo.dev/6c3e19dc-162f-45b6-98f4-716ce558cd0e',
@@ -48,6 +48,7 @@ export default {
 		ios: {
 			supportsTablet: true,
 			bundleIdentifier: bundleIdentifier || 'dev.petedavis.fithacker',
+			associatedDomains: ['applinks:fithacker.app'],
 			infoPlist: {
 				CFBundleAllowMixedLocalizations: true,
 				CFBundleLocalizations: [
@@ -77,6 +78,20 @@ export default {
 				backgroundColor: '#111122',
 			},
 			package: bundleIdentifier || 'dev.petedavis.fithacker',
+			intentFilters: [
+				{
+					action: 'VIEW',
+					autoVerify: true,
+					data: [
+						{
+							scheme: 'https',
+							host: 'fithacker.app',
+							pathPrefix: '/chart',
+						},
+					],
+					category: ['BROWSABLE', 'DEFAULT'],
+				},
+			],
 		},
 		web: {
 			bundler: 'metro',

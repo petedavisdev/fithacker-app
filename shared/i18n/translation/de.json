@@ -38,7 +38,21 @@
 		"offlineLoggedOut": "Kein Problem! Wenn du online bist, melde dich an, um deine Daten zu sichern und zu synchronisieren.",
 		"sendCode": "Schicke mir eine magische Nummer ✨",
 		"somethingWentWrong": "Etwas ist schief gelaufen",
-		"tryAgain": "Erneut versuchen"
+		"tryAgain": "Erneut versuchen",
+		"shareProfile": "Teile dein Trainingsprotokoll und finde andere",
+		"usernameLabel": "Benutzername",
+		"usernameInUse": "Benutzername bereits vergeben",
+		"usernameTooShort": "Benutzername muss mindestens {{min}} Zeichen lang sein",
+		"usernameTooLong": "Benutzername darf höchstens {{max}} Zeichen lang sein",
+		"usernameInvalidCharacters": "{{chars}} nicht erlaubt",
+		"copyUsername": "Benutzername kopieren",
+		"copyLink": "Link kopieren",
+		"copied": "Kopiert!",
+		"searchUsers": "Fithacker suchen",
+		"recentlyViewed": "Kürzlich angesehen",
+		"noResults": "Keine Benutzer gefunden",
+		"userNotFound": "Benutzer nicht gefunden",
+		"removeUser": "Benutzer entfernen"
 	},
 	"auth": {
 		"invalidEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein",

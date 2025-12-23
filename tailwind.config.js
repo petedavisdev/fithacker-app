@@ -16,6 +16,7 @@ module.exports = {
 			white: '#fff', // App Store badge text (web-only)
 			// App background
 			bg: '#112',
+			bgPink: '#211', // Dark pink gradient (matches darkness of #112)
 			// Yellow: Weekends, completed state, default buttons, inputs (unfocused), "FIT" branding
 			yellow: {
 				400: '#facc15', // Input text (default state)

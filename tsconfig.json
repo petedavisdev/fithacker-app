@@ -5,7 +5,8 @@
 		"jsx": "react-jsx",
 		"paths": {
 			"@/*": ["./*"]
-		}
+		},
+		"moduleSuffixes": [".web", ".native", ""]
 	},
 	"include": [
 		"**/*.ts",

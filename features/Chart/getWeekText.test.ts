@@ -75,7 +75,7 @@ describe('getWeekText', () => {
 		expect(result).toEqual(expected);
 	});
 
-	it('should return a week last year', () => {
+	it('should return a week across years', () => {
 		const dates = [
 			'2021-12-28',
 			'2021-12-29',
@@ -86,7 +86,25 @@ describe('getWeekText', () => {
 			'2022-01-03',
 		];
 
-		const expected = 'Dec 28, 2021 - Jan 3';
+		const expected = 'Dec 28, 2021 - Jan 3, 2022';
+
+		const result = getWeekText(dates);
+
+		expect(result).toEqual(expected);
+	});
+
+	it('should return a week last year', () => {
+		const dates = [
+			'2021-12-21',
+			'2021-12-22',
+			'2021-12-23',
+			'2021-12-24',
+			'2021-12-25',
+			'2021-12-26',
+			'2021-12-27',
+		];
+
+		const expected = '21 - Dec 27, 2021';
 
 		const result = getWeekText(dates);
 
