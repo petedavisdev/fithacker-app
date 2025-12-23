@@ -18,9 +18,9 @@
 		"ios:prod": "eas build --platform=ios",
 		"ios:submit": "eas submit --platform=ios",
 		"ios:update:prod": "eas update --channel production",
-		"web:build": "npx expo export --platform web",
-		"web:pre": "eas deploy --alias preview",
-		"web:prod": "eas deploy --prod",
+		"web:build": "npx expo export --platform web && npx workbox-cli injectManifest workbox-config.js",
+		"web:pre": "npm run web:build && eas deploy --alias preview",
+		"web:prod": "npm run web:build && eas deploy --prod",
 		"supabase:login": "npx supabase login",
 		"supabase:types": "npx supabase gen types typescript --project-id eujlarqrbwllnmxlhbsk > shared/supabase/database.types.ts",
 		"supabase:status": "npx supabase projects list",
@@ -95,9 +95,9 @@
 	"devDependencies": {
 		"@babel/core": "^7.25.2",
 		"@types/jest": "^29.5.14",
-		"dotenv": "^17.2.3",
 		"@types/react": "^19.2.7",
 		"@types/react-test-renderer": "^19.1.0",
+		"dotenv": "^17.2.3",
 		"eslint": "^8.57.1",
 		"eslint-config-expo": "~10.0.0",
 		"jest": "^29.7.0",
@@ -105,7 +105,13 @@
 		"prettier": "^3.7.4",
 		"react-test-renderer": "^19.1.4",
 		"tailwindcss": "^3.4.14",
-		"typescript": "~5.9.2"
+		"typescript": "~5.9.2",
+		"workbox-cacheable-response": "^7.4.0",
+		"workbox-cli": "^7.4.0",
+		"workbox-expiration": "^7.4.0",
+		"workbox-precaching": "^7.4.0",
+		"workbox-routing": "^7.4.0",
+		"workbox-strategies": "^7.4.0"
 	},
 	"private": true
 }

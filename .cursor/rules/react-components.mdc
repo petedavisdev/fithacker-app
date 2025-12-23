@@ -78,3 +78,11 @@ Effects are an escape hatch for synchronizing with external systems. Use sparing
 
 - Co-locate pure functions in feature folders (e.g., `Chart/getChartData.ts`)
 - Export function and types together
+
+## Single Component Per File
+
+- One component per `.tsx` file - single named export only
+- Don't export functions, constants, or types from component files
+- Types may be exported if they follow the same import direction as the component (e.g., `ComponentProps` exported alongside `Component`)
+- **Even internal components** must be in separate files - extract helper components to their own files
+- **Anti-pattern**: ❌ Multiple components (even if only one is exported), utility functions, or constants exported from component files

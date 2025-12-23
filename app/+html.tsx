@@ -12,29 +12,29 @@ export default function Root({ children }: PropsWithChildren) {
 				<title>Fithacker</title>
 				<meta charSet="utf-8" />
 				<meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-				<meta
-					name="viewport"
-					content="width=device-width, initial-scale=1, shrink-to-fit=no"
-				/>
+			<meta
+				name="viewport"
+				content="width=device-width, initial-scale=1, shrink-to-fit=no"
+			/>
 
-				{/*
+			{/* PWA Meta Tags */}
+			<link rel="manifest" href="/manifest.json" />
+			<meta name="theme-color" content="#111122" />
+			<meta name="apple-mobile-web-app-capable" content="yes" />
+			<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+			<meta name="apple-mobile-web-app-title" content="Fithacker" />
+
+			{/*
           Disable body scrolling on web. This makes ScrollView components work closer to how they do on native.
           However, body scrolling is often nice to have for mobile web. If you want to enable it, remove this line.
         */}
-				<ScrollViewStyleReset />
+			<ScrollViewStyleReset />
 				{/* Add any additional <head> elements that you want globally available on web... */}
 			</head>
 			<body style={{ backgroundColor: 'black' }}>
 				<main className="grid place-items-center h-full">
 					<div className="h-full max-h-[800px] w-full">{children}</div>
 				</main>
-
-				<a
-					className="absolute bottom-5 left-4 text-white"
-					href="https://apps.apple.com/us/app/fithacker/id6737473687?platform=iphone"
-				>
-					<img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" />
-				</a>
 			</body>
 		</html>
 	);

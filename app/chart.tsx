@@ -15,7 +15,7 @@ import { useAuthSession } from '@/features/Account/useAuthSession';
 import { useIsOnline } from '@/shared/queries/useNetworkStatus';
 import { useUserProfile } from '@/features/Account/useUserProfile';
 import { useUpdateViewedUsers } from '@/features/Account/useUpdateViewedUsers';
-import { useGradient } from './_layout';
+import { useGradient } from './useGradient';
 import { ChartNotFound } from '../features/Chart/ChartNotFound';
 
 export default function Chart() {

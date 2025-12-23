@@ -7,6 +7,8 @@ import { usePendingSync } from '@/shared/queries/usePendingSync';
 import { useUserProfile } from './useUserProfile';
 import { ProfileInfo } from './ProfileInfo';
 import { ProfileSetup } from './ProfileSetup';
+import { InstallButton } from './InstallButton';
+import { AppStoreLink } from './AppStoreLink';
 
 export function AccountInfo() {
 	const { t } = useTranslation();
@@ -43,7 +45,9 @@ export function AccountInfo() {
 				{!userProfile ? <ProfileSetup /> : <ProfileInfo />}
 			</View>
 
-			<View className="mt-10 items-center pb-8">
+			<View className="mt-10 items-center pb-8 gap-4">
+				<InstallButton />
+				<AppStoreLink />
 				<Pressable
 					onPress={() => {
 						logout();

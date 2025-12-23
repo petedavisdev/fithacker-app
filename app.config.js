@@ -97,6 +97,16 @@ export default {
 			bundler: 'metro',
 			output: 'static',
 			favicon: './assets/images/favicon.png',
+			// PWA fields (Expo auto-generates manifest.json):
+			name: 'Fithacker',
+			shortName: 'Fithacker',
+			description: 'Simple, emoji-based exercise logging',
+			themeColor: '#111122',
+			backgroundColor: '#111122',
+			display: 'standalone',
+			orientation: 'portrait',
+			startUrl: '/',
+			scope: '/',
 		},
 		plugins: [
 			'expo-router',

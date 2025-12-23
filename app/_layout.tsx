@@ -6,7 +6,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Slot } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect, useState, createContext, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import {
 	Platform,
 	StatusBar,
@@ -20,14 +20,7 @@ import { runMigration } from '@/shared/supabase/migration';
 import { queryKeys } from '@/shared/queries/queryKeys';
 import { QueryErrorBoundary } from '@/shared/components/AErrorBoundary';
 import { useBackgroundSync } from '@/shared/queries/useBackgroundSync';
-
-const GradientContext = createContext<{
-	setViewingOther: (value: boolean) => void;
-}>({ setViewingOther: () => {} });
-
-export function useGradient() {
-	return useContext(GradientContext);
-}
+import { GradientContext } from './useGradient';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -56,6 +49,36 @@ if (Platform.OS !== 'web' || typeof window !== 'undefined') {
 		});
 }
 
+// Register service worker for PWA offline support (web only)
+if (Platform.OS === 'web' && typeof window !== 'undefined') {
+	if ('serviceWorker' in navigator) {
+		window.addEventListener('load', () => {
+			navigator.serviceWorker
+				.register('/sw.js')
+				.then((registration) => {
+					console.log('[SW] Registered:', registration.scope);
+
+					registration.addEventListener('updatefound', () => {
+						const newWorker = registration.installing;
+						if (newWorker) {
+							newWorker.addEventListener('statechange', () => {
+								if (
+									newWorker.state === 'installed' &&
+									navigator.serviceWorker.controller
+								) {
+									console.log('[SW] New version available');
+								}
+							});
+						}
+					});
+				})
+				.catch((error) => {
+					console.error('[SW] Registration failed:', error);
+				});
+		});
+	}
+}
+
 // Background sync hook - must be inside QueryClientProvider
 // Syncs on app open, foreground, and when navigating with pending changes
 function InitBackgroundSync() {
@@ -74,7 +97,7 @@ export default function RootLayout() {
 
 	const [day, setDay] = useState<number>(new Date().getDate());
 	const [viewingOther, setViewingOther] = useState(false);
-	const gradientColor = viewingOther ? '#211' : '#112';
+	const gradientColor = viewingOther ? '#200616' : '#112';
 
 	useEffect(() => {
 		i18nReady.then(() => {
