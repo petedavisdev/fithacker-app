@@ -23,38 +23,40 @@ export function ShareableWeek(props: ShareableWeekProps) {
 				alignItems: 'center',
 			}}
 		>
-			<View className="flex-row">
-				<Text className="font-mono text-xl text-yellow-500">FIT</Text>
-				<Text className="font-mono text-xl text-cyan-500">HACKER</Text>
-			</View>
+			<View className="gap-4 items-center" style={{ transform: [{ scale: 1.3 }] }}>
+				<View className="flex-row">
+					<Text className="font-mono text-xl text-yellow-500">FIT</Text>
+					<Text className="font-mono text-xl text-cyan-500">HACKER</Text>
+				</View>
 
-			<View className="h-12">
-				{props.username && (
-					<Text className="font-mono text-2xl text-pink-400 text-center">
-						{props.username}
-					</Text>
-				)}
-			</View>
+				<View className="h-12">
+					{props.username && (
+						<Text className="font-mono text-2xl text-pink-400 text-center">
+							{props.username}
+						</Text>
+					)}
+				</View>
 
-			<View className="flex-row">
-				{Object.entries(props.weekData.days).map(([date, exercises]) => (
-					<ShareableChartDay date={date} exercises={exercises} key={date} />
-				))}
-			</View>
+				<View className="flex-row">
+					{Object.entries(props.weekData.days).map(([date, exercises]) => (
+						<ShareableChartDay date={date} exercises={exercises} key={date} />
+					))}
+				</View>
 
-			<Text className="text-cyan-500 text-2xl font-mono text-center">
-				{weekText}
-			</Text>
-
-			<View className="flex-row items-center gap-2">
-				<Text className="text-yellow-500 text-7xl font-extralight font-mono">
-					{props.weekData.total}
+				<Text className="text-cyan-500 text-2xl font-mono text-center">
+					{weekText}
 				</Text>
-				{props.weekData.badges.length > 0 && (
-					<Text className="text-yellow-500 text-6xl font-extralight font-mono">
-						{props.weekData.badges.join('')}
+
+				<View className="flex-row items-center gap-2">
+					<Text className="text-yellow-500 text-7xl font-extralight font-mono">
+						{props.weekData.total}
 					</Text>
-				)}
+					{props.weekData.badges.length > 0 && (
+						<Text className="text-yellow-500 text-6xl font-extralight font-mono">
+							{props.weekData.badges.join('')}
+						</Text>
+					)}
+				</View>
 			</View>
 		</LinearGradient>
 	);

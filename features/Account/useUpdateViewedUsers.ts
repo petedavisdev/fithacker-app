@@ -51,6 +51,10 @@ export function useUpdateViewedUsers() {
 		},
 		onSuccess: (data) => {
 			queryClient.setQueryData(queryKeys.profiles.own, data);
+			// Invalidate to ensure UI updates
+			queryClient.invalidateQueries({
+				queryKey: queryKeys.profiles.own,
+			});
 		},
 		networkMode: 'online',
 	});

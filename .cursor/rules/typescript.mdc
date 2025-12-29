@@ -18,6 +18,7 @@ alwaysApply: false
 - Export types alongside data from constant files (e.g., `EXERCISES.ts` exports both `EXERCISES` and `Exercise`)
 - Use `Record<string, T>` for object maps with string keys
 - Props interfaces: Use `[ComponentName]Props` naming pattern
+- Boolean coercion: Use `!!value` instead of `Boolean(value)`
 
 ## Type Examples
 

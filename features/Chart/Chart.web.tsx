@@ -1,13 +1,7 @@
 import { useEffect, useRef } from 'react';
-import { useLocalSearchParams } from 'expo-router';
-import { getChartData } from './getChartData';
 import { ChartWeek } from './ChartWeek';
-import { filterExerciseLog } from '@/shared/utils/filterExerciseLog';
-import {
-	type ExerciseLog,
-	type Exercise,
-	URL_PARAMS,
-} from '@/shared/utils/constants';
+import { useChart } from './useChart';
+import type { ExerciseLog } from '@/shared/utils/constants';
 
 type ChartProps = {
 	readOnly: boolean;
@@ -16,8 +10,7 @@ type ChartProps = {
 };
 
 export function Chart(props: ChartProps) {
-	const params = useLocalSearchParams<{ [URL_PARAMS.FILTER]?: string }>();
-	const filter = params[URL_PARAMS.FILTER] as Exercise | undefined;
+	const data = useChart(props);
 	const scrollContainerRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -31,17 +24,11 @@ export function Chart(props: ChartProps) {
 		}
 	}, [props.exerciseLog]);
 
-	if (!props.exerciseLog) {
+	if (!data) {
 		return null;
 	}
 
-	const filteredLog =
-		filter && props.exerciseLog
-			? filterExerciseLog(props.exerciseLog, filter)
-			: props.exerciseLog;
-
-	const chartData = getChartData(filteredLog);
-	const reversedData = [...chartData].reverse();
+	const reversedData = [...data.chartData].reverse();
 
 	return (
 		<div
@@ -65,6 +52,7 @@ export function Chart(props: ChartProps) {
 							weekData={weekData}
 							readOnly={props.readOnly}
 							onBadgePress={props.onBadgePress}
+							indicatorDate={data.indicatorDate}
 						/>
 					</div>
 				);

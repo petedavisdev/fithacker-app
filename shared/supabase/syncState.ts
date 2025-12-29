@@ -27,6 +27,11 @@ export async function clearSyncState(): Promise<void> {
 	await AsyncStorage.setItem(STORAGE_KEYS.EXERCISE_LOG_PENDING_SYNC, '{}');
 }
 
+export async function clearExerciseLog(): Promise<void> {
+	// Called on sign-out - set to empty, don't remove key (preserves migration state)
+	await AsyncStorage.setItem(STORAGE_KEYS.EXERCISE_LOG, '{}');
+}
+
 export async function hasPendingSyncKey(): Promise<boolean> {
 	// Check if migration has been done (key exists)
 	const value = await AsyncStorage.getItem(

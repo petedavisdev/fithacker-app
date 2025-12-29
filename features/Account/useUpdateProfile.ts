@@ -34,6 +34,24 @@ export function useUpdateProfile() {
 		},
 		onSuccess: (data) => {
 			queryClient.setQueryData(queryKeys.profiles.own, data);
+			// Invalidate related queries to ensure UI updates
+			queryClient.invalidateQueries({
+				queryKey: queryKeys.profiles.own,
+			});
+			// Invalidate public profile queries that might be cached
+			if (data?.user_id) {
+				queryClient.invalidateQueries({
+					queryKey: queryKeys.profiles.public(data.user_id),
+				});
+			}
+			// Invalidate search queries since username changed
+			queryClient.invalidateQueries({
+				queryKey: ['profiles', 'search'],
+			});
+			// Invalidate batch queries that might include this user
+			queryClient.invalidateQueries({
+				queryKey: ['profiles', 'batch'],
+			});
 		},
 		networkMode: 'online',
 	});

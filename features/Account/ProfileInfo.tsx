@@ -5,6 +5,7 @@ import { useUserProfile } from './useUserProfile';
 import { UserSearch } from './UserSearch';
 import { RecentlyViewed } from './RecentlyViewed';
 import { UsernameInput } from './UsernameInput';
+import { AButton } from '@/shared/components/AButton';
 import * as Clipboard from 'expo-clipboard';
 import { useState } from 'react';
 import { useIsOnline } from '@/shared/queries/useNetworkStatus';
@@ -50,6 +51,7 @@ export function ProfileInfo() {
 							<UsernameInput
 								mode="update"
 								initialUsername={username}
+								autoFocus={true}
 								onSuccess={() => {
 									setIsEditingUsername(false);
 								}}
@@ -60,19 +62,30 @@ export function ProfileInfo() {
 							<Text className="font-mono text-pink-400 text-lg">
 								{username}
 							</Text>
-							<Pressable
+							<AButton
 								onPress={() => {
 									setIsEditingUsername(true);
 								}}
+								size="sm"
+								color="pink"
 							>
-								<Text className="font-mono text-cyan-400 text-lg">✏️</Text>
-							</Pressable>
+								✏️
+							</AButton>
 						</View>
 					)}
 
 					<View className="flex-row gap-4 mb-6">
 						<Pressable onPress={copyUsername}>
-							<View className="px-4 py-2 items-center justify-center border-2 border-yellow-500 rounded-full shadow shadow-yellow-500">
+							<View
+								className="px-4 py-2 items-center justify-center border-2 border-yellow-500 rounded-full"
+								style={{
+									shadowColor: '#eab308',
+									shadowOffset: { width: 0, height: 2 },
+									shadowOpacity: 0.25,
+									shadowRadius: 3.84,
+									elevation: 5,
+								}}
+							>
 								<Text className="text-sm text-yellow-400 font-mono text-balance text-center">
 									{copied === 'username'
 										? t('_@.copied')
@@ -82,7 +95,16 @@ export function ProfileInfo() {
 						</Pressable>
 
 						<Pressable onPress={copyLink}>
-							<View className="px-4 py-2 items-center justify-center border-2 border-yellow-500 rounded-full shadow shadow-yellow-500">
+							<View
+								className="px-4 py-2 items-center justify-center border-2 border-yellow-500 rounded-full"
+								style={{
+									shadowColor: '#eab308',
+									shadowOffset: { width: 0, height: 2 },
+									shadowOpacity: 0.25,
+									shadowRadius: 3.84,
+									elevation: 5,
+								}}
+							>
 								<Text className="text-sm text-yellow-400 font-mono text-balance text-center">
 									{copied === 'link' ? t('_@.copied') : t('_@.copyLink')}
 								</Text>

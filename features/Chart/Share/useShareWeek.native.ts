@@ -20,6 +20,10 @@ export function useShareWeek() {
 				throw error;
 			}
 
+			// Wait for view to fully render before capturing
+			// This ensures fonts, styles, and layout are complete
+			await new Promise((resolve) => setTimeout(resolve, 300));
+
 			console.log('Capturing view with ViewShot...');
 			const uri = await viewShotRef.current.capture();
 			console.log('Capture result:', uri);

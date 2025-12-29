@@ -7,8 +7,6 @@ import { usePendingSync } from '@/shared/queries/usePendingSync';
 import { useUserProfile } from './useUserProfile';
 import { ProfileInfo } from './ProfileInfo';
 import { ProfileSetup } from './ProfileSetup';
-import { InstallButton } from './InstallButton';
-import { AppStoreLink } from './AppStoreLink';
 
 export function AccountInfo() {
 	const { t } = useTranslation();
@@ -23,7 +21,7 @@ export function AccountInfo() {
 
 	return (
 		<View className="flex-1 items-center p-4">
-			<View className="w-full items-center pt-8">
+			<View className="w-full items-center pt-8 mb-8">
 				<Text className="font-mono text-cyan-400 text-2xl font-bold text-center">
 					{t('_@.loggedInAs', { email: userEmail })}
 				</Text>
@@ -45,26 +43,31 @@ export function AccountInfo() {
 				{!userProfile ? <ProfileSetup /> : <ProfileInfo />}
 			</View>
 
-			<View className="mt-10 items-center pb-8 gap-4">
-				<InstallButton />
-				<AppStoreLink />
-				<Pressable
-					onPress={() => {
-						logout();
+		<View className="mt-10 items-center pb-8">
+			<Pressable
+				onPress={() => {
+					logout();
+				}}
+				disabled={isLoggingOut}
+			>
+				<View
+					className={`px-4 py-2 items-center justify-center border-2 border-pink-500 rounded-full ${
+						isLoggingOut ? 'opacity-35' : ''
+					}`}
+					style={{
+						shadowColor: '#ec4899',
+						shadowOffset: { width: 0, height: 2 },
+						shadowOpacity: 0.25,
+						shadowRadius: 3.84,
+						elevation: 5,
 					}}
-					disabled={isLoggingOut}
 				>
-					<View
-						className={`px-4 py-2 items-center justify-center border-2 border-pink-500 rounded-full shadow shadow-pink-500 ${
-							isLoggingOut ? 'opacity-35' : ''
-						}`}
-					>
-						<Text className="text-sm text-pink-400 font-mono text-balance text-center">
-							{isLoggingOut ? '⏳' : '🚪'} {t('_@.signOut')}
-						</Text>
-					</View>
-				</Pressable>
-			</View>
+					<Text className="text-sm text-pink-400 font-mono text-balance text-center">
+						{isLoggingOut ? '⏳' : '🚪'} {t('_@.signOut')}
+					</Text>
+				</View>
+			</Pressable>
+		</View>
 		</View>
 	);
 }

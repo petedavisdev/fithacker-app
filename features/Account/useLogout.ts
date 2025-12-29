@@ -1,10 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { clearSyncState } from '@/shared/supabase/syncState';
+import { useRouter } from 'expo-router';
+import { clearSyncState, clearExerciseLog } from '@/shared/supabase/syncState';
 import { signOut } from './authHelpers';
-import { queryKeys } from '@/shared/queries/queryKeys';
 
 export function useLogout() {
 	const queryClient = useQueryClient();
+	const router = useRouter();
 
 	const {
 		mutate: logout,
@@ -14,10 +15,13 @@ export function useLogout() {
 		mutationFn: async () => {
 			await signOut();
 			await clearSyncState();
+			await clearExerciseLog();
 		},
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: queryKeys.auth.session });
-			queryClient.invalidateQueries({ queryKey: queryKeys.pendingSync });
+			// Clear ALL React Query cache to remove disabled query data
+			queryClient.clear();
+			// Navigate to account page to clear URL parameters
+			router.replace('/account');
 		},
 	});
 

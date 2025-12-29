@@ -34,6 +34,16 @@ export function useCreateProfile() {
 		},
 		onSuccess: (data) => {
 			queryClient.setQueryData(queryKeys.profiles.own, data);
+			// Invalidate related queries to ensure UI updates
+			queryClient.invalidateQueries({
+				queryKey: queryKeys.profiles.own,
+			});
+			// Invalidate public profile queries that might be cached
+			if (data?.user_id) {
+				queryClient.invalidateQueries({
+					queryKey: queryKeys.profiles.public(data.user_id),
+				});
+			}
 		},
 		networkMode: 'online',
 	});

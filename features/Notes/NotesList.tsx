@@ -1,0 +1,107 @@
+import { View, Text, Pressable } from 'react-native';
+import { Link, useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
+import type { NotesDay } from './getNotesData';
+import { NotesItem } from './NotesItem';
+import type { Exercise } from '@/shared/utils/constants';
+import { URL_PARAMS } from '@/shared/utils/constants';
+
+type NotesListProps = {
+	data: NotesDay[];
+	searchQuery?: string;
+	filterExercise?: Exercise;
+};
+
+export function NotesList(props: NotesListProps) {
+	const { t } = useTranslation();
+	const router = useRouter();
+	const { searchQuery, filterExercise, data } = props;
+
+	if (data.length === 0) {
+		const hasFilter = !!filterExercise;
+		const hasSearch = !!searchQuery;
+		let message: string;
+		if (hasFilter && hasSearch) {
+			message = t('_@.noNotesFoundWithFilter', {
+				filter: filterExercise,
+				searchTerm: searchQuery,
+			});
+		} else if (hasSearch) {
+			message = t('_@.noNotesFoundWithoutFilter', { searchTerm: searchQuery });
+		} else if (hasFilter) {
+			message = t('_@.noNotesFoundFilterOnly', { filter: filterExercise });
+		} else {
+			message = t('_@.noResultsFound');
+		}
+
+		function handleClear() {
+			const params: Record<string, string | undefined> = {};
+			if (hasSearch) {
+				params[URL_PARAMS.SEARCH] = undefined;
+			}
+			if (hasFilter) {
+				params[URL_PARAMS.FILTER] = undefined;
+			}
+			router.setParams(params);
+		}
+
+		return (
+			<View className="flex-1 items-center justify-center p-8 gap-4">
+				<Text className="text-slate-400 font-mono text-center">
+					{message}
+				</Text>
+				{(hasSearch || hasFilter) && (
+					<Pressable onPress={handleClear}>
+						<View
+							className="px-4 py-2 items-center justify-center border-2 border-pink-500 rounded-full"
+							style={{
+								shadowColor: '#ec4899',
+								shadowOffset: { width: 0, height: 2 },
+								shadowOpacity: 0.25,
+								shadowRadius: 3.84,
+								elevation: 5,
+							}}
+						>
+							<Text className="text-sm text-pink-400 font-mono text-balance text-center">
+								{hasSearch && hasFilter
+									? t('_@.clearSearchAndFilter')
+									: hasSearch
+										? t('_@.clearSearch')
+										: t('_@.clearFilter')}
+							</Text>
+						</View>
+					</Pressable>
+				)}
+			</View>
+		);
+	}
+
+	return (
+		<View className="flex-1">
+			{props.data.map((day) => (
+				<View key={day.date} className="py-2">
+					<View className="flex-row items-center">
+						<Link href={`/?date=${day.date}`} asChild>
+							<Pressable>
+								<View className="flex items-start justify-center border-2 bg-bg rounded-full border-cyan-600 px-4 py-2">
+									<Text className="text-cyan-400 font-mono text-xs">
+										{t(day.dateText)}
+									</Text>
+								</View>
+							</Pressable>
+						</Link>
+					</View>
+					{day.exercises.map((exercise, index) => (
+						<NotesItem
+							key={`${day.date}-${exercise.exercise}-${index}`}
+							exercise={exercise.exercise}
+							note={exercise.note}
+							date={day.date}
+						/>
+					))}
+				</View>
+			))}
+		</View>
+	);
+}
+

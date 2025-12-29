@@ -17,12 +17,15 @@ export async function runMigration(): Promise<void> {
 	}
 
 	const exerciseLog = await getExerciseLog();
-	const now = new Date().toISOString();
 
 	if (Object.keys(exerciseLog).length > 0) {
 		// Migrate all existing dates to pending sync
 		for (const date of Object.keys(exerciseLog)) {
-			await addToPendingSync(date, now);
+			// Use end of day (23:59:59.999Z) as timestamp - assumes data was edited late in the day
+			// This prevents remote data from the same day (edited earlier) from overwriting local,
+			// but allows remote data from later days to win
+			const timestamp = new Date(date + 'T23:59:59.999Z').toISOString();
+			await addToPendingSync(date, timestamp);
 		}
 	} else {
 		// No exercise log, just initialize empty pending sync

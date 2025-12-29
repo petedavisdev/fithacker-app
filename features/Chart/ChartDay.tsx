@@ -9,6 +9,7 @@ type ChartDayProps = {
 	date: string;
 	exercises?: ExerciseDay;
 	readOnly?: boolean;
+	indicatorDate?: string;
 };
 
 export function ChartDay(props: ChartDayProps) {
@@ -30,13 +31,22 @@ export function ChartDay(props: ChartDayProps) {
 
 	const DATE_LINE_COLORS = {
 		future: 'bg-black',
-		tomorrow: 'bg-slate-700 shadow shadow-slate-700',
-		today: 'bg-pink-500 shadow shadow-pink-500',
-		weekend: 'bg-yellow-500 shadow shadow-yellow-500',
-		weekday: 'bg-cyan-500 shadow shadow-cyan-500',
+		tomorrow: 'bg-slate-700',
+		today: 'bg-pink-500',
+		weekend: 'bg-yellow-500',
+		weekday: 'bg-cyan-500',
+	};
+
+	const DATE_LINE_SHADOW_COLORS = {
+		future: undefined,
+		tomorrow: '#334155',
+		today: '#ec4899',
+		weekend: '#eab308',
+		weekday: '#06b6d4',
 	};
 
 	const dateLineColor = DATE_LINE_COLORS[dateInfo.category];
+	const dateLineShadowColor = DATE_LINE_SHADOW_COLORS[dateInfo.category];
 
 	const DATE_UNDERLINE_COLORS = {
 		future: '',
@@ -48,10 +58,12 @@ export function ChartDay(props: ChartDayProps) {
 
 	const dateUnderlineColor = DATE_UNDERLINE_COLORS[dateInfo.category];
 
-	return (
-		<Link href={`/?date=${props.date}` as Href} disabled={isDisabled}>
-			<View className="justify-end items-center h-96 gap-2">
-				{props.exercises?.map((exerciseItem, index) => {
+	const content = (
+		<View className="justify-end items-center h-96 gap-2">
+			{props.date === props.indicatorDate ? (
+				<Text className="text-yellow-500 text-4xl">👇</Text>
+			) : (
+				props.exercises?.map((exerciseItem, index) => {
 					const note = typeof exerciseItem !== 'string' && exerciseItem[1];
 					const exercise = note ? exerciseItem[0] : exerciseItem;
 
@@ -70,19 +82,42 @@ export function ChartDay(props: ChartDayProps) {
 							</Text>
 						</View>
 					);
-				})}
+				})
+			)}
 
-				{/* scale-x to remove gap in ios */}
-				<View className={`h-[2px] w-12 scale-x-[1.01] ${dateLineColor}`} />
+			{/* scale-x to remove gap in ios */}
+			<View
+				className={`h-[2px] w-12 scale-x-[1.01] ${dateLineColor}`}
+				style={
+					dateLineShadowColor
+						? {
+								shadowColor: dateLineShadowColor,
+								shadowOffset: { width: 0, height: 1 },
+								shadowOpacity: 0.3,
+								shadowRadius: 2,
+								elevation: 3,
+							}
+						: undefined
+				}
+			/>
 
-				<Text
-					className={`font-mono leading pb-0.5 border-b ${dateTextColor} ${
-						isDisabled ? 'border-transparent' : `${dateUnderlineColor}`
-					}`}
-				>
-					{t(`_day.${dateInfo.dayIndex}`).slice(0, 3)}
-				</Text>
-			</View>
+			<Text
+				className={`font-mono leading pb-0.5 border-b ${dateTextColor} ${
+					isDisabled ? 'border-transparent' : `${dateUnderlineColor}`
+				}`}
+			>
+				{t(`_day.${dateInfo.dayIndex}`).slice(0, 3)}
+			</Text>
+		</View>
+	);
+
+	if (props.readOnly || dateInfo.category === 'future') {
+		return content;
+	}
+
+	return (
+		<Link href={`/?date=${props.date}` as Href}>
+			{content}
 		</Link>
 	);
 }

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Text, TextInput, View } from 'react-native';
 import { AButton } from '@/shared/components/AButton';
@@ -11,11 +11,13 @@ type UsernameInputProps = {
 	mode: 'create' | 'update';
 	initialUsername?: string;
 	onSuccess?: () => void;
+	autoFocus?: boolean;
 };
 
 export function UsernameInput(props: UsernameInputProps) {
 	const { t } = useTranslation();
 	const router = useRouter();
+	const inputRef = useRef<TextInput>(null);
 	const [username, setUsername] = useState(props.initialUsername ?? '');
 	const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState(false);
 	const { createProfile, isCreatingProfile, errorCreateProfile } =
@@ -72,12 +74,31 @@ export function UsernameInput(props: UsernameInputProps) {
 		}
 	}, [hasAttemptedSubmit, isUsernameValid, username]);
 
+	// Auto-focus input when autoFocus prop is true
+	useEffect(() => {
+		if (props.autoFocus && inputRef.current) {
+			// Small delay to ensure the component is fully mounted
+			setTimeout(() => {
+				inputRef.current?.focus();
+			}, 100);
+		}
+	}, [props.autoFocus]);
+
 	function handleSubmit() {
 		if (isSubmitting) return;
 
 		setHasAttemptedSubmit(true);
 
 		if (isUsernameValid) {
+			// For update mode, skip if username hasn't changed
+			if (props.mode === 'update' && username === props.initialUsername) {
+				// Username hasn't changed, just call onSuccess to close the editor
+				if (props.onSuccess) {
+					props.onSuccess();
+				}
+				return;
+			}
+
 			if (props.mode === 'create') {
 				createProfile(
 					{ username },
@@ -100,6 +121,10 @@ export function UsernameInput(props: UsernameInputProps) {
 								props.onSuccess();
 							}
 						},
+						onError: (error) => {
+							// Error is already handled by the error state
+							console.error('Failed to update username:', error);
+						},
 					},
 				);
 			}
@@ -110,7 +135,8 @@ export function UsernameInput(props: UsernameInputProps) {
 		<View>
 			<View className="flex-row items-center gap-2">
 				<TextInput
-					className="text-yellow-400 font-mono border-y-2 border-b-yellow-500 border-t-transparent pb-3 pt-6 focus:text-pink-400 focus:border-b-pink-500 outline-none flex-1"
+					ref={inputRef}
+					className="text-yellow-400 font-mono border-y-2 border-b-yellow-500 border-t-transparent pt-4 pb-4 focus:text-pink-400 focus:border-b-pink-500 outline-none flex-1"
 					value={username}
 					onChangeText={(text) => {
 						setUsername(text);

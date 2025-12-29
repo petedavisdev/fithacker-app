@@ -3,31 +3,25 @@ import { Text, View } from 'react-native';
 import { AButton } from '@/shared/components/AButton';
 import { AModal } from '@/shared/components/AModal';
 import { HelpSuggestions } from './HelpSuggestions';
-import { Link, useRouter, usePathname } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import React from 'react';
 import { useIsLoggedIn } from '@/features/Account/useAuthSession';
 import { useIsOnline } from '@/shared/queries/useNetworkStatus';
 import { useUserProfile } from '@/features/Account/useUserProfile';
 
-type TheHeaderButtons = 'account' | 'help' | 'back';
+type TheHeaderButtons = 'account' | 'help' | 'back' | 'notes' | 'chart';
 
 type TheHeaderProps = {
 	buttonLeft?: TheHeaderButtons;
 	buttonRight?: TheHeaderButtons;
-	helpContent?: React.ReactNode;
-	customButtonLeft?: React.ReactNode;
-	customButtonRight?: React.ReactNode;
 };
 
 export function TheHeader(props: TheHeaderProps) {
 	const [isHelpOpen, setIsHelpOpen] = React.useState(false);
 	const router = useRouter();
-	const pathname = usePathname();
 	const loggedIn = useIsLoggedIn();
 	const isOnline = useIsOnline();
 	const { userProfile } = useUserProfile();
-
-	const isAccountPage = pathname === '/account';
 
 	function open() {
 		setIsHelpOpen(true);
@@ -55,11 +49,7 @@ export function TheHeader(props: TheHeaderProps) {
 
 	// Create buttons inside component to avoid stale closures
 	const headerButtons = {
-		account: isAccountPage ? (
-			<AButton onPress={handleBack} size="sm" color="pink">
-				👈
-			</AButton>
-		) : (
+		account: (
 			<AButton href="/account" size="sm">
 				{accountEmoji}
 			</AButton>
@@ -70,8 +60,18 @@ export function TheHeader(props: TheHeaderProps) {
 			</AButton>
 		),
 		back: (
-			<AButton onPress={handleBack} size="sm" color="pink">
+			<AButton onPress={handleBack} size="sm">
 				👈
+			</AButton>
+		),
+		notes: (
+			<AButton href="/notes" size="sm" color="cyan">
+				📝
+			</AButton>
+		),
+		chart: (
+			<AButton href="/chart" size="sm" color="cyan">
+				📊
 			</AButton>
 		),
 	};
@@ -80,8 +80,7 @@ export function TheHeader(props: TheHeaderProps) {
 		<View className="w-full flex-row justify-center p-4">
 			<View className="w-full max-w-96 flex-row justify-between">
 				<View className="h-10 w-10">
-					{props.customButtonLeft ||
-						(props.buttonLeft && headerButtons[props.buttonLeft])}
+					{props.buttonLeft && headerButtons[props.buttonLeft]}
 				</View>
 
 				<Link href="/" className="flex-row">
@@ -90,13 +89,12 @@ export function TheHeader(props: TheHeaderProps) {
 				</Link>
 
 				<View className="h-10 w-10">
-					{props.customButtonRight ||
-						(props.buttonRight && headerButtons[props.buttonRight])}
+					{props.buttonRight && headerButtons[props.buttonRight]}
 				</View>
 			</View>
 
 			<AModal isOpen={isHelpOpen} onClose={closeHelp}>
-				{props.helpContent || <HelpSuggestions />}
+				<HelpSuggestions />
 			</AModal>
 		</View>
 	);

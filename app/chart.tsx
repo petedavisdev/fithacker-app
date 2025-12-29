@@ -2,20 +2,19 @@ import { Chart as ChartComponent } from '../features/Chart/Chart';
 import { BadgesHelp } from '../features/Chart/BadgesHelp';
 import { TheFilter } from '@/shared/components/TheFilter';
 import { TheHeader } from '../features/TheHeader/TheHeader';
-import { AButton } from '@/shared/components/AButton';
 import { View, Text } from 'react-native';
 import { useExerciseLog } from '@/shared/queries/useExerciseLog';
 import { AModal } from '@/shared/components/AModal';
 import { useState, useEffect, useRef } from 'react';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { type Exercise, URL_PARAMS } from '@/shared/utils/constants';
+import { URL_PARAMS } from '@/shared/utils/constants';
 import { usePublicExerciseLog } from '@/shared/queries/usePublicExerciseLog';
 import { usePublicProfile } from '@/shared/queries/usePublicProfile';
 import { useAuthSession } from '@/features/Account/useAuthSession';
 import { useIsOnline } from '@/shared/queries/useNetworkStatus';
 import { useUserProfile } from '@/features/Account/useUserProfile';
 import { useUpdateViewedUsers } from '@/features/Account/useUpdateViewedUsers';
-import { useGradient } from './useGradient';
+import { useGradient } from '@/shared/hooks/useGradient';
 import { ChartNotFound } from '../features/Chart/ChartNotFound';
 
 export default function Chart() {
@@ -110,15 +109,12 @@ export default function Chart() {
 		);
 	}
 
-	const searchButton = !isViewingOtherUser ? (
-		<AButton href="/search" size="sm" color="cyan">
-			🔎
-		</AButton>
-	) : undefined;
-
 	return (
 		<>
-			<TheHeader buttonLeft="account" customButtonRight={searchButton} />
+			<TheHeader
+				buttonLeft="account"
+				buttonRight={!isViewingOtherUser ? 'notes' : 'chart'}
+			/>
 
 			<AModal
 				isOpen={isAchievementModalOpen}
@@ -129,8 +125,13 @@ export default function Chart() {
 
 			<View className="flex-1 items-center justify-center gap-10">
 				{isViewingOtherUser && publicProfile && (
-					<Text className="font-mono text-pink-400 text-xl mb-4">
+					<Text className="font-mono text-pink-400 text-2xl mb-4">
 						{publicProfile.username}
+					</Text>
+				)}
+				{!isViewingOtherUser && userProfile && (
+					<Text className="font-mono text-cyan-400 text-2xl mb-4">
+						{userProfile.username}
 					</Text>
 				)}
 				<ChartComponent

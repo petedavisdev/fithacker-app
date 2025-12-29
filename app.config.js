@@ -70,6 +70,7 @@ export default {
 					'zh-CN',
 				],
 				CFBundleDevelopmentRegion: 'en',
+				ITSAppUsesNonExemptEncryption: false,
 			},
 		},
 		android: {

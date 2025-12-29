@@ -58,18 +58,27 @@ export default function HomeScreen() {
 		<View className="flex-1 items-center gap-5">
 			<TheHeader
 				buttonLeft="account"
-				buttonRight={dateInfo.category === 'today' ? 'help' : undefined}
+				buttonRight={
+					dateInfo.category === 'today' || dateInfo.category === 'tomorrow'
+						? 'help'
+						: undefined
+				}
 			/>
 
-			<View className="w-96 px-4 flex flex-grow justify-center">
-				<Text
-					className={` text-cyan-300 text-2xl text-center text-balance font-mono first-letter:uppercase ${dateClassName}`}
-				>
-					{date ? t(dateInfo.text) : t('_.whatExerciseToday')}
-				</Text>
-			</View>
-
-			<KeyboardAwareScrollView keyboardOpeningTime={0}>
+			<KeyboardAwareScrollView
+				keyboardOpeningTime={0}
+				enableOnAndroid={true}
+				enableAutomaticScroll={true}
+				extraScrollHeight={20}
+				contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
+			>
+				<View className="w-96 px-4 pb-5">
+					<Text
+						className={` text-cyan-300 text-2xl text-center text-balance font-mono first-letter:uppercase ${dateClassName}`}
+					>
+						{date ? t(dateInfo.text) : t('_.whatExerciseToday')}
+					</Text>
+				</View>
 				<Checklist />
 			</KeyboardAwareScrollView>
 

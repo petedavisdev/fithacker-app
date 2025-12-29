@@ -10,8 +10,14 @@ export function useAuthSession() {
 	useEffect(() => {
 		const {
 			data: { subscription },
-		} = supabase.auth.onAuthStateChange((_event, session) => {
-			queryClient.setQueryData(queryKeys.auth.session, session ?? null);
+		} = supabase.auth.onAuthStateChange((event, session) => {
+			// Handle SIGNED_OUT events (e.g., when refresh token is invalid)
+			if (event === 'SIGNED_OUT' || !session) {
+				queryClient.setQueryData(queryKeys.auth.session, null);
+				return;
+			}
+
+			queryClient.setQueryData(queryKeys.auth.session, session);
 			if (session?.user) {
 				queryClient.invalidateQueries({ queryKey: queryKeys.exerciseLog });
 			}

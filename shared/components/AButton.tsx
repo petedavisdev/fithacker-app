@@ -18,16 +18,30 @@ type AButtonProps = (LinkButtonProps | PressableButtonProps) & {
 };
 
 export function AButton(props: AButtonProps) {
+	const shadowColor =
+		props.color === 'pink'
+			? '#be185d'
+			: props.color === 'cyan'
+				? '#0e7490'
+				: '#a16207';
+
 	const button: JSX.Element = (
 		<View
-			className={`flex items-center justify-center border-2 bg-bg rounded-full shadow ${
+			className={`flex items-center justify-center border-2 bg-bg rounded-full ${
 				props.color === 'pink'
-					? 'border-pink-600 shadow-pink-700'
+					? 'border-pink-600'
 					: props.color === 'cyan'
-						? 'border-cyan-600 shadow-cyan-700'
-						: 'border-yellow-600 shadow-yellow-700'
+						? 'border-cyan-600'
+						: 'border-yellow-600'
 			} ${props.size === 'sm' ? 'w-10 h-10' : 'w-20 h-20'}
 			}`}
+			style={{
+				shadowColor,
+				shadowOffset: { width: 0, height: 2 },
+				shadowOpacity: 0.25,
+				shadowRadius: 3.84,
+				elevation: 5,
+			}}
 		>
 			<Text
 				className={`text-2xl  ${

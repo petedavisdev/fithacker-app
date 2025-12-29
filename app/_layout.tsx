@@ -20,7 +20,9 @@ import { runMigration } from '@/shared/supabase/migration';
 import { queryKeys } from '@/shared/queries/queryKeys';
 import { QueryErrorBoundary } from '@/shared/components/AErrorBoundary';
 import { useBackgroundSync } from '@/shared/queries/useBackgroundSync';
-import { GradientContext } from './useGradient';
+import { GradientContext } from '@/shared/hooks/useGradient';
+import { LogoutModal } from '@/features/Account/LogoutModal';
+import { AutoInstallPrompt } from '@/features/Account/AutoInstallPrompt';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -137,6 +139,8 @@ export default function RootLayout() {
 					<QueryErrorBoundary>
 						<GradientContext.Provider value={{ setViewingOther }}>
 							<InitBackgroundSync />
+							<LogoutModal />
+							<AutoInstallPrompt />
 							<LinearGradient
 								colors={['black', gradientColor, gradientColor, 'black']}
 								style={{
@@ -155,7 +159,7 @@ export default function RootLayout() {
 							</LinearGradient>
 						</GradientContext.Provider>
 					</QueryErrorBoundary>
-					<ReactQueryDevtools />
+					{Platform.OS === 'web' && <ReactQueryDevtools />}
 				</QueryClientProvider>
 			</QueryErrorBoundary>
 

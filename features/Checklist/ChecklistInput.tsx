@@ -50,9 +50,20 @@ export function ChecklistInput(props: ChecklistInputProps) {
 						props.isDisabled
 							? 'border-transparent'
 							: props.isChecked
-								? 'border-yellow-500 shadow shadow-yellow-700 bg-bg'
-								: 'border-cyan-500 shadow shadow-cyan-700'
+								? 'border-yellow-500 bg-bg'
+								: 'border-cyan-500'
 					}`}
+					style={
+						!props.isDisabled
+							? {
+									shadowColor: props.isChecked ? '#a16207' : '#0e7490',
+									shadowOffset: { width: 0, height: 2 },
+									shadowOpacity: 0.25,
+									shadowRadius: 3.84,
+									elevation: 5,
+								}
+							: undefined
+					}
 				>
 					{props.isChecked ? (
 						<Text>👍</Text>
@@ -67,7 +78,16 @@ export function ChecklistInput(props: ChecklistInputProps) {
 					)}
 
 					{props.isPriority && !props.isChecked && (
-						<View className="absolute -top-1 -right-1 w-4 h-4 bg-pink-500 rounded-full shadow border-2 border-black" />
+						<View
+							className="absolute -top-1 -right-1 w-4 h-4 bg-pink-500 rounded-full border-2 border-black"
+							style={{
+								shadowColor: '#ec4899',
+								shadowOffset: { width: 0, height: 1 },
+								shadowOpacity: 0.3,
+								shadowRadius: 2,
+								elevation: 3,
+							}}
+						/>
 					)}
 				</View>
 
@@ -88,7 +108,7 @@ export function ChecklistInput(props: ChecklistInputProps) {
 				<TextInput
 					placeholder={placeholder}
 					placeholderTextColor={'#64748b'}
-					className="text-yellow-400 font-mono border-y-2 border-b-yellow-500 border-t-transparent w-64 py-3  focus:text-pink-400 focus:border-b-pink-500 outline-none"
+					className="text-yellow-400 font-mono border-y-2 border-b-yellow-500 border-t-transparent w-64 pt-4 pb-4  focus:text-pink-400 focus:border-b-pink-500 outline-none"
 					defaultValue={props.note}
 					onChangeText={(value) => setNote(value || undefined)}
 					onFocus={() => setPlaceholder('')}

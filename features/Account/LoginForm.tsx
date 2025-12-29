@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, Text, TextInput, View } from 'react-native';
-import { AButton } from '@/shared/components/AButton';
 import { isAppleReviewEmail, type AuthError } from './authHelpers';
 import { useLogin } from './useLogin';
 import { useVerifyOtp } from './useVerifyOtp';
@@ -27,7 +26,7 @@ export function LoginForm() {
 				{t('_@.login')}
 			</Text>
 			<Text className="font-mono text-cyan-400 mt-2 text-center">
-				{t('_@.loginSubtitle')}
+				{t('_@.loginSubtitle')} 💻📲
 			</Text>
 
 			{step === 'email' && (
@@ -35,7 +34,7 @@ export function LoginForm() {
 					<TextInput
 						placeholder={emailPlaceholder}
 						placeholderTextColor={'#f472b6'}
-						className="text-yellow-400 font-mono border-y-2 border-b-yellow-500 border-t-transparent pb-3 pt-6 focus:text-pink-400 focus:border-b-pink-500 outline-none"
+						className="text-yellow-400 font-mono border-y-2 border-b-yellow-500 border-t-transparent pt-4 pb-4 focus:text-pink-400 focus:border-b-pink-500 outline-none"
 						value={email}
 						onChangeText={(text) => {
 							setEmail(text);
@@ -51,6 +50,8 @@ export function LoginForm() {
 							}
 						}}
 						keyboardType="email-address"
+						autoComplete="email"
+						textContentType="emailAddress"
 						autoCapitalize="none"
 						editable={!isLoggingIn}
 					/>
@@ -71,9 +72,16 @@ export function LoginForm() {
 							disabled={isLoggingIn}
 						>
 							<View
-								className={`min-h-20 max-w-60 p-6 items-center justify-center border-2 border-yellow-500 rounded-full shadow shadow-yellow-500 ${
+								className={`min-h-20 max-w-60 p-6 items-center justify-center border-2 border-yellow-500 rounded-full ${
 									isLoggingIn ? 'opacity-35' : ''
 								}`}
+								style={{
+									shadowColor: '#eab308',
+									shadowOffset: { width: 0, height: 2 },
+									shadowOpacity: 0.25,
+									shadowRadius: 3.84,
+									elevation: 5,
+								}}
 							>
 								<Text className="text-lg text-yellow-400 font-mono text-balance text-center">
 									{isLoggingIn
@@ -96,7 +104,7 @@ export function LoginForm() {
 							: t('_@.enterMagicNumber', { email })}
 					</Text>
 					<TextInput
-						className="text-lg text-yellow-400 font-mono border-y-2 border-b-yellow-500 border-t-transparent pb-3 pt-6 focus:text-pink-400 focus:border-b-pink-500 outline-none mt-4"
+						className="text-yellow-400 font-mono border-y-2 border-b-yellow-500 border-t-transparent pt-4 pb-4 focus:text-pink-400 focus:border-b-pink-500 outline-none mt-4"
 						value={token}
 						onChangeText={(text) => {
 							setToken(text);
@@ -113,7 +121,7 @@ export function LoginForm() {
 							{t(`auth.${error}`)}
 						</Text>
 					)}
-					<View className="mt-10 items-center">
+					<View className="mt-10 items-center gap-6">
 						<Pressable
 							onPress={() => {
 								verifyOtp({ email, token });
@@ -121,9 +129,16 @@ export function LoginForm() {
 							disabled={isVerifyingOtp}
 						>
 							<View
-								className={`min-h-20 max-w-60 p-6 items-center justify-center border-2 border-yellow-500 rounded-full shadow shadow-yellow-500 ${
+								className={`min-h-20 max-w-60 p-6 items-center justify-center border-2 border-yellow-500 rounded-full ${
 									isVerifyingOtp ? 'opacity-35' : ''
 								}`}
+								style={{
+									shadowColor: '#eab308',
+									shadowOffset: { width: 0, height: 2 },
+									shadowOpacity: 0.25,
+									shadowRadius: 3.84,
+									elevation: 5,
+								}}
 							>
 								<Text className="text-lg text-yellow-400 font-mono text-balance text-center">
 									{isVerifyingOtp
@@ -134,6 +149,27 @@ export function LoginForm() {
 								</Text>
 							</View>
 						</Pressable>
+
+						{!isAppleReview && (
+							<View className="items-center gap-3">
+								<Text className="font-mono text-cyan-400 text-center">
+									📨 {t('_@.checkInboxAndJunkMail')} 👀
+								</Text>
+								<Pressable
+									onPress={() => {
+										setToken('');
+										setStep('email');
+										resetVerifyOtp();
+										resetLogin();
+									}}
+									disabled={isVerifyingOtp}
+								>
+									<Text className="font-mono text-cyan-400 underline">
+										{t('_@.tryAgain')}
+									</Text>
+								</Pressable>
+							</View>
+						)}
 					</View>
 				</View>
 			)}

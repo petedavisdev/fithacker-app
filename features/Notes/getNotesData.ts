@@ -1,23 +1,23 @@
 import type { Exercise, ExerciseLog } from '@/shared/utils/constants';
 import { getDateInfo } from '@/shared/utils/dateInfo';
 
-export type SearchResultExercise = {
+export type NotesExercise = {
 	exercise: Exercise;
 	note?: string;
 };
 
-export type SearchResultDay = {
+export type NotesDay = {
 	date: string;
 	dateText: string;
-	exercises: SearchResultExercise[];
+	exercises: NotesExercise[];
 };
 
-export function getSearchData(
+export function getNotesData(
 	exerciseLog: ExerciseLog,
 	searchQuery?: string,
 	filterExercise?: Exercise,
-): SearchResultDay[] {
-	const results: SearchResultDay[] = [];
+): NotesDay[] {
+	const results: NotesDay[] = [];
 	const hasSearchQuery = !!searchQuery;
 
 	// Get all dates, sorted newest first
@@ -27,7 +27,7 @@ export function getSearchData(
 
 	for (const date of dates) {
 		const day = exerciseLog[date]!;
-		const exercises: SearchResultExercise[] = [];
+		const exercises: NotesExercise[] = [];
 
 		for (const item of day) {
 			const exercise = Array.isArray(item) ? item[0] : item;
@@ -63,3 +63,4 @@ export function getSearchData(
 
 	return results;
 }
+
