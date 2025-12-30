@@ -129,11 +129,6 @@ export default function Chart() {
 						{publicProfile.username}
 					</Text>
 				)}
-				{!isViewingOtherUser && userProfile && (
-					<Text className="font-mono text-cyan-400 text-2xl mb-4">
-						{userProfile.username}
-					</Text>
-				)}
 				<ChartComponent
 					readOnly={isViewingOtherUser}
 					exerciseLog={logToUse}

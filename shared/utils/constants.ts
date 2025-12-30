@@ -17,11 +17,9 @@ export const EXERCISE_PRIORITIES: Record<Exercise, number> = {
 export const STORAGE_KEYS = {
 	EXERCISE_LOG: 'exerciseLog',
 	EXERCISE_LOG_PENDING_SYNC: 'exerciseLogPendingSync',
-	LANGUAGE: 'language',
 } as const;
 
 export const TIMING = {
-	DEBOUNCE_MS: 500,
 	SEARCH_DEBOUNCE_MS: 300,
 	DAY_MS: 24 * 60 * 60 * 1000,
 	WEEK_MS: 7 * 24 * 60 * 60 * 1000,
@@ -34,6 +32,7 @@ export const LIMITS = {
 	USERNAME_MAX_LENGTH: 15, // Client-side limit (DB allows up to 30)
 	VIEWED_USERS_MAX: 100,
 	SEARCH_RESULTS_LIMIT: 20,
+	SUGGESTIONS_LIMIT: 10,
 } as const;
 
 export const USERNAME = {
@@ -52,6 +51,7 @@ export type Badge = (typeof BADGES)[keyof typeof BADGES];
 export const STALE_TIME = {
 	IMMEDIATE: 0,
 	BACKGROUND_SYNC: 30 * 1000,
+	PROFILE_QUERIES: 60 * 1000, // 1 minute for search, suggestions, and recently viewed
 } as const;
 
 export const DAYS = {

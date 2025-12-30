@@ -46,7 +46,7 @@ export function RecentlyViewed() {
 									}}
 									className="flex-1"
 								>
-									<Text className="font-mono text-cyan-400">{username}</Text>
+									<Text className="font-mono text-pink-400">{username}</Text>
 								</Pressable>
 								<Pressable
 									onPress={() => {

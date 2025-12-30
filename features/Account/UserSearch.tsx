@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, Text, TextInput, View } from 'react-native';
 import { useSearchUsers } from './useSearchUsers';
+import { useSuggestedProfiles } from './useSuggestedProfiles';
 import { useRouter } from 'expo-router';
 import { URL_PARAMS } from '@/shared/utils/constants';
 
@@ -12,6 +13,8 @@ export function UserSearch() {
 	const [placeholder, setPlaceholder] = useState(t('_@.searchUsers'));
 	const [isFocused, setIsFocused] = useState(false);
 	const { searchResults, isLoadingSearch } = useSearchUsers(searchQuery);
+	const { suggestedProfiles, isLoadingSuggestedProfiles } =
+		useSuggestedProfiles();
 
 	function handleClear() {
 		setSearchQuery('');
@@ -56,7 +59,7 @@ export function UserSearch() {
 					</Pressable>
 				)}
 			</View>
-			{searchQuery.length > 0 && (
+			{searchQuery.length > 0 ? (
 				<View className="mt-4">
 					{isLoadingSearch ? (
 						<Text className="font-mono text-cyan-400 text-center">...</Text>
@@ -74,7 +77,7 @@ export function UserSearch() {
 								}}
 							>
 								<View className="py-2">
-									<Text className="font-mono text-cyan-400">
+									<Text className="font-mono text-pink-400">
 										{profile.username}
 									</Text>
 								</View>
@@ -82,6 +85,36 @@ export function UserSearch() {
 						))
 					)}
 				</View>
+			) : (
+				suggestedProfiles.length > 0 && (
+					<View className="mt-4">
+						{isLoadingSuggestedProfiles ? (
+							<Text className="font-mono text-cyan-400 text-center">...</Text>
+						) : (
+							<>
+								<Text className="font-mono text-cyan-400 text-lg mb-2">
+									{t('_@.suggestions')}
+								</Text>
+								{suggestedProfiles.map((profile) => (
+									<Pressable
+										key={profile.user_id}
+										onPress={() => {
+											router.push(
+												`/chart?${URL_PARAMS.USER}=${profile.user_id}`
+											);
+										}}
+									>
+										<View className="py-2">
+											<Text className="font-mono text-pink-400">
+												{profile.username}
+											</Text>
+										</View>
+									</Pressable>
+								))}
+							</>
+						)}
+					</View>
+				)
 			)}
 		</View>
 	);

@@ -4,6 +4,7 @@ import { queryKeys } from '@/shared/queries/queryKeys';
 import { useAuthSession } from './useAuthSession';
 import { useUserProfile } from './useUserProfile';
 import { LIMITS } from '@/shared/utils/constants';
+import i18n from '@/shared/i18n';
 
 type UpdateViewedUsersParams =
 	| { action: 'add'; userId: string }
@@ -39,9 +40,14 @@ export function useUpdateViewedUsers() {
 				newViewedIds = currentViewedIds.filter((id) => id !== params.userId);
 			}
 
+			const language = i18n.language || null;
+
 			const { data, error } = await supabase
 				.from('user_profiles')
-				.update({ viewed_user_ids: newViewedIds })
+				.update({ 
+					viewed_user_ids: newViewedIds,
+					language,
+				})
 				.eq('user_id', userId)
 				.select()
 				.single();
@@ -54,6 +60,10 @@ export function useUpdateViewedUsers() {
 			// Invalidate to ensure UI updates
 			queryClient.invalidateQueries({
 				queryKey: queryKeys.profiles.own,
+			});
+			// Invalidate batch queries (recently viewed) since viewed_user_ids changed
+			queryClient.invalidateQueries({
+				queryKey: ['profiles', 'batch'],
 			});
 		},
 		networkMode: 'online',

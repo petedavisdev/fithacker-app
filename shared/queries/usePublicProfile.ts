@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/shared/supabase/client';
 import { queryKeys } from './queryKeys';
+import { STALE_TIME } from '@/shared/utils/constants';
 
 export function usePublicProfile(userId: string | null) {
 	const {
@@ -30,7 +31,7 @@ export function usePublicProfile(userId: string | null) {
 		},
 		enabled: !!userId,
 		networkMode: 'online',
-		staleTime: 0,
+		staleTime: STALE_TIME.PROFILE_QUERIES,
 	});
 
 	return {

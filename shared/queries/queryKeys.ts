@@ -16,6 +16,7 @@ export const queryKeys = {
 		batch: (userIds: string[]) =>
 			['profiles', 'batch', ...userIds.sort()] as const,
 		search: (query: string) => ['profiles', 'search', query] as const,
+		suggested: ['profiles', 'suggested'] as const,
 	},
 	publicExerciseLog: (userId: string) => ['publicExerciseLog', userId] as const,
 };

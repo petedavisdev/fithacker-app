@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/shared/supabase/client';
 import { queryKeys } from '@/shared/queries/queryKeys';
 import { useAuthSession } from './useAuthSession';
+import i18n from '@/shared/i18n';
 
 type CreateProfileParams = {
 	username: string;
@@ -20,11 +21,14 @@ export function useCreateProfile() {
 		mutationFn: async (params: CreateProfileParams) => {
 			if (!userId) throw new Error('User not authenticated');
 
+			const language = i18n.language || null;
+
 			const { data, error } = await supabase
 				.from('user_profiles')
 				.insert({
 					user_id: userId,
 					username: params.username,
+					language,
 				})
 				.select()
 				.single();
@@ -44,6 +48,10 @@ export function useCreateProfile() {
 					queryKey: queryKeys.profiles.public(data.user_id),
 				});
 			}
+			// Invalidate suggestions since a new user might appear
+			queryClient.invalidateQueries({
+				queryKey: queryKeys.profiles.suggested,
+			});
 		},
 		networkMode: 'online',
 	});

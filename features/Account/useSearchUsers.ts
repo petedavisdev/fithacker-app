@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/shared/supabase/client';
 import { queryKeys } from '@/shared/queries/queryKeys';
 import { useState, useEffect } from 'react';
-import { TIMING, LIMITS } from '@/shared/utils/constants';
+import { TIMING, LIMITS, STALE_TIME } from '@/shared/utils/constants';
 import { useAuthSession } from './useAuthSession';
 
 export function useSearchUsers(searchQuery: string) {
@@ -46,7 +46,7 @@ export function useSearchUsers(searchQuery: string) {
 		},
 		enabled: debouncedQuery.length >= 1,
 		networkMode: 'online',
-		staleTime: 0,
+		staleTime: STALE_TIME.PROFILE_QUERIES,
 	});
 
 	return {

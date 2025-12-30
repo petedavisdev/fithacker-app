@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/shared/supabase/client';
 import { queryKeys } from './queryKeys';
+import { STALE_TIME } from '@/shared/utils/constants';
 
 export function useBatchProfiles(userIds: string[]) {
 	const {
@@ -22,7 +23,7 @@ export function useBatchProfiles(userIds: string[]) {
 		},
 		enabled: userIds.length > 0,
 		networkMode: 'online',
-		staleTime: 0,
+		staleTime: STALE_TIME.PROFILE_QUERIES,
 	});
 
 	return {

@@ -45,7 +45,7 @@ export function TheHeader(props: TheHeaderProps) {
 			? '😎'
 			: loggedIn
 				? '😀'
-				: '👤';
+				: '👋';
 
 	// Create buttons inside component to avoid stale closures
 	const headerButtons = {

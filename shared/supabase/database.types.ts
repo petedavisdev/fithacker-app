@@ -41,18 +41,21 @@ export type Database = {
 					user_id: string;
 					username: string;
 					viewed_user_ids: string[] | null;
+					language: string | null;
 				};
 				Insert: {
 					updated_at?: string;
 					user_id: string;
 					username: string;
 					viewed_user_ids?: string[] | null;
+					language?: string | null;
 				};
 				Update: {
 					updated_at?: string;
 					user_id?: string;
 					username?: string;
 					viewed_user_ids?: string[] | null;
+					language?: string | null;
 				};
 				Relationships: [];
 			};

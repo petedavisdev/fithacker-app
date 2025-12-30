@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/shared/supabase/client';
 import { queryKeys } from '@/shared/queries/queryKeys';
 import { useAuthSession } from './useAuthSession';
+import i18n from '@/shared/i18n';
 
 type UpdateProfileParams = {
 	username: string;
@@ -20,10 +21,13 @@ export function useUpdateProfile() {
 		mutationFn: async (params: UpdateProfileParams) => {
 			if (!userId) throw new Error('User not authenticated');
 
+			const language = i18n.language || null;
+
 			const { data, error } = await supabase
 				.from('user_profiles')
 				.update({
 					username: params.username,
+					language,
 				})
 				.eq('user_id', userId)
 				.select()
@@ -51,6 +55,10 @@ export function useUpdateProfile() {
 			// Invalidate batch queries that might include this user
 			queryClient.invalidateQueries({
 				queryKey: ['profiles', 'batch'],
+			});
+			// Invalidate suggestions since updated_at and username changed
+			queryClient.invalidateQueries({
+				queryKey: queryKeys.profiles.suggested,
 			});
 		},
 		networkMode: 'online',
