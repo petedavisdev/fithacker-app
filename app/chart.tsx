@@ -68,7 +68,7 @@ export default function Chart() {
 	useEffect(() => {
 		if (shouldUpdateViewedUsers) {
 			hasUpdatedViewedRef.current = viewingUserId;
-			updateViewedUsers({ action: 'add', userId: viewingUserId });
+			updateViewedUsers({ userId: viewingUserId });
 		}
 
 		if (!isViewingOtherUser) {

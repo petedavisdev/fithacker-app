@@ -3,12 +3,9 @@ import { supabase } from '@/shared/supabase/client';
 import { queryKeys } from '@/shared/queries/queryKeys';
 import { useAuthSession } from './useAuthSession';
 import { useUserProfile } from './useUserProfile';
-import { LIMITS } from '@/shared/utils/constants';
 import i18n from '@/shared/i18n';
 
-type UpdateViewedUsersParams =
-	| { action: 'add'; userId: string }
-	| { action: 'remove'; userId: string };
+type UpdateViewedUsersParams = { userId: string };
 
 export function useUpdateViewedUsers() {
 	const queryClient = useQueryClient();
@@ -27,18 +24,11 @@ export function useUpdateViewedUsers() {
 
 			const currentViewedIds = userProfile.viewed_user_ids ?? [];
 
-			let newViewedIds: string[];
-
-			if (params.action === 'add') {
-				// Remove if exists, then add to start
-				newViewedIds = [
-					params.userId,
-					...currentViewedIds.filter((id) => id !== params.userId),
-				].slice(0, LIMITS.VIEWED_USERS_MAX);
-			} else {
-				// Remove the user_id
-				newViewedIds = currentViewedIds.filter((id) => id !== params.userId);
-			}
+			// Add to start, deduplicated
+			const newViewedIds = [
+				params.userId,
+				...currentViewedIds.filter((id) => id !== params.userId),
+			];
 
 			const language = i18n.language || null;
 

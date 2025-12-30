@@ -2,7 +2,6 @@ import { useTranslation } from 'react-i18next';
 import { Pressable, Text, View } from 'react-native';
 import { useBatchProfiles } from '@/shared/queries/useBatchProfiles';
 import { useUserProfile } from './useUserProfile';
-import { useUpdateViewedUsers } from './useUpdateViewedUsers';
 import { useRouter } from 'expo-router';
 import { URL_PARAMS } from '@/shared/utils/constants';
 
@@ -10,7 +9,6 @@ export function RecentlyViewed() {
 	const { t } = useTranslation();
 	const router = useRouter();
 	const { userProfile } = useUserProfile();
-	const { updateViewedUsers } = useUpdateViewedUsers();
 	const viewedUserIds = userProfile?.viewed_user_ids ?? [];
 	const { batchProfiles } = useBatchProfiles(viewedUserIds);
 
@@ -36,28 +34,15 @@ export function RecentlyViewed() {
 						if (!username) return null;
 
 						return (
-							<View
+							<Pressable
 								key={userId}
-								className="flex-row items-center justify-between py-2"
+								onPress={() => {
+									router.push(`/chart?${URL_PARAMS.USER}=${userId}`);
+								}}
+								className="py-2"
 							>
-								<Pressable
-									onPress={() => {
-										router.push(`/chart?${URL_PARAMS.USER}=${userId}`);
-									}}
-									className="flex-1"
-								>
-									<Text className="font-mono text-pink-400">{username}</Text>
-								</Pressable>
-								<Pressable
-									onPress={() => {
-										updateViewedUsers({ action: 'remove', userId });
-									}}
-								>
-									<Text className="font-mono text-pink-400 text-xl ml-4">
-										⊗
-									</Text>
-								</Pressable>
-							</View>
+								<Text className="font-mono text-pink-400">{username}</Text>
+							</Pressable>
 						);
 					})
 			)}
