@@ -47,7 +47,10 @@ export function SearchInput() {
 
 	return (
 		<View className="relative w-full">
-			<View className="absolute left-0 top-0 bottom-0 justify-center items-center" pointerEvents="none">
+			<View
+				className="absolute left-0 top-0 bottom-0 justify-center items-center"
+				pointerEvents="none"
+			>
 				<Text className="text-xl">🔎</Text>
 			</View>
 			<TextInput
@@ -70,4 +73,3 @@ export function SearchInput() {
 		</View>
 	);
 }
-

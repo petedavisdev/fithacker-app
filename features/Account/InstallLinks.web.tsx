@@ -5,11 +5,8 @@ import { usePromptInstall } from './usePromptInstall.web';
 
 export function InstallLinks() {
 	const { t } = useTranslation();
-	const {
-		promptInstall,
-		isPromptingInstall,
-		isInstallable,
-	} = usePromptInstall();
+	const { promptInstall, isPromptingInstall, isInstallable } =
+		usePromptInstall();
 
 	const userAgent = navigator.userAgent.toLowerCase();
 	const isAndroid = userAgent.includes('android');
@@ -43,7 +40,9 @@ export function InstallLinks() {
 					>
 						📱
 					</AButton>
-					<Text className="text-slate-400 text-xs text-center">Install App</Text>
+					<Text className="text-slate-400 text-xs text-center">
+						Install App
+					</Text>
 				</View>
 			)}
 

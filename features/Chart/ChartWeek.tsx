@@ -31,7 +31,8 @@ export function ChartWeek(props: ChartWeekProps) {
 	const today = new Date();
 	const isSunday = today.getDay() === 0;
 
-	const canShare = !props.readOnly && !isFiltered && (isLastWeek || (isThisWeek && isSunday));
+	const canShare =
+		!props.readOnly && !isFiltered && (isLastWeek || (isThisWeek && isSunday));
 
 	return (
 		<View className="justify-center items-end gap-2 ml-2">

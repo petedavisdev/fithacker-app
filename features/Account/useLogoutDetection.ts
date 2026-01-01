@@ -36,4 +36,3 @@ export function useLogoutDetection() {
 
 	return { wasLoggedOut, dismissLogout };
 }
-

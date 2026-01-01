@@ -28,9 +28,7 @@ export function useChart(props: UseChartProps) {
 
 	const isExerciseLogEmpty =
 		!filteredLog ||
-		Object.values(filteredLog).every(
-			(day) => !day || day.length === 0,
-		);
+		Object.values(filteredLog).every((day) => !day || day.length === 0);
 
 	const indicatorDate =
 		!props.readOnly && isExerciseLogEmpty && !filter ? getDate() : undefined;
@@ -42,8 +40,3 @@ export function useChart(props: UseChartProps) {
 		indicatorDate,
 	};
 }
-
-
-
-
-

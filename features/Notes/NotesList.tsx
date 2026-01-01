@@ -47,9 +47,7 @@ export function NotesList(props: NotesListProps) {
 
 		return (
 			<View className="flex-1 items-center justify-center p-8 gap-4">
-				<Text className="text-slate-400 font-mono text-center">
-					{message}
-				</Text>
+				<Text className="text-slate-400 font-mono text-center">{message}</Text>
 				{(hasSearch || hasFilter) && (
 					<Pressable onPress={handleClear}>
 						<View
@@ -104,4 +102,3 @@ export function NotesList(props: NotesListProps) {
 		</View>
 	);
 }
-

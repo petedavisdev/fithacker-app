@@ -23,7 +23,10 @@ export function ShareableWeek(props: ShareableWeekProps) {
 				alignItems: 'center',
 			}}
 		>
-			<View className="gap-4 items-center" style={{ transform: [{ scale: 1.3 }] }}>
+			<View
+				className="gap-4 items-center"
+				style={{ transform: [{ scale: 1.3 }] }}
+			>
 				<View className="flex-row">
 					<Text className="font-mono text-xl text-yellow-500">FIT</Text>
 					<Text className="font-mono text-xl text-cyan-500">HACKER</Text>

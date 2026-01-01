@@ -33,18 +33,17 @@ export function NotesItem(props: NotesItemProps) {
 				<Text className="text-2xl">{props.exercise}</Text>
 			</Pressable>
 
-		<TextInput
-			ref={inputRef}
-			placeholder={placeholder}
-			placeholderTextColor={'#64748b'}
-			className="text-yellow-400 font-mono border-y-2 border-b-transparent border-t-transparent flex-1 pt-4 pb-4 focus:text-pink-400 focus:border-b-pink-500 outline-none"
-			defaultValue={props.note}
-			onChangeText={(value) => setNote(value || undefined)}
-			onFocus={() => setPlaceholder('')}
-			onBlur={handleBlur}
-			maxLength={LIMITS.NOTE_MAX_LENGTH}
-		/>
+			<TextInput
+				ref={inputRef}
+				placeholder={placeholder}
+				placeholderTextColor={'#64748b'}
+				className="text-yellow-400 font-mono border-y-2 border-b-transparent border-t-transparent flex-1 pt-4 pb-4 focus:text-pink-400 focus:border-b-pink-500 outline-none"
+				defaultValue={props.note}
+				onChangeText={(value) => setNote(value || undefined)}
+				onFocus={() => setPlaceholder('')}
+				onBlur={handleBlur}
+				maxLength={LIMITS.NOTE_MAX_LENGTH}
+			/>
 		</View>
 	);
 }
-

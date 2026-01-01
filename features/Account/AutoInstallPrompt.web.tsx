@@ -8,11 +8,7 @@ export function AutoInstallPrompt() {
 	const hasPromptedRef = useRef(false);
 
 	useEffect(() => {
-		if (
-			hasPromptedRef.current ||
-			isLoadingExerciseLog ||
-			!isInstallable
-		) {
+		if (hasPromptedRef.current || isLoadingExerciseLog || !isInstallable) {
 			return;
 		}
 
@@ -27,9 +23,7 @@ export function AutoInstallPrompt() {
 		const isExerciseLogEmpty =
 			!exerciseLog ||
 			Object.keys(exerciseLog).length === 0 ||
-			Object.values(exerciseLog).every(
-				(day) => !day || day.length === 0,
-			);
+			Object.values(exerciseLog).every((day) => !day || day.length === 0);
 
 		if (isExerciseLogEmpty) {
 			hasPromptedRef.current = true;
@@ -42,4 +36,3 @@ export function AutoInstallPrompt() {
 
 	return null;
 }
-

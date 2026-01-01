@@ -43,31 +43,31 @@ export function AccountInfo() {
 				{!userProfile ? <ProfileSetup /> : <ProfileInfo />}
 			</View>
 
-		<View className="mt-10 items-center pb-8">
-			<Pressable
-				onPress={() => {
-					logout();
-				}}
-				disabled={isLoggingOut}
-			>
-				<View
-					className={`px-4 py-2 items-center justify-center border-2 border-pink-500 rounded-full ${
-						isLoggingOut ? 'opacity-35' : ''
-					}`}
-					style={{
-						shadowColor: '#ec4899',
-						shadowOffset: { width: 0, height: 2 },
-						shadowOpacity: 0.25,
-						shadowRadius: 3.84,
-						elevation: 5,
+			<View className="mt-10 items-center pb-8">
+				<Pressable
+					onPress={() => {
+						logout();
 					}}
+					disabled={isLoggingOut}
 				>
-					<Text className="text-sm text-pink-400 font-mono text-balance text-center">
-						{isLoggingOut ? '⏳' : '🚪'} {t('_@.signOut')}
-					</Text>
-				</View>
-			</Pressable>
-		</View>
+					<View
+						className={`px-4 py-2 items-center justify-center border-2 border-pink-500 rounded-full ${
+							isLoggingOut ? 'opacity-35' : ''
+						}`}
+						style={{
+							shadowColor: '#ec4899',
+							shadowOffset: { width: 0, height: 2 },
+							shadowOpacity: 0.25,
+							shadowRadius: 3.84,
+							elevation: 5,
+						}}
+					>
+						<Text className="text-sm text-pink-400 font-mono text-balance text-center">
+							{isLoggingOut ? '⏳' : '🚪'} {t('_@.signOut')}
+						</Text>
+					</View>
+				</Pressable>
+			</View>
 		</View>
 	);
 }

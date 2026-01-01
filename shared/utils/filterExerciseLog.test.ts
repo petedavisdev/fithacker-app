@@ -25,7 +25,3 @@ describe('filterExerciseLog', () => {
 		expect(result).toEqual(expected);
 	});
 });
-
-
-
-

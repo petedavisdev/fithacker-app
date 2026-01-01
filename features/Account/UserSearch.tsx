@@ -100,7 +100,7 @@ export function UserSearch() {
 										key={profile.user_id}
 										onPress={() => {
 											router.push(
-												`/chart?${URL_PARAMS.USER}=${profile.user_id}`
+												`/chart?${URL_PARAMS.USER}=${profile.user_id}`,
 											);
 										}}
 									>

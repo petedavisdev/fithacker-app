@@ -27,7 +27,10 @@ export function usePromptInstall() {
 		}
 
 		return () => {
-			window.removeEventListener('beforeinstallprompt', captureBeforeInstallPrompt);
+			window.removeEventListener(
+				'beforeinstallprompt',
+				captureBeforeInstallPrompt,
+			);
 		};
 	}, []);
 
@@ -61,4 +64,3 @@ export function usePromptInstall() {
 		isInstallable,
 	};
 }
-

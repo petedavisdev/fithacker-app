@@ -34,7 +34,7 @@ export function useUpdateViewedUsers() {
 
 			const { data, error } = await supabase
 				.from('user_profiles')
-				.update({ 
+				.update({
 					viewed_user_ids: newViewedIds,
 					language,
 				})

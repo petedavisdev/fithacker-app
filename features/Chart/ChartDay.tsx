@@ -115,9 +115,5 @@ export function ChartDay(props: ChartDayProps) {
 		return content;
 	}
 
-	return (
-		<Link href={`/?date=${props.date}` as Href}>
-			{content}
-		</Link>
-	);
+	return <Link href={`/?date=${props.date}` as Href}>{content}</Link>;
 }
