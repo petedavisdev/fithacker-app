@@ -1,0 +1,186 @@
+---
+description: Schema evolution patterns for backward compatibility with iOS apps
+globs: supabase/schemas/*.sql
+alwaysApply: false
+---
+
+# Schema Evolution (Backward Compatibility)
+
+## Critical Constraint: iOS App Update Lag
+
+**Problem**: Web deploys instantly, but iOS apps can't be force-updated (App Store review + user adoption delay). Old iOS app versions may persist for months.
+
+**Solution**: All schema changes must be **backward compatible** - old iOS apps must continue working.
+
+## YAGNI Principle: Minimize Schema Churn
+
+**Before making ANY schema change, ask:**
+
+1. **Is this change actually necessary?** Can the feature work with existing schema? Can JSONB handle it?
+2. **What's the minimum change?** Prefer JSONB additions over new columns. Prefer nullable columns over required.
+3. **Can we avoid this entirely?** Use application-level logic. Store flexible data in JSONB.
+
+**Rule**: If you can avoid a schema change, avoid it. Schema changes are permanent and affect all clients forever.
+
+## Safe Changes (Always Backward Compatible)
+
+### ✅ Add New Nullable Columns
+```sql
+ALTER TABLE user_profiles ADD COLUMN avatar_url TEXT;
+```
+Old apps ignore it, new apps use it.
+
+### ✅ Add New Columns with Defaults
+```sql
+ALTER TABLE user_profiles ADD COLUMN notification_enabled BOOLEAN DEFAULT true;
+```
+Old apps get default, new apps can modify.
+
+### ✅ Add New Tables
+```sql
+CREATE TABLE achievements (user_id UUID, achievement_type TEXT, unlocked_at TIMESTAMP);
+```
+Old apps never query it, new apps use it.
+
+### ✅ Add Indexes
+```sql
+CREATE INDEX idx_exercise_logs_day ON exercise_logs(day);
+```
+Performance only, no breaking changes.
+
+### ✅ Relax Constraints (Make More Permissive)
+```sql
+-- Extend username from 3-30 to 3-50 chars
+ALTER TABLE user_profiles DROP CONSTRAINT user_profiles_username_check;
+ALTER TABLE user_profiles ADD CONSTRAINT user_profiles_username_check 
+  CHECK (username ~ '^[a-zA-Z0-9_-]{3,50}$');
+```
+
+### ✅ Use JSONB Flexibility (Preferred - Zero Schema Churn)
+```json
+{
+  "0": "🚶",
+  "workout_note": "Morning walk",  // New field - old apps ignore
+  "intensity": "moderate"           // New field - old apps ignore
+}
+```
+**Always prefer this** - most flexible, zero schema churn.
+
+## Unsafe Changes (NEVER Do These)
+
+### ❌ Remove Columns
+```sql
+ALTER TABLE user_profiles DROP COLUMN username;  -- Old apps crash
+```
+
+### ❌ Rename Columns
+```sql
+ALTER TABLE user_profiles RENAME COLUMN username TO display_name;  -- Old apps query wrong name
+```
+
+### ❌ Change Column Types
+```sql
+ALTER TABLE user_profiles ALTER COLUMN username TYPE VARCHAR(100);  -- Type mismatches
+```
+
+### ❌ Add NOT NULL Without Default
+```sql
+ALTER TABLE user_profiles ADD COLUMN email TEXT NOT NULL;  -- Old apps can't insert
+```
+
+### ❌ Tighten Constraints
+```sql
+-- Making username lowercase-only when it was case-insensitive before
+-- Old apps might write invalid data that now fails
+```
+
+### ❌ Remove Tables
+```sql
+DROP TABLE user_profiles;  -- Old apps crash
+```
+
+## Expand-Contract Pattern (For Eventual Removals)
+
+If you must eventually remove something (after months/years):
+
+1. **Expand**: Add new column/table, keep old one. New apps use both, old apps continue.
+2. **Monitor**: Track iOS app versions. Wait until old app usage < 5% (typically 3-6 months).
+3. **Contract**: Remove old column/table only after old iOS app is essentially dead.
+
+## Decision Tree
+
+```
+Do I need this feature?
+├─ No → Don't change schema (YAGNI)
+└─ Yes → Can I use JSONB?
+    ├─ Yes → Use JSONB (no schema change) ✅
+    └─ No → Is it a new table?
+        ├─ Yes → Add new table ✅
+        └─ No → Is it nullable or has default?
+            ├─ Yes → Add nullable column ✅
+            └─ No → Can I make it nullable?
+                ├─ Yes → Add nullable column ✅
+                └─ No → **STOP** - This breaks old apps ❌
+                    → Reconsider: Can feature wait?
+                    → Or use expand-contract pattern
+```
+
+## Schema Change Checklist
+
+Before making ANY schema change:
+
+- [ ] **YAGNI**: Is this change actually necessary?
+- [ ] **JSONB first**: Can JSONB handle this without schema change?
+- [ ] **Backward compatible**: Will old iOS apps continue working?
+- [ ] **Nullable/default**: Is the new column nullable or has a default?
+- [ ] **New table**: Would a new table be better than modifying existing?
+- [ ] **Migration tested**: Tested locally with old app version?
+- [ ] **Documented**: Change documented in migration comments?
+
+## Examples: Good vs Bad
+
+### ❌ BAD: Unnecessary Column
+```sql
+-- Adding a column for data that fits in JSONB
+ALTER TABLE exercise_logs ADD COLUMN workout_duration INTEGER;
+```
+**BETTER**: Use JSONB `{ "0": "🚶", "duration_minutes": 30 }`
+
+### ❌ BAD: Required Column Without Default
+```sql
+ALTER TABLE user_profiles ADD COLUMN email TEXT NOT NULL;
+```
+**BETTER**: `ALTER TABLE user_profiles ADD COLUMN email TEXT;` (nullable first)
+
+### ✅ GOOD: Flexible JSONB Addition
+```json
+// No schema change needed!
+// Old apps: { "0": "🚶" }
+// New apps: { "0": "🚶", "note": "felt great", "weather": "sunny" }
+```
+
+### ✅ GOOD: New Optional Feature
+```sql
+ALTER TABLE user_profiles ADD COLUMN avatar_url TEXT;  -- Nullable, old apps ignore
+```
+
+## Migration Comments Template
+
+```sql
+-- Migration: add_workout_notes
+-- Backward compatible: Adds nullable column, old apps ignore
+-- YAGNI: Using JSONB instead (no schema change needed)
+-- Actually, this migration is unnecessary - using JSONB
+```
+
+## Summary
+
+1. **YAGNI**: Question every schema change - can we avoid it?
+2. **JSONB first**: Prefer JSONB additions over schema changes
+3. **Additive only**: Only add, never remove or modify
+4. **Nullable/defaults**: New columns must be nullable or have defaults
+5. **New tables**: Prefer new tables over modifying existing
+6. **Expand-contract**: For removals, use multi-phase approach
+7. **Test old apps**: Always verify old iOS app still works
+
+**Remember**: Schema changes are permanent. Every change affects all clients forever. Minimize churn.

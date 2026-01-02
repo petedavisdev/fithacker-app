@@ -19,19 +19,48 @@ alwaysApply: false
 
 ## Database Schema
 
+**Source of Truth**: `supabase/schemas/schema.sql`
+
+- **Declarative Schema Approach**: The repo is the single source of truth
+- `supabase/schemas/schema.sql` contains the complete desired database state
+- Schema changes are made by editing `schema.sql` directly
+- Supabase generates migrations from the diff: `npm run supabase:schema:diff <migration-name>`
+- Migrations are applied automatically when using Supabase branching
+- Pull latest schema from production: `npm run supabase:schema:pull`
+
+**Critical: Backward Compatibility**
+
+- **iOS apps can't be force-updated** - old versions persist for months
+- **Web deploys instantly** - creates version mismatch
+- **All schema changes must be backward compatible** - old iOS apps must continue working
+- See `.cursor/rules/schema-evolution.mdc` for detailed patterns and YAGNI principles
+
 **JSONB Storage** - Store ExerciseDay directly as JSONB
 
 - Column `log` is JSONB type, stores ExerciseDay array
 - Same format as client - no transformations needed
 - Just `JSON.stringify()` to save, `JSON.parse()` to load
 - Query example: `log->>'0'` gets first exercise
+- **JSONB is your friend** - prefer JSONB additions over schema changes (zero churn)
+
+**Schema Workflow with Branching**
+
+1. Edit `supabase/schemas/schema.sql` in your feature branch
+2. Generate migration: `npm run supabase:schema:diff <migration-name>`
+3. Migration is automatically applied to your branch
+4. Test in branch environment
+5. Merge to main → migration applies to production
 
 ## Type Generation
 
-- Use generated types: `supabase gen types typescript`
-- Don't manually edit `database.types.ts`
-- Re-generate after schema changes
+**Source of Truth**: `shared/supabase/database.types.ts` (generated from schema)
+
+- Use generated types: `npm run supabase:types`
+- **Never** manually edit `database.types.ts`
+- Re-generate after schema changes: `npm run supabase:types`
+- Verify types are in sync: `npm run verify:types` (part of `npm run checks`)
 - Import types from `database.types.ts`
+- Types are used in Supabase client: `createClient<Database>(...)`
 - Use MCP tool `mcp_supabase_generate_typescript_types` to generate types
 
 ## Auth Patterns

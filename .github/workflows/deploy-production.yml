@@ -1,0 +1,43 @@
+name: Deploy Production
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+      - '.github/**'
+      - 'docs/**'
+
+jobs:
+  # Note: Schema deployment is manual and must happen before code deployment
+  # This workflow only deploys code, assuming schema is already deployed
+
+  deploy-web:
+    name: Deploy Web to Production
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[skip deploy]')"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build and deploy web
+        run: npm run web:prod
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          EAS_BUILD_PROFILE: production
+
+      - name: Deployment summary
+        run: |
+          echo "✅ Web deployment complete"
+          echo "⚠️  Remember: Schema migrations must be deployed manually before code deployment"

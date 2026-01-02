@@ -1,6 +1,6 @@
 ---
 description: Build and deployment conventions
-globs: app.config.js,eas.json,package.json
+globs: app.config.js,eas.json,package.json,scripts/deploy-prod.sh
 alwaysApply: false
 ---
 
@@ -9,6 +9,41 @@ alwaysApply: false
 ## NPM Scripts
 
 **Source of Truth**: `package.json` (`scripts` section)
+
+## Production Deployment
+
+**Source of Truth**: `scripts/deploy-prod.sh`
+
+**Critical Rule**: Database schema must be deployed **before** code deployment.
+
+### Deployment Commands
+
+- `npm run deploy:prod` - Interactive deployment script (checks schema, prompts, deploys)
+- `npm run deploy:schema` - Deploy database schema only (`npx supabase db push --linked`)
+- `npm run web:prod` - Build and deploy web only
+- `npm run ios:prod` - Build iOS app only
+
+### Deployment Workflow
+
+1. **Check schema changes**: `npm run supabase:db:diff`
+2. **Deploy schema first** (if changes exist): `npm run deploy:schema`
+3. **Deploy code**: `npm run deploy:prod` or platform-specific commands
+
+### Why Schema First?
+
+- Code may depend on new database structure
+- If migration fails, code hasn't deployed yet (safer rollback)
+- Forward-compatible: old code works with new schema
+- Human review of migrations before touching production
+
+### Schema Changes Process
+
+1. Edit `supabase/schemas/schema.sql` in feature branch
+2. Generate migration: `npm run supabase:schema:diff <migration-name>`
+3. Test locally or in preview
+4. PR reviewed and merged to `main`
+5. **Before code deployment**: Deploy schema with `npm run deploy:schema`
+6. Deploy code with `npm run deploy:prod`
 
 ## Environment Variants
 
