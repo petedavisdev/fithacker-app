@@ -1,5 +1,6 @@
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { AText } from '@/shared/components/AText';
 import type { ChartData } from '../getChartData';
 import { formatWeekFull } from '../getWeekText';
 import { ShareableChartDay } from './ShareableChartDay';
@@ -28,15 +29,19 @@ export function ShareableWeek(props: ShareableWeekProps) {
 				style={{ transform: [{ scale: 1.3 }] }}
 			>
 				<View className="flex-row">
-					<Text className="font-mono text-xl text-yellow-500">FIT</Text>
-					<Text className="font-mono text-xl text-cyan-500">HACKER</Text>
+					<AText color="yellow" shade={500} size="xl">
+						FIT
+					</AText>
+					<AText color="cyan" shade={500} size="xl">
+						HACKER
+					</AText>
 				</View>
 
 				<View className="h-12">
 					{props.username && (
-						<Text className="font-mono text-2xl text-pink-400 text-center">
+						<AText color="pink" size="2xl" className="text-center">
 							{props.username}
-						</Text>
+						</AText>
 					)}
 				</View>
 
@@ -46,18 +51,23 @@ export function ShareableWeek(props: ShareableWeekProps) {
 					))}
 				</View>
 
-				<Text className="text-cyan-500 text-2xl font-mono text-center">
+				<AText color="cyan" shade={500} size="2xl" className="text-center">
 					{weekText}
-				</Text>
+				</AText>
 
 				<View className="flex-row items-center gap-2">
-					<Text className="text-yellow-500 text-7xl font-extralight font-mono">
+					<AText
+						color="yellow"
+						shade={500}
+						size="7xl"
+						className="font-extralight"
+					>
 						{props.weekData.total}
-					</Text>
+					</AText>
 					{props.weekData.badges.length > 0 && (
-						<Text className="text-yellow-500 text-6xl font-extralight font-mono">
+						<AText size="6xl" className="font-extralight">
 							{props.weekData.badges.join('')}
-						</Text>
+						</AText>
 					)}
 				</View>
 			</View>

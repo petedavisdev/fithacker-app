@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, Text, TextInput, View } from 'react-native';
+import { Pressable, TextInput, View } from 'react-native';
+import { Link, type Href } from 'expo-router';
+import { AText } from '@/shared/components/AText';
 import { isAppleReviewEmail, type AuthError } from './authHelpers';
 import { useLogin } from './useLogin';
 import { useVerifyOtp } from './useVerifyOtp';
@@ -22,19 +24,17 @@ export function LoginForm() {
 
 	return (
 		<View className="flex-1 items-center justify-center p-4">
-			<Text className="font-mono text-cyan-400 text-2xl font-bold text-center">
+			<AText size="2xl" className="font-bold text-center">
 				{t('_@.login')}
-			</Text>
-			<Text className="font-mono text-cyan-400 mt-2 text-center">
-				{t('_@.loginSubtitle')} 💻📲
-			</Text>
+			</AText>
+			<AText className="mt-2 text-center">{t('_@.loginSubtitle')} 💻📲</AText>
 
 			{step === 'email' && (
 				<View className="mt-6">
 					<TextInput
 						placeholder={emailPlaceholder}
 						placeholderTextColor={'#f472b6'}
-						className="text-yellow-400 font-mono border-y-2 border-b-yellow-500 border-t-transparent pt-4 pb-4 focus:text-pink-400 focus:border-b-pink-500 outline-none"
+						className="font-sans text-yellow-400 border-y-2 border-b-yellow-500 border-t-transparent pt-4 pb-4 focus:text-pink-400 focus:border-b-pink-500 outline-none"
 						value={email}
 						onChangeText={(text) => {
 							setEmail(text);
@@ -56,9 +56,9 @@ export function LoginForm() {
 						editable={!isLoggingIn}
 					/>
 					{error && (
-						<Text className="font-mono text-pink-400 mt-2">
+						<AText color="pink" className="mt-2">
 							{t(`auth.${error}`)}
-						</Text>
+						</AText>
 					)}
 					<View className="mt-10 items-center">
 						<Pressable
@@ -83,13 +83,17 @@ export function LoginForm() {
 									elevation: 5,
 								}}
 							>
-								<Text className="text-lg text-yellow-400 font-mono text-balance text-center">
+								<AText
+									color="yellow"
+									size="lg"
+									className="text-balance text-center"
+								>
 									{isLoggingIn
 										? '⏳'
 										: isAppleReview
 											? t('_@.enterPassword')
 											: t('_@.sendCode')}
-								</Text>
+								</AText>
 							</View>
 						</Pressable>
 					</View>
@@ -98,13 +102,13 @@ export function LoginForm() {
 
 			{step === 'token' && (
 				<View className="mt-6">
-					<Text className="font-mono text-cyan-400 mt-2">
+					<AText className="mt-2">
 						{isAppleReview
 							? t('_@.enterPasswordFor', { email })
 							: t('_@.enterMagicNumber', { email })}
-					</Text>
+					</AText>
 					<TextInput
-						className="text-yellow-400 font-mono border-y-2 border-b-yellow-500 border-t-transparent pt-4 pb-4 focus:text-pink-400 focus:border-b-pink-500 outline-none mt-4"
+						className="text-yellow-400 border-y-2 border-b-yellow-500 border-t-transparent pt-4 pb-4 focus:text-pink-400 focus:border-b-pink-500 outline-none mt-4"
 						value={token}
 						onChangeText={(text) => {
 							setToken(text);
@@ -117,9 +121,9 @@ export function LoginForm() {
 						editable={!isVerifyingOtp}
 					/>
 					{error && (
-						<Text className="font-mono text-pink-400 mt-2">
+						<AText color="pink" className="mt-2">
 							{t(`auth.${error}`)}
-						</Text>
+						</AText>
 					)}
 					<View className="mt-10 items-center gap-6">
 						<Pressable
@@ -140,21 +144,25 @@ export function LoginForm() {
 									elevation: 5,
 								}}
 							>
-								<Text className="text-lg text-yellow-400 font-mono text-balance text-center">
+								<AText
+									color="yellow"
+									size="lg"
+									className="text-balance text-center"
+								>
 									{isVerifyingOtp
 										? '⏳'
 										: isAppleReview
 											? t('_@.signIn')
 											: t('_@.verify')}
-								</Text>
+								</AText>
 							</View>
 						</Pressable>
 
 						{!isAppleReview && (
 							<View className="items-center gap-3">
-								<Text className="font-mono text-cyan-400 text-center">
+								<AText className="text-center">
 									📨 {t('_@.checkInboxAndJunkMail')} 👀
-								</Text>
+								</AText>
 								<Pressable
 									onPress={() => {
 										setToken('');
@@ -164,15 +172,24 @@ export function LoginForm() {
 									}}
 									disabled={isVerifyingOtp}
 								>
-									<Text className="font-mono text-cyan-400 underline">
-										{t('_@.tryAgain')}
-									</Text>
+									<AText className="underline">{t('_@.tryAgain')}</AText>
 								</Pressable>
 							</View>
 						)}
 					</View>
 				</View>
 			)}
+
+			<View className="mt-8 items-center">
+				<AText shade={300} size="xs" className="text-center mb-2">
+					{t('_@.emailNeverShared')}
+				</AText>
+				<Link href={'/privacy' as Href}>
+					<AText size="sm" className="underline text-center">
+						{t('_@.privacyPolicy')}
+					</AText>
+				</Link>
+			</View>
 		</View>
 	);
 }

@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { TheHeader } from '@/features/TheHeader/TheHeader';
+import { TheHeader } from '@/shared/components/TheHeader';
 import { SearchInput } from '@/features/Notes/SearchInput';
 import { NotesList } from '@/features/Notes/NotesList';
 import { TheFilter } from '@/shared/components/TheFilter';

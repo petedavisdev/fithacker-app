@@ -1,7 +1,10 @@
 import React from 'react';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { ErrorBoundary } from 'react-error-boundary';
-import { ErrorFallback } from './ErrorFallback';
+import { useTranslation } from 'react-i18next';
+import { View } from 'react-native';
+import { AButton } from './AButton';
+import { AText } from './AText';
 
 type QueryErrorBoundaryProps = {
 	children: React.ReactNode;
@@ -24,5 +27,23 @@ export function QueryErrorBoundary(props: QueryErrorBoundaryProps) {
 				</ErrorBoundary>
 			)}
 		</QueryErrorResetBoundary>
+	);
+}
+
+type ErrorFallbackProps = {
+	error: Error;
+	resetErrorBoundary: () => void;
+};
+
+function ErrorFallback(props: ErrorFallbackProps) {
+	const { t } = useTranslation();
+	return (
+		<View className="flex-1 items-center justify-center p-4 bg-bg">
+			<AText color="pink" shade={500} size="xl" className="mb-4">
+				{t('_@.somethingWentWrong')}
+			</AText>
+			<AText className="mb-4">{props.error.message}</AText>
+			<AButton onPress={props.resetErrorBoundary}>🔄</AButton>
+		</View>
 	);
 }

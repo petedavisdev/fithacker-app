@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { AModal } from '@/shared/components/AModal';
+import { AText } from '@/shared/components/AText';
 import { useLogoutDetection } from './useLogoutDetection';
 
 export function LogoutModal() {
@@ -10,9 +11,9 @@ export function LogoutModal() {
 	return (
 		<AModal isOpen={wasLoggedOut} onClose={dismissLogout}>
 			<View className="flex gap-6 items-center">
-				<Text className="font-mono text-cyan-400 text-xl text-center">
+				<AText size="xl" className="text-center">
 					{t('_@.loggedOut')}
-				</Text>
+				</AText>
 			</View>
 		</AModal>
 	);

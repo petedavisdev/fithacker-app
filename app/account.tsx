@@ -6,7 +6,7 @@ import { OfflineMessage } from '@/features/Account/OfflineMessage';
 import { LoginForm } from '@/features/Account/LoginForm';
 import { AccountInfo } from '@/features/Account/AccountInfo';
 import { useUserProfile } from '@/features/Account/useUserProfile';
-import { TheHeader } from '@/features/TheHeader/TheHeader';
+import { TheHeader } from '@/shared/components/TheHeader';
 import { InstallLinks } from '@/features/Account/InstallLinks';
 
 export default function AccountScreen() {

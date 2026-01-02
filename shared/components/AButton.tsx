@@ -1,6 +1,7 @@
-import { View, Text, Pressable } from 'react-native';
+import { View, Pressable } from 'react-native';
 import React from 'react';
 import { Link, type LinkProps } from 'expo-router';
+import { AText } from './AText';
 
 type LinkButtonProps = {
 	href: LinkProps['href'];
@@ -43,17 +44,19 @@ export function AButton(props: AButtonProps) {
 				elevation: 5,
 			}}
 		>
-			<Text
-				className={`text-2xl  ${
+			<AText
+				color={
 					props.color === 'pink'
-						? 'text-pink-500'
+						? 'pink'
 						: props.color === 'cyan'
-							? 'text-cyan-500'
-							: 'text-yellow-500'
-				} ${props.size === 'sm' ? 'text-2xl' : 'text-4xl'}`}
+							? 'cyan'
+							: 'yellow'
+				}
+				shade={500}
+				className={`${props.size === 'sm' ? 'text-2xl' : 'text-4xl'}`}
 			>
 				{props.children}
-			</Text>
+			</AText>
 		</View>
 	);
 

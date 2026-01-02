@@ -1,8 +1,9 @@
 import { Chart as ChartComponent } from '../features/Chart/Chart';
 import { BadgesHelp } from '../features/Chart/BadgesHelp';
 import { TheFilter } from '@/shared/components/TheFilter';
-import { TheHeader } from '../features/TheHeader/TheHeader';
-import { View, Text } from 'react-native';
+import { TheHeader } from '@/shared/components/TheHeader';
+import { View } from 'react-native';
+import { AText } from '@/shared/components/AText';
 import { useExerciseLog } from '@/shared/queries/useExerciseLog';
 import { AModal } from '@/shared/components/AModal';
 import { useState, useEffect, useRef } from 'react';
@@ -125,9 +126,9 @@ export default function Chart() {
 
 			<View className="flex-1 items-center justify-center gap-10">
 				{isViewingOtherUser && publicProfile && (
-					<Text className="font-mono text-pink-400 text-2xl mb-4">
+					<AText color="pink" size="2xl" className="mb-4">
 						{publicProfile.username}
-					</Text>
+					</AText>
 				)}
 				<ChartComponent
 					readOnly={isViewingOtherUser}

@@ -1,6 +1,7 @@
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { AButton } from '@/shared/components/AButton';
+import { AText } from '@/shared/components/AText';
 import { usePromptInstall } from './usePromptInstall.web';
 
 export function InstallLinks() {
@@ -40,16 +41,16 @@ export function InstallLinks() {
 					>
 						📱
 					</AButton>
-					<Text className="text-slate-400 text-xs text-center">
+					<AText color="cyan" shade={300} size="xs" className="text-center">
 						Install App
-					</Text>
+					</AText>
 				</View>
 			)}
 
 			{!isIOS && (!isInstallable || !isAndroid) && (
-				<Text className="text-slate-400 text-xs text-center px-4">
+				<AText color="cyan" shade={300} size="xs" className="text-center px-4">
 					{t('_@.androidInstallHint')}
-				</Text>
+				</AText>
 			)}
 		</View>
 	);

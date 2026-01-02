@@ -19,7 +19,8 @@ import '../global.css';
 import { runMigration } from '@/shared/supabase/migration';
 import { queryKeys } from '@/shared/queries/queryKeys';
 import { QueryErrorBoundary } from '@/shared/components/AErrorBoundary';
-import { useBackgroundSync } from '@/shared/queries/useBackgroundSync';
+import { InitNetworkStatus } from '@/shared/init/InitNetworkStatus';
+import { InitBackgroundSync } from '@/shared/init/InitBackgroundSync';
 import { GradientContext } from '@/shared/hooks/useGradient';
 import { LogoutModal } from '@/features/Account/LogoutModal';
 import { AutoInstallPrompt } from '@/features/Account/AutoInstallPrompt';
@@ -81,13 +82,6 @@ if (Platform.OS === 'web' && typeof window !== 'undefined') {
 	}
 }
 
-// Background sync hook - must be inside QueryClientProvider
-// Syncs on app open, foreground, and when navigating with pending changes
-function InitBackgroundSync() {
-	useBackgroundSync();
-	return null;
-}
-
 export default function RootLayout() {
 	const [fontLoaded] = useFonts({
 		UbuntuMono: require('../assets/fonts/UbuntuMono-Regular.ttf'),
@@ -138,6 +132,7 @@ export default function RootLayout() {
 				<QueryClientProvider client={queryClient}>
 					<QueryErrorBoundary>
 						<GradientContext.Provider value={{ setViewingOther }}>
+							<InitNetworkStatus />
 							<InitBackgroundSync />
 							<LogoutModal />
 							<AutoInstallPrompt />

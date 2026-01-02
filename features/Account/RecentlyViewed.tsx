@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
-import { Pressable, Text, View } from 'react-native';
+import { Pressable, View } from 'react-native';
+import { AText } from '@/shared/components/AText';
 import { useBatchProfiles } from '@/shared/queries/useBatchProfiles';
 import { useUserProfile } from './useUserProfile';
 import { useRouter } from 'expo-router';
@@ -21,11 +22,11 @@ export function RecentlyViewed() {
 
 	return (
 		<View className="w-full max-w-xs mt-4">
-			<Text className="font-mono text-cyan-400 text-lg mb-2">
+			<AText size="lg" className="mb-2">
 				{t('_@.recentlyViewed')}
-			</Text>
+			</AText>
 			{viewedUserIds.length > 0 && batchProfiles.length === 0 ? (
-				<Text className="font-mono text-cyan-400 text-center">...</Text>
+				<AText className="text-center">...</AText>
 			) : (
 				viewedUserIds
 					.filter((userId) => profileMap.has(userId))
@@ -41,7 +42,7 @@ export function RecentlyViewed() {
 								}}
 								className="py-2"
 							>
-								<Text className="font-mono text-pink-400">{username}</Text>
+								<AText color="pink">{username}</AText>
 							</Pressable>
 						);
 					})

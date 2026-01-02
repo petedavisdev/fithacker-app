@@ -1,5 +1,6 @@
-import { Text, View } from 'react-native';
+import { View, Pressable } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { AText } from '@/shared/components/AText';
 import type { ExerciseDay, Exercise } from '@/shared/utils/constants';
 import { URL_PARAMS } from '@/shared/utils/constants';
 import { type Href, Link, useLocalSearchParams } from 'expo-router';
@@ -19,15 +20,18 @@ export function ChartDay(props: ChartDayProps) {
 	const dateInfo = getDateInfo(props.date);
 	const isDisabled = dateInfo.category === 'future' || props.readOnly;
 
-	const DATE_TEXT_COLORS = {
-		future: 'text-slate-500',
-		today: 'text-pink-400',
-		tomorrow: 'text-slate-400',
-		weekend: 'text-yellow-500',
-		weekday: 'text-cyan-500',
+	const DATE_TEXT_COLOR_PROPS: Record<
+		string,
+		{ color: 'cyan' | 'pink' | 'yellow' | 'slate'; shade: 300 | 400 | 500 }
+	> = {
+		future: { color: 'slate', shade: 500 },
+		today: { color: 'pink', shade: 400 },
+		tomorrow: { color: 'slate', shade: 400 },
+		weekend: { color: 'yellow', shade: 500 },
+		weekday: { color: 'cyan', shade: 500 },
 	};
 
-	const dateTextColor = DATE_TEXT_COLORS[dateInfo.category];
+	const dateTextColorProps = DATE_TEXT_COLOR_PROPS[dateInfo.category];
 
 	const DATE_LINE_COLORS = {
 		future: 'bg-black',
@@ -58,10 +62,10 @@ export function ChartDay(props: ChartDayProps) {
 
 	const dateUnderlineColor = DATE_UNDERLINE_COLORS[dateInfo.category];
 
-	const content = (
-		<View className="justify-end items-center h-96 gap-2">
+	const actualContent = (
+		<View className="items-center gap-2">
 			{props.date === props.indicatorDate ? (
-				<Text className="text-yellow-500 text-4xl">👇</Text>
+				<AText size="4xl">👇</AText>
 			) : (
 				props.exercises?.map((exerciseItem, index) => {
 					const note = typeof exerciseItem !== 'string' && exerciseItem[1];
@@ -71,15 +75,15 @@ export function ChartDay(props: ChartDayProps) {
 						<View key={`${props.date}${index}`} className="relative">
 							{!!filter && note && (
 								<View className="absolute -top-12 w-full -rotate-90">
-									<Text className="font-mono text-pink-500 w-80 h-12 p-3">
+									<AText color="pink" shade={500} className="w-80 h-12 p-3">
 										{note}
-									</Text>
+									</AText>
 								</View>
 							)}
 
-							<Text className="text-yellow-500 text-4xl">
+							<AText size="4xl">
 								{typeof exercise === 'string' ? exercise : exercise[0]}
-							</Text>
+							</AText>
 						</View>
 					);
 				})
@@ -101,19 +105,29 @@ export function ChartDay(props: ChartDayProps) {
 				}
 			/>
 
-			<Text
-				className={`font-mono leading pb-0.5 border-b ${dateTextColor} ${
+			<AText
+				color={dateTextColorProps.color}
+				shade={dateTextColorProps.shade}
+				className={`leading pb-0.5 border-b ${
 					isDisabled ? 'border-transparent' : `${dateUnderlineColor}`
 				}`}
 			>
 				{t(`_day.${dateInfo.dayIndex}`).slice(0, 3)}
-			</Text>
+			</AText>
 		</View>
 	);
 
-	if (props.readOnly || dateInfo.category === 'future') {
-		return content;
-	}
+	const container = (
+		<View className="justify-end items-center h-96">
+			{props.readOnly || dateInfo.category === 'future' ? (
+				actualContent
+			) : (
+				<Link href={`/?date=${props.date}` as Href} asChild>
+					<Pressable>{actualContent}</Pressable>
+				</Link>
+			)}
+		</View>
+	);
 
-	return <Link href={`/?date=${props.date}` as Href}>{content}</Link>;
+	return container;
 }

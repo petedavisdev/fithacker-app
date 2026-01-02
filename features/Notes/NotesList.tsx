@@ -1,6 +1,7 @@
-import { View, Text, Pressable } from 'react-native';
+import { View, Pressable } from 'react-native';
 import { Link, useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
+import { AText } from '@/shared/components/AText';
 import type { NotesDay } from './getNotesData';
 import { NotesItem } from './NotesItem';
 import type { Exercise } from '@/shared/utils/constants';
@@ -47,7 +48,7 @@ export function NotesList(props: NotesListProps) {
 
 		return (
 			<View className="flex-1 items-center justify-center p-8 gap-4">
-				<Text className="text-slate-400 font-mono text-center">{message}</Text>
+				<AText className="text-center">{message}</AText>
 				{(hasSearch || hasFilter) && (
 					<Pressable onPress={handleClear}>
 						<View
@@ -60,13 +61,17 @@ export function NotesList(props: NotesListProps) {
 								elevation: 5,
 							}}
 						>
-							<Text className="text-sm text-pink-400 font-mono text-balance text-center">
+							<AText
+								color="pink"
+								size="sm"
+								className="text-balance text-center"
+							>
 								{hasSearch && hasFilter
 									? t('_@.clearSearchAndFilter')
 									: hasSearch
 										? t('_@.clearSearch')
 										: t('_@.clearFilter')}
-							</Text>
+							</AText>
 						</View>
 					</Pressable>
 				)}
@@ -82,9 +87,7 @@ export function NotesList(props: NotesListProps) {
 						<Link href={`/?date=${day.date}`} asChild>
 							<Pressable>
 								<View className="flex items-start justify-center border-2 bg-bg rounded-full border-cyan-600 px-4 py-2">
-									<Text className="text-cyan-400 font-mono text-xs">
-										{t(day.dateText)}
-									</Text>
+									<AText size="xs">{t(day.dateText)}</AText>
 								</View>
 							</Pressable>
 						</Link>

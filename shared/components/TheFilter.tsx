@@ -1,5 +1,6 @@
-import { Pressable, Text, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import { AText } from '@/shared/components/AText';
 import { EXERCISES, type Exercise, URL_PARAMS } from '@/shared/utils/constants';
 
 export function TheFilter() {
@@ -33,11 +34,15 @@ export function TheFilter() {
 							: undefined
 					}
 				/>
-				<Text className="text-cyan-500 w-14 h-12 text-center text-xs font-mono my-3">
+				<AText
+					color="cyan"
+					shade={500}
+					className="w-14 h-12 text-center text-xs my-3"
+				>
 					{EXERCISES.map((exercise) => (
-						<Text key={exercise}>{exercise}</Text>
+						<AText key={exercise}>{exercise}</AText>
 					))}
-				</Text>
+				</AText>
 			</Pressable>
 			{Object.values(EXERCISES).map((exercise) => (
 				<Pressable key={exercise} onPress={() => updateFilter(exercise)}>
@@ -55,9 +60,13 @@ export function TheFilter() {
 								: undefined
 						}
 					/>
-					<Text className="text-yellow-500 w-14 h-12 text-center text-3xl font-mono my-3">
+					<AText
+						color="yellow"
+						shade={500}
+						className="w-14 h-12 text-center text-3xl my-3"
+					>
 						{exercise}
-					</Text>
+					</AText>
 				</Pressable>
 			))}
 		</View>

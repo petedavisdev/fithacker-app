@@ -1,7 +1,8 @@
-import { Platform, Text, View, TouchableOpacity } from 'react-native';
+import { Platform, View, TouchableOpacity } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useLocalSearchParams } from 'expo-router';
 import ViewShot from 'react-native-view-shot';
+import { AText } from '@/shared/components/AText';
 import { ChartDay } from './ChartDay';
 import { type ChartData } from './getChartData';
 import { checkThisWeek, checkLastWeek } from './getWeekText';
@@ -84,20 +85,25 @@ export function ChartWeek(props: ChartWeekProps) {
 				))}
 			</View>
 
-			<Text className="text-cyan-500 text-xl px-2 font-mono text-right">
+			<AText color="cyan" shade={500} size="xl" className="px-2 text-right">
 				{t(props.weekData.text)}
-			</Text>
+			</AText>
 
-			<Text className="text-yellow-500 text-6xl -mt-1 font-extralight px-1 font-mono text-right">
+			<AText
+				color="yellow"
+				shade={500}
+				size="6xl"
+				className="-mt-1 font-extralight px-1 text-right"
+			>
 				{props.weekData.total}
-			</Text>
+			</AText>
 
 			<View className="h-16">
 				{props.weekData.badges.length > 0 && (
 					<TouchableOpacity onPress={props.onBadgePress}>
-						<Text className="text-yellow-500 text-5xl font-extralight px-1 font-mono text-right">
+						<AText size="5xl" className="font-extralight px-1 text-right">
 							{props.weekData.badges.join('')}
-						</Text>
+						</AText>
 					</TouchableOpacity>
 				)}
 			</View>

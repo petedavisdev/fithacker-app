@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, Text, TextInput, View } from 'react-native';
+import { Pressable, TextInput, View } from 'react-native';
+import { AText } from '@/shared/components/AText';
 import { useSearchUsers } from './useSearchUsers';
 import { useSuggestedProfiles } from './useSuggestedProfiles';
 import { useRouter } from 'expo-router';
@@ -42,7 +43,7 @@ export function UserSearch() {
 				<TextInput
 					placeholder={placeholder}
 					placeholderTextColor={'#f472b6'}
-					className={`${textColor} font-mono border-y-2 ${borderColor} border-t-transparent w-full pt-4 pb-4 pr-8 outline-none`}
+					className={`font-sans ${textColor} border-y-2 ${borderColor} border-t-transparent w-full pt-4 pb-4 pr-8 outline-none`}
 					value={searchQuery}
 					onChangeText={setSearchQuery}
 					onFocus={handleFocus}
@@ -55,18 +56,20 @@ export function UserSearch() {
 						onPress={handleClear}
 						className="absolute right-0 top-0 bottom-0 justify-center items-center px-1"
 					>
-						<Text className="text-pink-500 text-xl">×</Text>
+						<AText color="pink" shade={500} size="xl">
+							×
+						</AText>
 					</Pressable>
 				)}
 			</View>
 			{searchQuery.length > 0 ? (
 				<View className="mt-4">
 					{isLoadingSearch ? (
-						<Text className="font-mono text-cyan-400 text-center">...</Text>
+						<AText className="text-center">...</AText>
 					) : searchResults.length === 0 ? (
-						<Text className="font-mono text-cyan-400 text-center">
+						<AText className="text-center">
 							{t('_@.noUsersFound', { searchTerm: searchQuery })}
-						</Text>
+						</AText>
 					) : (
 						searchResults.map((profile) => (
 							<Pressable
@@ -77,9 +80,7 @@ export function UserSearch() {
 								}}
 							>
 								<View className="py-2">
-									<Text className="font-mono text-pink-400">
-										{profile.username}
-									</Text>
+									<AText color="pink">{profile.username}</AText>
 								</View>
 							</Pressable>
 						))
@@ -89,12 +90,12 @@ export function UserSearch() {
 				suggestedProfiles.length > 0 && (
 					<View className="mt-4">
 						{isLoadingSuggestedProfiles ? (
-							<Text className="font-mono text-cyan-400 text-center">...</Text>
+							<AText className="text-center">...</AText>
 						) : (
 							<>
-								<Text className="font-mono text-cyan-400 text-lg mb-2">
+								<AText size="lg" className="mb-2">
 									{t('_@.suggestions')}
-								</Text>
+								</AText>
 								{suggestedProfiles.map((profile) => (
 									<Pressable
 										key={profile.user_id}
@@ -105,9 +106,7 @@ export function UserSearch() {
 										}}
 									>
 										<View className="py-2">
-											<Text className="font-mono text-pink-400">
-												{profile.username}
-											</Text>
+											<AText color="pink">{profile.username}</AText>
 										</View>
 									</Pressable>
 								))}

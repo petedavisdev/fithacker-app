@@ -48,13 +48,13 @@ module.exports = {
 				800: '#1e293b', // Inactive filters
 			},
 		},
-		extend: {
-			fontFamily: {
-				mono: ['UbuntuMono'],
-				sans: ['UbuntuMono'],
-				serif: ['UbuntuMono'],
-			},
+		fontFamily: {
+			// Override default font families - Ubuntu Mono is the default for everything
+			sans: ['UbuntuMono'],
+			serif: ['UbuntuMono'],
+			mono: ['UbuntuMono'],
 		},
+		extend: {},
 	},
 	plugins: [],
 };

@@ -21,6 +21,7 @@ export const STORAGE_KEYS = {
 
 export const TIMING = {
 	SEARCH_DEBOUNCE_MS: 300,
+	OFFLINE_DETECTION_DEBOUNCE_MS: 2 * 1000,
 	DAY_MS: 24 * 60 * 60 * 1000,
 	WEEK_MS: 7 * 24 * 60 * 60 * 1000,
 } as const;

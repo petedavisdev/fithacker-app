@@ -1,8 +1,8 @@
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 
 import { AButton } from '@/shared/components/AButton';
 import { AModal } from '@/shared/components/AModal';
-import { HelpSuggestions } from './HelpSuggestions';
+import { AText } from '@/shared/components/AText';
 import { Link, useRouter } from 'expo-router';
 import React from 'react';
 import { useIsLoggedIn } from '@/features/Account/useAuthSession';
@@ -14,6 +14,7 @@ type TheHeaderButtons = 'account' | 'help' | 'back' | 'notes' | 'chart';
 type TheHeaderProps = {
 	buttonLeft?: TheHeaderButtons;
 	buttonRight?: TheHeaderButtons;
+	helpContent?: React.ReactNode;
 };
 
 export function TheHeader(props: TheHeaderProps) {
@@ -84,8 +85,12 @@ export function TheHeader(props: TheHeaderProps) {
 				</View>
 
 				<Link href="/" className="flex-row">
-					<Text className="font-mono text-xl text-yellow-500">FIT</Text>
-					<Text className="font-mono text-xl text-cyan-500">HACKER</Text>
+					<AText color="yellow" shade={500} size="xl">
+						FIT
+					</AText>
+					<AText color="cyan" shade={500} size="xl">
+						HACKER
+					</AText>
 				</Link>
 
 				<View className="h-10 w-10">
@@ -93,9 +98,11 @@ export function TheHeader(props: TheHeaderProps) {
 				</View>
 			</View>
 
-			<AModal isOpen={isHelpOpen} onClose={closeHelp}>
-				<HelpSuggestions />
-			</AModal>
+			{props.helpContent && (
+				<AModal isOpen={isHelpOpen} onClose={closeHelp}>
+					{props.helpContent}
+				</AModal>
+			)}
 		</View>
 	);
 }

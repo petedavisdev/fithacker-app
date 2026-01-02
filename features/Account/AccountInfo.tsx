@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, Text, View } from 'react-native';
+import { Pressable, View } from 'react-native';
+import { AText } from '@/shared/components/AText';
 import { useLogout } from './useLogout';
 import { useAuthSession } from './useAuthSession';
 import { useBackgroundSync } from '@/shared/queries/useBackgroundSync';
@@ -7,6 +9,7 @@ import { usePendingSync } from '@/shared/queries/usePendingSync';
 import { useUserProfile } from './useUserProfile';
 import { ProfileInfo } from './ProfileInfo';
 import { ProfileSetup } from './ProfileSetup';
+import { DeleteAccountModal } from './DeleteAccountModal';
 
 export function AccountInfo() {
 	const { t } = useTranslation();
@@ -15,6 +18,7 @@ export function AccountInfo() {
 	const { isBackgroundSyncFetching } = useBackgroundSync();
 	const { pendingSync } = usePendingSync();
 	const { userProfile } = useUserProfile();
+	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
 	const userEmail = authSession?.user?.email ?? null;
 	const pendingCount = Object.keys(pendingSync ?? {}).length;
@@ -22,28 +26,36 @@ export function AccountInfo() {
 	return (
 		<View className="flex-1 items-center p-4">
 			<View className="w-full items-center pt-8 mb-8">
-				<Text className="font-mono text-cyan-400 text-2xl font-bold text-center">
+				<AText size="2xl" className="font-bold text-center">
 					{t('_@.loggedInAs', { email: userEmail })}
-				</Text>
+				</AText>
 
-				<Text className="font-mono text-cyan-400 mt-4 text-center">
-					{t('_@.backupDescription')}
-				</Text>
+				<AText className="mt-4 text-center">{t('_@.backupDescription')}</AText>
 
-				<Text className="font-mono text-yellow-400 mt-4 text-center">
+				<AText color="yellow" className="mt-4 text-center">
 					{isBackgroundSyncFetching && pendingCount > 0
 						? t('_@.daysSyncingNow', { count: pendingCount })
 						: !isBackgroundSyncFetching && pendingCount === 0
 							? t('_@.syncComplete')
 							: t('_@.daysWaitingSync', { count: pendingCount })}
-				</Text>
+				</AText>
 			</View>
 
 			<View className="flex-1 w-full items-center justify-center">
 				{!userProfile ? <ProfileSetup /> : <ProfileInfo />}
 			</View>
 
-			<View className="mt-10 items-center pb-8">
+			<View className="mt-10 items-center pb-8 gap-4">
+				<Pressable
+					onPress={() => {
+						setIsDeleteModalOpen(true);
+					}}
+				>
+					<AText color="pink" size="sm" className="underline">
+						❌ {t('_@.deleteCloudBackup')}
+					</AText>
+				</Pressable>
+
 				<Pressable
 					onPress={() => {
 						logout();
@@ -62,12 +74,19 @@ export function AccountInfo() {
 							elevation: 5,
 						}}
 					>
-						<Text className="text-sm text-pink-400 font-mono text-balance text-center">
+						<AText color="pink" size="sm" className="text-balance text-center">
 							{isLoggingOut ? '⏳' : '🚪'} {t('_@.signOut')}
-						</Text>
+						</AText>
 					</View>
 				</Pressable>
 			</View>
+
+			<DeleteAccountModal
+				isOpen={isDeleteModalOpen}
+				onClose={() => {
+					setIsDeleteModalOpen(false);
+				}}
+			/>
 		</View>
 	);
 }

@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
-import { Pressable, Text, View } from 'react-native';
+import { Pressable, View } from 'react-native';
+import { AText } from '@/shared/components/AText';
 import { useAuthSession } from './useAuthSession';
 import { useUserProfile } from './useUserProfile';
 import { UserSearch } from './UserSearch';
@@ -59,9 +60,9 @@ export function ProfileInfo() {
 						</View>
 					) : (
 						<View className="flex-row items-center justify-center gap-2 mb-4">
-							<Text className="font-mono text-pink-400 text-lg">
+							<AText color="pink" size="lg">
 								{username}
-							</Text>
+							</AText>
 							<AButton
 								onPress={() => {
 									setIsEditingUsername(true);
@@ -86,11 +87,15 @@ export function ProfileInfo() {
 									elevation: 5,
 								}}
 							>
-								<Text className="text-sm text-yellow-400 font-mono text-balance text-center">
+								<AText
+									color="yellow"
+									size="sm"
+									className="text-balance text-center"
+								>
 									{copied === 'username'
 										? t('_@.copied')
 										: t('_@.copyUsername')}
-								</Text>
+								</AText>
 							</View>
 						</Pressable>
 
@@ -105,9 +110,13 @@ export function ProfileInfo() {
 									elevation: 5,
 								}}
 							>
-								<Text className="text-sm text-yellow-400 font-mono text-balance text-center">
+								<AText
+									color="yellow"
+									size="sm"
+									className="text-balance text-center"
+								>
 									{copied === 'link' ? t('_@.copied') : t('_@.copyLink')}
-								</Text>
+								</AText>
 							</View>
 						</Pressable>
 					</View>

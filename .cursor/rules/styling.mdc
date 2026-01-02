@@ -26,8 +26,8 @@ Only colors defined in config are available - attempts to use others will fail:
 
 **Source of Truth**: `tailwind.config.js` (`theme.extend.fontFamily`)
 
-- Font family: **Ubuntu Mono** for everything
-- Use `font-mono` class
+- Font family: **Ubuntu Mono** for everything (configured as default for all font families)
+- No need to use `font-mono` class - Ubuntu Mono is the default
 - No other fonts allowed
 
 ## Root Layout Gradient

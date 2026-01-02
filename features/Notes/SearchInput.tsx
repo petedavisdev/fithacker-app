@@ -1,7 +1,8 @@
-import { TextInput, View, Text, Pressable } from 'react-native';
+import { TextInput, View, Pressable } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { AText } from '@/shared/components/AText';
 import { URL_PARAMS } from '@/shared/utils/constants';
 
 export function SearchInput() {
@@ -51,12 +52,12 @@ export function SearchInput() {
 				className="absolute left-0 top-0 bottom-0 justify-center items-center"
 				pointerEvents="none"
 			>
-				<Text className="text-xl">🔎</Text>
+				<AText size="xl">🔎</AText>
 			</View>
 			<TextInput
 				placeholder={placeholder}
 				placeholderTextColor={'#64748b'}
-				className={`${textColor} font-mono border-y-2 ${borderColor} border-t-transparent w-full pt-4 pb-4 pl-8 pr-8 outline-none`}
+				className={`font-sans ${textColor} border-y-2 ${borderColor} border-t-transparent w-full pt-4 pb-4 pl-8 pr-8 outline-none`}
 				value={searchQuery}
 				onChangeText={handleChangeText}
 				onFocus={handleFocus}
@@ -67,7 +68,9 @@ export function SearchInput() {
 					onPress={handleClear}
 					className="absolute right-0 top-0 bottom-0 justify-center items-center px-1"
 				>
-					<Text className="text-pink-500 text-xl">×</Text>
+					<AText color="pink" shade={500} size="xl">
+						×
+					</AText>
 				</Pressable>
 			)}
 		</View>

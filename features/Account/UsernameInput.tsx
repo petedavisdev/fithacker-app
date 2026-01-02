@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Text, TextInput, View } from 'react-native';
+import { TextInput, View } from 'react-native';
 import { AButton } from '@/shared/components/AButton';
+import { AText } from '@/shared/components/AText';
 import { USERNAME } from '@/shared/utils/constants';
 import { useCreateProfile } from './useCreateProfile';
 import { useUpdateProfile } from './useUpdateProfile';
@@ -136,7 +137,7 @@ export function UsernameInput(props: UsernameInputProps) {
 			<View className="flex-row items-center gap-2">
 				<TextInput
 					ref={inputRef}
-					className="text-yellow-400 font-mono border-y-2 border-b-yellow-500 border-t-transparent pt-4 pb-4 focus:text-pink-400 focus:border-b-pink-500 outline-none flex-1"
+					className="font-sans text-yellow-400 border-y-2 border-b-yellow-500 border-t-transparent pt-4 pb-4 focus:text-pink-400 focus:border-b-pink-500 outline-none flex-1"
 					value={username}
 					onChangeText={(text) => {
 						setUsername(text);
@@ -156,16 +157,12 @@ export function UsernameInput(props: UsernameInputProps) {
 				isUsernameInUse ||
 				(error && !isUsernameInUse && !showValidationError)) && (
 				<View className="mt-2">
-					{showValidationError && (
-						<Text className="font-mono text-pink-400">{validationError}</Text>
-					)}
+					{showValidationError && <AText color="pink">{validationError}</AText>}
 					{isUsernameInUse && (
-						<Text className="font-mono text-pink-400">
-							{t('_@.usernameInUse')}
-						</Text>
+						<AText color="pink">{t('_@.usernameInUse')}</AText>
 					)}
 					{error && !isUsernameInUse && !showValidationError && (
-						<Text className="font-mono text-pink-400">{error.message}</Text>
+						<AText color="pink">{error.message}</AText>
 					)}
 				</View>
 			)}

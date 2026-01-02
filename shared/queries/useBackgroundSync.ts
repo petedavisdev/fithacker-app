@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useAuthSession } from '@/features/Account/useAuthSession';
-import { useNetworkStatus } from './useNetworkStatus';
+import { useIsOnline } from './useNetworkStatus';
 import { queryKeys } from './queryKeys';
 import { syncAll } from '@/shared/supabase/syncHelpers';
 import { STALE_TIME } from '@/shared/utils/constants';
@@ -8,9 +8,9 @@ import { STALE_TIME } from '@/shared/utils/constants';
 export function useBackgroundSync() {
 	const queryClient = useQueryClient();
 	const { authSession } = useAuthSession();
-	const { networkStatus } = useNetworkStatus();
+	const isOnline = useIsOnline();
 
-	const canSync = !!(authSession?.user && networkStatus?.isOnline);
+	const canSync = !!(authSession?.user && isOnline);
 
 	const {
 		isFetching: isBackgroundSyncFetching,
