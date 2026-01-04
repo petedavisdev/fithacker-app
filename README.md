@@ -91,15 +91,40 @@ npm start
 
 **Local development:**
 
+**Start dev server:**
+
 ```bash
 npm run web
 ```
+
+**⚠️ Environment Variable Changes**: If you update `.env` (e.g., after `npm run env:pull`):
+
+```bash
+# 1. Clear Node's module cache (REQUIRED - dotenv values are cached here)
+rm -rf node_modules/.cache
+
+# 2. Kill running dev server
+pkill -f "expo|metro|node.*expo"
+
+# 3. Restart
+npm run web
+```
+
+Metro's `--clear` flag doesn't help because the cache is in Node, not Metro.
 
 **Build for deployment:**
 
 ```bash
 npm run web:build
 ```
+
+**When Rebuilds Are Required:**
+
+- **Environment variables**: Changes to `.env` require cache clearing for dev server (see above), and rebuilding for production builds
+- **Native code changes**: Always require rebuilding native apps (iOS/Android)
+- **Config changes**: Changes to `app.config.js` that affect native configs require rebuilds
+- **Plugin changes**: Changes to Expo plugins require rebuilds
+- **Asset changes**: Changes to icons, splash screens, or other bundled assets require rebuilds
 
 ### Available Scripts
 

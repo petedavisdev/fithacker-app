@@ -12,3 +12,4 @@ export function filterExerciseLog(exerciseLog: ExerciseLog, filter?: Exercise) {
 		]),
 	);
 }
+
