@@ -5,14 +5,12 @@ import { useAuthSession } from '@/features/Account/useAuthSession';
 import { OfflineMessage } from '@/features/Account/OfflineMessage';
 import { LoginForm } from '@/features/Account/LoginForm';
 import { AccountInfo } from '@/features/Account/AccountInfo';
-import { useUserProfile } from '@/features/Account/useUserProfile';
 import { TheHeader } from '@/shared/components/TheHeader';
 import { InstallLinks } from '@/features/Account/InstallLinks';
 
 export default function AccountScreen() {
 	const isOnline = useIsOnline();
 	const { authSession } = useAuthSession();
-	const { isLoadingUserProfile } = useUserProfile();
 	const loggedIn = !!authSession?.user;
 
 	return (
@@ -24,7 +22,7 @@ export default function AccountScreen() {
 					<OfflineMessage />
 				) : !loggedIn ? (
 					<LoginForm />
-				) : isLoadingUserProfile ? null : (
+				) : (
 					<AccountInfo />
 				)}
 			</KeyboardAwareScrollView>

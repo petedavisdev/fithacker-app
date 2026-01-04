@@ -8,7 +8,6 @@ import { type ChartData } from './getChartData';
 import { checkThisWeek, checkLastWeek } from './getWeekText';
 import { ShareableWeek } from './Share/ShareableWeek';
 import { useShareWeek } from './Share/useShareWeek';
-import { useUserProfile } from '@/features/Account/useUserProfile';
 import { AButton } from '@/shared/components/AButton';
 import { URL_PARAMS, type Exercise } from '@/shared/utils/constants';
 
@@ -22,7 +21,6 @@ type ChartWeekProps = {
 export function ChartWeek(props: ChartWeekProps) {
 	const { t } = useTranslation();
 	const { viewShotRef, shareWeek, isSharingWeek } = useShareWeek();
-	const { userProfile } = useUserProfile();
 	const params = useLocalSearchParams<{ [URL_PARAMS.FILTER]?: string }>();
 	const filter = params[URL_PARAMS.FILTER] as Exercise | undefined;
 	const isFiltered = Boolean(filter);
@@ -48,10 +46,7 @@ export function ChartWeek(props: ChartWeekProps) {
 							pointerEvents: 'none',
 						}}
 					>
-						<ShareableWeek
-							weekData={props.weekData}
-							username={userProfile?.username}
-						/>
+						<ShareableWeek weekData={props.weekData} />
 					</View>
 				) : (
 					<ViewShot
@@ -67,10 +62,7 @@ export function ChartWeek(props: ChartWeekProps) {
 							pointerEvents: 'none',
 						}}
 					>
-						<ShareableWeek
-							weekData={props.weekData}
-							username={userProfile?.username}
-						/>
+						<ShareableWeek weekData={props.weekData} />
 					</ViewShot>
 				))}
 			<View className="flex-row">

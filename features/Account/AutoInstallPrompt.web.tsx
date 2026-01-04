@@ -23,7 +23,9 @@ export function AutoInstallPrompt() {
 		const isExerciseLogEmpty =
 			!exerciseLog ||
 			Object.keys(exerciseLog).length === 0 ||
-			Object.values(exerciseLog).every((day) => !day || day.length === 0);
+			Object.values(exerciseLog).every(
+				(day) => !day || (Array.isArray(day) && day.length === 0),
+			);
 
 		if (isExerciseLogEmpty) {
 			hasPromptedRef.current = true;

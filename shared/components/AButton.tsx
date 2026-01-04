@@ -26,7 +26,7 @@ export function AButton(props: AButtonProps) {
 				? '#0e7490'
 				: '#a16207';
 
-	const button: JSX.Element = (
+	const button = (
 		<View
 			className={`flex items-center justify-center border-2 bg-bg rounded-full ${
 				props.color === 'pink'

@@ -12,7 +12,7 @@ export function LogoutModal() {
 		<AModal isOpen={wasLoggedOut} onClose={dismissLogout}>
 			<View className="flex gap-6 items-center">
 				<AText size="xl" className="text-center">
-					{t('_@.loggedOut')}
+					{t('_auth.loggedOut')}
 				</AText>
 			</View>
 		</AModal>

@@ -21,7 +21,6 @@ import { queryKeys } from '@/shared/queries/queryKeys';
 import { QueryErrorBoundary } from '@/shared/components/AErrorBoundary';
 import { InitNetworkStatus } from '@/shared/init/InitNetworkStatus';
 import { InitBackgroundSync } from '@/shared/init/InitBackgroundSync';
-import { GradientContext } from '@/shared/hooks/useGradient';
 import { LogoutModal } from '@/features/Account/LogoutModal';
 import { AutoInstallPrompt } from '@/features/Account/AutoInstallPrompt';
 
@@ -92,8 +91,7 @@ export default function RootLayout() {
 	const [i18nLoaded, setI18nLoaded] = useState(false);
 
 	const [day, setDay] = useState<number>(new Date().getDate());
-	const [viewingOther, setViewingOther] = useState(false);
-	const gradientColor = viewingOther ? '#200616' : '#112';
+	const gradientColor = '#112';
 
 	useEffect(() => {
 		i18nReady.then(() => {
@@ -131,28 +129,26 @@ export default function RootLayout() {
 			<QueryErrorBoundary>
 				<QueryClientProvider client={queryClient}>
 					<QueryErrorBoundary>
-						<GradientContext.Provider value={{ setViewingOther }}>
-							<InitNetworkStatus />
-							<InitBackgroundSync />
-							<LogoutModal />
-							<AutoInstallPrompt />
-							<LinearGradient
-								colors={['black', gradientColor, gradientColor, 'black']}
-								style={{
-									flex: 1,
-									alignItems: 'center',
-									justifyContent: 'center',
-								}}
+						<InitNetworkStatus />
+						<InitBackgroundSync />
+						<LogoutModal />
+						<AutoInstallPrompt />
+						<LinearGradient
+							colors={['black', gradientColor, gradientColor, 'black']}
+							style={{
+								flex: 1,
+								alignItems: 'center',
+								justifyContent: 'center',
+							}}
+						>
+							<SafeAreaView
+								className={`flex-1 w-full ${
+									Platform.OS === 'web' ? 'py-4' : ''
+								}`}
 							>
-								<SafeAreaView
-									className={`flex-1 w-full ${
-										Platform.OS === 'web' ? 'py-4' : ''
-									}`}
-								>
-									<Slot key={day} />
-								</SafeAreaView>
-							</LinearGradient>
-						</GradientContext.Provider>
+								<Slot key={day} />
+							</SafeAreaView>
+						</LinearGradient>
 					</QueryErrorBoundary>
 					{Platform.OS === 'web' && <ReactQueryDevtools />}
 				</QueryClientProvider>

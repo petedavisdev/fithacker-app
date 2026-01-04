@@ -49,7 +49,7 @@ export function InstallLinks() {
 
 			{!isIOS && (!isInstallable || !isAndroid) && (
 				<AText color="cyan" shade={300} size="xs" className="text-center px-4">
-					{t('_@.androidInstallHint')}
+					{t('_account.androidInstallHint')}
 				</AText>
 			)}
 		</View>

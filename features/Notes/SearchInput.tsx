@@ -11,7 +11,7 @@ export function SearchInput() {
 	const router = useRouter();
 	const searchParam = params[URL_PARAMS.SEARCH];
 	const [searchQuery, setSearchQuery] = useState(searchParam || '');
-	const [placeholder, setPlaceholder] = useState(t('_@.searchPlaceholder'));
+	const [placeholder, setPlaceholder] = useState(t('_notes.searchPlaceholder'));
 	const [isFocused, setIsFocused] = useState(false);
 
 	useEffect(() => {
@@ -39,7 +39,7 @@ export function SearchInput() {
 
 	function handleBlur() {
 		setIsFocused(false);
-		setPlaceholder(t('_@.searchPlaceholder'));
+		setPlaceholder(t('_notes.searchPlaceholder'));
 	}
 
 	const isActive = isFocused || Boolean(searchQuery);

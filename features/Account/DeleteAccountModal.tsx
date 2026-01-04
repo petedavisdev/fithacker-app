@@ -34,15 +34,15 @@ export function DeleteAccountModal(props: DeleteAccountModalProps) {
 		<AModal isOpen={props.isOpen} onClose={handleClose}>
 			<View className="p-6 gap-6">
 				<AText color="pink" size="2xl" className="font-bold text-center">
-					⚠️ {t('_@.deleteAccountTitle')}
+					⚠️ {t('_account.deleteAccountTitle')}
 				</AText>
 
 				<AText size="base" className="text-center leading-6">
-					{t('_@.deleteAccountWarning')}
+					{t('_account.deleteAccountWarning')}
 				</AText>
 
 				<AText color="yellow" size="base" className="text-center leading-6">
-					{t('_@.deleteAccountLocalData')}
+					{t('_account.deleteAccountLocalData')}
 				</AText>
 
 				<Pressable
@@ -63,7 +63,7 @@ export function DeleteAccountModal(props: DeleteAccountModalProps) {
 								</AText>
 							)}
 						</View>
-						<AText size="sm">{t('_@.deleteAccountConfirm')}</AText>
+						<AText size="sm">{t('_account.deleteAccountConfirm')}</AText>
 					</View>
 				</Pressable>
 
@@ -85,13 +85,14 @@ export function DeleteAccountModal(props: DeleteAccountModalProps) {
 							}}
 						>
 							<AText color="pink" size="base" className="text-center">
-								{isDeletingAccount ? '⏳' : '🗑️'} {t('_@.deleteAccountButton')}
+								{isDeletingAccount ? '⏳' : '🗑️'}{' '}
+								{t('_account.deleteAccountButton')}
 							</AText>
 						</View>
 					</Pressable>
 
 					<Pressable onPress={handleClose} disabled={isDeletingAccount}>
-						<AText className="underline">{t('_@.cancel')}</AText>
+						<AText className="underline">{t('_account.cancel')}</AText>
 					</Pressable>
 				</View>
 			</View>

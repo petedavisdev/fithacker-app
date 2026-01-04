@@ -7,7 +7,6 @@ import { Link, useRouter } from 'expo-router';
 import React from 'react';
 import { useIsLoggedIn } from '@/features/Account/useAuthSession';
 import { useIsOnline } from '@/shared/queries/useNetworkStatus';
-import { useUserProfile } from '@/features/Account/useUserProfile';
 
 type TheHeaderButtons = 'account' | 'help' | 'back' | 'notes' | 'chart';
 
@@ -22,7 +21,6 @@ export function TheHeader(props: TheHeaderProps) {
 	const router = useRouter();
 	const loggedIn = useIsLoggedIn();
 	const isOnline = useIsOnline();
-	const { userProfile } = useUserProfile();
 
 	function open() {
 		setIsHelpOpen(true);
@@ -40,13 +38,7 @@ export function TheHeader(props: TheHeaderProps) {
 		}
 	}
 
-	const accountEmoji = !isOnline
-		? '🫥'
-		: userProfile
-			? '😎'
-			: loggedIn
-				? '😀'
-				: '👋';
+	const accountEmoji = !isOnline ? '🫥' : loggedIn ? '😀' : '👋';
 
 	// Create buttons inside component to avoid stale closures
 	const headerButtons = {

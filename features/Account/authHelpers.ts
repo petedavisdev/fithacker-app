@@ -11,8 +11,7 @@ export type AuthError =
 
 const appleReviewEmail =
 	Constants.expoConfig?.extra?.appleReviewEmail ??
-	process.env.EXPO_PUBLIC_APPLE_REVIEW_EMAIL ??
-	'apple.review@fithacker.app';
+	process.env.EXPO_PUBLIC_APPLE_REVIEW_EMAIL;
 
 export async function getCurrentUserId(): Promise<string | null> {
 	const {
@@ -27,6 +26,7 @@ function isValidEmail(email: string): boolean {
 }
 
 export function isAppleReviewEmail(email: string): boolean {
+	if (!appleReviewEmail) return false;
 	return email.toLowerCase() === appleReviewEmail.toLowerCase();
 }
 

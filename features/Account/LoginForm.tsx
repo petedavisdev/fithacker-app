@@ -12,7 +12,7 @@ export function LoginForm() {
 	const [email, setEmail] = useState('');
 	const [token, setToken] = useState('');
 	const [step, setStep] = useState<'email' | 'token'>('email');
-	const [emailPlaceholder, setEmailPlaceholder] = useState(t('_@.email'));
+	const [emailPlaceholder, setEmailPlaceholder] = useState(t('_auth.email'));
 
 	const isAppleReview = isAppleReviewEmail(email);
 
@@ -22,12 +22,17 @@ export function LoginForm() {
 
 	const error = (errorLogin?.message ?? errorVerifyOtp?.message) as AuthError;
 
+	const showPasswordField = isAppleReview && email && step === 'email';
+	const isSubmitting = isLoggingIn || isVerifyingOtp;
+
 	return (
 		<View className="flex-1 items-center justify-center p-4">
 			<AText size="2xl" className="font-bold text-center">
-				{t('_@.login')}
+				{t('_auth.login')}
 			</AText>
-			<AText className="mt-2 text-center">{t('_@.loginSubtitle')} 💻📲</AText>
+			<AText className="mt-2 text-center">
+				{t('_auth.loginSubtitle')} 💻📲
+			</AText>
 
 			{step === 'email' && (
 				<View className="mt-6">
@@ -39,6 +44,7 @@ export function LoginForm() {
 						onChangeText={(text) => {
 							setEmail(text);
 							resetLogin();
+							resetVerifyOtp();
 						}}
 						onFocus={() => {
 							resetLogin();
@@ -46,34 +52,60 @@ export function LoginForm() {
 						}}
 						onBlur={() => {
 							if (!email) {
-								setEmailPlaceholder(t('_@.email'));
+								setEmailPlaceholder(t('_auth.email'));
 							}
 						}}
 						keyboardType="email-address"
 						autoComplete="email"
 						textContentType="emailAddress"
 						autoCapitalize="none"
-						editable={!isLoggingIn}
+						editable={!isSubmitting}
 					/>
+					{showPasswordField && (
+						<>
+							<AText className="mt-4">{t('_auth.password')}</AText>
+							<TextInput
+								className="text-yellow-400 border-y-2 border-b-yellow-500 border-t-transparent pt-4 pb-4 focus:text-pink-400 focus:border-b-pink-500 outline-none mt-4"
+								value={token}
+								onChangeText={(text) => {
+									setToken(text);
+									resetVerifyOtp();
+								}}
+								onFocus={() => resetVerifyOtp()}
+								keyboardType="default"
+								secureTextEntry={true}
+								editable={!isSubmitting}
+								autoCapitalize="none"
+								autoComplete="password"
+								textContentType="password"
+							/>
+						</>
+					)}
 					{error && (
 						<AText color="pink" className="mt-2">
-							{t(`auth.${error}`)}
+							{t(`_errors.${error}`)}
 						</AText>
 					)}
 					<View className="mt-10 items-center">
 						<Pressable
 							onPress={() => {
-								login(email, {
-									onSuccess: () => {
-										setStep('token');
-									},
-								});
+								if (isAppleReview && token) {
+									// For Apple review, verify password directly
+									verifyOtp({ email, token });
+								} else if (!isAppleReview) {
+									// For normal emails, send OTP
+									login(email, {
+										onSuccess: () => {
+											setStep('token');
+										},
+									});
+								}
 							}}
-							disabled={isLoggingIn}
+							disabled={isSubmitting || (isAppleReview && !token)}
 						>
 							<View
 								className={`min-h-20 max-w-60 p-6 items-center justify-center border-2 border-yellow-500 rounded-full ${
-									isLoggingIn ? 'opacity-35' : ''
+									isSubmitting || (isAppleReview && !token) ? 'opacity-35' : ''
 								}`}
 								style={{
 									shadowColor: '#eab308',
@@ -88,11 +120,11 @@ export function LoginForm() {
 									size="lg"
 									className="text-balance text-center"
 								>
-									{isLoggingIn
+									{isSubmitting
 										? '⏳'
 										: isAppleReview
-											? t('_@.enterPassword')
-											: t('_@.sendCode')}
+											? t('_auth.signIn')
+											: t('_auth.sendCode')}
 								</AText>
 							</View>
 						</Pressable>
@@ -103,9 +135,7 @@ export function LoginForm() {
 			{step === 'token' && (
 				<View className="mt-6">
 					<AText className="mt-2">
-						{isAppleReview
-							? t('_@.enterPasswordFor', { email })
-							: t('_@.enterMagicNumber', { email })}
+						{t('_auth.enterMagicNumber', { email })}
 					</AText>
 					<TextInput
 						className="text-yellow-400 border-y-2 border-b-yellow-500 border-t-transparent pt-4 pb-4 focus:text-pink-400 focus:border-b-pink-500 outline-none mt-4"
@@ -115,14 +145,13 @@ export function LoginForm() {
 							resetVerifyOtp();
 						}}
 						onFocus={() => resetVerifyOtp()}
-						keyboardType={isAppleReview ? 'default' : 'number-pad'}
-						secureTextEntry={isAppleReview}
-						maxLength={isAppleReview ? undefined : 6}
+						keyboardType="number-pad"
+						maxLength={6}
 						editable={!isVerifyingOtp}
 					/>
 					{error && (
 						<AText color="pink" className="mt-2">
-							{t(`auth.${error}`)}
+							{t(`_errors.${error}`)}
 						</AText>
 					)}
 					<View className="mt-10 items-center gap-6">
@@ -149,44 +178,38 @@ export function LoginForm() {
 									size="lg"
 									className="text-balance text-center"
 								>
-									{isVerifyingOtp
-										? '⏳'
-										: isAppleReview
-											? t('_@.signIn')
-											: t('_@.verify')}
+									{isVerifyingOtp ? '⏳' : t('_auth.verify')}
 								</AText>
 							</View>
 						</Pressable>
 
-						{!isAppleReview && (
-							<View className="items-center gap-3">
-								<AText className="text-center">
-									📨 {t('_@.checkInboxAndJunkMail')} 👀
-								</AText>
-								<Pressable
-									onPress={() => {
-										setToken('');
-										setStep('email');
-										resetVerifyOtp();
-										resetLogin();
-									}}
-									disabled={isVerifyingOtp}
-								>
-									<AText className="underline">{t('_@.tryAgain')}</AText>
-								</Pressable>
-							</View>
-						)}
+						<View className="items-center gap-3">
+							<AText className="text-center">
+								📨 {t('_auth.checkInboxAndJunkMail')} 👀
+							</AText>
+							<Pressable
+								onPress={() => {
+									setToken('');
+									setStep('email');
+									resetVerifyOtp();
+									resetLogin();
+								}}
+								disabled={isVerifyingOtp}
+							>
+								<AText className="underline">{t('_auth.tryAgain')}</AText>
+							</Pressable>
+						</View>
 					</View>
 				</View>
 			)}
 
 			<View className="mt-8 items-center">
 				<AText shade={300} size="xs" className="text-center mb-2">
-					{t('_@.emailNeverShared')}
+					{t('_auth.emailNeverShared')}
 				</AText>
 				<Link href={'/privacy' as Href}>
 					<AText size="sm" className="underline text-center">
-						{t('_@.privacyPolicy')}
+						{t('_account.privacyPolicy')}
 					</AText>
 				</Link>
 			</View>

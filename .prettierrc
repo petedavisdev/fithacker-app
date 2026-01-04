@@ -1,4 +1,6 @@
 {
-	"useTabs": true,
-	"singleQuote": true
+	"jsonRecursiveSort": true,
+	"plugins": ["prettier-plugin-sort-json"],
+	"singleQuote": true,
+	"useTabs": true
 }

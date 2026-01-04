@@ -6,9 +6,6 @@ import { useLogout } from './useLogout';
 import { useAuthSession } from './useAuthSession';
 import { useBackgroundSync } from '@/shared/queries/useBackgroundSync';
 import { usePendingSync } from '@/shared/queries/usePendingSync';
-import { useUserProfile } from './useUserProfile';
-import { ProfileInfo } from './ProfileInfo';
-import { ProfileSetup } from './ProfileSetup';
 import { DeleteAccountModal } from './DeleteAccountModal';
 
 export function AccountInfo() {
@@ -17,7 +14,6 @@ export function AccountInfo() {
 	const { authSession } = useAuthSession();
 	const { isBackgroundSyncFetching } = useBackgroundSync();
 	const { pendingSync } = usePendingSync();
-	const { userProfile } = useUserProfile();
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
 	const userEmail = authSession?.user?.email ?? null;
@@ -27,22 +23,20 @@ export function AccountInfo() {
 		<View className="flex-1 items-center p-4">
 			<View className="w-full items-center pt-8 mb-8">
 				<AText size="2xl" className="font-bold text-center">
-					{t('_@.loggedInAs', { email: userEmail })}
+					{t('_auth.loggedInAs', { email: userEmail })}
 				</AText>
 
-				<AText className="mt-4 text-center">{t('_@.backupDescription')}</AText>
+				<AText className="mt-4 text-center">
+					{t('_account.backupDescription')}
+				</AText>
 
 				<AText color="yellow" className="mt-4 text-center">
 					{isBackgroundSyncFetching && pendingCount > 0
-						? t('_@.daysSyncingNow', { count: pendingCount })
+						? t('_account.daysSyncingNow', { count: pendingCount })
 						: !isBackgroundSyncFetching && pendingCount === 0
-							? t('_@.syncComplete')
-							: t('_@.daysWaitingSync', { count: pendingCount })}
+							? t('_account.syncComplete')
+							: t('_account.daysWaitingSync', { count: pendingCount })}
 				</AText>
-			</View>
-
-			<View className="flex-1 w-full items-center justify-center">
-				{!userProfile ? <ProfileSetup /> : <ProfileInfo />}
 			</View>
 
 			<View className="mt-10 items-center pb-8 gap-4">
@@ -52,7 +46,7 @@ export function AccountInfo() {
 					}}
 				>
 					<AText color="pink" size="sm" className="underline">
-						❌ {t('_@.deleteCloudBackup')}
+						❌ {t('_account.deleteCloudBackup')}
 					</AText>
 				</Pressable>
 
@@ -75,7 +69,7 @@ export function AccountInfo() {
 						}}
 					>
 						<AText color="pink" size="sm" className="text-balance text-center">
-							{isLoggingOut ? '⏳' : '🚪'} {t('_@.signOut')}
+							{isLoggingOut ? '⏳' : '🚪'} {t('_auth.signOut')}
 						</AText>
 					</View>
 				</Pressable>

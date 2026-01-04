@@ -1,25 +1,25 @@
 {
-	"short_name": "Fithacker",
-	"name": "Fithacker - Exercise Logger",
+	"background_color": "#111122",
 	"description": "Simple, emoji-based exercise logging",
+	"display": "standalone",
 	"icons": [
 		{
-			"src": "/icon-192.png",
+			"purpose": "any maskable",
 			"sizes": "192x192",
-			"type": "image/png",
-			"purpose": "any maskable"
+			"src": "/icon-192.png",
+			"type": "image/png"
 		},
 		{
-			"src": "/icon-512.png",
+			"purpose": "any maskable",
 			"sizes": "512x512",
-			"type": "image/png",
-			"purpose": "any maskable"
+			"src": "/icon-512.png",
+			"type": "image/png"
 		}
 	],
-	"start_url": "/",
-	"display": "standalone",
+	"name": "Fithacker - Exercise Logger",
 	"orientation": "portrait",
-	"theme_color": "#111122",
-	"background_color": "#111122",
-	"scope": "/"
+	"scope": "/",
+	"short_name": "Fithacker",
+	"start_url": "/",
+	"theme_color": "#111122"
 }

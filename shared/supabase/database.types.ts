@@ -35,30 +35,6 @@ export type Database = {
 				};
 				Relationships: [];
 			};
-			user_profiles: {
-				Row: {
-					language: string | null;
-					updated_at: string;
-					user_id: string;
-					username: string;
-					viewed_user_ids: string[] | null;
-				};
-				Insert: {
-					language?: string | null;
-					updated_at?: string;
-					user_id: string;
-					username: string;
-					viewed_user_ids?: string[] | null;
-				};
-				Update: {
-					language?: string | null;
-					updated_at?: string;
-					user_id?: string;
-					username?: string;
-					viewed_user_ids?: string[] | null;
-				};
-				Relationships: [];
-			};
 		};
 		Views: {
 			[_ in never]: never;

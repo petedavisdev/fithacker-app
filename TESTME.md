@@ -9,9 +9,9 @@ Run these tests on a real iOS device after each deployment to verify critical fu
 **Test Universal Links:**
 
 1. Build a new iOS app (deep linking requires a native rebuild)
-2. Open `https://fithacker.app/chart?user=3ad33119-8c47-49d2-b93d-a56ac9867a67` in Safari on an iOS device
+2. Open `https://fithacker.app/chart` in Safari on an iOS device
 3. The app should open automatically if installed
-4. Verify the chart displays correctly and shows the viewed user's username
+4. Verify the chart displays correctly
 
 ## Offline Functionality
 
@@ -32,17 +32,6 @@ Run these tests on a real iOS device after each deployment to verify critical fu
 3. Wait 10-15 seconds
 4. Return to app
 5. Verify sync indicator shows completion
-
-## Profile Sharing
-
-**Test viewing other users:**
-
-1. Log in with a profile
-2. Search for another user by username
-3. Tap a search result
-4. Verify chart opens in read-only mode with pink gradient background
-5. Verify username displays above chart
-6. Verify "recently viewed" list updates
 
 ## App State Restoration
 

@@ -11,10 +11,12 @@ export function OfflineMessage() {
 	return (
 		<View className="flex-1 items-center justify-center p-4">
 			<AText size="2xl" className="font-bold text-center">
-				{t('_@.offlineTitle')}
+				{t('_account.offlineTitle')}
 			</AText>
 			<AText className="mt-4 text-center">
-				{loggedIn ? t('_@.offlineLoggedIn') : t('_@.offlineLoggedOut')}
+				{loggedIn
+					? t('_account.offlineLoggedIn')
+					: t('_account.offlineLoggedOut')}
 			</AText>
 		</View>
 	);

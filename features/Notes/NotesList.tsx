@@ -23,16 +23,18 @@ export function NotesList(props: NotesListProps) {
 		const hasSearch = !!searchQuery;
 		let message: string;
 		if (hasFilter && hasSearch) {
-			message = t('_@.noNotesFoundWithFilter', {
+			message = t('_notes.noNotesFoundWithFilter', {
 				filter: filterExercise,
 				searchTerm: searchQuery,
 			});
 		} else if (hasSearch) {
-			message = t('_@.noNotesFoundWithoutFilter', { searchTerm: searchQuery });
+			message = t('_notes.noNotesFoundWithoutFilter', {
+				searchTerm: searchQuery,
+			});
 		} else if (hasFilter) {
-			message = t('_@.noNotesFoundFilterOnly', { filter: filterExercise });
+			message = t('_notes.noNotesFoundFilterOnly', { filter: filterExercise });
 		} else {
-			message = t('_@.noResultsFound');
+			message = t('_notes.noResultsFound');
 		}
 
 		function handleClear() {
@@ -67,10 +69,10 @@ export function NotesList(props: NotesListProps) {
 								className="text-balance text-center"
 							>
 								{hasSearch && hasFilter
-									? t('_@.clearSearchAndFilter')
+									? t('_notes.clearSearchAndFilter')
 									: hasSearch
-										? t('_@.clearSearch')
-										: t('_@.clearFilter')}
+										? t('_notes.clearSearch')
+										: t('_notes.clearFilter')}
 							</AText>
 						</View>
 					</Pressable>

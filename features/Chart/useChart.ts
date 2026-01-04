@@ -40,4 +40,3 @@ export function useChart(props: UseChartProps) {
 		indicatorDate,
 	};
 }
-

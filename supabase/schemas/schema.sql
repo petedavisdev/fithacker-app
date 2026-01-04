@@ -52,34 +52,8 @@ CREATE TABLE IF NOT EXISTS "public"."exercise_logs" (
 ALTER TABLE "public"."exercise_logs" OWNER TO "postgres";
 
 
-CREATE TABLE IF NOT EXISTS "public"."user_profiles" (
-    "user_id" "uuid" NOT NULL,
-    "username" "text" NOT NULL,
-    "updated_at" timestamp with time zone DEFAULT "now"() NOT NULL,
-    "viewed_user_ids" "uuid"[] DEFAULT '{}'::"uuid"[],
-    "language" "text",
-    CONSTRAINT "user_profiles_username_check" CHECK (("username" ~ '^[a-zA-Z0-9_-]{3,30}$'::"text"))
-);
-
-
-ALTER TABLE "public"."user_profiles" OWNER TO "postgres";
-
-
 ALTER TABLE ONLY "public"."exercise_logs"
     ADD CONSTRAINT "exercise_logs_pkey" PRIMARY KEY ("user_id", "day");
-
-
-
-ALTER TABLE ONLY "public"."user_profiles"
-    ADD CONSTRAINT "user_profiles_pkey" PRIMARY KEY ("user_id");
-
-
-
-CREATE INDEX "idx_user_profiles_language" ON "public"."user_profiles" USING "btree" ("language");
-
-
-
-CREATE UNIQUE INDEX "user_profiles_username_lower_unique" ON "public"."user_profiles" USING "btree" ("lower"("username"));
 
 
 
@@ -89,23 +63,6 @@ CREATE OR REPLACE TRIGGER "update_exercise_logs_updated_at" BEFORE UPDATE ON "pu
 
 ALTER TABLE ONLY "public"."exercise_logs"
     ADD CONSTRAINT "exercise_logs_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "auth"."users"("id");
-
-
-
-ALTER TABLE ONLY "public"."user_profiles"
-    ADD CONSTRAINT "user_profiles_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "auth"."users"("id") ON DELETE CASCADE;
-
-
-
-CREATE POLICY "Public exercise logs are viewable by everyone" ON "public"."exercise_logs" FOR SELECT USING (true);
-
-
-
-CREATE POLICY "Public profiles are viewable by everyone" ON "public"."user_profiles" FOR SELECT USING (true);
-
-
-
-CREATE POLICY "Users can create their own profile" ON "public"."user_profiles" FOR INSERT WITH CHECK ((( SELECT "auth"."uid"() AS "uid") = "user_id"));
 
 
 
@@ -121,14 +78,11 @@ CREATE POLICY "Users can update own exercise logs" ON "public"."exercise_logs" F
 
 
 
-CREATE POLICY "Users can update their own profile" ON "public"."user_profiles" FOR UPDATE USING ((( SELECT "auth"."uid"() AS "uid") = "user_id"));
+CREATE POLICY "Users can view own exercise logs" ON "public"."exercise_logs" FOR SELECT TO "authenticated" USING ((( SELECT "auth"."uid"() AS "uid") = "user_id"));
 
 
 
 ALTER TABLE "public"."exercise_logs" ENABLE ROW LEVEL SECURITY;
-
-
-ALTER TABLE "public"."user_profiles" ENABLE ROW LEVEL SECURITY;
 
 
 GRANT USAGE ON SCHEMA "public" TO "postgres";
@@ -147,12 +101,6 @@ GRANT ALL ON FUNCTION "public"."update_updated_at_column"() TO "service_role";
 GRANT ALL ON TABLE "public"."exercise_logs" TO "anon";
 GRANT ALL ON TABLE "public"."exercise_logs" TO "authenticated";
 GRANT ALL ON TABLE "public"."exercise_logs" TO "service_role";
-
-
-
-GRANT ALL ON TABLE "public"."user_profiles" TO "anon";
-GRANT ALL ON TABLE "public"."user_profiles" TO "authenticated";
-GRANT ALL ON TABLE "public"."user_profiles" TO "service_role";
 
 
 

@@ -26,13 +26,6 @@ export function useDeleteAccount() {
 
 			if (logsError) throw logsError;
 
-			const { error: profileError } = await supabase
-				.from('user_profiles')
-				.delete()
-				.eq('user_id', user.id);
-
-			if (profileError) throw profileError;
-
 			// Sign out from Supabase auth
 			await signOut();
 

@@ -7,7 +7,6 @@ import { ShareableChartDay } from './ShareableChartDay';
 
 type ShareableWeekProps = {
 	weekData: ChartData;
-	username?: string | null;
 };
 
 export function ShareableWeek(props: ShareableWeekProps) {
@@ -35,14 +34,6 @@ export function ShareableWeek(props: ShareableWeekProps) {
 					<AText color="cyan" shade={500} size="xl">
 						HACKER
 					</AText>
-				</View>
-
-				<View className="h-12">
-					{props.username && (
-						<AText color="pink" size="2xl" className="text-center">
-							{props.username}
-						</AText>
-					)}
 				</View>
 
 				<View className="flex-row">
