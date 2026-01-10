@@ -19,13 +19,15 @@ export function useBackgroundSync() {
 	} = useQuery({
 		queryKey: queryKeys.backgroundSync(authSession?.user?.id),
 		queryFn: async () => {
-			const success = await syncAll();
-			if (success) {
-				// Invalidate caches so they refetch from updated AsyncStorage
+			const exerciseSuccess = await syncAll();
+
+			// Invalidate queries based on what synced
+			if (exerciseSuccess) {
 				queryClient.invalidateQueries({ queryKey: queryKeys.exerciseLog });
 				queryClient.invalidateQueries({ queryKey: queryKeys.pendingSync });
 			}
-			return success;
+
+			return exerciseSuccess;
 		},
 		enabled: canSync,
 		refetchOnReconnect: true,

@@ -1,6 +1,11 @@
 #!/bin/bash
 # Production deployment script
 # Ensures database schema is deployed before code
+#
+# Schema Management:
+# - Uses declarative schema approach: edit supabase/schemas/schema.sql
+# - Generate migrations: npm run supabase:schema:diff <name>
+# - Deploy: npm run deploy:schema (pushes migrations + regenerates types)
 
 set -e  # Exit on error
 
@@ -31,17 +36,17 @@ if [ -n "$SCHEMA_DIFF" ]; then
     echo ""
     if [[ ! $REPLY =~ ^[Yy]$ ]]; then
         echo "❌ Deployment cancelled. Schema must be deployed first."
-        echo "   To deploy schema manually: npx supabase db push --linked"
+        echo "   To deploy schema manually: npm run deploy:schema"
         exit 1
     fi
     
     echo "📊 Deploying schema to production..."
-    npx supabase db push --linked
+    npm run deploy:schema
     if [ $? -ne 0 ]; then
         echo "❌ Schema deployment failed!"
         exit 1
     fi
-    echo "✅ Schema deployed successfully"
+    echo "✅ Schema deployed successfully (migrations pushed + types regenerated)"
     echo ""
 else
     echo "✅ No schema changes detected"

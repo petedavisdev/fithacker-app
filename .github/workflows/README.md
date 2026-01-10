@@ -80,7 +80,7 @@ This runs all checks except `format:check` (it runs `format` which auto-fixes).
 
 - This is informational only and won't block PRs
 - If unexpected, check if someone changed the database directly
-- Update `supabase/schemas/schema.sql` if needed
+- Update `supabase/schemas/schema.sql` to match production, then generate migration: `npm run supabase:schema:diff <name>`
 
 ## Production Deployment
 
@@ -92,19 +92,22 @@ The `deploy-production.yml` workflow automatically deploys web to production whe
 
 ### Deployment Workflow
 
+**Declarative Schema Approach**: Edit `schema.sql` (desired state) → Generate migrations → Deploy
+
 1. **Schema changes** (if any):
-   - Edit `supabase/schemas/schema.sql` in feature branch
+   - Edit `supabase/schemas/schema.sql` in feature branch (desired database state)
    - Generate migration: `npm run supabase:schema:diff <migration-name>`
-   - Test locally
-   - PR reviewed and merged
+   - **Review the generated migration** before committing
+   - Test locally or use Supabase preview branches
+   - PR reviewed and merged to `main`
 
 2. **Before code deployment**:
 
    ```bash
-   # Check for schema changes
+   # Check for schema changes (informational)
    npm run supabase:db:diff
 
-   # Deploy schema if needed
+   # Deploy schema if needed (pushes migrations + regenerates types)
    npm run deploy:schema
    ```
 

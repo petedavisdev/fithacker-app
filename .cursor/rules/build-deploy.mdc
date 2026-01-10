@@ -19,7 +19,7 @@ alwaysApply: false
 ### Deployment Commands
 
 - `npm run deploy:prod` - Interactive deployment script (checks schema, prompts, deploys)
-- `npm run deploy:schema` - Deploy database schema only (`npx supabase db push --linked`)
+- `npm run deploy:schema` - Deploy database schema (pushes migrations + regenerates TypeScript types)
 - `npm run web:prod` - Build and deploy web only
 - `npm run ios:prod` - Build iOS app only
 
@@ -36,14 +36,28 @@ alwaysApply: false
 - Forward-compatible: old code works with new schema
 - Human review of migrations before touching production
 
-### Schema Changes Process
+### Schema Changes Process (Declarative Workflow)
 
-1. Edit `supabase/schemas/schema.sql` in feature branch
-2. Generate migration: `npm run supabase:schema:diff <migration-name>`
-3. Test locally or in preview
-4. PR reviewed and merged to `main`
-5. **Before code deployment**: Deploy schema with `npm run deploy:schema`
-6. Deploy code with `npm run deploy:prod`
+**The declarative approach**: Edit `schema.sql` (desired state) → Generate migrations (diff) → Deploy
+
+1. **Edit schema**: Modify `supabase/schemas/schema.sql` to reflect desired database state
+2. **Generate migration**: `npm run supabase:schema:diff <migration-name>`
+   - Creates timestamped migration file in `supabase/migrations/`
+   - Review the generated migration before committing
+3. **Test** (optional): Use Supabase preview branches or test locally
+4. **PR & Review**: Commit migration file, open PR, get review
+5. **Merge to main**: Migration file is now in version control
+6. **Deploy schema**: `npm run deploy:schema` (before code deployment)
+   - Pushes pending migrations to production
+   - Regenerates TypeScript types automatically
+7. **Deploy code**: `npm run deploy:prod` or platform-specific commands
+
+**Key Commands**
+
+- `npm run supabase:schema:diff <name>` - Generate migration from schema.sql changes
+- `npm run supabase:db:diff` - Check if schema.sql differs from production (no migration generated)
+- `npm run deploy:schema` - Push migrations + regenerate types
+- `npm run supabase:schema:pull` - Pull production schema to schema.sql (sync local)
 
 ## Environment Variants
 

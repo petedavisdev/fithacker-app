@@ -23,9 +23,8 @@ alwaysApply: false
 
 - **Declarative Schema Approach**: The repo is the single source of truth
 - `supabase/schemas/schema.sql` contains the complete desired database state
-- Schema changes are made by editing `schema.sql` directly
-- Supabase generates migrations from the diff: `npm run supabase:schema:diff <migration-name>`
-- Migrations are applied automatically when using Supabase branching
+- Schema changes are made by editing `schema.sql` directly (never edit migrations manually)
+- Migrations are auto-generated from the diff between `schema.sql` and current database state
 - Pull latest schema from production: `npm run supabase:schema:pull`
 
 **Critical: Backward Compatibility**
@@ -43,13 +42,28 @@ alwaysApply: false
 - Query example: `log->>'0'` gets first exercise
 - **JSONB is your friend** - prefer JSONB additions over schema changes (zero churn)
 
-**Schema Workflow with Branching**
+**Declarative Schema Workflow**
 
-1. Edit `supabase/schemas/schema.sql` in your feature branch
-2. Generate migration: `npm run supabase:schema:diff <migration-name>`
-3. Migration is automatically applied to your branch
-4. Test in branch environment
-5. Merge to main → migration applies to production
+1. **Edit schema**: Modify `supabase/schemas/schema.sql` to reflect desired database state
+2. **Generate migration**: `npm run supabase:schema:diff <migration-name>`
+   - Creates migration file in `supabase/migrations/` with timestamp prefix
+   - Review the generated migration file - it contains the diff between schema.sql and current DB
+3. **Test locally** (optional): `supabase start` then `supabase migration up` to test migration
+4. **Deploy**: `npm run deploy:schema` (pushes migrations + regenerates TypeScript types)
+   - Always runs type generation after pushing to keep `database.types.ts` in sync
+
+**With Supabase Branching** (Preview Branches)
+
+- Migrations auto-apply when PR is opened (creates preview branch)
+- Test in preview branch environment before merging
+- Merge to main → migration applies to production automatically
+
+**Important Notes**
+
+- **Never manually edit migration files** - always edit `schema.sql` and regenerate
+- **Always review generated migrations** before deploying (especially for destructive changes)
+- **Migration files are versioned** - they track schema evolution over time
+- **Schema.sql is declarative** - it describes the desired end state, not the steps to get there
 
 ## Type Generation
 

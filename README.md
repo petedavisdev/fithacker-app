@@ -231,13 +231,29 @@ This updates `shared/supabase/database.types.ts` with the latest schema.
 
 **Schema Management (Declarative Approach):**
 
+The project uses **declarative schema management** - edit `schema.sql` (desired state) and generate migrations automatically.
+
+**Workflow:**
+
+1. **Edit schema**: Modify `supabase/schemas/schema.sql` to reflect desired database state
+2. **Generate migration**: `npm run supabase:schema:diff <migration-name>`
+   - Creates timestamped migration file in `supabase/migrations/`
+   - **Always review** the generated migration before committing
+3. **Deploy**: `npm run deploy:schema` (pushes migrations + regenerates types automatically)
+
+**Key Principles:**
+
 - **Single Source of Truth**: `supabase/schemas/schema.sql` contains the complete desired database state
-- Edit `supabase/schemas/schema.sql` directly to make schema changes
-- Generate migration from diff: `npm run supabase:schema:diff <migration-name>`
+- **Never edit migrations manually** - always edit `schema.sql` and regenerate
+- **Always review generated migrations** before deploying (especially for destructive changes)
+- Migrations track schema evolution over time for version control
+
+**Other Commands:**
+
 - Pull latest schema from production: `npm run supabase:schema:pull`
-- After schema changes, regenerate types: `npm run supabase:types`
+- Check for schema drift: `npm run supabase:db:diff` (informational, no migration generated)
 - Verify types are in sync: `npm run verify:types` (part of `npm run checks`)
-- Works seamlessly with Supabase database branching
+- Works seamlessly with Supabase database branching (preview branches)
 
 **Available Supabase scripts:**
 
@@ -298,7 +314,7 @@ See `.github/workflows/README.md` for detailed CI documentation.
 
    ```bash
    npm run deploy:schema
-   # Or manually: npx supabase db push --linked
+   # This pushes migrations and regenerates TypeScript types automatically
    ```
 
 3. **Deploy code**:
@@ -352,14 +368,21 @@ npm run ios:prod
 
 **⚠️ Critical**: All schema changes must be **backward compatible** - iOS apps can't be force-updated and may lag behind web deployments for months.
 
+**Declarative Workflow:**
+
 1. **Question the change** (YAGNI): Is this schema change actually necessary? Can JSONB handle it?
-2. Edit `supabase/schemas/schema.sql` in feature branch
-3. Generate migration: `npm run supabase:schema:diff <migration-name>`
-4. **Verify backward compatibility**: Test that old iOS app version still works
-5. Test locally or in preview environment
-6. PR gets reviewed and merged to `main`
-7. **Before deploying code**: Run `npm run deploy:schema` to apply migrations
-8. Deploy code: `npm run deploy:prod`
+2. **Edit schema**: Modify `supabase/schemas/schema.sql` in feature branch (desired state)
+3. **Generate migration**: `npm run supabase:schema:diff <migration-name>`
+   - Creates migration file in `supabase/migrations/`
+   - **Review the generated migration** - verify it matches your intent
+4. **Test**: Use Supabase preview branches or test locally
+5. **PR & Review**: Commit migration file, open PR, get code review
+6. **Merge to main**: Migration file is now in version control
+7. **Deploy schema**: `npm run deploy:schema` (before code deployment)
+   - Pushes migrations to production
+   - Regenerates TypeScript types automatically
+8. **Verify backward compatibility**: Test that old iOS app version still works
+9. **Deploy code**: `npm run deploy:prod`
 
 **Schema Evolution Rules:**
 
