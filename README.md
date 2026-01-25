@@ -269,8 +269,33 @@ The project uses **declarative schema management** - edit `schema.sql` (desired 
 - `npm run supabase:logs:api` - View API logs
 - `npm run supabase:logs:postgres` - View Postgres logs
 - `npm run supabase:logs:realtime` - View Realtime logs
+- `npm run supabase:templates:deploy` - Deploy auth email templates
 
 **Project ID:** `eujlarqrbwllnmxlhbsk` (configured in scripts)
+
+### Email Templates
+
+Auth email templates (magic link, confirmation) with localized content are stored in `supabase/templates/`.
+
+**Supported Languages:** en, de, es, fr, it, ja, ko, pt, zh
+
+**Updating translations:**
+
+1. Edit `supabase/templates/auth-email.html`
+2. Follow voice guide in `.cursor/rules/email-translations.mdc`
+3. Deploy: `npm run supabase:templates:deploy`
+
+**Setup (one-time):**
+
+1. Get access token from https://supabase.com/dashboard/account/tokens
+2. Set environment variables (do not commit):
+
+```bash
+export SUPABASE_ACCESS_TOKEN=your-token
+export SUPABASE_PROJECT_REF=eujlarqrbwllnmxlhbsk
+```
+
+**Note:** Custom SMTP provider must be configured in Supabase for custom email templates to work.
 
 ### Testing
 

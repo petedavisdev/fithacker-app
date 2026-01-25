@@ -1,6 +1,7 @@
 import { checkThisYear, getDate } from '@/shared/utils/dateInfo';
 import { getLanguage } from '@/shared/i18n/getLanguage';
 import { TIMING } from '@/shared/utils/constants';
+import { formatWeekFull } from '@/shared/utils/formatWeek';
 
 type WeekTextOption = {
 	check: (dates: string[]) => boolean;
@@ -44,31 +45,6 @@ export function checkLastWeek(dates: string[]) {
 function formatWeekLong(firstDate: string, lastDate: string) {
 	const firstDateText = formatDayMonth(firstDate);
 	const lastDateText = formatDayMonth(lastDate);
-
-	return `${firstDateText} - ${lastDateText}`;
-}
-
-export function formatWeekFull(firstDate: string, lastDate: string) {
-	const firstDateObj = new Date(firstDate);
-	const lastDateObj = new Date(lastDate);
-	const firstDateYear = firstDateObj.getFullYear();
-	const lastDateYear = lastDateObj.getFullYear();
-	const firstDateMonth = firstDateObj.getMonth();
-	const lastDateMonth = lastDateObj.getMonth();
-
-	const firstDateText =
-		firstDateMonth === lastDateMonth && firstDateYear === lastDateYear
-			? firstDateObj.getDate().toString()
-			: firstDateObj.toLocaleDateString(getLanguage(), {
-					month: 'short',
-					day: 'numeric',
-					...(firstDateYear !== lastDateYear && { year: 'numeric' }),
-				});
-	const lastDateText = lastDateObj.toLocaleDateString(getLanguage(), {
-		year: 'numeric',
-		month: 'short',
-		day: 'numeric',
-	});
 
 	return `${firstDateText} - ${lastDateText}`;
 }

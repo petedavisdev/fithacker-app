@@ -1,15 +1,10 @@
-import type { ExerciseLog, Badge } from '@/shared/utils/constants';
+import type { ExerciseLog, ChartData } from '@/shared/utils/constants';
 import { getLastMonday, getDate } from '@/shared/utils/dateInfo';
 import { checkThisWeek, getWeekText } from './getWeekText';
 import { LIMITS, DAYS } from '@/shared/utils/constants';
 import { calculateBadges } from '@/shared/utils/calculateBadges';
 
-export type ChartData = {
-	days: ExerciseLog;
-	text: string;
-	total: number;
-	badges: Badge[];
-};
+export type { ChartData };
 
 export function getChartData(exerciseLog: ExerciseLog) {
 	const firstDate = Object.keys(exerciseLog).sort()[0] ?? getDate();

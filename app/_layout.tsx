@@ -22,7 +22,7 @@ import { QueryErrorBoundary } from '@/shared/components/AErrorBoundary';
 import { InitNetworkStatus } from '@/shared/init/InitNetworkStatus';
 import { InitBackgroundSync } from '@/shared/init/InitBackgroundSync';
 import { LogoutModal } from '@/features/Account/LogoutModal';
-import { AutoInstallPrompt } from '@/features/Account/AutoInstallPrompt';
+import { AutoInstallPrompt } from '@/features/Install/AutoInstallPrompt';
 
 SplashScreen.preventAutoHideAsync();
 

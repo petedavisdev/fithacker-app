@@ -9,7 +9,7 @@ alwaysApply: false
 ## Emoji Usage
 
 - Use emojis extensively instead of traditional icons
-- **Exercise emojis**: See `shared/utils/EXERCISES.ts` (`EXERCISES` array)
+- **Exercise emojis**: See `shared/utils/constants.ts` (`EXERCISES` array)
 - **UI action emojis**: 👍 (confirm), 👈 (previous), 👉 (next), 👋 (account), ? (help)
 - NEVER replace these with icon libraries (no Ionicons, FontAwesome, etc.)
 
@@ -20,7 +20,7 @@ alwaysApply: false
 - Use `AButton` component for all buttons
 - Supports two modes: Link (`href` prop) or Pressable (`onPress` prop)
 - See component for available sizes, colors, and props
-- Examples: See usage in `features/TheHeader/TheHeader.tsx` and `app/index.tsx`
+- Examples: See usage in `shared/components/TheHeader.tsx` and `app/index.tsx`
 
 ## Modal Patterns
 

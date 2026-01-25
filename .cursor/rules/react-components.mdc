@@ -18,11 +18,11 @@ alwaysApply: false
 
 ## Custom Hooks Structure
 
-**Example**: See React Query hooks in `shared/queries/` or feature-specific hooks like `features/Checklist/useUpdateDayExercise.ts`
+**Example**: See React Query hooks in `shared/queries/` or feature-specific hooks like `features/Checklist/useMutateDayExercise.ts`
 
 ## Custom Hooks for Domain Logic
 
-**Examples**: React Query hooks in `shared/queries/`, feature-specific mutation hooks like `features/Checklist/useUpdateDayExercise.ts`
+**Examples**: React Query hooks in `shared/queries/`, feature-specific mutation hooks like `features/Checklist/useMutateDayExercise.ts`
 
 See `.cursor/rules/react-query.mdc` for React Query patterns
 

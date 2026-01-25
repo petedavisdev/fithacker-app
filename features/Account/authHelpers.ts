@@ -1,4 +1,5 @@
 import Constants from 'expo-constants';
+import i18n from '@/shared/i18n';
 import { supabase } from '@/shared/supabase/client';
 
 export type AuthError =
@@ -46,7 +47,10 @@ export async function requestEmailOtp(
 
 	const { error } = await supabase.auth.signInWithOtp({
 		email,
-		options: { shouldCreateUser: true },
+		options: {
+			shouldCreateUser: true,
+			data: { language: i18n.language || 'en' },
+		},
 	});
 
 	if (error) {

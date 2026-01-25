@@ -16,13 +16,13 @@ alwaysApply: false
 
 ## Exercise Log Data Structure
 
-**Source of Truth**: `shared/utils/EXERCISES.ts` (type definitions)
+**Source of Truth**: `shared/utils/constants.ts` (type definitions)
 
 See `ExerciseItem`, `ExerciseDay`, `ExerciseLog` types
 
 ## Exercise Log Updates
 
-**Source of Truth**: `shared/queries/useExerciseLog.ts` and feature-specific hooks like `features/Checklist/useUpdateDayExercise.ts`
+**Source of Truth**: `shared/queries/useExerciseLog.ts` and feature-specific hooks like `features/Checklist/useMutateDayExercise.ts`
 
 See `updateDayExercise()` and `removeDayExercise()` functions for:
 

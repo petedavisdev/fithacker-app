@@ -1,8 +1,8 @@
 import { View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { AText } from '@/shared/components/AText';
-import type { ChartData } from '../getChartData';
-import { formatWeekFull } from '../getWeekText';
+import type { ChartData } from '@/shared/utils/constants';
+import { formatWeekFull } from '@/shared/utils/formatWeek';
 import { ShareableChartDay } from './ShareableChartDay';
 
 type ShareableWeekProps = {

@@ -39,8 +39,8 @@ Output:
 Dependency analysis for features/Chart/
 
 Imports from:
-- features/EXERCISES.ts (ExerciseLog type)
-- features/dateInfo.ts (getDate, getLastMonday)
+- shared/utils/constants.ts (ExerciseLog type)
+- shared/utils/dateInfo.ts (getDate, getLastMonday)
 - expo-router (Link, useLocalSearchParams)
 - react-i18next (useTranslation)
 
@@ -50,7 +50,7 @@ Imported by:
 Internal dependencies:
 - Chart.tsx → ChartWeek.tsx
 - Chart.tsx → getChartData.ts
-- ChartDay.tsx → dateInfo.ts
+- ChartWeek.tsx → features/Share/ShareableWeek.tsx
 
 ✅ No circular dependencies detected
 
@@ -58,6 +58,7 @@ Dependency graph:
 app/chart.tsx
   └─ Chart.tsx
       ├─ ChartWeek.tsx
-      │   └─ ChartDay.tsx
+      │   ├─ ChartDay.tsx
+      │   └─ features/Share/ShareableWeek.tsx
       └─ getChartData.ts
 ```

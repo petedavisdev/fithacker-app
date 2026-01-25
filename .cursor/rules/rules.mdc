@@ -12,7 +12,7 @@ This directory contains context-aware rules for Cursor AI to follow when working
 
 These rules **reference the source of truth** in the codebase rather than duplicating information:
 
-- ✅ **Point to examples**: "See `shared/utils/EXERCISES.ts`" 
+- ✅ **Point to examples**: "See `shared/utils/constants.ts`" 
 - ✅ **Reference actual files**: "Check `app.config.js` for languages"
 - ✅ **Show patterns in use**: "Examples: `features/Chart/Chart.tsx`"
 - ❌ **Don't duplicate**: Hardcoded values that can change
@@ -55,7 +55,7 @@ When adding new rules:
 ### Writing Rules: Best Practices
 
 ✅ **Do:**
-- **Reference**: "See `shared/utils/EXERCISES.ts` for types"
+- **Reference**: "See `shared/utils/constants.ts` for types"
 - **Point to examples**: "Example: `features/Chart/Chart.tsx`"
 - **Use broad globs**: `**/*.ts,**/*.tsx` if pattern used throughout
 - **Explain why**: Include rationale for non-obvious patterns

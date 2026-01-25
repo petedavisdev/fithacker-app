@@ -4,10 +4,10 @@ import { useLocalSearchParams } from 'expo-router';
 import ViewShot from 'react-native-view-shot';
 import { AText } from '@/shared/components/AText';
 import { ChartDay } from './ChartDay';
-import { type ChartData } from './getChartData';
+import { type ChartData } from '@/shared/utils/constants';
 import { checkThisWeek, checkLastWeek } from './getWeekText';
-import { ShareableWeek } from './Share/ShareableWeek';
-import { useShareWeek } from './Share/useShareWeek';
+import { ShareableWeek } from '@/features/Share/ShareableWeek';
+import { useShareWeek } from '@/features/Share/useShareWeek';
 import { AButton } from '@/shared/components/AButton';
 import { URL_PARAMS, type Exercise } from '@/shared/utils/constants';
 

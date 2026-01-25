@@ -38,6 +38,13 @@ export const BADGES = {
 
 export type Badge = (typeof BADGES)[keyof typeof BADGES];
 
+export type ChartData = {
+	days: ExerciseLog;
+	text: string;
+	total: number;
+	badges: Badge[];
+};
+
 export const STALE_TIME = {
 	IMMEDIATE: 0,
 	BACKGROUND_SYNC: 30 * 1000,

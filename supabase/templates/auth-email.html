@@ -1,0 +1,288 @@
+<div style="font-family: monospace; text-align: center">
+	<!-- Magic number heading -->
+	{{ if eq .Data.language "de" }}
+	<p>✨ Deine magische Zahl ist ✨</p>
+	{{ else if eq .Data.language "es" }}
+	<p>✨ Tu número mágico es ✨</p>
+	{{ else if eq .Data.language "fr" }}
+	<p>✨ Votre numéro magique est ✨</p>
+	{{ else if eq .Data.language "it" }}
+	<p>✨ Il tuo numero magico è ✨</p>
+	{{ else if eq .Data.language "ja" }}
+	<p>✨ あなたのマジックナンバーは ✨</p>
+	{{ else if eq .Data.language "ko" }}
+	<p>✨ 당신의 매직 넘버는 ✨</p>
+	{{ else if eq .Data.language "pt" }}
+	<p>✨ Seu número mágico é ✨</p>
+	{{ else if eq .Data.language "zh" }}
+	<p>✨ 您的魔法数字是 ✨</p>
+	{{ else }}
+	<p>✨ Your magic number is ✨</p>
+	{{ end }}
+
+	<h1>{{ .Token }}</h1>
+
+	<br />
+
+	<!-- Sync description heading -->
+	{{ if eq .Data.language "de" }}
+	<h3>Kostenlose Sicherung und Synchronisation 💻📲</h3>
+	{{ else if eq .Data.language "es" }}
+	<h3>Copia de seguridad y sincronización gratuitas 💻📲</h3>
+	{{ else if eq .Data.language "fr" }}
+	<h3>Sauvegarde et synchronisation gratuites 💻📲</h3>
+	{{ else if eq .Data.language "it" }}
+	<h3>Backup e sincronizzazione gratuiti 💻📲</h3>
+	{{ else if eq .Data.language "ja" }}
+	<h3>無料バックアップと同期 💻📲</h3>
+	{{ else if eq .Data.language "ko" }}
+	<h3>무료 백업 및 동기화 💻📲</h3>
+	{{ else if eq .Data.language "pt" }}
+	<h3>Backup e sincronização gratuitos 💻📲</h3>
+	{{ else if eq .Data.language "zh" }}
+	<h3>免费备份和同步 💻📲</h3>
+	{{ else }}
+	<h3>Free backup and sync 💻📲</h3>
+	{{ end }}
+
+	<!-- Sync details -->
+	{{ if eq .Data.language "de" }}
+	<p>
+		Du kannst jetzt den Fithacker in der mobilen App und in deinem Browser unter
+		<a href="https://fithacker.app">fithacker.app</a> verwenden
+	</p>
+	{{ else if eq .Data.language "es" }}
+	<p>
+		Ahora puedes usar Fithacker en la aplicación móvil y en tu navegador en
+		<a href="https://fithacker.app">fithacker.app</a>
+	</p>
+	{{ else if eq .Data.language "fr" }}
+	<p>
+		Vous pouvez maintenant utiliser Fithacker dans l'application mobile et dans
+		votre navigateur sur <a href="https://fithacker.app">fithacker.app</a>
+	</p>
+	{{ else if eq .Data.language "it" }}
+	<p>
+		Ora puoi usare Fithacker nell'app mobile e nel browser su
+		<a href="https://fithacker.app">fithacker.app</a>
+	</p>
+	{{ else if eq .Data.language "ja" }}
+	<p>
+		モバイルアプリとブラウザの<a href="https://fithacker.app">fithacker.app</a
+		>でFithackerをご利用いただけます
+	</p>
+	{{ else if eq .Data.language "ko" }}
+	<p>
+		이제 모바일 앱과
+		<a href="https://fithacker.app">fithacker.app</a> 브라우저에서 Fithacker를
+		사용할 수 있습니다
+	</p>
+	{{ else if eq .Data.language "pt" }}
+	<p>
+		Agora você pode usar o Fithacker no aplicativo móvel e no navegador em
+		<a href="https://fithacker.app">fithacker.app</a>
+	</p>
+	{{ else if eq .Data.language "zh" }}
+	<p>
+		您现在可以在移动应用和浏览器<a href="https://fithacker.app">fithacker.app</a
+		>中使用Fithacker
+	</p>
+	{{ else }}
+	<p>
+		You can now use the Fithacker in the mobile app and in your browser at
+		<a href="https://fithacker.app">fithacker.app</a>
+	</p>
+	{{ end }}
+
+	<br />
+
+	<h2>
+		FITHACKER
+		<br />
+		🚶🏃‍♀️🤸💪🌴🦵
+	</h2>
+
+	<hr />
+
+	<!-- Donation Footer -->
+	{{ if eq .Data.language "de" }}
+	<p><strong>Eine Nachricht vom Entwickler 👋</strong></p>
+	<p>
+		Hi! Ich bin Pete und habe Fithacker als persönliches Projekt entwickelt, um
+		Menschen zu helfen, einen ausgewogenen, nachhaltigen Weg zur Fitness zu
+		finden. Ich wollte ein einfaches, ehrliches Tool für langfristige Gesundheit
+		schaffen, das nicht im Weg steht.
+	</p>
+	<p>
+		Um dies zu einem wirklich privaten Raum für deine Reise zu machen, gibt es
+		keine Werbung, keinen Datenverkauf und keine kostenpflichtigen Funktionen.
+	</p>
+	<p>
+		Ich beabsichtige, Fithacker für alle 100% kostenlos zu halten, solange ich
+		die Hosting-Kosten selbst tragen kann. Wenn die App einen Mehrwert für dein
+		Leben bietet, kannst du mir gerne
+		<a href="https://buymeacoffee.com/fithacker">hier einen Kaffee spendieren</a
+		>. Deine Unterstützung bedeutet mir viel!
+	</p>
+	<p>Frohes Training,</p>
+	<p>Pete 💪</p>
+	{{ else if eq .Data.language "es" }}
+	<p><strong>Una nota del creador de Fithacker 👋</strong></p>
+	<p>
+		¡Hola! Soy Pete y creé Fithacker como un proyecto personal para ayudar a las
+		personas a encontrar una forma equilibrada y sostenible de mantenerse en
+		forma. Quería crear una herramienta simple y honesta para la salud a largo
+		plazo que realmente no se interponga en tu camino.
+	</p>
+	<p>
+		Para mantener este espacio verdaderamente privado para tu viaje, no hay
+		anuncios, no vendemos datos y no hay funciones de pago.
+	</p>
+	<p>
+		Mi intención es mantener Fithacker 100% gratis para todos mientras pueda
+		cubrir los costos de hosting yo mismo. Si la app aporta valor a tu vida,
+		considera
+		<a href="https://buymeacoffee.com/fithacker">invitarme a un café aquí</a>.
+		¡Tu apoyo significa mucho!
+	</p>
+	<p>Feliz entrenamiento,</p>
+	<p>Pete 💪</p>
+	{{ else if eq .Data.language "fr" }}
+	<p><strong>Un mot du créateur de Fithacker 👋</strong></p>
+	<p>
+		Salut ! Je suis Pete, et j'ai créé Fithacker comme un projet personnel pour
+		aider les gens à trouver une façon équilibrée et durable de rester en forme.
+		Je voulais créer un outil simple et honnête pour la santé à long terme qui
+		ne vous gêne pas.
+	</p>
+	<p>
+		Pour garder cet espace vraiment privé pour votre parcours, il n'y a pas de
+		publicités, pas de vente de données et pas de fonctionnalités payantes.
+	</p>
+	<p>
+		J'ai l'intention de garder Fithacker 100% gratuit pour tous tant que je peux
+		couvrir les coûts d'hébergement moi-même. Si l'application apporte de la
+		valeur à votre vie, pensez à
+		<a href="https://buymeacoffee.com/fithacker">m'offrir un café ici</a>. Votre
+		soutien compte beaucoup !
+	</p>
+	<p>Bon entraînement,</p>
+	<p>Pete 💪</p>
+	{{ else if eq .Data.language "it" }}
+	<p><strong>Una nota dal creatore di Fithacker 👋</strong></p>
+	<p>
+		Ciao! Sono Pete, e ho creato Fithacker come progetto personale per aiutare
+		le persone a trovare un modo equilibrato e sostenibile per mantenersi in
+		forma. Volevo creare uno strumento semplice e onesto per la salute a lungo
+		termine che non ti intralci.
+	</p>
+	<p>
+		Per mantenere questo uno spazio veramente privato per il tuo percorso, non
+		ci sono pubblicità, nessuna vendita di dati e nessuna funzionalità a
+		pagamento.
+	</p>
+	<p>
+		Ho intenzione di mantenere Fithacker 100% gratuito per tutti finché posso
+		coprire i costi di hosting da solo. Se l'app aggiunge valore alla tua vita,
+		considera di
+		<a href="https://buymeacoffee.com/fithacker">offrirmi un caffè qui</a>. Il
+		tuo supporto significa molto!
+	</p>
+	<p>Buon allenamento,</p>
+	<p>Pete 💪</p>
+	{{ else if eq .Data.language "ja" }}
+	<p><strong>開発者のPeteより 👋</strong></p>
+	<p>
+		こんにちは！Pete（ピート）です。Fithackerは、皆さんが無理なく健康的な習慣を長く続けられるよう、個人の情熱を込めて開発したプロジェクトです。過度な機能はなく、長期的な健康を支えるためのシンプルで誠実なツールを目指しています。
+	</p>
+	<p>
+		プライバシーを第一に考えた自分だけの空間にするため、広告表示やデータの販売、有料機能などは一切ありません。
+	</p>
+	<p>
+		サーバー費用などの維持費をまかなえる限り、今後もずっと100%無料で提供し続けたいと考えています。もしこのアプリがお役に立ちましたら、<a
+			href="https://buymeacoffee.com/fithacker"
+			>こちらからコーヒー一杯分のサポート</a
+		>をいただけると嬉しいです。皆さんからの応援がとても励みになります！
+	</p>
+	<p>理想の体づくりを応援しています。</p>
+	<p>Pete 💪</p>
+	{{ else if eq .Data.language "ko" }}
+	<p><strong>Fithacker 개발자로부터 👋</strong></p>
+	<p>
+		안녕하세요! 저는 Pete입니다. Fithacker는 사람들이 균형 잡히고 지속 가능한
+		방식으로 건강을 유지할 수 있도록 돕기 위해 개인적인 열정으로 만든
+		프로젝트입니다. 방해가 되지 않는 장기적인 건강을 위한 간단하고 정직한 도구를
+		만들고 싶었습니다.
+	</p>
+	<p>
+		당신의 여정을 위한 진정한 개인 공간을 유지하기 위해 광고도, 데이터 판매도,
+		유료 기능도 없습니다.
+	</p>
+	<p>
+		호스팅 비용을 스스로 감당할 수 있는 한 Fithacker를 모든 사람에게 100% 무료로
+		유지할 계획입니다. 이 앱이 당신의 삶에 가치를 더한다면,
+		<a href="https://buymeacoffee.com/fithacker"
+			>여기서 커피 한 잔 사주시는 것</a
+		>을 고려해 주세요. 여러분의 응원이 큰 힘이 됩니다!
+	</p>
+	<p>즐거운 운동 되세요,</p>
+	<p>Pete 💪</p>
+	{{ else if eq .Data.language "pt" }}
+	<p><strong>Uma nota do Pete 👋</strong></p>
+	<p>
+		Oi! Eu sou o Pete. Criei o Fithacker como um projeto pessoal para ajudar as
+		pessoas a encontrarem um caminho equilibrado e sustentável para a boa forma.
+		Queria criar uma ferramenta simples e honesta para a saúde a longo prazo,
+		que não atrapalhasse a sua rotina.
+	</p>
+	<p>
+		Para que este seja um espaço verdadeiramente privado para a sua jornada, não
+		há anúncios, não vendemos seus dados e não existem recursos pagos.
+	</p>
+	<p>
+		Minha intenção é manter o Fithacker 100% gratuito para todos enquanto eu
+		conseguir cobrir os custos de hospedagem. Se o app agrega valor à sua vida,
+		considere
+		<a href="https://buymeacoffee.com/fithacker">me pagar um café aqui</a>. Seu
+		apoio significa muito!
+	</p>
+	<p>Bons treinos,</p>
+	<p>Pete 💪</p>
+	{{ else if eq .Data.language "zh" }}
+	<p><strong>来自Fithacker创建者的留言 👋</strong></p>
+	<p>
+		你好！我是Pete，我创建Fithacker是作为一个个人热情项目，帮助人们找到一种平衡、可持续的健身方式。我想创建一个简单、诚实的长期健康工具，真正不会妨碍你。
+	</p>
+	<p>
+		为了让这成为你旅程中真正私密的空间，没有广告，不出售数据，也没有付费功能。
+	</p>
+	<p>
+		只要我能承担托管费用，我打算让Fithacker对所有人100%免费。如果这个应用为你的生活增添了价值，请考虑<a
+			href="https://buymeacoffee.com/fithacker"
+			>在这里请我喝杯咖啡</a
+		>。你的支持意义重大！
+	</p>
+	<p>训练愉快，</p>
+	<p>Pete 💪</p>
+	{{ else }}
+	<p><strong>A note from Fithacker's creator 👋</strong></p>
+	<p>
+		Hi! I'm Pete, and I built Fithacker as a personal passion project to help
+		people find a balanced, sustainable way to stay fit. I wanted to create a
+		simple, honest tool for long-term health that actually stays out of your
+		way.
+	</p>
+	<p>
+		To keep this a truly private space for your journey, there are no ads, no
+		data selling, and no paid features.
+	</p>
+	<p>
+		I intend to keep Fithacker 100% free for everyone as long as I can cover the
+		hosting costs myself. If the app adds value to your life, please consider
+		<a href="https://buymeacoffee.com/fithacker">buying me a coffee here</a>.
+		Your support means a lot!
+	</p>
+	<p>Happy training,</p>
+	<p>Pete 💪</p>
+	{{ end }}
+</div>
