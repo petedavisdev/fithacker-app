@@ -1,39 +1,49 @@
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Pressable, Text, TextInput, View } from 'react-native';
+import { View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useIsOnline } from '@/shared/queries/useNetworkStatus';
+import { useAuthSession } from '@/features/Account/useAuthSession';
+import { OfflineMessage } from '@/features/Account/OfflineMessage';
+import { LoginForm } from '@/features/Account/LoginForm';
+import { AccountInfo } from '@/features/Account/AccountInfo';
+import { DownloadData } from '@/features/Download/DownloadData';
+import { UploadData } from '@/features/Upload/UploadData';
+import { TheHeader } from '@/shared/components/TheHeader';
+import { InstallLinks } from '@/features/Install/InstallLinks';
 
-export default function account() {
-	const { t } = useTranslation();
-	const [email, setEmail] = useState('');
-	const [placeholder, setPlaceholder] = useState(t('_@.email'));
+export default function AccountScreen() {
+	const isOnline = useIsOnline();
+	const { authSession } = useAuthSession();
+	const loggedIn = !!authSession?.user;
 
 	return (
-		<View className="p-4">
-			<Text className="font-mono text-cyan-400 text-2xl font-bold">
-				{t('_@.login')}
-			</Text>
-			<Text className="font-mono text-cyan-400">
-				{t('_@.loginDescription')}
-			</Text>
+		<View className="flex-1">
+			<TheHeader buttonLeft="back" buttonRight="chart" />
 
-			<TextInput
-				placeholder={placeholder}
-				placeholderTextColor={'#f472b6'}
-				className="text-lg text-yellow-400 font-mono border-y-2 border-b-yellow-500 border-t-transparent pb-3 pt-6 focus:text-pink-400 focus:border-b-pink-500"
-				value={email}
-				onChangeText={(value) => setEmail(value)}
-				onFocus={() => setPlaceholder('')}
-				onBlur={() => setPlaceholder(t('_@.email'))}
-			/>
+			<View className="gap-6">
+				<View>
+					<KeyboardAwareScrollView
+						keyboardOpeningTime={0}
+						className="flex-1"
+						contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
+					>
+						{!isOnline ? (
+							<OfflineMessage />
+						) : !loggedIn ? (
+							<LoginForm />
+						) : (
+							<AccountInfo />
+						)}
+					</KeyboardAwareScrollView>
+				</View>
 
-			<View className="mt-10 items-center">
-				<Pressable>
-					<View className="min-h-20 max-w-60 p-6 items-center justify-center border-2 border-yellow-500 rounded-full shadow shadow-yellow-500">
-						<Text className="text-lg text-yellow-400 font-mono text-balance text-center">
-							{t('_@.sendCode')}
-						</Text>
-					</View>
-				</Pressable>
+				<View className="w-96 self-center items-center gap-2 px-4 py-8">
+					<DownloadData />
+					<UploadData />
+				</View>
+
+				<View>
+					<InstallLinks />
+				</View>
 			</View>
 		</View>
 	);

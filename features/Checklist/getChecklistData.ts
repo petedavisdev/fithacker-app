@@ -4,8 +4,8 @@ import {
 	EXERCISE_PRIORITIES,
 	type ExerciseDay,
 	type ExerciseLog,
-} from '../EXERCISES';
-import { DateInfo } from '../dateInfo';
+} from '@/shared/utils/constants';
+import { DateInfo } from '@/shared/utils/dateInfo';
 
 export function getChecklistData(
 	dateInfo: DateInfo,

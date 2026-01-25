@@ -1,6 +1,6 @@
 ---
 description: Build and deployment conventions
-globs: app.config.js,eas.json,package.json
+globs: app.config.js,eas.json,package.json,scripts/deploy-prod.sh
 alwaysApply: false
 ---
 
@@ -9,6 +9,55 @@ alwaysApply: false
 ## NPM Scripts
 
 **Source of Truth**: `package.json` (`scripts` section)
+
+## Production Deployment
+
+**Source of Truth**: `scripts/deploy-prod.sh`
+
+**Critical Rule**: Database schema must be deployed **before** code deployment.
+
+### Deployment Commands
+
+- `npm run deploy:prod` - Interactive deployment script (checks schema, prompts, deploys)
+- `npm run deploy:schema` - Deploy database schema (pushes migrations + regenerates TypeScript types)
+- `npm run web:prod` - Build and deploy web only
+- `npm run ios:prod` - Build iOS app only
+
+### Deployment Workflow
+
+1. **Check schema changes**: `npm run supabase:db:diff`
+2. **Deploy schema first** (if changes exist): `npm run deploy:schema`
+3. **Deploy code**: `npm run deploy:prod` or platform-specific commands
+
+### Why Schema First?
+
+- Code may depend on new database structure
+- If migration fails, code hasn't deployed yet (safer rollback)
+- Forward-compatible: old code works with new schema
+- Human review of migrations before touching production
+
+### Schema Changes Process (Declarative Workflow)
+
+**The declarative approach**: Edit `schema.sql` (desired state) → Generate migrations (diff) → Deploy
+
+1. **Edit schema**: Modify `supabase/schemas/schema.sql` to reflect desired database state
+2. **Generate migration**: `npm run supabase:schema:diff <migration-name>`
+   - Creates timestamped migration file in `supabase/migrations/`
+   - Review the generated migration before committing
+3. **Test** (optional): Use Supabase preview branches or test locally
+4. **PR & Review**: Commit migration file, open PR, get review
+5. **Merge to main**: Migration file is now in version control
+6. **Deploy schema**: `npm run deploy:schema` (before code deployment)
+   - Pushes pending migrations to production
+   - Regenerates TypeScript types automatically
+7. **Deploy code**: `npm run deploy:prod` or platform-specific commands
+
+**Key Commands**
+
+- `npm run supabase:schema:diff <name>` - Generate migration from schema.sql changes
+- `npm run supabase:db:diff` - Check if schema.sql differs from production (no migration generated)
+- `npm run deploy:schema` - Push migrations + regenerate types
+- `npm run supabase:schema:pull` - Pull production schema to schema.sql (sync local)
 
 ## Environment Variants
 
@@ -27,3 +76,44 @@ Set `APP_VARIANT` env var to control build variant
 ## Supported Platforms
 
 **Source of Truth**: `app.config.js` (`ios`, `android`, `web` configurations)
+
+## When Rebuilds Are Required
+
+### Web Builds
+
+**Environment Variables**: Changes to `.env` or `app.config.js` values require rebuilding web builds:
+
+```bash
+npm run web:build
+```
+
+**Why**: Web builds bake environment variables and config values into the JavaScript bundle at build time. The built files in `dist/` contain these values, so changes require a rebuild.
+
+**Dev Server Exception**: The dev server (`npm start`) reads `app.config.js` dynamically, so env var changes only require restarting the dev server, not a full rebuild.
+
+**Other reasons web builds need rebuilding:**
+- Changes to `app.config.js` that affect web config (PWA settings, web bundler config, etc.)
+- Changes to assets referenced in web build
+- Changes to plugins that affect web output
+- Changes to `workbox-config.js` or service worker configuration
+
+### Native Builds (iOS/Android)
+
+**Always require rebuilds for:**
+- Any changes to `app.config.js` (native configs are baked into the app binary)
+- Native dependency changes (new packages with native code)
+- Changes to `eas.json` build profiles
+- Changes to native plugins or Expo config plugins
+- Changes to app icons, splash screens, or other native assets
+- Environment variable changes (values are baked into native builds)
+
+**Dev Server**: Native development clients connect to the dev server for JavaScript updates, but native config changes always require a new build.
+
+## Environment Variables
+
+**Source of Truth**: `.env` file (loaded via `dotenv/config` in `app.config.js`)
+
+- Pull from EAS: `npm run env:pull` (outputs to `.env`)
+- Values from `.env` are read by `app.config.js` and exposed via `expo.extra`
+- Runtime code accesses via `Constants.expoConfig?.extra` or `process.env.EXPO_PUBLIC_*`
+- **Important**: Web builds bake these values into the bundle - rebuild required after changes

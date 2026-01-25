@@ -1,5 +1,5 @@
-import { ExerciseDay, ExerciseLog } from '../EXERCISES';
-import { DateInfo } from '../dateInfo';
+import { ExerciseDay, ExerciseLog } from '@/shared/utils/constants';
+import { DateInfo } from '@/shared/utils/dateInfo';
 import { getChecklistData } from './getChecklistData';
 
 describe('getChecklistData', () => {

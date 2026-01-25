@@ -1,6 +1,6 @@
 ---
 description: Internationalization patterns and translation conventions
-globs: i18n/**/*.ts,i18n/**/*.json,**/*.tsx
+globs: shared/i18n/**/*.ts,shared/i18n/**/*.json,**/*.tsx
 alwaysApply: false
 ---
 
@@ -15,9 +15,9 @@ alwaysApply: false
 
 ## Supported Languages
 
-**Source of Truth**: `i18n/index.ts` (see `resources` object)
+**Source of Truth**: `shared/i18n/index.ts` (see `resources` object)
 
-- Translation files: `/i18n/translation/{locale}.json` (one file per language)
+- Translation files: `/shared/i18n/translation/{locale}.json` (one file per language)
 - Language detection: Auto-detect from device, fallback to English
 - Registered in `app.config.js` under `CFBundleLocalizations`
 
@@ -25,7 +25,7 @@ alwaysApply: false
 
 When adding new translation keys:
 
-1. Add to **ALL** language files in `/i18n/translation/` directory
+1. Add to **ALL** language files in `/shared/i18n/translation/` directory
 2. Use underscore prefix for utilities: `_.keyName`
 3. Use emoji as key for exercises: `"🚶": "Walk"`
 4. Maintain JSON structure consistency

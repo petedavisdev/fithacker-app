@@ -9,28 +9,36 @@ alwaysApply: false
 ## Type Safety
 
 - Strict mode enabled (see `tsconfig.json`: `"strict": true`)
-- Use `as const` for arrays that become type sources (see `features/EXERCISES.ts`)
+- Use `as const` for arrays that become type sources (see `shared/utils/constants.ts`)
 
 ## Type Patterns
 
 - Derive types from constants using `typeof`: `type Exercise = (typeof EXERCISES)[number]`
 - Use discriminated unions for polymorphic props: `(LinkButtonProps | PressableButtonProps) & CommonProps`
-- Export types alongside data from constant files (e.g., `EXERCISES.ts` exports both `EXERCISES` and `Exercise`)
+- Export types alongside data from constant files (e.g., `constants.ts` exports both `EXERCISES` and `Exercise`)
 - Use `Record<string, T>` for object maps with string keys
 - Props interfaces: Use `[ComponentName]Props` naming pattern
+- Boolean coercion: Use `!!value` instead of `Boolean(value)`
 
 ## Type Examples
 
-**Derived types**: See `features/EXERCISES.ts` (Exercise type derived from EXERCISES array)
-**Discriminated unions**: See `features/Atoms/AButton.tsx` (LinkButtonProps | PressableButtonProps)
+**Derived types**: See `shared/utils/constants.ts` (Exercise type derived from EXERCISES array)
+**Discriminated unions**: See `shared/components/AButton.tsx` (LinkButtonProps | PressableButtonProps)
 
 ## Constants
 
 - ALL_CAPS for true constants
 - `as const` for readonly arrays/objects
-- Export from dedicated files (e.g., `EXERCISES.ts`)
+- Export from dedicated files (e.g., `constants.ts`)
+
+## Function Declarations vs Arrow Functions
+
+- Use function declarations for named functions: `function handleBlur() { ... }`
+- Use arrow functions for inline anonymous functions: `onPress={() => { ... }}`
+- **Examples**: See `features/Checklist/ChecklistInput.tsx` (`handleBlur` as function declaration, inline arrow in `onPress`)
 
 ## Anti-Patterns
 
 - ❌ Don't use `any` type
 - ❌ Don't use manual enums - use `as const` arrays instead
+- ❌ Don't use `const handleX = () => { ... }` for named helper functions - use `function handleX() { ... }`

@@ -7,18 +7,33 @@ alwaysApply: true
 
 ## Feature-Based Structure
 
-**Examples**: See `/features` directory structure (Chart, Checklist, ExerciseFilter, TheHeader, Atoms)
+**Examples**: See `/features` directory structure (Account, Chart, Checklist, Download, Install, Notes, Share, Upload)
 
 - Organize code by feature in `/features` directory, NOT by type (no `/components`, `/hooks`, `/utils` folders)
 - Each feature folder contains: components, hooks, utility functions, tests, and types
 - Co-locate test files next to implementation
 - Co-locate utility functions with their tests
+- **Prefer smaller, independent features** - avoid nesting subfolders within features
+- When a utility is used by multiple features, move it to `/shared/utils/`
+
+## Shared Code Structure
+
+**Examples**: See `/shared` directory structure (components, queries, supabase, utils, i18n)
+
+- Shared code goes in `/shared` directory, organized by type
+- `/shared/components/` - Shared atomic components (AButton, AModal, AErrorBoundary)
+- `/shared/queries/` - React Query hooks for data fetching
+- `/shared/supabase/` - Supabase client and sync logic
+- `/shared/utils/` - Shared utility functions and constants (EXERCISES, dateInfo)
+- `/shared/i18n/` - Internationalization configuration and translations
+
+**Note**: Mutations are co-located with features (e.g., `features/Checklist/useMutateDayExercise.ts`), not in `/shared/mutations/`. See `.cursor/rules/react-query.mdc` for mutation patterns.
 
 ## Atomic Components
 
-**Examples**: See `/features/Atoms/` (AButton, AModal)
+**Examples**: See `/shared/components/` (AButton, AModal, AErrorBoundary)
 
-- Shared primitive components go in `/features/Atoms/`
+- Shared primitive components go in `/shared/components/`
 - Prefix atomic component names with `A`
 - Keep atoms minimal and composable
 - Atoms should accept discriminated union props when polymorphic
@@ -47,6 +62,7 @@ alwaysApply: true
 
 ## Anti-Patterns (What NOT to Do)
 
-- ❌ Don't create `/components`, `/hooks`, `/utils` folders
+- ❌ Don't create `/components`, `/hooks`, `/utils` folders at root
+- ❌ Don't nest subfolders within feature folders - create separate top-level features instead
 - ❌ Don't store AsyncStorage keys without 'exerciseLog' prefix
-- ❌ Don't create standalone utility/helper folders
+- ❌ Don't keep feature-specific utilities in `/shared/utils/` if only used by one feature

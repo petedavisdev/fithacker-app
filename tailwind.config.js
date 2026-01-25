@@ -2,8 +2,9 @@
 module.exports = {
 	content: [
 		'./App.{js,jsx,ts,tsx}',
-		'./app/**/*.{js,jsx,ts,tsx}', // Include all JS, JSX, TS, and TSX files in the app folder
-		'./features/**/*.{js,jsx,ts,tsx}', // Include all JS, JSX, TS, and TSX files in the components folder]
+		'./app/**/*.{js,jsx,ts,tsx}',
+		'./features/**/*.{js,jsx,ts,tsx}',
+		'./shared/**/*.{js,jsx,ts,tsx}',
 	],
 	presets: [require('nativewind/preset')],
 	theme: {
@@ -15,6 +16,7 @@ module.exports = {
 			white: '#fff', // App Store badge text (web-only)
 			// App background
 			bg: '#112',
+			bgPink: '#211', // Dark pink gradient (matches darkness of #112)
 			// Yellow: Weekends, completed state, default buttons, inputs (unfocused), "FIT" branding
 			yellow: {
 				400: '#facc15', // Input text (default state)
@@ -46,13 +48,13 @@ module.exports = {
 				800: '#1e293b', // Inactive filters
 			},
 		},
-		extend: {
-			fontFamily: {
-				mono: ['UbuntuMono'],
-				sans: ['UbuntuMono'],
-				serif: ['UbuntuMono'],
-			},
+		fontFamily: {
+			// Override default font families - Ubuntu Mono is the default for everything
+			sans: ['UbuntuMono'],
+			serif: ['UbuntuMono'],
+			mono: ['UbuntuMono'],
 		},
+		extend: {},
 	},
 	plugins: [],
 };

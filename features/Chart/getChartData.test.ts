@@ -1,4 +1,4 @@
-import { ExerciseLog } from '../EXERCISES';
+import { ExerciseLog } from '@/shared/utils/constants';
 import { getChartData } from './getChartData';
 
 jest.useFakeTimers({ now: new Date('2022-02-26T00:00:00') });
@@ -20,6 +20,7 @@ describe('getWeekData', () => {
 				},
 				text: '_.thisWeek',
 				total: 0,
+				badges: [],
 			},
 			{
 				days: {
@@ -33,6 +34,7 @@ describe('getWeekData', () => {
 				},
 				text: '_.lastWeek',
 				total: 1,
+				badges: [],
 			},
 		];
 
@@ -67,6 +69,7 @@ describe('getWeekData', () => {
 				},
 				text: '_.thisWeek',
 				total: 4,
+				badges: [],
 			},
 		];
 

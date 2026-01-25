@@ -1,0 +1,85 @@
+---
+description: React Query patterns for queries and mutations
+globs: shared/queries/**/*.ts,features/**/use*.ts
+alwaysApply: false
+---
+
+# React Query Patterns
+
+## Query Hooks Location
+
+**Source of Truth**: `shared/queries/`
+
+- Shared query hooks go in `/shared/queries/`
+- Feature-specific queries can be co-located with features (e.g., `features/Account/useAuthSession.ts`)
+- Use `queryKeys` from `shared/queries/queryKeys.ts` for all query keys
+
+## Query Key Patterns
+
+**Source of Truth**: `shared/queries/queryKeys.ts`
+
+- Centralized query keys prevent typos and ensure consistency
+- Use nested objects for related keys (e.g., `queryKeys.auth.session`)
+- Use functions for parameterized keys (e.g., `queryKeys.exerciseLogDay(date)`)
+- Always use `as const` for type safety
+
+## Query Hook Patterns
+
+**Examples**: `shared/queries/useExerciseLog.ts`, `shared/queries/usePendingSync.ts`
+
+- Always rename destructured values: `{ data, isLoading, error }` → `{ exerciseLog, isLoadingExerciseLog, errorExerciseLog }`
+- Set appropriate `staleTime`: `0` for frequently changing data (exerciseLog, pendingSync), `Infinity` for stable data (auth session, network status)
+- Return object with renamed values: `{ exerciseLog: data ?? {}, isLoadingExerciseLog: isLoading, errorExerciseLog: error }`
+
+## Mutation Hooks Location
+
+**Examples**: `features/Checklist/useMutateDayExercise.ts`, `features/Account/useLogin.ts`
+
+- Mutations are co-located with features, NOT in `/shared/mutations/`
+- Feature-specific mutations live in feature folders
+- Shared mutations would go in `/shared/mutations/` if needed (currently empty)
+
+## Mutation Hook Patterns
+
+**Examples**: `features/Checklist/useMutateDayExercise.ts`, `features/Account/useLogin.ts`
+
+- Always rename destructured values: `{ mutate, isPending, error }` → `{ mutateDayExercise, isMutatingDayExercise, errorMutateDayExercise }`
+- Local-first: Update AsyncStorage first, then add to pendingSync
+- Background sync handled separately: Mutations don't push to Supabase directly - `syncAll()` handles all syncing
+- Update React Query cache in `onSuccess`: `queryClient.setQueryData(queryKeys.exerciseLog, newLog)`
+- Invalidate related queries: `queryClient.invalidateQueries({ queryKey: queryKeys.pendingSync })`
+- Return object with renamed values: `{ mutateDayExercise, isMutatingDayExercise, errorMutateDayExercise }`
+
+## Local-First Pattern
+
+**Example**: See `features/Checklist/useMutateDayExercise.ts`
+
+1. Read from cache or AsyncStorage
+2. Update local state
+3. Persist to AsyncStorage
+4. Add to pendingSync (marks for background sync)
+5. Update React Query cache in `onSuccess`
+6. Invalidate related queries
+7. Background sync (`syncAll()`) runs separately to push changes to Supabase
+
+## Cache Management
+
+- Use `queryClient.setQueryData()` for optimistic updates
+- Use `queryClient.invalidateQueries()` to trigger refetch
+- Use `queryClient.getQueryData()` to read from cache synchronously
+- Listeners (auth, network) update cache via `setQueryData` for instant updates
+
+## Error Handling
+
+- Mutations: Errors are returned in hook return value, handle in component
+- Queries: Errors are returned in hook return value, handle in component
+- Background sync errors: Log with `console.warn`, don't throw
+- Never block user actions for sync failures
+
+## Anti-Patterns
+
+- ❌ Don't put mutations in `/shared/mutations/` unless truly shared across features
+- ❌ Don't use `data`, `isLoading`, `error` without renaming
+- ❌ Don't push to Supabase directly in mutations - use `syncAll()` for all syncing
+- ❌ Don't forget to update React Query cache after AsyncStorage updates
+- ❌ Don't create query keys manually - use `queryKeys` object

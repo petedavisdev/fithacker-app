@@ -20,7 +20,7 @@ alwaysApply: false
 
 - Component snapshots: `features/Chart/ChartDay.test.tsx`
 - Pure function tests: `features/Chart/getChartData.test.ts`
-- Date tests: `features/dateInfo.test.ts`
+- Date tests: `shared/utils/dateInfo.test.ts`
 
 - Co-locate tests with implementation
 - Test file naming: `{filename}.test.ts[x]`

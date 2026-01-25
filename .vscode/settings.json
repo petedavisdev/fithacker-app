@@ -1,5 +1,6 @@
 {
 	"cSpell.words": [
+		"beforeinstallprompt",
 		"extralight",
 		"Fithacker",
 		"Ionicons",
@@ -7,6 +8,7 @@
 		"nativewind",
 		"petedavis",
 		"Pressable",
+		"supabase",
 		"tailwindcss"
 	],
 	"i18next.i18nPaths": "/Users/Pete/GitHub/fithacker-app/i18n"

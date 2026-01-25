@@ -1,0 +1,72 @@
+---
+description: Guide for email translations and Pete's voice
+globs: supabase/templates/**/*.html
+alwaysApply: false
+---
+
+# Email Translation & Voice Guide
+
+## The Three Pillars (Must include in every language)
+
+1. **The Mission**: Helping people have an easy, sustainable, balanced approach to long-term fitness
+2. **The Transparency**: No ads, no data selling, no paid features
+3. **The Reason for Donation**: "Covering server/hosting costs" so the app stays independent and free
+
+## Regional Tone Settings
+
+| Region | Tone | Focus |
+|--------|------|-------|
+| Western (en/es/pt) | Peer-to-peer, friendly | Emojis for warmth |
+| Eastern (ja/ko) | Humble creator, sincere | Reliability, "rooting for" the user |
+| Privacy-heavy (de) | Direct, trustworthy | "No data selling" emphasis |
+
+## Key Terms & Local Feel
+
+- "Simple tool" → Avoids sounding like complex Fitbit clone
+- "Passion project" → Humanizes Pete (person, not company)
+- "Sustainable" → "Long-term", "without overstrain" (JP: 無理のない)
+- "Buy me a coffee" → Local equivalents (PT: cafezinho, JP: コーヒー一杯分のサポート)
+
+## Golden Rule
+
+> "Fithacker should sound like a person talking to a friend, not a machine sending a notification."
+
+## When Updating English
+
+1. Update English first in `supabase/templates/auth-email.html`
+2. Run translation command for other languages
+3. Review regional adaptations (not word-for-word translations)
+4. Deploy with `npm run supabase:templates:deploy`
+
+## Translation Examples
+
+### Portuguese (Natural & Warm)
+
+Uses "cafezinho" (little coffee) concept. Friendly, not formal.
+
+### Japanese (Polite & Sincere)
+
+Uses humble tone (謙譲語 style). "Support equivalent to one cup of coffee" (コーヒー一杯分のサポート).
+Emphasizes "without overdoing it" (無理のない) for sustainable fitness.
+
+### German (Privacy-Focused)
+
+Lead with data privacy. Direct communication style.
+
+## For Translators
+
+When hiring translators or using AI translation, provide this guidance:
+
+> "Don't translate word-for-word. Translate the feeling of a 'passionate creator providing a clean, private tool for free.'"
+
+## Supported Languages
+
+- en (English) - Base language
+- de (German) - Privacy-focused tone
+- es (Spanish) - Warm, peer-to-peer
+- fr (French) - Friendly, casual
+- it (Italian) - Warm, personal
+- ja (Japanese) - Humble creator, sincere
+- ko (Korean) - Humble creator, supportive
+- pt (Portuguese) - Natural "cafezinho" style
+- zh (Chinese) - Respectful, sincere

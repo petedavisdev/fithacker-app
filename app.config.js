@@ -1,3 +1,5 @@
+import 'dotenv/config';
+
 const APP_VARIANTS = [
 	{
 		env: 'development',
@@ -30,7 +32,7 @@ export default {
 		orientation: 'portrait',
 		icon: './assets/images/icon.png',
 		newArchEnabled: true,
-		scheme: 'myapp',
+		scheme: 'fithacker',
 		userInterfaceStyle: 'automatic',
 		updates: {
 			url: 'https://u.expo.dev/6c3e19dc-162f-45b6-98f4-716ce558cd0e',
@@ -46,6 +48,7 @@ export default {
 		ios: {
 			supportsTablet: true,
 			bundleIdentifier: bundleIdentifier || 'dev.petedavis.fithacker',
+			associatedDomains: ['applinks:fithacker.app'],
 			infoPlist: {
 				CFBundleAllowMixedLocalizations: true,
 				CFBundleLocalizations: [
@@ -67,6 +70,7 @@ export default {
 					'zh-CN',
 				],
 				CFBundleDevelopmentRegion: 'en',
+				ITSAppUsesNonExemptEncryption: false,
 			},
 		},
 		android: {
@@ -75,13 +79,42 @@ export default {
 				backgroundColor: '#111122',
 			},
 			package: bundleIdentifier || 'dev.petedavis.fithacker',
+			intentFilters: [
+				{
+					action: 'VIEW',
+					autoVerify: true,
+					data: [
+						{
+							scheme: 'https',
+							host: 'fithacker.app',
+							pathPrefix: '/chart',
+						},
+					],
+					category: ['BROWSABLE', 'DEFAULT'],
+				},
+			],
 		},
 		web: {
 			bundler: 'metro',
 			output: 'static',
 			favicon: './assets/images/favicon.png',
+			// PWA fields (Expo auto-generates manifest.json):
+			name: 'Fithacker',
+			shortName: 'Fithacker',
+			description: 'Simple, emoji-based exercise logging',
+			themeColor: '#111122',
+			backgroundColor: '#111122',
+			display: 'standalone',
+			orientation: 'portrait',
+			startUrl: '/',
+			scope: '/',
 		},
-		plugins: ['expo-router', 'expo-localization', 'expo-font'],
+		plugins: [
+			'expo-router',
+			'expo-localization',
+			'expo-font',
+			'expo-web-browser',
+		],
 		experiments: {
 			typedRoutes: true,
 		},
@@ -89,6 +122,9 @@ export default {
 			eas: {
 				projectId: '6c3e19dc-162f-45b6-98f4-716ce558cd0e',
 			},
+			supabaseUrl: process.env.EXPO_PUBLIC_SUPABASE_URL,
+			supabaseAnonKey: process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY,
+			appleReviewEmail: process.env.EXPO_PUBLIC_APPLE_REVIEW_EMAIL,
 		},
 	},
 };

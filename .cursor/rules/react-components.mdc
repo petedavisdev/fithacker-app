@@ -11,22 +11,66 @@ alwaysApply: false
 - Use function declarations: `export function Component(props: Props)`
 - NOT arrow functions for components
 - Props type inline: `function Component(props: ComponentProps)`
+- Access props directly: Use `props.propName` throughout the component, NOT destructuring
+- **Examples**: See `shared/components/AButton.tsx`, `features/Checklist/ChecklistInput.tsx`
+- **Anti-pattern**: ❌ Don't destructure props (`const { prop } = props` or `function Component({ prop }: Props)`)
+- **Helper functions**: See `.cursor/rules/typescript.mdc` for function declaration vs arrow function patterns
 
 ## Custom Hooks Structure
 
-**Example**: See `features/useExerciseLog.ts` or `features/useNewDay.ts`
+**Example**: See React Query hooks in `shared/queries/` or feature-specific hooks like `features/Checklist/useMutateDayExercise.ts`
 
 ## Custom Hooks for Domain Logic
 
-**Examples**: `features/useExerciseLog.ts`, `features/useNewDay.ts`
+**Examples**: React Query hooks in `shared/queries/`, feature-specific mutation hooks like `features/Checklist/useMutateDayExercise.ts`
+
+See `.cursor/rules/react-query.mdc` for React Query patterns
 
 - Use custom hooks for domain-specific state logic
 - Keep state local to features when possible
-- NO external state management libraries (no Redux, Zustand, etc.)
+- Use React Query (`@tanstack/react-query`) for async state management
+- NO other external state management libraries (no Redux, Zustand, etc.)
 
-## Async in useEffect
+## Async State Management
 
-**Example**: See `features/useExerciseLog.ts` (IIFE pattern for async in useEffect)
+**Example**: See React Query hooks in `shared/queries/` and mutation hooks in feature folders
+
+- Use React Query's `useQuery` for data fetching
+- Use React Query's `useMutation` for data mutations
+- Components should have ZERO async/await, ZERO try-catch, ZERO data-fetching useEffects
+- Event handlers call `mutate()` synchronously
+- See `.cursor/rules/react-query.mdc` for detailed patterns
+
+## When to Use useEffect
+
+**Reference**: https://react.dev/learn/you-might-not-need-an-effect
+
+Effects are an escape hatch for synchronizing with external systems. Use sparingly.
+
+**✅ Valid**: Subscribing to external systems (browser/React Native APIs, third-party libraries), timing-based side effects (debouncing)
+**Examples**: `useNetworkStatus.ts`, `useAuthSession.ts`, `ChecklistInput.tsx` (debouncing)
+
+**❌ Anti-patterns**: Transforming data (calculate during render), updating state from props/state (calculate during render), data fetching (use React Query), handling user events (use event handlers)
+
+**Always return cleanup**: `return () => subscription.remove()` or `clearTimeout(timeoutId)`
+
+## Component Self-Containment
+
+**Examples**: `features/Account/AccountInfo.tsx`, `features/Checklist/Checklist.tsx`, `features/Account/OfflineMessage.tsx`
+
+- Prefer accessing hooks directly over receiving data via props when data is globally available
+- Components should own their data dependencies when possible
+- Access React Query hooks directly: `useExerciseLog()`, `useAuthSession()`, `usePendingSync()`
+- Access route params directly: `useLocalSearchParams()` instead of receiving via props
+- **When to use props**: Presentational components, reusable UI components, data computed by parent
+- **When to use hooks**: Data available globally (React Query cache, route params, auth session)
+- **Benefits**: Reduced coupling, simpler parent components, easier testing, better encapsulation
+
+**Examples**:
+- ✅ `AccountInfo` accesses `useAuthSession()`, `usePendingSync()`, `useBackgroundSync()` directly
+- ✅ `Checklist` accesses `useLocalSearchParams()` directly to get date
+- ✅ `OfflineMessage` accesses `useAuthSession()` directly
+- ✅ `ChecklistInput` receives props (presentational, reusable component)
 
 ## Pure Functions
 
@@ -34,3 +78,29 @@ alwaysApply: false
 
 - Co-locate pure functions in feature folders (e.g., `Chart/getChartData.ts`)
 - Export function and types together
+
+## Component Naming in `/shared/components/`
+
+**Examples**: `shared/components/TheHeader.tsx`, `shared/components/AButton.tsx`, `shared/components/AModal.tsx`
+
+- **`The` prefix**: Components that include content and typically render once per page (e.g., `TheHeader`, `TheFilter`)
+- **`A` prefix**: Generic/reusable components (e.g., `AButton`, `AModal`, `AErrorBoundary`)
+- File names match component names exactly: `TheHeader.tsx` exports `TheHeader`, `AButton.tsx` exports `AButton`
+
+## Using Wrapper Components
+
+**Source of Truth**: `shared/components/` directory
+
+- **Prefer wrapper components** instead of native React Native components when available
+- Available wrappers: `AText` (replaces `Text`), `AButton` (replaces `Button`/`Pressable` for buttons), `AModal` (replaces `Modal`)
+- Wrapper components provide consistent styling defaults and props (e.g., `AText` defaults to `text-cyan-400` without needing props or classNames)
+- Import from `@/shared/components/[AComponentName]`
+- **Examples**: See usage throughout the codebase - all text uses `AText`, all buttons use `AButton`
+
+## Single Component Per File
+
+- One component per `.tsx` file - single named export only
+- Don't export functions, constants, or types from component files
+- Types may be exported if they follow the same import direction as the component (e.g., `ComponentProps` exported alongside `Component`)
+- **Even internal components** must be in separate files - extract helper components to their own files
+- **Anti-pattern**: ❌ Multiple components (even if only one is exported), utility functions, or constants exported from component files
