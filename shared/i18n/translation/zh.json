@@ -25,6 +25,7 @@
 		"downloadData": "下载我的数据 (CSV + JSON)",
 		"downloadError": "下载失败。请重试。",
 		"downloadingData": "下载中...",
+		"installApp": "安装应用",
 		"offlineLoggedIn": "没问题！当您恢复在线时，数据将自动同步。",
 		"offlineLoggedOut": "没问题！当您恢复在线时，请登录以备份和同步您的数据。",
 		"offlineTitle": "您处于离线状态",

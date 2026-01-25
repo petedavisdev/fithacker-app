@@ -13,9 +13,19 @@ export function InstallLinks() {
 	const isAndroid = userAgent.includes('android');
 	const isIOS = /iphone|ipad|ipod/.test(userAgent);
 
+	// Determine if there's any content to show
+	const hasAppStoreBadge = !isAndroid;
+	const hasInstallButton = isAndroid && isInstallable;
+	const hasInstallHint = !isIOS && (!isInstallable || !isAndroid);
+	const hasContent = hasAppStoreBadge || hasInstallButton || hasInstallHint;
+
+	if (!hasContent) {
+		return null;
+	}
+
 	return (
-		<View className="items-center gap-4 pb-8">
-			{!isAndroid && (
+		<View className="w-96 self-center items-center gap-4 pb-8">
+			{hasAppStoreBadge && (
 				<View className="items-center">
 					<a
 						href="https://apps.apple.com/us/app/fithacker/id6737473687?platform=iphone"
@@ -31,23 +41,17 @@ export function InstallLinks() {
 				</View>
 			)}
 
-			{isAndroid && isInstallable && (
-				<View className="gap-2">
-					<AButton
-						onPress={() => promptInstall()}
-						size="sm"
-						color="cyan"
-						isDisabled={isPromptingInstall}
-					>
-						📱
-					</AButton>
-					<AText color="cyan" shade={300} size="xs" className="text-center">
-						Install App
-					</AText>
-				</View>
+			{hasInstallButton && (
+				<AButton
+					onPress={() => promptInstall()}
+					size="sm"
+					isDisabled={isPromptingInstall}
+				>
+					📱 {t('_account.installApp')}
+				</AButton>
 			)}
 
-			{!isIOS && (!isInstallable || !isAndroid) && (
+			{hasInstallHint && (
 				<AText color="cyan" shade={300} size="xs" className="text-center px-4">
 					{t('_account.androidInstallHint')}
 				</AText>

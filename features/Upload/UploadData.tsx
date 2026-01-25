@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, View } from 'react-native';
+import { View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { AText } from '@/shared/components/AText';
+import { AButton } from '@/shared/components/AButton';
 import { AModal } from '@/shared/components/AModal';
 import { useUploadData, type UploadResult } from './useUploadData';
 import { useMergeUploadedData } from './useMergeUploadedData';
@@ -99,35 +100,20 @@ export function UploadData() {
 
 	return (
 		<>
-			<View className="items-center gap-2 pb-4">
+			<View className="items-center gap-2">
 				{uploadError && (
 					<AText color="pink" size="xs" className="text-center px-4 mb-2">
 						{uploadError}
 					</AText>
 				)}
 
-				<Pressable onPress={handleSelectFile} disabled={isProcessing}>
-					<View
-						className={`px-4 py-2 items-center justify-center border-2 border-yellow-500 rounded-full ${
-							isProcessing ? 'opacity-35' : ''
-						}`}
-						style={{
-							shadowColor: '#a16207',
-							shadowOffset: { width: 0, height: 2 },
-							shadowOpacity: 0.25,
-							shadowRadius: 3.84,
-							elevation: 5,
-						}}
-					>
-						<AText
-							color="yellow"
-							size="sm"
-							className="text-balance text-center"
-						>
-							{isProcessing ? '⏳' : '📤'} {t('_account.uploadData')}
-						</AText>
-					</View>
-				</Pressable>
+				<AButton
+					color="cyan"
+					onPress={handleSelectFile}
+					isDisabled={isProcessing}
+				>
+					{isProcessing ? '⏳' : '📤'} {t('_account.uploadData')}
+				</AButton>
 			</View>
 
 			{validatedFile && validatedFile.success && (

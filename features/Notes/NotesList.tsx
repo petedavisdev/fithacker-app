@@ -1,7 +1,8 @@
-import { View, Pressable } from 'react-native';
-import { Link, useRouter } from 'expo-router';
+import { View } from 'react-native';
+import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { AText } from '@/shared/components/AText';
+import { AButton } from '@/shared/components/AButton';
 import type { NotesDay } from './getNotesData';
 import { NotesItem } from './NotesItem';
 import type { Exercise } from '@/shared/utils/constants';
@@ -52,30 +53,13 @@ export function NotesList(props: NotesListProps) {
 			<View className="flex-1 items-center justify-center p-8 gap-4">
 				<AText className="text-center">{message}</AText>
 				{(hasSearch || hasFilter) && (
-					<Pressable onPress={handleClear}>
-						<View
-							className="px-4 py-2 items-center justify-center border-2 border-pink-500 rounded-full"
-							style={{
-								shadowColor: '#ec4899',
-								shadowOffset: { width: 0, height: 2 },
-								shadowOpacity: 0.25,
-								shadowRadius: 3.84,
-								elevation: 5,
-							}}
-						>
-							<AText
-								color="pink"
-								size="sm"
-								className="text-balance text-center"
-							>
-								{hasSearch && hasFilter
-									? t('_notes.clearSearchAndFilter')
-									: hasSearch
-										? t('_notes.clearSearch')
-										: t('_notes.clearFilter')}
-							</AText>
-						</View>
-					</Pressable>
+					<AButton color="pink" onPress={handleClear}>
+						{hasSearch && hasFilter
+							? t('_notes.clearSearchAndFilter')
+							: hasSearch
+								? t('_notes.clearSearch')
+								: t('_notes.clearFilter')}
+					</AButton>
 				)}
 			</View>
 		);
@@ -86,13 +70,9 @@ export function NotesList(props: NotesListProps) {
 			{props.data.map((day) => (
 				<View key={day.date} className="py-2">
 					<View className="flex-row items-center">
-						<Link href={`/?date=${day.date}`} asChild>
-							<Pressable>
-								<View className="flex items-start justify-center border-2 bg-bg rounded-full border-cyan-600 px-4 py-2">
-									<AText size="xs">{t(day.dateText)}</AText>
-								</View>
-							</Pressable>
-						</Link>
+						<AButton color="cyan" href={`/?date=${day.date}`}>
+							{t(day.dateText)}
+						</AButton>
 					</View>
 					{day.exercises.map((exercise, index) => (
 						<NotesItem

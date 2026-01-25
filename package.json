@@ -5,7 +5,7 @@
 	"scripts": {
 		"android": "expo start --android",
 		"checks": "npm run typecheck && npm run lint:fix && npm run format && npm run test && npx expo-doctor && npx knip && npm run verify:types && npm run supabase:db:diff",
-		"checks:ci": "npm run typecheck && npm run lint && npm run format:check && npm run test && npx expo-doctor && npx knip && npm run verify:types && npm run supabase:db:diff",
+		"checks:ci": "npm run typecheck && npm run lint && npm run format:check && npm run test && npx expo-doctor && npx knip && npm run verify:types",
 		"checks:precommit": "npm run lint:fix && npm run format && git add -A && npm run typecheck",
 		"deploy:prod": "./scripts/deploy-prod.sh",
 		"deploy:schema": "npx supabase db push --linked && sleep 2 && npm run supabase:types",

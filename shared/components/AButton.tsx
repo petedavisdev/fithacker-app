@@ -19,6 +19,11 @@ type AButtonProps = (LinkButtonProps | PressableButtonProps) & {
 };
 
 export function AButton(props: AButtonProps) {
+	// Detect if this is an icon button (short content) or text button (longer content)
+	const childrenStr = String(props.children);
+	const charCount = Array.from(childrenStr).length;
+	const isIconButton = charCount <= 3;
+
 	const shadowColor =
 		props.color === 'pink'
 			? '#be185d'
@@ -26,7 +31,8 @@ export function AButton(props: AButtonProps) {
 				? '#0e7490'
 				: '#a16207';
 
-	const button = (
+	const button = isIconButton ? (
+		// Circular icon button
 		<View
 			className={`flex items-center justify-center border-2 bg-bg rounded-full ${
 				props.color === 'pink'
@@ -54,6 +60,39 @@ export function AButton(props: AButtonProps) {
 				}
 				shade={500}
 				className={`${props.size === 'sm' ? 'text-2xl' : 'text-4xl'}`}
+			>
+				{props.children}
+			</AText>
+		</View>
+	) : (
+		// Pill-shaped text button
+		<View
+			className={`px-4 py-2 items-center justify-center border-2 bg-bg rounded-full ${
+				props.color === 'pink'
+					? 'border-pink-500'
+					: props.color === 'cyan'
+						? 'border-cyan-500'
+						: 'border-yellow-500'
+			}`}
+			style={{
+				shadowColor,
+				shadowOffset: { width: 0, height: 2 },
+				shadowOpacity: 0.25,
+				shadowRadius: 3.84,
+				elevation: 5,
+			}}
+		>
+			<AText
+				color={
+					props.color === 'pink'
+						? 'pink'
+						: props.color === 'cyan'
+							? 'cyan'
+							: 'yellow'
+				}
+				shade={500}
+				size="sm"
+				className="text-balance text-center"
 			>
 				{props.children}
 			</AText>

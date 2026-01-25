@@ -45,11 +45,13 @@ export async function requestEmailOtp(
 		return { error: null };
 	}
 
+	const language = (i18n.language || 'en').substring(0, 2);
+
 	const { error } = await supabase.auth.signInWithOtp({
 		email,
 		options: {
 			shouldCreateUser: true,
-			data: { language: i18n.language || 'en' },
+			data: { language },
 		},
 	});
 

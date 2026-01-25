@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, View } from 'react-native';
+import { View } from 'react-native';
 import { AText } from '@/shared/components/AText';
+import { AButton } from '@/shared/components/AButton';
 import { useLogout } from './useLogout';
 import { useAuthSession } from './useAuthSession';
 import { useBackgroundSync } from '@/shared/queries/useBackgroundSync';
@@ -40,39 +41,24 @@ export function AccountInfo() {
 			</View>
 
 			<View className="mt-10 items-center pb-8 gap-4">
-				<Pressable
+				<AButton
+					color="pink"
+					onPress={() => {
+						logout();
+					}}
+					isDisabled={isLoggingOut}
+				>
+					{isLoggingOut ? '⏳' : '🚪'} {t('_auth.signOut')}
+				</AButton>
+
+				<AButton
+					color="pink"
 					onPress={() => {
 						setIsDeleteModalOpen(true);
 					}}
 				>
-					<AText color="pink" size="sm" className="underline">
-						❌ {t('_account.deleteCloudBackup')}
-					</AText>
-				</Pressable>
-
-				<Pressable
-					onPress={() => {
-						logout();
-					}}
-					disabled={isLoggingOut}
-				>
-					<View
-						className={`px-4 py-2 items-center justify-center border-2 border-pink-500 rounded-full ${
-							isLoggingOut ? 'opacity-35' : ''
-						}`}
-						style={{
-							shadowColor: '#ec4899',
-							shadowOffset: { width: 0, height: 2 },
-							shadowOpacity: 0.25,
-							shadowRadius: 3.84,
-							elevation: 5,
-						}}
-					>
-						<AText color="pink" size="sm" className="text-balance text-center">
-							{isLoggingOut ? '⏳' : '🚪'} {t('_auth.signOut')}
-						</AText>
-					</View>
-				</Pressable>
+					❌ {t('_account.deleteCloudBackup')}
+				</AButton>
 			</View>
 
 			<DeleteAccountModal

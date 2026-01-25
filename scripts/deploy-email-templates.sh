@@ -7,16 +7,27 @@ set -e
 #   SUPABASE_ACCESS_TOKEN - Get from https://supabase.com/dashboard/account/tokens
 #   SUPABASE_PROJECT_REF  - Your project reference (e.g., eujlarqrbwllnmxlhbsk)
 #
+# These can be set in .env file or exported as environment variables.
+#
 # Usage:
 #   npm run supabase:templates:deploy
 #
 # Note: This requires a custom SMTP provider to be configured in Supabase.
 
+# Load .env file if it exists (from project root)
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
+ENV_FILE="$PROJECT_DIR/.env"
+
+if [ -f "$ENV_FILE" ]; then
+  set -a
+  source "$ENV_FILE"
+  set +a
+fi
+
 SUPABASE_ACCESS_TOKEN="${SUPABASE_ACCESS_TOKEN:?Missing SUPABASE_ACCESS_TOKEN - get from https://supabase.com/dashboard/account/tokens}"
 PROJECT_REF="${SUPABASE_PROJECT_REF:?Missing SUPABASE_PROJECT_REF - your project reference}"
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 TEMPLATE_FILE="$PROJECT_DIR/supabase/templates/auth-email.html"
 
 if [ ! -f "$TEMPLATE_FILE" ]; then

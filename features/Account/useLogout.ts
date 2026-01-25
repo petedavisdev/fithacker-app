@@ -18,8 +18,10 @@ export function useLogout() {
 			await clearExerciseLog();
 		},
 		onSuccess: () => {
-			// Clear ALL React Query cache to remove disabled query data
-			queryClient.clear();
+			// Clear React Query cache, but preserve network status
+			queryClient.removeQueries({
+				predicate: (query) => query.queryKey[0] !== 'network',
+			});
 			// Navigate to account page to clear URL parameters
 			router.replace('/account');
 		},

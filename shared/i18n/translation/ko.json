@@ -25,6 +25,7 @@
 		"downloadData": "내 데이터 다운로드 (CSV + JSON)",
 		"downloadError": "다운로드 실패. 다시 시도해주세요.",
 		"downloadingData": "다운로드 중...",
+		"installApp": "앱 설치",
 		"offlineLoggedIn": "문제없습니다! 온라인이 되면 데이터가 자동으로 동기화됩니다.",
 		"offlineLoggedOut": "문제없습니다! 온라인이 되면 로그인하여 데이터를 백업하고 동기화하세요.",
 		"offlineTitle": "오프라인 상태입니다",

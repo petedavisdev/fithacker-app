@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Pressable, TextInput, View } from 'react-native';
 import { Link, type Href } from 'expo-router';
 import { AText } from '@/shared/components/AText';
+import { AButton } from '@/shared/components/AButton';
 import { isAppleReviewEmail, type AuthError } from './authHelpers';
 import { useLogin } from './useLogin';
 import { useVerifyOtp } from './useVerifyOtp';
@@ -39,7 +40,7 @@ export function LoginForm() {
 					<TextInput
 						placeholder={emailPlaceholder}
 						placeholderTextColor={'#f472b6'}
-						className="font-sans text-yellow-400 border-y-2 border-b-yellow-500 border-t-transparent pt-4 pb-4 focus:text-pink-400 focus:border-b-pink-500 outline-none"
+						className="font-sans text-yellow-400 border-y-2 border-b-yellow-500 border-t-transparent pt-4 pb-4 focus:text-pink-400 focus:border-b-pink-500 outline-none w-96"
 						value={email}
 						onChangeText={(text) => {
 							setEmail(text);
@@ -87,7 +88,7 @@ export function LoginForm() {
 						</AText>
 					)}
 					<View className="mt-10 items-center">
-						<Pressable
+						<AButton
 							onPress={() => {
 								if (isAppleReview && token) {
 									// For Apple review, verify password directly
@@ -101,44 +102,25 @@ export function LoginForm() {
 									});
 								}
 							}}
-							disabled={isSubmitting || (isAppleReview && !token)}
+							isDisabled={isSubmitting || (isAppleReview && !token)}
 						>
-							<View
-								className={`min-h-20 max-w-60 p-6 items-center justify-center border-2 border-yellow-500 rounded-full ${
-									isSubmitting || (isAppleReview && !token) ? 'opacity-35' : ''
-								}`}
-								style={{
-									shadowColor: '#eab308',
-									shadowOffset: { width: 0, height: 2 },
-									shadowOpacity: 0.25,
-									shadowRadius: 3.84,
-									elevation: 5,
-								}}
-							>
-								<AText
-									color="yellow"
-									size="lg"
-									className="text-balance text-center"
-								>
-									{isSubmitting
-										? '⏳'
-										: isAppleReview
-											? t('_auth.signIn')
-											: t('_auth.sendCode')}
-								</AText>
-							</View>
-						</Pressable>
+							{isSubmitting
+								? '⏳'
+								: isAppleReview
+									? t('_auth.signIn')
+									: t('_auth.sendCode')}
+						</AButton>
 					</View>
 				</View>
 			)}
 
 			{step === 'token' && (
-				<View className="mt-6">
-					<AText className="mt-2">
+				<View className="mt-6 items-center">
+					<AText className="mt-2 text-center">
 						{t('_auth.enterMagicNumber', { email })}
 					</AText>
 					<TextInput
-						className="text-yellow-400 border-y-2 border-b-yellow-500 border-t-transparent pt-4 pb-4 focus:text-pink-400 focus:border-b-pink-500 outline-none mt-4"
+						className="text-yellow-400 border-y-2 border-b-yellow-500 border-t-transparent pt-4 pb-4 focus:text-pink-400 focus:border-b-pink-500 outline-none mt-4 w-24 text-center"
 						value={token}
 						onChangeText={(text) => {
 							setToken(text);
@@ -155,33 +137,14 @@ export function LoginForm() {
 						</AText>
 					)}
 					<View className="mt-10 items-center gap-6">
-						<Pressable
+						<AButton
 							onPress={() => {
 								verifyOtp({ email, token });
 							}}
-							disabled={isVerifyingOtp}
+							isDisabled={isVerifyingOtp}
 						>
-							<View
-								className={`min-h-20 max-w-60 p-6 items-center justify-center border-2 border-yellow-500 rounded-full ${
-									isVerifyingOtp ? 'opacity-35' : ''
-								}`}
-								style={{
-									shadowColor: '#eab308',
-									shadowOffset: { width: 0, height: 2 },
-									shadowOpacity: 0.25,
-									shadowRadius: 3.84,
-									elevation: 5,
-								}}
-							>
-								<AText
-									color="yellow"
-									size="lg"
-									className="text-balance text-center"
-								>
-									{isVerifyingOtp ? '⏳' : t('_auth.verify')}
-								</AText>
-							</View>
-						</Pressable>
+							{isVerifyingOtp ? '⏳' : '👍'}
+						</AButton>
 
 						<View className="items-center gap-3">
 							<AText className="text-center">

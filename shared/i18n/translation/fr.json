@@ -25,6 +25,7 @@
 		"downloadData": "Télécharger mes données (CSV + JSON)",
 		"downloadError": "Échec du téléchargement. Veuillez réessayer.",
 		"downloadingData": "Téléchargement...",
+		"installApp": "Installer l'app",
 		"offlineLoggedIn": "Pas de problème ! Vos données se synchroniseront automatiquement lorsque vous serez de nouveau en ligne.",
 		"offlineLoggedOut": "Pas de problème ! Lorsque vous serez en ligne, connectez-vous pour sauvegarder et synchroniser vos données.",
 		"offlineTitle": "Vous êtes hors ligne",
