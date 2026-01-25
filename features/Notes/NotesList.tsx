@@ -82,7 +82,7 @@ export function NotesList(props: NotesListProps) {
 	}
 
 	return (
-		<View className="flex-1">
+		<View>
 			{props.data.map((day) => (
 				<View key={day.date} className="py-2">
 					<View className="flex-row items-center">

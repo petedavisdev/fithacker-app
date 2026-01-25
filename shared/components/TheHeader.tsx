@@ -59,7 +59,7 @@ export function TheHeader(props: TheHeaderProps) {
 		),
 		notes: (
 			<AButton href="/notes" size="sm" color="cyan">
-				📝
+				✏️
 			</AButton>
 		),
 		chart: (

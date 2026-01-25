@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { View, KeyboardAvoidingView, Platform } from 'react-native';
 import { TheHeader } from '@/shared/components/TheHeader';
 import { SearchInput } from '@/features/Notes/SearchInput';
 import { NotesList } from '@/features/Notes/NotesList';
@@ -25,6 +25,8 @@ export default function NotesScreen() {
 	const { pendingSync } = usePendingSync();
 	const hasTriggeredSyncRef = useRef(false);
 	const pendingSyncRef = useRef<Record<string, string>>({});
+	const scrollViewRef = useRef<KeyboardAwareScrollView>(null);
+	const shouldScrollRef = useRef(true);
 
 	// Keep ref updated with latest pendingSync value
 	useEffect(() => {
@@ -49,15 +51,29 @@ export default function NotesScreen() {
 
 	const notesResults = getNotesData(exerciseLog, searchQuery, filterExercise);
 
+	// Reset scroll flag when search or filter changes
+	useEffect(() => {
+		shouldScrollRef.current = true;
+	}, [searchQuery, filterExercise]);
+
+	function handleContentSizeChange(_width: number, height: number) {
+		if (shouldScrollRef.current && scrollViewRef.current) {
+			scrollViewRef.current.scrollToEnd(false);
+			shouldScrollRef.current = false;
+		}
+	}
+
 	return (
 		<View className="flex-1 items-center">
 			<TheHeader buttonLeft="account" buttonRight="chart" />
 
-			<View className="w-96 pt-4 mb-4">
-				<SearchInput />
-			</View>
-
-			<KeyboardAwareScrollView keyboardOpeningTime={0} className="flex-1 w-96">
+			<KeyboardAwareScrollView
+				ref={scrollViewRef}
+				keyboardOpeningTime={0}
+				className="flex-1 w-96 border-t-2 border-b-2 border-black"
+				contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
+				onContentSizeChange={handleContentSizeChange}
+			>
 				<NotesList
 					data={notesResults}
 					searchQuery={searchQuery}
@@ -65,9 +81,17 @@ export default function NotesScreen() {
 				/>
 			</KeyboardAwareScrollView>
 
-			<View className="w-96 pb-4 pt-4">
-				<TheFilter />
-			</View>
+			<KeyboardAvoidingView
+				behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+				className="w-96"
+			>
+				<View className="w-96">
+					<SearchInput />
+				</View>
+				<View className="w-96 pb-4">
+					<TheFilter />
+				</View>
+			</KeyboardAvoidingView>
 		</View>
 	);
 }

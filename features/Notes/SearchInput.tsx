@@ -43,7 +43,6 @@ export function SearchInput() {
 	}
 
 	const isActive = isFocused || Boolean(searchQuery);
-	const borderColor = isFocused ? 'border-b-pink-500' : 'border-b-slate-800';
 	const textColor = isActive ? 'text-pink-400' : 'text-yellow-400';
 
 	return (
@@ -57,7 +56,7 @@ export function SearchInput() {
 			<TextInput
 				placeholder={placeholder}
 				placeholderTextColor={'#64748b'}
-				className={`font-sans ${textColor} border-y-2 ${borderColor} border-t-transparent w-full pt-4 pb-4 pl-8 pr-8 outline-none`}
+				className={`font-sans ${textColor} w-full pt-4 pb-4 pl-8 pr-8 outline-none text-center`}
 				value={searchQuery}
 				onChangeText={handleChangeText}
 				onFocus={handleFocus}

@@ -20,10 +20,10 @@ export function getNotesData(
 	const results: NotesDay[] = [];
 	const hasSearchQuery = !!searchQuery;
 
-	// Get all dates, sorted newest first
+	// Get all dates, sorted oldest first (newest at bottom)
 	const dates = Object.keys(exerciseLog)
 		.filter((date) => exerciseLog[date] && exerciseLog[date]!.length > 0)
-		.sort((a, b) => b.localeCompare(a));
+		.sort((a, b) => a.localeCompare(b));
 
 	for (const date of dates) {
 		const day = exerciseLog[date]!;
