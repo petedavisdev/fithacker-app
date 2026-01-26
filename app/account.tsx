@@ -19,24 +19,21 @@ export default function AccountScreen() {
 		<View className="flex-1">
 			<TheHeader buttonLeft="back" buttonRight="chart" />
 
-			<View className="gap-6">
-				<View>
-					<KeyboardAwareScrollView
-						keyboardOpeningTime={0}
-						className="flex-1"
-						contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
-					>
-						{!isOnline ? (
-							<OfflineMessage />
-						) : !loggedIn ? (
-							<LoginForm />
-						) : (
-							<AccountInfo />
-						)}
-					</KeyboardAwareScrollView>
+			<KeyboardAwareScrollView
+				keyboardOpeningTime={0}
+				contentContainerClassName="flex-1"
+			>
+				<View className="flex-1 justify-center">
+					{!isOnline ? (
+						<OfflineMessage />
+					) : !loggedIn ? (
+						<LoginForm />
+					) : (
+						<AccountInfo />
+					)}
 				</View>
 
-				<View className="w-96 self-center items-center gap-2 px-4 py-8">
+				<View className="w-96 self-center items-center gap-2 px-4 pb-8">
 					<DownloadData />
 					<UploadData />
 				</View>
@@ -44,7 +41,7 @@ export default function AccountScreen() {
 				<View>
 					<InstallLinks />
 				</View>
-			</View>
+			</KeyboardAwareScrollView>
 		</View>
 	);
 }

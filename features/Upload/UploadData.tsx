@@ -152,10 +152,6 @@ export function UploadData() {
 				}}
 			>
 				<View className="p-6 gap-6 items-center">
-					<AText size="3xl" className="font-bold text-center">
-						✓
-					</AText>
-
 					<AText size="xl" className="font-bold text-center">
 						{t('_account.uploadSuccessTitle')}
 					</AText>

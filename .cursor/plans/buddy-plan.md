@@ -282,7 +282,7 @@ const SharePage = ({ token }) => {
 
         />
 
-        <Text>Only you will see this name.</Text>
+        <AText>Only you will see this name.</AText>
 
         <Button 
 

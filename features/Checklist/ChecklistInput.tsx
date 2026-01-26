@@ -1,5 +1,6 @@
 import { Keyboard, Pressable, TextInput, View } from 'react-native';
 import { AText } from '@/shared/components/AText';
+import { AEmoji } from '@/shared/components/AEmoji';
 import { type Exercise } from '@/shared/utils/constants';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
@@ -67,7 +68,7 @@ export function ChecklistInput(props: ChecklistInputProps) {
 					}
 				>
 					{props.isChecked ? (
-						<AText>👍</AText>
+						<AEmoji>👍</AEmoji>
 					) : (
 						<AText color={props.isDisabled ? 'slate' : 'cyan'} size="lg">
 							{props.dayCount}
@@ -88,7 +89,7 @@ export function ChecklistInput(props: ChecklistInputProps) {
 					)}
 				</View>
 
-				<AText size="4xl">{props.exercise}</AText>
+				<AEmoji size="4xl">{props.exercise}</AEmoji>
 
 				{!props.isChecked && (
 					<AText color={props.isDisabled ? 'slate' : 'cyan'}>
@@ -101,7 +102,7 @@ export function ChecklistInput(props: ChecklistInputProps) {
 				<TextInput
 					placeholder={placeholder}
 					placeholderTextColor={'#64748b'}
-					className="font-sans text-yellow-400 border-y-2 border-b-yellow-500 border-t-transparent w-64 pt-4 pb-4  focus:text-pink-400 focus:border-b-pink-500 outline-none"
+					className="font-ubuntu text-yellow-400 border-y-2 border-b-yellow-500 border-t-transparent w-64 pt-4 pb-4  focus:text-pink-400 focus:border-b-pink-500 outline-none"
 					defaultValue={props.note}
 					onChangeText={(value) => setNote(value || undefined)}
 					onFocus={() => setPlaceholder('')}

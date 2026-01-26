@@ -112,7 +112,17 @@ export default {
 		plugins: [
 			'expo-router',
 			'expo-localization',
-			'expo-font',
+			[
+				'expo-font',
+				{
+					fonts: [
+						'./assets/fonts/UbuntuMono-Regular.ttf',
+						'./assets/fonts/UbuntuMono-Bold.ttf',
+						'./assets/fonts/UbuntuMono-Italic.ttf',
+						'./assets/fonts/UbuntuMono-BoldItalic.ttf',
+					],
+				},
+			],
 			'expo-web-browser',
 		],
 		experiments: {

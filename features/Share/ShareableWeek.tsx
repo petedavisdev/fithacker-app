@@ -1,6 +1,7 @@
 import { View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { AText } from '@/shared/components/AText';
+import { AEmoji } from '@/shared/components/AEmoji';
 import type { ChartData } from '@/shared/utils/constants';
 import { formatWeekFull } from '@/shared/utils/formatWeek';
 import { ShareableChartDay } from './ShareableChartDay';
@@ -56,9 +57,9 @@ export function ShareableWeek(props: ShareableWeekProps) {
 						{props.weekData.total}
 					</AText>
 					{props.weekData.badges.length > 0 && (
-						<AText size="6xl" className="font-extralight">
+						<AEmoji size="6xl" className="font-extralight pt-2">
 							{props.weekData.badges.join('')}
-						</AText>
+						</AEmoji>
 					)}
 				</View>
 			</View>

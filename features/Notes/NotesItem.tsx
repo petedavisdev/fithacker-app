@@ -1,5 +1,6 @@
 import { TextInput, View, Pressable } from 'react-native';
 import { AText } from '@/shared/components/AText';
+import { AEmoji } from '@/shared/components/AEmoji';
 import { type Exercise } from '@/shared/utils/constants';
 import { useTranslation } from 'react-i18next';
 import { useState, useRef } from 'react';
@@ -31,14 +32,14 @@ export function NotesItem(props: NotesItemProps) {
 	return (
 		<View className="w-full flex-row items-center gap-4 rounded-lg">
 			<Pressable onPress={handleFocusInput}>
-				<AText size="2xl">{props.exercise}</AText>
+				<AEmoji size="2xl">{props.exercise}</AEmoji>
 			</Pressable>
 
 			<TextInput
 				ref={inputRef}
 				placeholder={placeholder}
 				placeholderTextColor={'#64748b'}
-				className="font-sans text-yellow-400 border-y-2 border-b-transparent border-t-transparent flex-1 pt-4 pb-4 focus:text-pink-400 focus:border-b-pink-500 outline-none"
+				className="font-ubuntu text-yellow-400 border-y-2 border-b-transparent border-t-transparent flex-1 pt-4 pb-4 focus:text-pink-400 focus:border-b-pink-500 outline-none"
 				defaultValue={props.note}
 				onChangeText={(value) => setNote(value || undefined)}
 				onFocus={() => setPlaceholder('')}

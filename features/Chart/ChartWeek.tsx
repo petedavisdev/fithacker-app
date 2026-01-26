@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocalSearchParams } from 'expo-router';
 import ViewShot from 'react-native-view-shot';
 import { AText } from '@/shared/components/AText';
+import { AEmoji } from '@/shared/components/AEmoji';
 import { ChartDay } from './ChartDay';
 import { type ChartData } from '@/shared/utils/constants';
 import { checkThisWeek, checkLastWeek } from './getWeekText';
@@ -93,9 +94,9 @@ export function ChartWeek(props: ChartWeekProps) {
 			<View className="h-16">
 				{props.weekData.badges.length > 0 && (
 					<TouchableOpacity onPress={props.onBadgePress}>
-						<AText size="5xl" className="font-extralight px-1 text-right">
+						<AEmoji size="5xl" className="font-extralight px-1 pt-2 text-right">
 							{props.weekData.badges.join('')}
-						</AText>
+						</AEmoji>
 					</TouchableOpacity>
 				)}
 			</View>

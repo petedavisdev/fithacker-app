@@ -40,7 +40,7 @@ export function LoginForm() {
 					<TextInput
 						placeholder={emailPlaceholder}
 						placeholderTextColor={'#f472b6'}
-						className="font-sans text-yellow-400 border-y-2 border-b-yellow-500 border-t-transparent pt-4 pb-4 focus:text-pink-400 focus:border-b-pink-500 outline-none w-96"
+						className="font-ubuntu text-yellow-400 border-y-2 border-b-yellow-500 border-t-transparent pt-4 pb-4 focus:text-pink-400 focus:border-b-pink-500 outline-none w-96"
 						value={email}
 						onChangeText={(text) => {
 							setEmail(text);

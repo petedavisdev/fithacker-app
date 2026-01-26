@@ -31,8 +31,8 @@ See `.cursor/rules/i18n.mdc` for:
 function Component() {
   return (
     <View>
-      <Text>Today</Text>
-      <Text>What exercises did you do?</Text>
+      <AText>Today</AText>
+      <AText>What exercises did you do?</AText>
     </View>
   );
 }
@@ -48,8 +48,8 @@ function Component() {
 
   return (
     <View>
-      <Text>{t("_.today")}</Text>
-      <Text>{t("_.whatExerciseToday")}</Text>
+      <AText>{t("_.today")}</AText>
+      <AText>{t("_.whatExerciseToday")}</AText>
     </View>
   );
 }

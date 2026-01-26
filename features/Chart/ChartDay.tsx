@@ -1,6 +1,7 @@
 import { View, Pressable } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { AText } from '@/shared/components/AText';
+import { AEmoji } from '@/shared/components/AEmoji';
 import type { ExerciseDay, Exercise } from '@/shared/utils/constants';
 import { URL_PARAMS } from '@/shared/utils/constants';
 import { type Href, Link, useLocalSearchParams } from 'expo-router';
@@ -65,7 +66,7 @@ export function ChartDay(props: ChartDayProps) {
 	const actualContent = (
 		<View className="items-center gap-2">
 			{props.date === props.indicatorDate ? (
-				<AText size="4xl">👇</AText>
+				<AEmoji size="4xl">👇</AEmoji>
 			) : (
 				props.exercises?.map((exerciseItem, index) => {
 					const note = typeof exerciseItem !== 'string' && exerciseItem[1];
@@ -81,9 +82,9 @@ export function ChartDay(props: ChartDayProps) {
 								</View>
 							)}
 
-							<AText size="4xl">
+							<AEmoji size="4xl">
 								{typeof exercise === 'string' ? exercise : exercise[0]}
-							</AText>
+							</AEmoji>
 						</View>
 					);
 				})

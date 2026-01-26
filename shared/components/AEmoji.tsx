@@ -1,8 +1,8 @@
 import { Text, type TextProps } from 'react-native';
 
-type ATextColor = 'cyan' | 'pink' | 'yellow' | 'slate';
-type ATextShade = 300 | 400 | 500;
-type ATextSize =
+type AEmojiColor = 'cyan' | 'pink' | 'yellow' | 'slate';
+type AEmojiShade = 300 | 400 | 500;
+type AEmojiSize =
 	| 'xs'
 	| 'sm'
 	| 'base'
@@ -15,15 +15,15 @@ type ATextSize =
 	| '6xl'
 	| '7xl';
 
-type ATextProps = TextProps & {
+type AEmojiProps = TextProps & {
 	className?: string;
-	color?: ATextColor;
-	shade?: ATextShade;
-	size?: ATextSize;
+	color?: AEmojiColor;
+	shade?: AEmojiShade;
+	size?: AEmojiSize;
 };
 
 // Static class name lookups for NativeWind's build-time analysis
-const COLOR_CLASSES: Record<ATextColor, Record<ATextShade, string>> = {
+const COLOR_CLASSES: Record<AEmojiColor, Record<AEmojiShade, string>> = {
 	cyan: {
 		300: 'text-cyan-300',
 		400: 'text-cyan-400',
@@ -46,7 +46,7 @@ const COLOR_CLASSES: Record<ATextColor, Record<ATextShade, string>> = {
 	},
 };
 
-const SIZE_CLASSES: Record<ATextSize, string> = {
+const SIZE_CLASSES: Record<AEmojiSize, string> = {
 	xs: 'text-xs',
 	sm: 'text-sm',
 	base: 'text-base',
@@ -60,7 +60,7 @@ const SIZE_CLASSES: Record<ATextSize, string> = {
 	'7xl': 'text-7xl',
 };
 
-export function AText(props: ATextProps) {
+export function AEmoji(props: AEmojiProps) {
 	const {
 		color = 'cyan',
 		shade = 400,
@@ -89,10 +89,9 @@ export function AText(props: ATextProps) {
 	// Use explicit size from className if present, otherwise use props
 	const finalSizeClass = hasTextSize ? '' : textSizeClass;
 
-	// Combine classes - ensure font-ubuntu and default color/size are applied
-	// Order: font, color, size, then user className (so user can override)
+	// Combine classes - NO font-ubuntu (emoji should use system font)
+	// Order: color, size, then user className (so user can override)
 	const classParts = [
-		'font-ubuntu', // Default font (Ubuntu Mono configured in tailwind.config.js)
 		finalColorClass, // Default color (text-cyan-400) unless overridden
 		finalSizeClass, // Default size (text-base) unless overridden
 		className, // User-provided classes (can override defaults)

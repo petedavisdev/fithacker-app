@@ -84,9 +84,6 @@ if (Platform.OS === 'web' && typeof window !== 'undefined') {
 export default function RootLayout() {
 	const [fontLoaded] = useFonts({
 		UbuntuMono: require('../assets/fonts/UbuntuMono-Regular.ttf'),
-		UbuntuMonoBold: require('../assets/fonts/UbuntuMono-Bold.ttf'),
-		UbuntuMonoItalic: require('../assets/fonts/UbuntuMono-Italic.ttf'),
-		UbuntuMonoBoldItalic: require('../assets/fonts/UbuntuMono-BoldItalic.ttf'),
 	});
 	const [i18nLoaded, setI18nLoaded] = useState(false);
 

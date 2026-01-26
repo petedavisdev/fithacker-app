@@ -2,6 +2,7 @@ import { View, Pressable } from 'react-native';
 import React from 'react';
 import { Link, type LinkProps } from 'expo-router';
 import { AText } from './AText';
+import { AEmoji } from './AEmoji';
 
 type LinkButtonProps = {
 	href: LinkProps['href'];
@@ -50,7 +51,7 @@ export function AButton(props: AButtonProps) {
 				elevation: 5,
 			}}
 		>
-			<AText
+			<AEmoji
 				color={
 					props.color === 'pink'
 						? 'pink'
@@ -59,10 +60,10 @@ export function AButton(props: AButtonProps) {
 							: 'yellow'
 				}
 				shade={500}
-				className={`${props.size === 'sm' ? 'text-2xl' : 'text-4xl'}`}
+				size={props.size === 'sm' ? '2xl' : '4xl'}
 			>
 				{props.children}
-			</AText>
+			</AEmoji>
 		</View>
 	) : (
 		// Pill-shaped text button
