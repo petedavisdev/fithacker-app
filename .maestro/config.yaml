@@ -1,0 +1,10 @@
+# Maestro configuration for FitHacker screenshot automation
+# See: https://maestro.mobile.dev/advanced/configuration
+
+flows:
+  - .maestro/flows/*.yaml
+
+appId: dev.petedavis.fithacker.development
+
+env:
+  SCREENSHOT_OUTPUT_DIR: ./docs

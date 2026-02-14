@@ -1,0 +1,33 @@
+# Screenshot 1: Home/Checklist screen
+# Main screen with exercise emojis and this week's progress
+
+appId: dev.petedavis.fithacker
+---
+- launchApp
+# Tap through dev launcher to connect to Metro
+- tapOn:
+    text: 'http://localhost:8081'
+    optional: true
+- waitForAnimationToEnd
+# Dismiss dev menu welcome dialog if shown
+- tapOn:
+    text: 'Continue'
+    optional: true
+- waitForAnimationToEnd
+# Dismiss dev menu if showing
+- tapOn:
+    text: 'Go home'
+    optional: true
+- waitForAnimationToEnd
+# Seed data via deep link
+- openLink: 'fithacker://seed'
+- tapOn:
+    text: 'Open'
+    optional: true
+- waitForAnimationToEnd
+# Navigate back from unmatched route to home
+- tapOn:
+    text: 'Go back'
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: ${OUTPUT_DIR}/${LOCALE}1

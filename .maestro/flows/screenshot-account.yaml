@@ -1,0 +1,37 @@
+# Screenshot 5: Account screen
+# Account/login screen
+
+appId: dev.petedavis.fithacker
+---
+- launchApp
+# Tap through dev launcher to connect to Metro
+- tapOn:
+    text: 'http://localhost:8081'
+    optional: true
+- waitForAnimationToEnd
+# Dismiss dev menu welcome dialog if shown
+- tapOn:
+    text: 'Continue'
+    optional: true
+- waitForAnimationToEnd
+# Dismiss dev menu if showing
+- tapOn:
+    text: 'Go home'
+    optional: true
+- waitForAnimationToEnd
+# Seed data via deep link
+- openLink: 'fithacker://seed'
+- tapOn:
+    text: 'Open'
+    optional: true
+- waitForAnimationToEnd
+# Navigate back from unmatched route to home
+- tapOn:
+    text: 'Go back'
+    optional: true
+- waitForAnimationToEnd
+# Navigate to account screen - tap top left button at ~16%, ~11%
+- tapOn:
+    point: '16%,11%'
+- waitForAnimationToEnd
+- takeScreenshot: ${OUTPUT_DIR}/${LOCALE}5

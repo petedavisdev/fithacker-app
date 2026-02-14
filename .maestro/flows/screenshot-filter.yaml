@@ -1,0 +1,41 @@
+# Screenshot 4: Filter modal
+# Chart with cardio filter selected (showing only running exercises)
+
+appId: dev.petedavis.fithacker
+---
+- launchApp
+# Tap through dev launcher to connect to Metro
+- tapOn:
+    text: 'http://localhost:8081'
+    optional: true
+- waitForAnimationToEnd
+# Dismiss dev menu welcome dialog if shown
+- tapOn:
+    text: 'Continue'
+    optional: true
+- waitForAnimationToEnd
+# Dismiss dev menu if showing
+- tapOn:
+    text: 'Go home'
+    optional: true
+- waitForAnimationToEnd
+# Seed data via deep link
+- openLink: 'fithacker://seed'
+- tapOn:
+    text: 'Open'
+    optional: true
+- waitForAnimationToEnd
+# Navigate back from unmatched route to home
+- tapOn:
+    text: 'Go back'
+    optional: true
+- waitForAnimationToEnd
+# Navigate to chart screen - tap center bottom nav button
+- tapOn:
+    point: '50%,92%'
+- waitForAnimationToEnd
+# Tap cardio filter emoji (🏃‍♀️) - 3rd of 7 items at ~42% from left, 95% from top
+- tapOn:
+    point: '42%,95%'
+- waitForAnimationToEnd
+- takeScreenshot: ${OUTPUT_DIR}/${LOCALE}4

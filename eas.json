@@ -22,6 +22,17 @@
 				"APP_VARIANT": "production"
 			}
 		},
+		"screenshot": {
+			"channel": "simulator",
+			"developmentClient": false,
+			"distribution": "internal",
+			"env": {
+				"APP_VARIANT": "development"
+			},
+			"ios": {
+				"simulator": true
+			}
+		},
 		"simulator": {
 			"channel": "simulator",
 			"developmentClient": true,
