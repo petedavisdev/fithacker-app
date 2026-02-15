@@ -1,8 +1,0 @@
-# Flow to seed exercise log data via deep link
-# This should be run before taking screenshots
-
-appId: dev.petedavis.fithacker
----
-- launchApp
-- openLink: 'fithacker://seed'
-- waitForAnimationToEnd

@@ -77,3 +77,19 @@ export async function seedScreenshotData(): Promise<void> {
 
 	console.log('[Screenshot] Seeded exercise log data');
 }
+
+/**
+ * Clears exercise log - seeds empty data for screenshot 1 (empty home)
+ */
+export async function seedEmptyScreenshotData(): Promise<void> {
+	const emptyLog: ExerciseLog = {};
+	await AsyncStorage.setItem(
+		STORAGE_KEYS.EXERCISE_LOG,
+		JSON.stringify(emptyLog),
+	);
+	await AsyncStorage.setItem(
+		STORAGE_KEYS.EXERCISE_LOG_PENDING_SYNC,
+		JSON.stringify({}),
+	);
+	console.log('[Screenshot] Seeded empty exercise log');
+}

@@ -1,74 +1,34 @@
 # Maestro Setup Instructions
 
-## 1. Install Maestro CLI
+## Java Installation Required
 
-```bash
-curl -Ls "https://get.maestro.mobile.dev" | bash
-export PATH="$HOME/.maestro/bin:$PATH"
-```
+Maestro requires Java to run. Follow these steps:
 
-Add to your shell profile (e.g., `~/.zshrc`):
-
-```bash
-export PATH="$HOME/.maestro/bin:$PATH"
-```
-
-## 2. Install Java 17+ (Required)
-
-Maestro requires Java to run. Choose one option:
-
-### Option A: Oracle JDK (Recommended)
-
-1. Download from: https://www.oracle.com/java/technologies/downloads/#java17-mac
-2. Install the `.dmg` file
-3. Verify: `java -version`
-
-### Option B: Homebrew
+### Install Java via Homebrew (Recommended)
 
 ```bash
 brew install --cask temurin
 ```
 
-### Option C: SDKMAN
+### Verify Installation
 
 ```bash
-curl -s "https://get.sdkman.io" | bash
-source "$HOME/.sdkman/bin/sdkman-init.sh"
-sdk install java 17.0.9-tem
+java -version
 ```
 
-## 3. Verify Installation
+You should see output like: `openjdk version "17.0.x"` or similar.
+
+## Verify Maestro After Java Installation
+
+Once Java is installed:
 
 ```bash
+export PATH="$HOME/.maestro/bin:$PATH"
 maestro --version
 ```
 
-You should see the Maestro version without Java errors.
+You should see Maestro version information without Java errors.
 
-## 4. Build the App
+## Next Steps
 
-```bash
-# Create native iOS project
-npx expo prebuild --platform ios
-
-# Build for simulator
-cd ios && xcodebuild -workspace Fithacker.xcworkspace -scheme Fithacker \
-  -configuration Debug -sdk iphonesimulator -derivedDataPath build
-
-# Install on booted simulator
-xcrun simctl install booted build/Build/Products/Debug-iphonesimulator/Fithacker.app
-```
-
-## 5. Run Screenshots
-
-**Metro bundler must be running** in a separate terminal:
-
-```bash
-# Terminal 1
-npm start
-
-# Terminal 2
-maestro test .maestro/flows/screenshot-home.yaml
-```
-
-See [README.md](README.md) for full usage instructions.
+After Java and Maestro are installed, see [README.md](README.md) for build and screenshot generation instructions.

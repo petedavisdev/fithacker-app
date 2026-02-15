@@ -4,7 +4,8 @@
 flows:
   - .maestro/flows/*.yaml
 
-appId: dev.petedavis.fithacker.development
+appId: dev.petedavis.fithacker
 
 env:
-  SCREENSHOT_OUTPUT_DIR: ./docs
+  # OUTPUT_DIR default fallback; script overrides via -e
+  OUTPUT_DIR: docs/screenshots

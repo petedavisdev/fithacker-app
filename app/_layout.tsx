@@ -24,10 +24,8 @@ import { InitNetworkStatus } from '@/shared/init/InitNetworkStatus';
 import { InitBackgroundSync } from '@/shared/init/InitBackgroundSync';
 import { LogoutModal } from '@/features/Account/LogoutModal';
 import { AutoInstallPrompt } from '@/features/Install/AutoInstallPrompt';
-import * as Linking from 'expo-linking';
-import { seedScreenshotData } from '@/shared/utils/seedScreenshotData';
 
-// Suppress non-actionable warnings from RN internals
+// Suppress known framework deprecation warnings (not app bugs)
 LogBox.ignoreLogs(['SafeAreaView has been deprecated']);
 
 SplashScreen.preventAutoHideAsync();
@@ -122,43 +120,6 @@ export default function RootLayout() {
 			SplashScreen.hideAsync();
 		}
 	}, [fontLoaded, i18nLoaded]);
-
-	// Handle deep links for screenshot seeding
-	useEffect(() => {
-		const handleDeepLink = async (url: string) => {
-			const parsed = Linking.parse(url);
-			// Handle fithacker://seed deep link
-			if (
-				parsed.scheme === 'fithacker' &&
-				(parsed.hostname === 'seed' || parsed.path === '/seed')
-			) {
-				try {
-					await seedScreenshotData();
-					// Invalidate queries to refresh UI
-					queryClient.invalidateQueries({ queryKey: queryKeys.exerciseLog });
-					queryClient.invalidateQueries({ queryKey: queryKeys.pendingSync });
-				} catch (error) {
-					console.error('[Screenshot] Failed to seed data:', error);
-				}
-			}
-		};
-
-		// Handle initial URL (if app was opened via deep link)
-		Linking.getInitialURL().then((url) => {
-			if (url) {
-				handleDeepLink(url);
-			}
-		});
-
-		// Listen for deep links while app is running
-		const subscription = Linking.addEventListener('url', (event) => {
-			handleDeepLink(event.url);
-		});
-
-		return () => {
-			subscription.remove();
-		};
-	}, []);
 
 	if (!fontLoaded || !i18nLoaded) {
 		return null;

@@ -17,13 +17,20 @@ type AButtonProps = (LinkButtonProps | PressableButtonProps) & {
 	color?: 'pink' | 'cyan';
 	size?: 'sm';
 	isDisabled?: boolean;
+	variant?: 'icon' | 'text';
 };
 
 export function AButton(props: AButtonProps) {
-	// Detect if this is an icon button (short content) or text button (longer content)
+	// Round style only for single character (emoji icons); otherwise pill-shaped text button
+	// variant overrides the heuristic (e.g. for multi-codepoint emojis like ✏️)
 	const childrenStr = String(props.children);
 	const charCount = Array.from(childrenStr).length;
-	const isIconButton = charCount <= 3;
+	const isIconButton =
+		props.variant === 'icon'
+			? true
+			: props.variant === 'text'
+				? false
+				: charCount === 1;
 
 	const shadowColor =
 		props.color === 'pink'
