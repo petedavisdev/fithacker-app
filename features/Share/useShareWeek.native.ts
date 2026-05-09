@@ -1,10 +1,10 @@
 import { useRef } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import ViewShot from 'react-native-view-shot';
+import { type ViewShotRef } from 'react-native-view-shot';
 import * as Sharing from 'expo-sharing';
 
 export function useShareWeek() {
-	const viewShotRef = useRef<ViewShot>(null);
+	const viewShotRef = useRef<ViewShotRef | null>(null);
 
 	const {
 		mutate: shareWeek,

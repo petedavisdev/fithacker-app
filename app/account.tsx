@@ -6,7 +6,6 @@ import { OfflineMessage } from '@/features/Account/OfflineMessage';
 import { LoginForm } from '@/features/Account/LoginForm';
 import { AccountInfo } from '@/features/Account/AccountInfo';
 import { DownloadData } from '@/features/Download/DownloadData';
-import { UploadData } from '@/features/Upload/UploadData';
 import { TheHeader } from '@/shared/components/TheHeader';
 import { InstallLinks } from '@/features/Install/InstallLinks';
 
@@ -35,7 +34,6 @@ export default function AccountScreen() {
 
 				<View className="w-96 self-center items-center gap-2 px-4 pb-8">
 					<DownloadData />
-					<UploadData />
 				</View>
 
 				<View>

@@ -22,7 +22,7 @@
 		"deleteAccountTitle": "Supprimer la sauvegarde cloud",
 		"deleteAccountWarning": "Cela supprimera votre sauvegarde cloud et arrêtera la synchronisation. Vous pouvez continuer à utiliser vos données sur cet appareil.",
 		"deleteCloudBackup": "Supprimer la sauvegarde cloud",
-		"downloadData": "Télécharger mes données (CSV + JSON)",
+		"downloadData": "Télécharger mes données",
 		"downloadError": "Échec du téléchargement. Veuillez réessayer.",
 		"downloadingData": "Téléchargement...",
 		"installApp": "Installer l'app",
@@ -30,13 +30,7 @@
 		"offlineLoggedOut": "Pas de problème ! Lorsque vous serez en ligne, connectez-vous pour sauvegarder et synchroniser vos données.",
 		"offlineTitle": "Vous êtes hors ligne",
 		"privacyPolicy": "Politique de confidentialité",
-		"syncComplete": "Synchronisation terminée",
-		"uploadConfirmMessage": "Importer {{count}} jours de données d'exercice ?",
-		"uploadConfirmTitle": "Confirmer l'import",
-		"uploadConfirmWarning": "Cela fusionnera avec vos données locales. Cela ne peut pas être annulé.",
-		"uploadData": "Importer mes données (JSON)",
-		"uploadSuccessMessage": "{{count}} jours importés avec succès !",
-		"uploadSuccessTitle": "Import terminé"
+		"syncComplete": "Synchronisation terminée"
 	},
 	"_auth": {
 		"checkInboxAndJunkMail": "Vérifiez votre boîte de réception et vos courriers indésirables",
@@ -111,8 +105,8 @@
 		"dataStorageTitle": "Vos données, votre contrôle",
 		"emailOptionalDescription": "L'inscription par e-mail est optionnelle. Si fourni, votre e-mail n'est utilisé que pour la connexion et jamais partagé avec des tiers ni utilisé pour du marketing.",
 		"emailOptionalTitle": "L'email est optionnel",
-		"noTrackingDescription": "Fithacker n'utilise pas de cookies ni de technologie de suivi.",
-		"noTrackingTitle": "Aucun suivi",
+		"noTrackingDescription": "Fithacker n'utilise pas de technologie de suivi publicitaire ou analytique.",
+		"noTrackingTitle": "Pas de publicités ni de suivi",
 		"thirdPartyDescription": "E-mails d'authentification via Resend. Sauvegarde cloud optionnelle via Supabase. Les deux sont conformes RGPD et uniquement utilisés pour les fonctionnalités principales.",
 		"thirdPartyTitle": "Services tiers",
 		"title": "Politique de confidentialité"

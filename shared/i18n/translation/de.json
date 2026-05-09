@@ -22,7 +22,7 @@
 		"deleteAccountTitle": "Cloud-Backup löschen",
 		"deleteAccountWarning": "Dies löscht Ihr Cloud-Backup und beendet die Synchronisierung. Sie können Ihre Daten auf diesem Gerät weiterhin verwenden.",
 		"deleteCloudBackup": "Cloud-Backup löschen",
-		"downloadData": "Meine Daten herunterladen (CSV + JSON)",
+		"downloadData": "Meine Daten herunterladen",
 		"downloadError": "Download fehlgeschlagen. Bitte versuche es erneut.",
 		"downloadingData": "Wird heruntergeladen...",
 		"installApp": "App installieren",
@@ -30,13 +30,7 @@
 		"offlineLoggedOut": "Kein Problem! Wenn du online bist, melde dich an, um deine Daten zu sichern und zu synchronisieren.",
 		"offlineTitle": "Du bist offline",
 		"privacyPolicy": "Datenschutzrichtlinie",
-		"syncComplete": "Synchronisierung abgeschlossen",
-		"uploadConfirmMessage": "{{count}} Tage Trainingsdaten hochladen?",
-		"uploadConfirmTitle": "Upload bestätigen",
-		"uploadConfirmWarning": "Dies wird mit deinen lokalen Daten zusammengeführt. Dies kann nicht rückgängig gemacht werden.",
-		"uploadData": "Meine Daten hochladen (JSON)",
-		"uploadSuccessMessage": "{{count}} Tage erfolgreich hochgeladen!",
-		"uploadSuccessTitle": "Upload abgeschlossen"
+		"syncComplete": "Synchronisierung abgeschlossen"
 	},
 	"_auth": {
 		"checkInboxAndJunkMail": "Überprüfen Sie Ihren Posteingang und Spam",
@@ -111,8 +105,8 @@
 		"dataStorageTitle": "Ihre Daten, Ihre Kontrolle",
 		"emailOptionalDescription": "E-Mail-Registrierung ist optional. Falls angegeben, wird Ihre E-Mail nur für die Anmeldung verwendet und niemals an Dritte weitergegeben oder für Marketing genutzt.",
 		"emailOptionalTitle": "E-Mail ist optional",
-		"noTrackingDescription": "Fithacker verwendet keine Cookies oder Tracking-Technologien.",
-		"noTrackingTitle": "Kein Tracking",
+		"noTrackingDescription": "Fithacker verwendet keine Werbe- oder Analyse-Tracking-Technologie.",
+		"noTrackingTitle": "Keine Werbung oder Tracking",
 		"thirdPartyDescription": "Authentifizierungs-E-Mails über Resend. Optionales Cloud-Backup über Supabase. Beide sind DSGVO-konform und werden nur für Kernfunktionen verwendet.",
 		"thirdPartyTitle": "Drittanbieterdienste",
 		"title": "Datenschutzrichtlinie"

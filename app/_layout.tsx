@@ -1,4 +1,3 @@
-import '@/shared/i18n';
 import { i18nReady } from '@/shared/i18n';
 import { useFonts } from 'expo-font';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -55,8 +54,12 @@ if (Platform.OS !== 'web' || typeof window !== 'undefined') {
 		});
 }
 
-// Register service worker for PWA offline support (web only)
-if (Platform.OS === 'web' && typeof window !== 'undefined') {
+// Register service worker for PWA offline support (production web only)
+if (
+	Platform.OS === 'web' &&
+	typeof window !== 'undefined' &&
+	process.env.NODE_ENV === 'production'
+) {
 	if ('serviceWorker' in navigator) {
 		window.addEventListener('load', () => {
 			navigator.serviceWorker

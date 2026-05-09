@@ -1,11 +1,11 @@
 import { useRef } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import type ViewShot from 'react-native-view-shot';
+import { type ViewShotRef } from 'react-native-view-shot';
 
 const WEB_SHAREABLE_TESTID = 'shareable-week-view';
 
 export function useShareWeek() {
-	const viewShotRef = useRef<ViewShot | null>(null);
+	const viewShotRef = useRef<ViewShotRef | null>(null);
 	const {
 		mutate: shareWeek,
 		isPending: isSharingWeek,

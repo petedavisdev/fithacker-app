@@ -22,7 +22,7 @@
 		"deleteAccountTitle": "Eliminar copia de seguridad en la nube",
 		"deleteAccountWarning": "Esto eliminará tu copia de seguridad en la nube y dejará de sincronizar. Puedes seguir usando tus datos en este dispositivo.",
 		"deleteCloudBackup": "Eliminar copia de seguridad en la nube",
-		"downloadData": "Descargar mis datos (CSV + JSON)",
+		"downloadData": "Descargar mis datos",
 		"downloadError": "Error al descargar. Por favor, inténtalo de nuevo.",
 		"downloadingData": "Descargando...",
 		"installApp": "Instalar app",
@@ -30,13 +30,7 @@
 		"offlineLoggedOut": "¡No hay problema! Cuando estés en línea, inicia sesión para hacer una copia de seguridad y sincronizar tus datos.",
 		"offlineTitle": "Estás desconectado",
 		"privacyPolicy": "Política de privacidad",
-		"syncComplete": "Sincronización completa",
-		"uploadConfirmMessage": "¿Subir {{count}} días de datos de ejercicio?",
-		"uploadConfirmTitle": "Confirmar subida",
-		"uploadConfirmWarning": "Esto se fusionará con tus datos locales. Esto no se puede deshacer.",
-		"uploadData": "Subir mis datos (JSON)",
-		"uploadSuccessMessage": "¡{{count}} días subidos correctamente!",
-		"uploadSuccessTitle": "Subida completada"
+		"syncComplete": "Sincronización completa"
 	},
 	"_auth": {
 		"checkInboxAndJunkMail": "Revisa tu bandeja de entrada y correo no deseado",
@@ -111,8 +105,8 @@
 		"dataStorageTitle": "Tus datos, tu control",
 		"emailOptionalDescription": "El registro por correo es opcional. Si se proporciona, tu correo solo se usa para inicio de sesión y nunca se comparte con terceros ni se usa para marketing.",
 		"emailOptionalTitle": "El correo electrónico es opcional",
-		"noTrackingDescription": "Fithacker no utiliza cookies ni tecnología de seguimiento.",
-		"noTrackingTitle": "Sin seguimiento",
+		"noTrackingDescription": "Fithacker no utiliza tecnología de seguimiento publicitario ni analítico.",
+		"noTrackingTitle": "Sin anuncios ni seguimiento",
 		"thirdPartyDescription": "Correos de autenticación vía Resend. Copia de seguridad en la nube opcional vía Supabase. Ambos son compatibles con GDPR y solo se usan para funcionalidad principal.",
 		"thirdPartyTitle": "Servicios de terceros",
 		"title": "Política de privacidad"

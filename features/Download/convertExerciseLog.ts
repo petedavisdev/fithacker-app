@@ -44,10 +44,3 @@ export function convertExerciseLogToCsv(exerciseLog: ExerciseLog): string {
 
 	return rows.join('\n');
 }
-
-/**
- * Formats an ExerciseLog as pretty-printed JSON
- */
-export function formatExerciseLogAsJson(exerciseLog: ExerciseLog): string {
-	return JSON.stringify(exerciseLog, null, 2);
-}

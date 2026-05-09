@@ -22,7 +22,7 @@
 		"deleteAccountTitle": "クラウドバックアップを削除",
 		"deleteAccountWarning": "クラウドバックアップが削除され、同期が停止されます。このデバイスでデータを引き続き使用できます。",
 		"deleteCloudBackup": "クラウドバックアップを削除",
-		"downloadData": "データをダウンロード (CSV + JSON)",
+		"downloadData": "データをダウンロード",
 		"downloadError": "ダウンロードに失敗しました。もう一度お試しください。",
 		"downloadingData": "ダウンロード中...",
 		"installApp": "アプリをインストール",
@@ -30,13 +30,7 @@
 		"offlineLoggedOut": "問題ありません！オンラインになったら、ログインしてデータをバックアップし、同期してください。",
 		"offlineTitle": "オフラインです",
 		"privacyPolicy": "プライバシーポリシー",
-		"syncComplete": "同期完了",
-		"uploadConfirmMessage": "{{count}}日分の運動データをアップロードしますか？",
-		"uploadConfirmTitle": "アップロードの確認",
-		"uploadConfirmWarning": "これはローカルデータとマージされます。これは元に戻すことができません。",
-		"uploadData": "データをアップロード (JSON)",
-		"uploadSuccessMessage": "{{count}}日分が正常にアップロードされました！",
-		"uploadSuccessTitle": "アップロード完了"
+		"syncComplete": "同期完了"
 	},
 	"_auth": {
 		"checkInboxAndJunkMail": "受信トレイと迷惑メールを確認してください",
@@ -111,8 +105,8 @@
 		"dataStorageTitle": "あなたのデータ、あなたの管理",
 		"emailOptionalDescription": "メール登録は任意です。提供された場合、メールはログインにのみ使用され、第三者と共有されたりマーケティングに使用されることはありません。",
 		"emailOptionalTitle": "メールは任意",
-		"noTrackingDescription": "Fithackerはクッキーやトラッキング技術を使用しません。",
-		"noTrackingTitle": "トラッキングなし",
+		"noTrackingDescription": "Fithackerは広告や分析のトラッキング技術を使用しません。",
+		"noTrackingTitle": "広告・追跡なし",
 		"thirdPartyDescription": "認証メールはResend経由。オプションのクラウドバックアップはSupabase経由。両方ともGDPR準拠で、コア機能にのみ使用されます。",
 		"thirdPartyTitle": "サードパーティサービス",
 		"title": "プライバシーポリシー"

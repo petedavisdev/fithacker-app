@@ -31,18 +31,20 @@ export function QueryErrorBoundary(props: QueryErrorBoundaryProps) {
 }
 
 type ErrorFallbackProps = {
-	error: Error;
+	error: unknown;
 	resetErrorBoundary: () => void;
 };
 
 function ErrorFallback(props: ErrorFallbackProps) {
 	const { t } = useTranslation();
+	const message =
+		props.error instanceof Error ? props.error.message : String(props.error);
 	return (
 		<View className="flex-1 items-center justify-center p-4 bg-bg">
 			<AText color="pink" shade={500} size="xl" className="mb-4">
 				{t('_errors.somethingWentWrong')}
 			</AText>
-			<AText className="mb-4">{props.error.message}</AText>
+			<AText className="mb-4">{message}</AText>
 			<AButton onPress={props.resetErrorBoundary}>🔄</AButton>
 		</View>
 	);
