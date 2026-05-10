@@ -2,6 +2,41 @@
 
 Generates App Store screenshots for all locales using Maestro automation (iOS only).
 
+## Agent Behavior
+
+**STOP AND ASK the user immediately** if any of these occur:
+
+- xcodebuild fails (missing SDK, expired certificates, no destinations)
+- Simulator won't boot or app won't install
+- Metro isn't running and can't be started
+- Any prerequisite is missing that requires manual installation (Java, Maestro, Xcode platforms)
+- EAS build or credential errors
+
+Do NOT retry failing steps repeatedly. If something fails once and is clearly a configuration/environment issue, ask the user to fix it.
+
+## Process (Two Phases)
+
+### Phase 1: Verify with en-only screenshots
+
+1. Build the simulator app with `APP_VARIANT=production`
+2. Run `./scripts/run-all-screenshots.sh en` (iPhone only)
+3. Run `./scripts/run-all-screenshots.sh en --ipad` (iPad only)
+4. **Show the user `en2.png` from each device** (home with data — most representative)
+5. Check for common issues:
+   - System dialogs covering the screen
+   - Upside-down orientation
+   - Wrong app variant ("Fithacker (dev)" instead of "Fithacker")
+   - Bundling/loading indicators visible
+6. **Wait for user approval** before continuing
+
+### Phase 2: Generate all locales
+
+Only after the user confirms en screenshots look good:
+
+```bash
+./scripts/run-all-screenshots.sh --all-devices --all-locales
+```
+
 ## Usage
 
 ```
@@ -17,15 +52,8 @@ The script checks all of these automatically. Run `--check-only` to verify witho
 1. **Java** — Required by Maestro (`brew install --cask temurin`)
 2. **Maestro CLI** — `curl -Ls "https://get.maestro.mobile.dev" | bash`
 3. **Metro bundler** — Must be running (`npm start`)
-4. **iOS build** — App must be built without expo-dev-client (see `.maestro/README.md`)
-
-## What it does
-
-1. **Checks prerequisites** — Java, Maestro, Metro, app build
-2. **Boots simulator** — iPhone 15 Pro or iPad Pro 13-inch (M4)
-3. **For each locale**: sets simulator language, runs a single Maestro flow that captures all 5 screenshots via deep links
-4. **Reports progress** — `[3/9] fr (iPad) ✓ done (24s)`
-5. **Reports failures** — with a `--resume-from` command to retry
+4. **iOS build** — App must be built with `APP_VARIANT=production` (see `.maestro/README.md`)
+5. **iPad full-screen mode** — One-time per machine: in the iPad simulator go to Settings → Multitasking & Gestures → switch from "Windowed Apps" to "Full Screen Apps". See `.maestro/README.md` for details.
 
 ## Screenshots Captured
 
@@ -51,9 +79,6 @@ The script checks all of these automatically. Run `--check-only` to verify witho
 # Single locale — iPad
 ./scripts/run-all-screenshots.sh en --ipad
 
-# All locales — iPad
-./scripts/run-all-screenshots.sh --ipad --all-locales
-
 # All locales — both devices
 ./scripts/run-all-screenshots.sh --all-devices --all-locales
 
@@ -66,11 +91,7 @@ The script checks all of these automatically. Run `--check-only` to verify witho
 ```
 docs/screenshots-YYYY-MM-DD/
   iPhone/
-    en1.png  # Home empty
-    en2.png  # Home with data
-    en3.png  # Chart
-    en4.png  # Notes
-    en5.png  # Account
+    en1.png … en5.png
     de1.png … de5.png
     # ... (de, es, fr, it, ja, ko, pt, zh)
   iPad/
@@ -93,6 +114,12 @@ de, en, es, fr, it, ja, ko, pt, zh
 | `shared/utils/seedScreenshotData.ts` | Data seeding logic |
 | `data/screenshot-sample.json` | Sample exercise data with relative dates |
 
+## Known Issues & Manual Steps
+
+- **iOS deep link dialog**: The Maestro flow includes `tapOn "Open" optional: true` to dismiss the iOS URL scheme confirmation. If the system language changes, this text may need updating.
+- **`APP_VARIANT`**: The `.env` file has `APP_VARIANT=development`. The build step must explicitly use `APP_VARIANT=production` to get the correct bundle ID (`dev.petedavis.fithacker`).
+- **iPad full-screen mode**: The iPad simulator defaults to "Windowed Apps" (Stage Manager). This must be changed to full-screen mode once per machine via Settings → Multitasking & Gestures. Without this, screenshots show the iPad desktop behind the app window. This is a persistent simulator setting — it survives reboots.
+
 ## Performance
 
-~25 seconds per locale. All 9 locales on one device: ~4 minutes. Both devices: ~8 minutes.
+~75 seconds per locale per device. All 9 locales on one device: ~11 minutes. Both devices: ~22 minutes.

@@ -19,7 +19,7 @@ NC='\033[0m'
 # Configuration
 LOCALES=("en" "de" "es" "fr" "it" "ja" "ko" "pt" "zh")
 DATE_FOLDER=$(date +%Y-%m-%d)
-IPHONE_SIMULATOR="iPhone 15 Pro"
+IPHONE_SIMULATOR="iPhone 17 Pro"
 IPAD_SIMULATOR="iPad Pro 13-inch (M4)"
 APP_PATH="ios/build/Build/Products/Debug-iphonesimulator/Fithacker.app"
 OUTPUT_BASE="docs/screenshots-${DATE_FOLDER}"
@@ -58,18 +58,12 @@ check_prerequisites() {
 
 ensure_simulator() {
   local simulator_name=$1
-  local booted_name
-  booted_name=$(xcrun simctl list devices booted | grep "Booted" | head -1 || true)
 
-  if [[ "$booted_name" == *"$simulator_name"* ]]; then
-    echo -e "  Simulator: ${GREEN}$simulator_name (already booted)${NC}"
-  else
-    echo -e "  Simulator: ${YELLOW}booting $simulator_name...${NC}"
-    xcrun simctl shutdown all 2>/dev/null || true
-    xcrun simctl boot "$simulator_name" || { echo -e "${RED}Failed to boot $simulator_name${NC}"; exit 1; }
-    open -a Simulator
-    sleep 2
-  fi
+  echo -e "  Simulator: ${YELLOW}shutting down others, booting $simulator_name...${NC}"
+  xcrun simctl shutdown all 2>/dev/null || true
+  xcrun simctl boot "$simulator_name" || { echo -e "${RED}Failed to boot $simulator_name${NC}"; exit 1; }
+  open -a Simulator
+  sleep 2
 
   xcrun simctl install booted "$APP_PATH"
 }

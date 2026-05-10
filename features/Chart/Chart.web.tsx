@@ -45,10 +45,8 @@ export function Chart(props: ChartProps) {
 					display: 'flex',
 					flexDirection: 'row',
 					alignItems: 'flex-end',
-					marginLeft: 'auto',
 					width: 'fit-content',
-					minWidth: '100%',
-					justifyContent: 'flex-end',
+					margin: '0 auto',
 				}}
 			>
 				{reversedData.map((weekData) => {

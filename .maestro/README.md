@@ -13,6 +13,20 @@ Automated App Store screenshot generation using Maestro. Captures 5 screenshots 
    export PATH="$HOME/.maestro/bin:$PATH"
    ```
 3. **Xcode and iOS Simulators** — Available from Mac App Store (free)
+4. **iPad simulator set to full-screen mode** — See "iPad Simulator Setup" below
+
+## iPad Simulator Setup (One-Time, Per Machine)
+
+The iPad simulator defaults to "Windowed Apps" mode (Stage Manager), which causes the app to open in a floating window rather than full-screen. This makes screenshots show the iPad desktop behind the app.
+
+**Fix (one-time per machine):**
+
+1. Boot the iPad simulator: `xcrun simctl boot "iPad Pro 13-inch (M4)" && open -a Simulator`
+2. In the simulator, go to **Settings → Multitasking & Gestures**
+3. Under **"iPad Multitasking"**, change **"Allow Multiple Apps"** to **off**, or switch from **"Windowed Apps"** to **"Full Screen Apps"**
+4. Quit and reboot the simulator
+
+The simulator remembers this setting permanently, so you only need to do it once per machine.
 
 ## Build (One-Time Setup)
 
@@ -27,8 +41,10 @@ npm uninstall expo-dev-client
 ### 2. Rebuild iOS project
 
 ```bash
-npx expo prebuild --platform ios --clean
+APP_VARIANT=production npx expo prebuild --platform ios --clean
 ```
+
+`APP_VARIANT=production` ensures the correct bundle ID (`dev.petedavis.fithacker`).
 
 ### 3. Build with xcodebuild
 

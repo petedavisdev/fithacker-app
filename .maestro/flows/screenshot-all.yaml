@@ -11,28 +11,56 @@ appId: dev.petedavis.fithacker
 # --- Screenshot 1: Empty home ---
 - openLink: 'fithacker://seed-empty'
 - waitForAnimationToEnd
+- tapOn:
+    text: 'Open'
+    optional: true
+- waitForAnimationToEnd
 - openLink: 'fithacker://'
+- waitForAnimationToEnd
+- tapOn:
+    text: 'Open'
+    optional: true
 - waitForAnimationToEnd
 - takeScreenshot: ${OUTPUT_DIR}/${LOCALE}1
 
 # --- Screenshot 2: Home with seeded data ---
 - openLink: 'fithacker://seed'
 - waitForAnimationToEnd
+- tapOn:
+    text: 'Open'
+    optional: true
+- waitForAnimationToEnd
 - openLink: 'fithacker://'
+- waitForAnimationToEnd
+- tapOn:
+    text: 'Open'
+    optional: true
 - waitForAnimationToEnd
 - takeScreenshot: ${OUTPUT_DIR}/${LOCALE}2
 
 # --- Screenshot 3: Chart ---
 - openLink: 'fithacker://chart'
 - waitForAnimationToEnd
+- tapOn:
+    text: 'Open'
+    optional: true
+- waitForAnimationToEnd
 - takeScreenshot: ${OUTPUT_DIR}/${LOCALE}3
 
 # --- Screenshot 4: Notes ---
 - openLink: 'fithacker://notes'
 - waitForAnimationToEnd
+- tapOn:
+    text: 'Open'
+    optional: true
+- waitForAnimationToEnd
 - takeScreenshot: ${OUTPUT_DIR}/${LOCALE}4
 
 # --- Screenshot 5: Account ---
 - openLink: 'fithacker://account'
+- waitForAnimationToEnd
+- tapOn:
+    text: 'Open'
+    optional: true
 - waitForAnimationToEnd
 - takeScreenshot: ${OUTPUT_DIR}/${LOCALE}5
