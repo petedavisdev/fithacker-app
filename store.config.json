@@ -1,0 +1,221 @@
+{
+	"apple": {
+		"categories": ["HEALTH_AND_FITNESS"],
+		"copyright": "2024 Peter Davis",
+		"info": {
+			"de-DE": {
+				"description": "Fithacker hilft Ihnen dabei, die Bewegung zu bekommen, die Ihr Körper für langfristige Fitness, Kraft und Mobilität braucht.",
+				"keywords": [
+					"Fitness",
+					"Übung",
+					"fit",
+					"Übungstagebuch",
+					"Tagebuch",
+					"Übungstracker"
+				],
+				"marketingUrl": "https://fithacker.app",
+				"privacyPolicyUrl": "https://fithacker.app/privacy",
+				"releaseNotes": "Optionale Anmeldung für kostenloses Backup und Synchronisierung auf all deinen Geräten",
+				"subtitle": "Die einfache Fitness-App",
+				"supportUrl": "https://fithacker.app",
+				"title": "Fithacker"
+			},
+			"en-US": {
+				"description": "Fithacker helps you get all the exercise your body needs for long-term fitness, strength and mobility.",
+				"keywords": [
+					"fitness",
+					"exercise",
+					"fit",
+					"exercise log",
+					"log",
+					"exercise tracker"
+				],
+				"marketingUrl": "https://fithacker.app",
+				"privacyPolicyUrl": "https://fithacker.app/privacy",
+				"releaseNotes": "Optional login for free backup and sync to all your devices",
+				"subtitle": "Log your exercise to keep fit",
+				"supportUrl": "https://fithacker.app",
+				"title": "Fithacker"
+			},
+			"es-ES": {
+				"description": "Fithacker le ayuda a realizar todo el ejercicio que su cuerpo necesita para mantener su forma física, fuerza y ​​movilidad a largo plazo.",
+				"keywords": [
+					"fitness",
+					"ejercicio",
+					"en forma",
+					"registro de ejercicio",
+					"registro",
+					"tracker de ejercicio"
+				],
+				"marketingUrl": "https://fithacker.app",
+				"privacyPolicyUrl": "https://fithacker.app/privacy",
+				"releaseNotes": "Inicio de sesión opcional para copia de seguridad gratuita y sincronización en todos tus dispositivos",
+				"subtitle": "La sencilla app de fitness",
+				"supportUrl": "https://fithacker.app",
+				"title": "Fithacker"
+			},
+			"es-MX": {
+				"description": "Fithacker le ayuda a realizar todo el ejercicio que su cuerpo necesita para mantener su forma física, fuerza y ​​movilidad a largo plazo.",
+				"keywords": [
+					"fitness",
+					"ejercicio",
+					"en forma",
+					"registro de ejercicio",
+					"registro",
+					"tracker de ejercicio"
+				],
+				"marketingUrl": "https://fithacker.app",
+				"privacyPolicyUrl": "https://fithacker.app/privacy",
+				"releaseNotes": "Inicio de sesión opcional para copia de seguridad gratuita y sincronización en todos tus dispositivos",
+				"subtitle": "La sencilla app de fitness",
+				"supportUrl": "https://fithacker.app",
+				"title": "Fithacker"
+			},
+			"fr-CA": {
+				"description": "Fithacker vous aide à faire tous les exercices dont votre corps a besoin pour une forme physique, une force et une mobilité à long terme.",
+				"keywords": [
+					"fitness",
+					"entraînement",
+					"en forme",
+					"journal d'entraînement",
+					"journal",
+					"suivi des entraînements"
+				],
+				"marketingUrl": "https://fithacker.app",
+				"privacyPolicyUrl": "https://fithacker.app/privacy",
+				"releaseNotes": "Connexion optionnelle pour sauvegarde gratuite et synchronisation sur tous vos appareils",
+				"subtitle": "L'app de fitness simple",
+				"supportUrl": "https://fithacker.app",
+				"title": "Fithacker"
+			},
+			"fr-FR": {
+				"description": "Fithacker vous aide à faire tous les exercices dont votre corps a besoin pour une forme physique, une force et une mobilité à long terme.",
+				"keywords": [
+					"fitness",
+					"entraînement",
+					"en forme",
+					"journal d'entraînement",
+					"journal",
+					"suivi des entraînements"
+				],
+				"marketingUrl": "https://fithacker.app",
+				"privacyPolicyUrl": "https://fithacker.app/privacy",
+				"releaseNotes": "Connexion optionnelle pour sauvegarde gratuite et synchronisation sur tous vos appareils",
+				"subtitle": "L'app de fitness simple",
+				"supportUrl": "https://fithacker.app",
+				"title": "Fithacker"
+			},
+			"it": {
+				"description": "Fithacker ti aiuta a ottenere tutto l'esercizio di cui il tuo corpo ha bisogno per fitness, forza e mobilità a lungo termine.",
+				"keywords": [
+					"fitness",
+					"esercizio",
+					"in forma",
+					"registro esercizi",
+					"registro",
+					"tracker esercizi"
+				],
+				"marketingUrl": "https://fithacker.app",
+				"privacyPolicyUrl": "https://fithacker.app/privacy",
+				"releaseNotes": "Login opzionale per backup gratuito e sincronizzazione su tutti i tuoi dispositivi",
+				"subtitle": "La semplice app per il fitness",
+				"supportUrl": "https://fithacker.app",
+				"title": "Fithacker"
+			},
+			"ja": {
+				"description": "Fithackerは、長期的な運動のために必要な運動を記録するために役立ちます。",
+				"keywords": [
+					"フィットネス",
+					"エクササイズ",
+					"習慣トラッカー",
+					"健康",
+					"ワークアウト",
+					"エクササイズログ",
+					"ログ",
+					"エクササイズトラッカー"
+				],
+				"marketingUrl": "https://fithacker.app",
+				"privacyPolicyUrl": "https://fithacker.app/privacy",
+				"releaseNotes": "無料バックアップとすべてのデバイスへの同期のためのオプションログイン",
+				"subtitle": "シンプルなフィットネスアプリ",
+				"supportUrl": "https://fithacker.app",
+				"title": "Fithacker"
+			},
+			"ko": {
+				"description": "Fithacker는 장기적인 건강, 근력 및 이동성을 위한 모든 운동을 도와줍니다.",
+				"keywords": [
+					"피트니스",
+					"운동",
+					"습관 추적기",
+					"건강",
+					"운동 기록",
+					"기록",
+					"운동 추적기"
+				],
+				"marketingUrl": "https://fithacker.app",
+				"privacyPolicyUrl": "https://fithacker.app/privacy",
+				"releaseNotes": "무료 백업 및 모든 기기 동기화를 위한 선택적 로그인",
+				"subtitle": "간단한 피트니스 앱",
+				"supportUrl": "https://fithacker.app",
+				"title": "Fithacker"
+			},
+			"pt-BR": {
+				"description": "Fithacker ajuda você a obter todos os exercícios que seu corpo precisa para um condicionamento físico, força e mobilidade de longo prazo.",
+				"keywords": [
+					"fitness",
+					"exercício",
+					"em forma",
+					"registro de exercício",
+					"registro",
+					"tracker de exercício"
+				],
+				"marketingUrl": "https://fithacker.app",
+				"privacyPolicyUrl": "https://fithacker.app/privacy",
+				"releaseNotes": "Login opcional para backup gratuito e sincronização em todos os seus dispositivos",
+				"subtitle": "Aptidão simples",
+				"supportUrl": "https://fithacker.app",
+				"title": "Fithacker"
+			},
+			"pt-PT": {
+				"description": "Fithacker ajuda você a obter todos os exercícios que seu corpo precisa para um condicionamento físico, força e mobilidade de longo prazo.",
+				"keywords": [
+					"fitness",
+					"exercício",
+					"em forma",
+					"registro de exercício",
+					"registro",
+					"tracker de exercício"
+				],
+				"marketingUrl": "https://fithacker.app",
+				"privacyPolicyUrl": "https://fithacker.app/privacy",
+				"releaseNotes": "Login opcional para backup gratuito e sincronização em todos os seus dispositivos",
+				"subtitle": "Aptidão simples",
+				"supportUrl": "https://fithacker.app",
+				"title": "Fithacker"
+			},
+			"zh-Hans": {
+				"description": "Fithacker可以帮助你记录每日运动,帮助你保持健康。",
+				"keywords": [
+					"健康",
+					"运动",
+					"习惯追踪",
+					"健康保持",
+					"训练",
+					"运动记录",
+					"记录",
+					"运动追踪"
+				],
+				"marketingUrl": "https://fithacker.app",
+				"privacyPolicyUrl": "https://fithacker.app/privacy",
+				"releaseNotes": "可选登录，免费备份并同步到所有设备",
+				"subtitle": "简单的健身应用程序",
+				"supportUrl": "https://fithacker.app",
+				"title": "Fithacker"
+			}
+		},
+		"release": {
+			"automaticRelease": true
+		}
+	},
+	"configVersion": 0
+}

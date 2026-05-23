@@ -65,8 +65,6 @@ if (
 			navigator.serviceWorker
 				.register('/sw.js')
 				.then((registration) => {
-					console.log('[SW] Registered:', registration.scope);
-
 					registration.addEventListener('updatefound', () => {
 						const newWorker = registration.installing;
 						if (newWorker) {
@@ -75,7 +73,7 @@ if (
 									newWorker.state === 'installed' &&
 									navigator.serviceWorker.controller
 								) {
-									console.log('[SW] New version available');
+									// New version available — will activate on next load
 								}
 							});
 						}

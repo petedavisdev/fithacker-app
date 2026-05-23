@@ -23,7 +23,6 @@ export function usePromptInstall() {
 
 		if (window.matchMedia('(display-mode: standalone)').matches) {
 			setIsInstallable(false);
-			console.log('[PWA] App already installed');
 		}
 
 		return () => {
@@ -46,7 +45,6 @@ export function usePromptInstall() {
 
 			await deferredPrompt.prompt();
 			const { outcome } = await deferredPrompt.userChoice;
-			console.log('[PWA] Install prompt outcome:', outcome);
 
 			if (outcome === 'accepted') {
 				setIsInstallable(false);
