@@ -16,7 +16,7 @@ export default function SeedEmptyRoute() {
 			queryClient.invalidateQueries({ queryKey: queryKeys.exerciseLog });
 			queryClient.invalidateQueries({ queryKey: queryKeys.pendingSync });
 		})();
-	}, []);
+	}, [queryClient]);
 
 	return null;
 }
