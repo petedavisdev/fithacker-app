@@ -1,8 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import {
-	convertExerciseLogToCsv,
-	formatExerciseLogAsJson,
-} from './convertExerciseLog';
+import { convertExerciseLogToCsv } from './convertExerciseLog';
 import type { ExerciseLog } from '@/shared/utils/constants';
 
 function getFilename(): string {
@@ -40,22 +37,9 @@ export function useDownloadData() {
 		error,
 	} = useMutation({
 		mutationFn: async (exerciseLog: ExerciseLog) => {
-			const baseFilename = getFilename();
-			const jsonFilename = `${baseFilename}.json`;
-			const csvFilename = `${baseFilename}.csv`;
-
-			// Convert data to formats
-			const jsonContent = formatExerciseLogAsJson(exerciseLog);
+			const csvFilename = `${getFilename()}.csv`;
 			const csvContent = convertExerciseLogToCsv(exerciseLog);
-
-			// Create blobs
-			const jsonBlob = new Blob([jsonContent], { type: 'application/json' });
 			const csvBlob = new Blob([csvContent], { type: 'text/csv' });
-
-			// Download both files sequentially
-			downloadBlob(jsonBlob, jsonFilename);
-			// Small delay to allow first download to start
-			await new Promise((resolve) => setTimeout(resolve, 300));
 			downloadBlob(csvBlob, csvFilename);
 		},
 		onError: (error) => {

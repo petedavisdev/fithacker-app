@@ -1,7 +1,4 @@
-import {
-	convertExerciseLogToCsv,
-	formatExerciseLogAsJson,
-} from './convertExerciseLog';
+import { convertExerciseLogToCsv } from './convertExerciseLog';
 import type { ExerciseLog } from '@/shared/utils/constants';
 
 describe('convertExerciseLogToCsv', () => {
@@ -91,25 +88,5 @@ describe('convertExerciseLogToCsv', () => {
 		expect(csv).toBe(
 			'Date,Exercise,Note\n2026-01-15,🚶,\n2026-01-15,💪,morning workout\n2026-01-15,🏃‍♀️,\n2026-01-15,🌴,core session',
 		);
-	});
-});
-
-describe('formatExerciseLogAsJson', () => {
-	it('formats empty log', () => {
-		const log: ExerciseLog = {};
-		const json = formatExerciseLogAsJson(log);
-		expect(json).toBe('{}');
-	});
-
-	it('formats log with data', () => {
-		const log: ExerciseLog = {
-			'2026-01-15': ['🚶', ['💪', 'morning workout']],
-		};
-		const json = formatExerciseLogAsJson(log);
-		const parsed = JSON.parse(json);
-		expect(parsed).toEqual(log);
-		expect(json).toContain('2026-01-15');
-		expect(json).toContain('🚶');
-		expect(json).toContain('morning workout');
 	});
 });

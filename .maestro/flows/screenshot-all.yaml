@@ -1,0 +1,71 @@
+# All 5 screenshots in a single flow (no app restart between shots)
+# Flow: empty home → seeded home → chart → notes → account
+#
+# LOCALE and OUTPUT_DIR passed via: maestro test -e LOCALE=xx -e OUTPUT_DIR=xx
+
+appId: dev.petedavis.fithacker
+---
+- launchApp
+- waitForAnimationToEnd
+# Wait for the app to fully load (Metro bundling completes, splash screen clears)
+- extendedWaitUntil:
+    visible:
+      text: 'FITHACKER'
+    timeout: 30000
+
+# --- Screenshot 1: Empty home ---
+- openLink: 'fithacker://seed-empty'
+- waitForAnimationToEnd
+- tapOn:
+    text: 'Open'
+    optional: true
+- waitForAnimationToEnd
+- openLink: 'fithacker://'
+- waitForAnimationToEnd
+- tapOn:
+    text: 'Open'
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: ${OUTPUT_DIR}/${LOCALE}1
+
+# --- Screenshot 2: Home with seeded data ---
+- openLink: 'fithacker://seed'
+- waitForAnimationToEnd
+- tapOn:
+    text: 'Open'
+    optional: true
+- waitForAnimationToEnd
+- openLink: 'fithacker://'
+- waitForAnimationToEnd
+- tapOn:
+    text: 'Open'
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: ${OUTPUT_DIR}/${LOCALE}2
+
+# --- Screenshot 3: Chart ---
+- openLink: 'fithacker://chart'
+- waitForAnimationToEnd
+- tapOn:
+    text: 'Open'
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: ${OUTPUT_DIR}/${LOCALE}3
+
+# --- Screenshot 4: Notes ---
+- openLink: 'fithacker://notes'
+- waitForAnimationToEnd
+- tapOn:
+    text: 'Open'
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: ${OUTPUT_DIR}/${LOCALE}4
+
+# --- Screenshot 5: Account ---
+- openLink: 'fithacker://account'
+- waitForAnimationToEnd
+- tapOn:
+    text: 'Open'
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: ${OUTPUT_DIR}/${LOCALE}5

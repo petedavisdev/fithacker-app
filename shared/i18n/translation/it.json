@@ -22,7 +22,7 @@
 		"deleteAccountTitle": "Elimina backup cloud",
 		"deleteAccountWarning": "Questo eliminerà il tuo backup cloud e interromperà la sincronizzazione. Puoi continuare a utilizzare i tuoi dati su questo dispositivo.",
 		"deleteCloudBackup": "Elimina backup cloud",
-		"downloadData": "Scarica i miei dati (CSV + JSON)",
+		"downloadData": "Scarica i miei dati",
 		"downloadError": "Download fallito. Riprova.",
 		"downloadingData": "Download in corso...",
 		"installApp": "Installa app",
@@ -30,13 +30,7 @@
 		"offlineLoggedOut": "Nessun problema! Quando sarai online, accedi per eseguire il backup e sincronizzare i tuoi dati.",
 		"offlineTitle": "Sei offline",
 		"privacyPolicy": "Informativa sulla privacy",
-		"syncComplete": "Sincronizzazione completata",
-		"uploadConfirmMessage": "Caricare {{count}} giorni di dati di esercizio?",
-		"uploadConfirmTitle": "Conferma caricamento",
-		"uploadConfirmWarning": "Questo si unirà con i tuoi dati locali. Questo non può essere annullato.",
-		"uploadData": "Carica i miei dati (JSON)",
-		"uploadSuccessMessage": "{{count}} giorni caricati con successo!",
-		"uploadSuccessTitle": "Caricamento completato"
+		"syncComplete": "Sincronizzazione completata"
 	},
 	"_auth": {
 		"checkInboxAndJunkMail": "Controlla la tua casella di posta e la posta indesiderata",
@@ -111,8 +105,8 @@
 		"dataStorageTitle": "I tuoi dati, il tuo controllo",
 		"emailOptionalDescription": "La registrazione email è opzionale. Se fornita, la tua email viene utilizzata solo per l'accesso e mai condivisa con terze parti o usata per marketing.",
 		"emailOptionalTitle": "L'email è opzionale",
-		"noTrackingDescription": "Fithacker non utilizza cookie o tecnologie di tracciamento.",
-		"noTrackingTitle": "Nessun tracciamento",
+		"noTrackingDescription": "Fithacker non utilizza tecnologie di tracciamento pubblicitario o analitico.",
+		"noTrackingTitle": "Nessuna pubblicità o tracciamento",
 		"thirdPartyDescription": "Email di autenticazione tramite Resend. Backup cloud opzionale tramite Supabase. Entrambi sono conformi GDPR e utilizzati solo per funzionalità principali.",
 		"thirdPartyTitle": "Servizi di terze parti",
 		"title": "Informativa sulla privacy"

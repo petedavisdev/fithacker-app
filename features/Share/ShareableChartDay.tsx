@@ -1,6 +1,7 @@
 import { View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { AText } from '@/shared/components/AText';
+import { AEmoji } from '@/shared/components/AEmoji';
 import { getDateInfo } from '@/shared/utils/dateInfo';
 import type { ExerciseDay } from '@/shared/utils/constants';
 
@@ -24,9 +25,9 @@ export function ShareableChartDay(props: ShareableChartDayProps) {
 					typeof exerciseItem === 'string' ? exerciseItem : exerciseItem[0];
 
 				return (
-					<AText key={`${props.date}${index}`} size="4xl">
+					<AEmoji key={`${props.date}${index}`} size="4xl">
 						{exercise}
-					</AText>
+					</AEmoji>
 				);
 			})}
 

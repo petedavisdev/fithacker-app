@@ -28,14 +28,14 @@ export default {
 	expo: {
 		name: name || 'Fithacker',
 		slug: 'fithacker-app',
-		version: '1.1.0',
+		version: '2.0.0',
 		orientation: 'portrait',
 		icon: './assets/images/icon.png',
-		newArchEnabled: true,
 		scheme: 'fithacker',
 		userInterfaceStyle: 'automatic',
 		updates: {
 			url: 'https://u.expo.dev/6c3e19dc-162f-45b6-98f4-716ce558cd0e',
+			enableBsdiffPatchSupport: true,
 		},
 		runtimeVersion: {
 			policy: 'appVersion',
@@ -112,8 +112,19 @@ export default {
 		plugins: [
 			'expo-router',
 			'expo-localization',
-			'expo-font',
+			[
+				'expo-font',
+				{
+					fonts: [
+						'./assets/fonts/UbuntuMono-Regular.ttf',
+						'./assets/fonts/UbuntuMono-Bold.ttf',
+						'./assets/fonts/UbuntuMono-Italic.ttf',
+						'./assets/fonts/UbuntuMono-BoldItalic.ttf',
+					],
+				},
+			],
 			'expo-web-browser',
+			'expo-sharing',
 		],
 		experiments: {
 			typedRoutes: true,

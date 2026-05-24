@@ -1,6 +1,6 @@
 ---
 description: Build and deployment conventions
-globs: app.config.js,eas.json,package.json,scripts/deploy-prod.sh
+globs: app.config.js,eas.json,package.json,scripts/deploy-prod.sh,store.config.json
 alwaysApply: false
 ---
 
@@ -72,6 +72,37 @@ Set `APP_VARIANT` env var to control build variant
 - Single source of truth for app versioning (maps to iOS CFBundleShortVersionString and Android versionName)
 - Must use full semver format: `"Major.Minor.Patch"` (e.g., `"1.2.0"`) - required by Apple
 - Used as `runtimeVersion` for EAS OTA updates (see `app.config.js` runtimeVersion policy)
+
+## App Store Metadata (EAS Metadata)
+
+**Source of Truth**: `store.config.json`
+
+EAS Metadata automates pushing localized text content to App Store Connect. Screenshots must still be uploaded manually.
+
+### Release Order
+
+1. **Build & submit binary**: `npm run ios:prod` (binary must exist in App Store Connect first)
+2. **Push metadata**: `npx eas metadata:push` (updates descriptions, keywords, release notes, etc.)
+3. **Upload screenshots** manually in App Store Connect (EAS Metadata does not support screenshots)
+4. **Submit for review** in App Store Connect
+
+### Commands
+
+- `npx eas metadata:lint` - Validate `store.config.json` locally (fast, no auth needed)
+- `npx eas metadata:push` - Push metadata to App Store Connect (requires auth)
+- `npx eas metadata:pull` - Pull current App Store Connect metadata into `store.config.json`
+
+### Updating for a New Release
+
+1. Update `releaseNotes` in `store.config.json` from `docs/appStore.json` (use the relevant `updateN` field)
+2. Update `subtitle`, `description`, `keywords` if changed
+3. Run `npx eas metadata:lint` to validate
+4. Push after binary is submitted
+
+### Locales
+
+12 locales configured (must match App Store Connect localizations):
+`en-US`, `de-DE`, `es-ES`, `es-MX`, `fr-FR`, `fr-CA`, `it`, `ja`, `ko`, `pt-BR`, `pt-PT`, `zh-Hans`
 
 ## Supported Platforms
 

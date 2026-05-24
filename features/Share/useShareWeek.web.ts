@@ -1,19 +1,17 @@
 import { useRef } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import type ViewShot from 'react-native-view-shot';
+import { type ViewShotRef } from 'react-native-view-shot';
 
 const WEB_SHAREABLE_TESTID = 'shareable-week-view';
 
 export function useShareWeek() {
-	const viewShotRef = useRef<ViewShot | null>(null);
+	const viewShotRef = useRef<ViewShotRef | null>(null);
 	const {
 		mutate: shareWeek,
 		isPending: isSharingWeek,
 		error: errorShareWeek,
 	} = useMutation({
 		mutationFn: async (firstDate: string) => {
-			console.log('shareWeek mutation called (web)', firstDate);
-
 			if (typeof document === 'undefined') {
 				throw new Error('Document not available');
 			}
@@ -49,7 +47,6 @@ export function useShareWeek() {
 			try {
 				// Dynamically import html2canvas
 				const html2canvas = (await import('html2canvas')).default;
-				console.log('Capturing view with html2canvas...');
 
 				const canvas = await html2canvas(element, {
 					width: 540,
@@ -62,7 +59,6 @@ export function useShareWeek() {
 				});
 
 				const uri = canvas.toDataURL('image/png');
-				console.log('Capture result:', uri.substring(0, 50) + '...');
 
 				// Download the image
 				const link = document.createElement('a');
@@ -71,7 +67,6 @@ export function useShareWeek() {
 				document.body.appendChild(link);
 				link.click();
 				document.body.removeChild(link);
-				console.log('Downloaded image');
 			} finally {
 				// Restore original styles
 				element.style.position = originalStyles.position;

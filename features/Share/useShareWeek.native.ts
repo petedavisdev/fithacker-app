@@ -1,10 +1,10 @@
 import { useRef } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import ViewShot from 'react-native-view-shot';
+import { type ViewShotRef } from 'react-native-view-shot';
 import * as Sharing from 'expo-sharing';
 
 export function useShareWeek() {
-	const viewShotRef = useRef<ViewShot>(null);
+	const viewShotRef = useRef<ViewShotRef | null>(null);
 
 	const {
 		mutate: shareWeek,
@@ -12,8 +12,6 @@ export function useShareWeek() {
 		error: errorShareWeek,
 	} = useMutation({
 		mutationFn: async (firstDate: string) => {
-			console.log('shareWeek mutation called (native)', firstDate);
-
 			if (!viewShotRef.current?.capture) {
 				const error = new Error('ViewShot ref not available');
 				console.error('ViewShot error:', error);
@@ -24,16 +22,12 @@ export function useShareWeek() {
 			// This ensures fonts, styles, and layout are complete
 			await new Promise((resolve) => setTimeout(resolve, 300));
 
-			console.log('Capturing view with ViewShot...');
 			const uri = await viewShotRef.current.capture();
-			console.log('Capture result:', uri);
 
 			const isAvailable = await Sharing.isAvailableAsync();
-			console.log('Sharing.isAvailableAsync():', isAvailable);
 
 			if (isAvailable) {
 				await Sharing.shareAsync(uri);
-				console.log('Native share successful');
 			} else {
 				throw new Error('Sharing is not available on this platform');
 			}

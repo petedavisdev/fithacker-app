@@ -1,6 +1,6 @@
 import { Pressable, View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { AText } from '@/shared/components/AText';
+import { AEmoji } from '@/shared/components/AEmoji';
 import { EXERCISES, type Exercise, URL_PARAMS } from '@/shared/utils/constants';
 
 export function TheFilter() {
@@ -34,15 +34,13 @@ export function TheFilter() {
 							: undefined
 					}
 				/>
-				<AText
-					color="cyan"
-					shade={500}
-					className="w-14 h-12 text-center text-xs my-3"
-				>
+				<View className="w-14 h-12 flex-row flex-wrap justify-center content-start my-3">
 					{EXERCISES.map((exercise) => (
-						<AText key={exercise}>{exercise}</AText>
+						<AEmoji key={exercise} size="xs">
+							{exercise}
+						</AEmoji>
 					))}
-				</AText>
+				</View>
 			</Pressable>
 			{Object.values(EXERCISES).map((exercise) => (
 				<Pressable key={exercise} onPress={() => updateFilter(exercise)}>
@@ -60,13 +58,9 @@ export function TheFilter() {
 								: undefined
 						}
 					/>
-					<AText
-						color="yellow"
-						shade={500}
-						className="w-14 h-12 text-center text-3xl my-3"
-					>
+					<AEmoji size="3xl" className="w-14 h-12 text-center my-3">
 						{exercise}
-					</AText>
+					</AEmoji>
 				</Pressable>
 			))}
 		</View>

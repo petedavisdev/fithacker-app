@@ -6,21 +6,36 @@
 			"distribution": "internal",
 			"env": {
 				"APP_VARIANT": "development"
-			}
+			},
+			"node": "24.12.0"
 		},
 		"preview": {
 			"channel": "preview",
 			"distribution": "internal",
 			"env": {
 				"APP_VARIANT": "preview"
-			}
+			},
+			"node": "24.12.0"
 		},
 		"production": {
 			"autoIncrement": true,
 			"channel": "production",
 			"env": {
 				"APP_VARIANT": "production"
-			}
+			},
+			"node": "24.12.0"
+		},
+		"screenshot": {
+			"channel": "simulator",
+			"developmentClient": false,
+			"distribution": "internal",
+			"env": {
+				"APP_VARIANT": "development"
+			},
+			"ios": {
+				"simulator": true
+			},
+			"node": "24.12.0"
 		},
 		"simulator": {
 			"channel": "simulator",
@@ -31,7 +46,8 @@
 			},
 			"ios": {
 				"simulator": true
-			}
+			},
+			"node": "24.12.0"
 		}
 	},
 	"cli": {

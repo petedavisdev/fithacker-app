@@ -38,25 +38,31 @@ export function Chart(props: ChartProps) {
 				minWidth: '100%',
 				overflowX: 'auto',
 				overflowY: 'hidden',
-				display: 'flex',
-				flexDirection: 'row',
-				alignItems: 'flex-end',
-				justifyContent: 'center',
 			}}
 		>
-			{reversedData.map((weekData) => {
-				const firstDate = Object.keys(weekData.days)[0];
-				return (
-					<div key={firstDate} style={{ flexShrink: 0 }}>
-						<ChartWeek
-							weekData={weekData}
-							readOnly={props.readOnly}
-							onBadgePress={props.onBadgePress}
-							indicatorDate={data.indicatorDate}
-						/>
-					</div>
-				);
-			})}
+			<div
+				style={{
+					display: 'flex',
+					flexDirection: 'row',
+					alignItems: 'flex-end',
+					width: 'fit-content',
+					margin: '0 auto',
+				}}
+			>
+				{reversedData.map((weekData) => {
+					const firstDate = Object.keys(weekData.days)[0];
+					return (
+						<div key={firstDate} style={{ flexShrink: 0 }}>
+							<ChartWeek
+								weekData={weekData}
+								readOnly={props.readOnly}
+								onBadgePress={props.onBadgePress}
+								indicatorDate={data.indicatorDate}
+							/>
+						</div>
+					);
+				})}
+			</div>
 		</div>
 	);
 }

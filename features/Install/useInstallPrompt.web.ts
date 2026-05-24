@@ -25,7 +25,6 @@ export function useInstallPrompt() {
 			const promptEvent = e as BeforeInstallPromptEvent;
 			setDeferredPrompt(promptEvent);
 			setIsInstallable(true);
-			console.log('[PWA] Install prompt available');
 		};
 
 		window.addEventListener('beforeinstallprompt', handler);
@@ -33,7 +32,6 @@ export function useInstallPrompt() {
 		// Check if already installed
 		if (window.matchMedia('(display-mode: standalone)').matches) {
 			setIsInstallable(false);
-			console.log('[PWA] App already installed');
 		}
 
 		return () => {
@@ -50,7 +48,6 @@ export function useInstallPrompt() {
 		try {
 			await deferredPrompt.prompt();
 			const { outcome } = await deferredPrompt.userChoice;
-			console.log('[PWA] Install prompt outcome:', outcome);
 
 			if (outcome === 'accepted') {
 				setIsInstallable(false);

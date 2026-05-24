@@ -1,4 +1,11 @@
-import { View, KeyboardAvoidingView, Platform } from 'react-native';
+import {
+	View,
+	ScrollView,
+	KeyboardAvoidingView,
+	Platform,
+	InteractionManager,
+	Keyboard,
+} from 'react-native';
 import { TheHeader } from '@/shared/components/TheHeader';
 import { SearchInput } from '@/features/Notes/SearchInput';
 import { NotesList } from '@/features/Notes/NotesList';
@@ -10,8 +17,6 @@ import { type Exercise, URL_PARAMS } from '@/shared/utils/constants';
 import { useRef, useEffect } from 'react';
 import { useBackgroundSync } from '@/shared/queries/useBackgroundSync';
 import { usePendingSync } from '@/shared/queries/usePendingSync';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-
 export default function NotesScreen() {
 	const params = useLocalSearchParams<{
 		[URL_PARAMS.SEARCH]?: string;
@@ -25,7 +30,7 @@ export default function NotesScreen() {
 	const { pendingSync } = usePendingSync();
 	const hasTriggeredSyncRef = useRef(false);
 	const pendingSyncRef = useRef<Record<string, string>>({});
-	const scrollViewRef = useRef<KeyboardAwareScrollView>(null);
+	const scrollViewRef = useRef<ScrollView>(null);
 	const shouldScrollRef = useRef(true);
 
 	// Keep ref updated with latest pendingSync value
@@ -56,20 +61,41 @@ export default function NotesScreen() {
 		shouldScrollRef.current = true;
 	}, [searchQuery, filterExercise]);
 
+	// Explicitly scroll to end when search/filter changes (onContentSizeChange may not fire if content height is unchanged)
+	useEffect(() => {
+		const task = InteractionManager.runAfterInteractions(() => {
+			if (scrollViewRef.current) {
+				scrollViewRef.current.scrollToEnd({ animated: false });
+			}
+		});
+		return () => task.cancel();
+	}, [searchQuery, filterExercise]);
+
 	function handleContentSizeChange(_width: number, height: number) {
 		if (shouldScrollRef.current && scrollViewRef.current) {
-			scrollViewRef.current.scrollToEnd(false);
+			scrollViewRef.current.scrollToEnd({ animated: false });
 			shouldScrollRef.current = false;
 		}
 	}
+
+	// Scroll to end when keyboard closes (plain ScrollView has no onKeyboardDidHide)
+	useEffect(() => {
+		const subscription = Keyboard.addListener('keyboardDidHide', () => {
+			InteractionManager.runAfterInteractions(() => {
+				if (scrollViewRef.current) {
+					scrollViewRef.current.scrollToEnd({ animated: false });
+				}
+			});
+		});
+		return () => subscription.remove();
+	}, []);
 
 	return (
 		<View className="flex-1 items-center">
 			<TheHeader buttonLeft="account" buttonRight="chart" />
 
-			<KeyboardAwareScrollView
+			<ScrollView
 				ref={scrollViewRef}
-				keyboardOpeningTime={0}
 				className="flex-1 w-96 border-t-2 border-b-2 border-black"
 				contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
 				onContentSizeChange={handleContentSizeChange}
@@ -79,7 +105,7 @@ export default function NotesScreen() {
 					searchQuery={searchQuery}
 					filterExercise={filterExercise}
 				/>
-			</KeyboardAwareScrollView>
+			</ScrollView>
 
 			<KeyboardAvoidingView
 				behavior={Platform.OS === 'ios' ? 'padding' : 'height'}

@@ -89,10 +89,10 @@ export function AText(props: ATextProps) {
 	// Use explicit size from className if present, otherwise use props
 	const finalSizeClass = hasTextSize ? '' : textSizeClass;
 
-	// Combine classes - ensure font-sans and default color/size are applied
+	// Combine classes - ensure font-ubuntu and default color/size are applied
 	// Order: font, color, size, then user className (so user can override)
 	const classParts = [
-		'font-sans', // Default font (Ubuntu Mono configured in tailwind.config.js)
+		'font-ubuntu', // Default font (Ubuntu Mono configured in tailwind.config.js)
 		finalColorClass, // Default color (text-cyan-400) unless overridden
 		finalSizeClass, // Default size (text-base) unless overridden
 		className, // User-provided classes (can override defaults)

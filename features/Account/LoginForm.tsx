@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, TextInput, View } from 'react-native';
-import { Link, type Href } from 'expo-router';
 import { AText } from '@/shared/components/AText';
 import { AButton } from '@/shared/components/AButton';
 import { isAppleReviewEmail, type AuthError } from './authHelpers';
@@ -40,7 +39,7 @@ export function LoginForm() {
 					<TextInput
 						placeholder={emailPlaceholder}
 						placeholderTextColor={'#f472b6'}
-						className="font-sans text-yellow-400 border-y-2 border-b-yellow-500 border-t-transparent pt-4 pb-4 focus:text-pink-400 focus:border-b-pink-500 outline-none w-96"
+						className="font-ubuntu text-yellow-400 border-y-2 border-b-yellow-500 border-t-transparent pt-4 pb-4 focus:text-pink-400 focus:border-b-pink-500 outline-none w-96"
 						value={email}
 						onChangeText={(text) => {
 							setEmail(text);
@@ -165,17 +164,6 @@ export function LoginForm() {
 					</View>
 				</View>
 			)}
-
-			<View className="mt-8 items-center">
-				<AText shade={300} size="xs" className="text-center mb-2">
-					{t('_auth.emailNeverShared')}
-				</AText>
-				<Link href={'/privacy' as Href}>
-					<AText size="sm" className="underline text-center">
-						{t('_account.privacyPolicy')}
-					</AText>
-				</Link>
-			</View>
 		</View>
 	);
 }

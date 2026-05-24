@@ -22,7 +22,7 @@
 		"deleteAccountTitle": "删除云备份",
 		"deleteAccountWarning": "这将删除您的云备份并停止同步。您可以继续在此设备上使用您的数据。",
 		"deleteCloudBackup": "删除云备份",
-		"downloadData": "下载我的数据 (CSV + JSON)",
+		"downloadData": "下载我的数据",
 		"downloadError": "下载失败。请重试。",
 		"downloadingData": "下载中...",
 		"installApp": "安装应用",
@@ -30,13 +30,7 @@
 		"offlineLoggedOut": "没问题！当您恢复在线时，请登录以备份和同步您的数据。",
 		"offlineTitle": "您处于离线状态",
 		"privacyPolicy": "隐私政策",
-		"syncComplete": "同步完成",
-		"uploadConfirmMessage": "上传 {{count}} 天的运动数据？",
-		"uploadConfirmTitle": "确认上传",
-		"uploadConfirmWarning": "这将与您的本地数据合并。这无法撤销。",
-		"uploadData": "上传我的数据 (JSON)",
-		"uploadSuccessMessage": "成功上传 {{count}} 天！",
-		"uploadSuccessTitle": "上传完成"
+		"syncComplete": "同步完成"
 	},
 	"_auth": {
 		"checkInboxAndJunkMail": "请检查您的收件箱和垃圾邮件",
@@ -111,8 +105,8 @@
 		"dataStorageTitle": "您的数据，您控制",
 		"emailOptionalDescription": "电子邮件注册是可选的。如果提供，您的电子邮件仅用于登录，绝不与第三方共享或用于营销。",
 		"emailOptionalTitle": "电子邮件是可选的",
-		"noTrackingDescription": "Fithacker 不使用 cookie 或追踪技术。",
-		"noTrackingTitle": "无追踪",
+		"noTrackingDescription": "Fithacker不使用广告或分析追踪技术。",
+		"noTrackingTitle": "无广告或追踪",
 		"thirdPartyDescription": "通过 Resend 发送认证邮件。通过 Supabase 可选云备份。两者均符合 GDPR 且仅用于核心功能。",
 		"thirdPartyTitle": "第三方服务",
 		"title": "隐私政策"

@@ -1,4 +1,3 @@
-import '@/shared/i18n';
 import { i18nReady } from '@/shared/i18n';
 import { useFonts } from 'expo-font';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -11,6 +10,7 @@ import {
 	Platform,
 	StatusBar,
 	AppState,
+	LogBox,
 	type AppStateStatus,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -23,6 +23,9 @@ import { InitNetworkStatus } from '@/shared/init/InitNetworkStatus';
 import { InitBackgroundSync } from '@/shared/init/InitBackgroundSync';
 import { LogoutModal } from '@/features/Account/LogoutModal';
 import { AutoInstallPrompt } from '@/features/Install/AutoInstallPrompt';
+
+// Suppress known framework deprecation warnings (not app bugs)
+LogBox.ignoreLogs(['SafeAreaView has been deprecated']);
 
 SplashScreen.preventAutoHideAsync();
 
@@ -51,15 +54,17 @@ if (Platform.OS !== 'web' || typeof window !== 'undefined') {
 		});
 }
 
-// Register service worker for PWA offline support (web only)
-if (Platform.OS === 'web' && typeof window !== 'undefined') {
+// Register service worker for PWA offline support (production web only)
+if (
+	Platform.OS === 'web' &&
+	typeof window !== 'undefined' &&
+	process.env.NODE_ENV === 'production'
+) {
 	if ('serviceWorker' in navigator) {
 		window.addEventListener('load', () => {
 			navigator.serviceWorker
 				.register('/sw.js')
 				.then((registration) => {
-					console.log('[SW] Registered:', registration.scope);
-
 					registration.addEventListener('updatefound', () => {
 						const newWorker = registration.installing;
 						if (newWorker) {
@@ -68,7 +73,7 @@ if (Platform.OS === 'web' && typeof window !== 'undefined') {
 									newWorker.state === 'installed' &&
 									navigator.serviceWorker.controller
 								) {
-									console.log('[SW] New version available');
+									// New version available — will activate on next load
 								}
 							});
 						}
@@ -84,9 +89,6 @@ if (Platform.OS === 'web' && typeof window !== 'undefined') {
 export default function RootLayout() {
 	const [fontLoaded] = useFonts({
 		UbuntuMono: require('../assets/fonts/UbuntuMono-Regular.ttf'),
-		UbuntuMonoBold: require('../assets/fonts/UbuntuMono-Bold.ttf'),
-		UbuntuMonoItalic: require('../assets/fonts/UbuntuMono-Italic.ttf'),
-		UbuntuMonoBoldItalic: require('../assets/fonts/UbuntuMono-BoldItalic.ttf'),
 	});
 	const [i18nLoaded, setI18nLoaded] = useState(false);
 

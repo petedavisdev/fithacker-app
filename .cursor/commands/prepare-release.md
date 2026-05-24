@@ -27,25 +27,32 @@ See `.cursor/rules/build-deploy.mdc` for:
 
 - Build scripts
 - Environment variants
+- App Store release workflow
 
 **Source of Truth**:
 
 - Version location: `app.config.js` (`expo.version`)
 - Languages: `i18n/index.ts` (`resources` object)
+- Store metadata: `store.config.json`
+- App Store translations: `docs/appStore.json`
 
 ## Example
 
 ```
-/prepare-release 1.2.0
+/prepare-release 2.0.0
 ```
 
 Checklist generated:
 
-- [ ] Update app.config.js version to 1.2.0
+- [ ] Update app.config.js version to 2.0.0
 - [ ] Run translation check
 - [ ] Remove console.logs
-- [ ] Test on iOS simulator
-- [ ] Test on Android
-- [ ] Test web build
-- [ ] Create git tag v1.2.0
-- [ ] Submit to App Store
+- [ ] Run test suite
+- [ ] Update `store.config.json` releaseNotes from `docs/appStore.json`
+- [ ] Validate store config: `npx eas metadata:lint`
+- [ ] Deploy schema if needed: `npm run deploy:schema`
+- [ ] Build & submit iOS binary: `npm run ios:prod`
+- [ ] Push store metadata: `npx eas metadata:push`
+- [ ] Upload screenshots manually in App Store Connect
+- [ ] Create git tag v2.0.0
+- [ ] Submit for App Store review

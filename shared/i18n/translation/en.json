@@ -22,7 +22,7 @@
 		"deleteAccountTitle": "Delete cloud backup",
 		"deleteAccountWarning": "This will delete your cloud backup and stop syncing. You can continue using your data on this device.",
 		"deleteCloudBackup": "Delete cloud backup",
-		"downloadData": "Download my data (CSV + JSON)",
+		"downloadData": "Download my data",
 		"downloadError": "Download failed. Please try again.",
 		"downloadingData": "Downloading...",
 		"installApp": "Install app",
@@ -30,13 +30,7 @@
 		"offlineLoggedOut": "No problem! When you are online, login to backup and sync your data.",
 		"offlineTitle": "You are offline",
 		"privacyPolicy": "Privacy Policy",
-		"syncComplete": "Sync complete",
-		"uploadConfirmMessage": "Upload {{count}} days of exercise data?",
-		"uploadConfirmTitle": "Confirm upload",
-		"uploadConfirmWarning": "This will merge with your local data. This cannot be undone.",
-		"uploadData": "Upload my data (JSON)",
-		"uploadSuccessMessage": "{{count}} days uploaded successfully!",
-		"uploadSuccessTitle": "Upload complete"
+		"syncComplete": "Sync complete"
 	},
 	"_auth": {
 		"checkInboxAndJunkMail": "Check your inbox and junk mail",
@@ -111,8 +105,8 @@
 		"dataStorageTitle": "Your data, your control",
 		"emailOptionalDescription": "Email registration is optional. If provided, your email is only used for login and never shared with third parties or used for marketing.",
 		"emailOptionalTitle": "Email is optional",
-		"noTrackingDescription": "Fithacker does not use cookies or tracking technology.",
-		"noTrackingTitle": "No tracking",
+		"noTrackingDescription": "Fithacker does not use advertising or analytics tracking technology.",
+		"noTrackingTitle": "No ads or tracking",
 		"thirdPartyDescription": "Optional cloud backup via Supabase with authentication emails via Resend. Both are GDPR-compliant and only used for core app functionality.",
 		"thirdPartyTitle": "Third-party services",
 		"title": "Privacy Policy"
