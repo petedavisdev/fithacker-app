@@ -7,6 +7,11 @@ appId: dev.petedavis.fithacker
 ---
 - launchApp
 - waitForAnimationToEnd
+# Wait for the app to fully load (Metro bundling completes, splash screen clears)
+- extendedWaitUntil:
+    visible:
+      text: 'FITHACKER'
+    timeout: 30000
 
 # --- Screenshot 1: Empty home ---
 - openLink: 'fithacker://seed-empty'

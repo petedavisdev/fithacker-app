@@ -53,7 +53,11 @@ The script checks all of these automatically. Run `--check-only` to verify witho
 2. **Maestro CLI** — `curl -Ls "https://get.maestro.mobile.dev" | bash`
 3. **Metro bundler** — Must be running (`npm start`)
 4. **iOS build** — App must be built with `APP_VARIANT=production` (see `.maestro/README.md`)
-5. **iPad full-screen mode** — One-time per machine: in the iPad simulator go to Settings → Multitasking & Gestures → switch from "Windowed Apps" to "Full Screen Apps". See `.maestro/README.md` for details.
+5. **iPhone 13 Pro Max simulator** — Required for correct App Store screenshot dimensions (1284×2778px). Needs iOS 17.5 runtime:
+   - Download iOS 17.5 in Xcode → Settings → Platforms if not present
+   - Create simulator once: `xcrun simctl create "iPhone 13 Pro Max" "com.apple.CoreSimulator.SimDeviceType.iPhone-13-Pro-Max" "com.apple.CoreSimulator.SimRuntime.iOS-17-5"`
+   - Verify: `xcrun simctl list devices available | grep "13 Pro Max"`
+6. **iPad full-screen mode** — One-time per machine: in the iPad simulator go to Settings → Multitasking & Gestures → switch from "Windowed Apps" to "Full Screen Apps". See `.maestro/README.md` for details.
 
 ## Screenshots Captured
 
@@ -118,6 +122,7 @@ de, en, es, fr, it, ja, ko, pt, zh
 
 - **iOS deep link dialog**: The Maestro flow includes `tapOn "Open" optional: true` to dismiss the iOS URL scheme confirmation. If the system language changes, this text may need updating.
 - **`APP_VARIANT`**: The `.env` file has `APP_VARIANT=development`. The build step must explicitly use `APP_VARIANT=production` to get the correct bundle ID (`dev.petedavis.fithacker`).
+- **iPhone simulator runtime**: The script uses `iPhone 13 Pro Max` (iOS 17.5) to produce 1284×2778px screenshots, which is required by App Store Connect's 6.5" display slot. This simulator does not use the default iOS 26 runtime — iOS 17.5 must be installed separately (see Prerequisites).
 - **iPad full-screen mode**: The iPad simulator defaults to "Windowed Apps" (Stage Manager). This must be changed to full-screen mode once per machine via Settings → Multitasking & Gestures. Without this, screenshots show the iPad desktop behind the app window. This is a persistent simulator setting — it survives reboots.
 
 ## Performance

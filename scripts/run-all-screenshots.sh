@@ -19,7 +19,7 @@ NC='\033[0m'
 # Configuration
 LOCALES=("en" "de" "es" "fr" "it" "ja" "ko" "pt" "zh")
 DATE_FOLDER=$(date +%Y-%m-%d)
-IPHONE_SIMULATOR="iPhone 17 Pro"
+IPHONE_SIMULATOR="iPhone 13 Pro Max"
 IPAD_SIMULATOR="iPad Pro 13-inch (M4)"
 APP_PATH="ios/build/Build/Products/Debug-iphonesimulator/Fithacker.app"
 OUTPUT_BASE="docs/screenshots-${DATE_FOLDER}"
