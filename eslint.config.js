@@ -5,7 +5,7 @@ const expo = require('eslint-config-expo/flat');
 module.exports = defineConfig([
 	...expo,
 	{
-		ignores: ['dist/**', 'public/sw-template.js'],
+		ignores: ['dist/**'],
 	},
 	{
 		// eslint-config-expo's core config sets import/resolver: { typescript: true }

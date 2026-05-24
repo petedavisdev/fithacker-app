@@ -10,22 +10,13 @@
 		"**/*.web.ts",
 		"**/*.native.tsx",
 		"**/*.native.ts",
-		"public/sw-template.js",
-		"workbox-config.js",
-		"babel.config.js",
-		"metro.config.js",
 		"shared/supabase/database.types.ts"
 	],
 	"ignoreBinaries": ["expo-doctor", "sleep", "eas", "diff", "eas-cli"],
 	"ignoreDependencies": [
-		"workbox-cacheable-response",
+		"@babel/core",
 		"workbox-cli",
-		"workbox-expiration",
-		"workbox-precaching",
-		"workbox-routing",
-		"workbox-strategies",
 		"babel-preset-expo",
-		"metro-minify-terser",
 		"jest-mock",
 		"expo-sharing"
 	],
